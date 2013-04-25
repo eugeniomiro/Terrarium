@@ -473,150 +473,158 @@ namespace Terrarium.Client
                 return 0;
 			}
 
-			// Clear out any relaunch commands
-			GameConfig.RelaunchCommandLine = "";
+            try
+            {
+                // Clear out any relaunch commands
+                GameConfig.RelaunchCommandLine = "";
 
-			// Catch toplevel exceptions and assertions so we can stop the timer
-			// and report them properly
-			Debug.Listeners.Clear();
-			traceListener = new TerrariumTraceListener(enableLogging);
-			Debug.Listeners.Add(traceListener);
-			
-			// Create/Open a global named mutex that indicates if the app is already running
-			// if we can get the mutex, then we are the only version running
-            appMutex = new System.Threading.Mutex(false, appMutexName);
-			if (!appMutex.WaitOne(new TimeSpan(1), false))
-			{
-                //// Don't show a messagebox because it locks the exe and dll's and prevents the
-                //// app from being upgraded
-                //if (mode == ScreenSaverMode.Run)
-                //{
-                //    Application.Run(new SimpleScreenSaver());
-                //}
-                appMutex.Close();
-				return 0;
-			}
+                // Catch toplevel exceptions and assertions so we can stop the timer
+                // and report them properly
+                Debug.Listeners.Clear();
+                traceListener = new TerrariumTraceListener(enableLogging);
+                Debug.Listeners.Add(traceListener);
 
-			// Make sure we can access our config file
-			try
-			{
-				GameConfig.CheckConfigFile();
-			}
-			catch (Exception e)
-			{
-				ErrorLog.LogHandledException(e);
-				MessageBox.Show("Error loading '" + GameConfig.UserSettingsLocation + "': " + e.Message + "\r\n\r\nPlease correct the problem and restart Terrarium.");
-				return 0;
-			}
-
-			// early check for an enabled security system
-			// if it's not enabled, bail out without running code
-			if (!SecurityUtils.SecurityEnabled)
-			{
-				MessageBox.Show("Terrarium will not run if security is disabled.\nPlease use \"caspol -s on\" to enable",
-					"Terrarium Security Check");
-				return 0;
-			}
-
-			// check for globally disabled strong name verification or selective terrarium verification
-			if (SecurityUtils.VerificationDisabled)
-			{
-				MessageBox.Show("Terrarium will not run if strong name verification is disabled.\nPlease use \"sn.exe -Vx\" to enable it",
-					"Terrarium Security Check");
-				return 0;
-			}
-
-			// Disable directX if the user is running in too low of a resolution
-			if (Screen.PrimaryScreen.Bounds.Width < 800 ||
-				Screen.PrimaryScreen.Bounds.Height < 600)
-			{
-				noDirectX = true;
-			}
-
-			FileInfo info = new FileInfo(Assembly.GetEntryAssembly().Location);
-			if (info.Extension == ".scr" && mode == ScreenSaverMode.NoScreenSaver)
-			{
-				mode = ScreenSaverMode.ShowSettingsModeless;
-			}
-
-			// Don't run if we're being asked to preview or change settings
-			if (mode == ScreenSaverMode.Run || mode == ScreenSaverMode.NoScreenSaver ||
-				mode == ScreenSaverMode.RunLoadTerrarium || mode == ScreenSaverMode.RunNewTerrarium)
-			{
-                if (skipSplashScreen == false)
+                // Create/Open a global named mutex that indicates if the app is already running
+                // if we can get the mutex, then we are the only version running
+                appMutex = new System.Threading.Mutex(false, appMutexName);
+                if (!appMutex.WaitOne(new TimeSpan(1), false))
                 {
+                    //// Don't show a messagebox because it locks the exe and dll's and prevents the
+                    //// app from being upgraded
+                    //if (mode == ScreenSaverMode.Run)
+                    //{
+                    //    Application.Run(new SimpleScreenSaver());
+                    //}
+                    appMutex.Close();
+                    return 0;
+                }
+
+                // Make sure we can access our config file
+                try
+                {
+                    GameConfig.CheckConfigFile();
+                }
+                catch (Exception e)
+                {
+                    ErrorLog.LogHandledException(e);
+                    MessageBox.Show("Error loading '" + GameConfig.UserSettingsLocation + "': " + e.Message + "\r\n\r\nPlease correct the problem and restart Terrarium.");
+                    return 0;
+                }
+
+                // early check for an enabled security system
+                // if it's not enabled, bail out without running code
+                if (!SecurityUtils.SecurityEnabled)
+                {
+                    MessageBox.Show("Terrarium will not run if security is disabled.\nPlease use \"caspol -s on\" to enable",
+                        "Terrarium Security Check");
+                    return 0;
+                }
+
+                // check for globally disabled strong name verification or selective terrarium verification
+                if (SecurityUtils.VerificationDisabled)
+                {
+                    MessageBox.Show("Terrarium will not run if strong name verification is disabled.\nPlease use \"sn.exe -Vx\" to enable it",
+                        "Terrarium Security Check");
+                    return 0;
+                }
+
+                // Disable directX if the user is running in too low of a resolution
+                if (Screen.PrimaryScreen.Bounds.Width < 800 ||
+                    Screen.PrimaryScreen.Bounds.Height < 600)
+                {
+                    noDirectX = true;
+                }
+
+                FileInfo info = new FileInfo(Assembly.GetEntryAssembly().Location);
+                if (info.Extension == ".scr" && mode == ScreenSaverMode.NoScreenSaver)
+                {
+                    mode = ScreenSaverMode.ShowSettingsModeless;
+                }
+
+                // Don't run if we're being asked to preview or change settings
+                if (mode == ScreenSaverMode.Run || mode == ScreenSaverMode.NoScreenSaver ||
+                    mode == ScreenSaverMode.RunLoadTerrarium || mode == ScreenSaverMode.RunNewTerrarium)
+                {
+                    if (skipSplashScreen == false)
+                    {
 #if !DEVELOPER
-            
-				    SplashWindow.Current.Image = new Bitmap( typeof(MainForm), "splashscreen.png" );
-				    SplashWindow.Current.ShowShadow = true;
-				    SplashWindow.Current.MinimumDuration = 3000;
-				    SplashWindow.Current.Show();
+
+                        SplashWindow.Current.Image = new Bitmap(typeof(MainForm), "splashscreen.png");
+                        SplashWindow.Current.ShowShadow = true;
+                        SplashWindow.Current.MinimumDuration = 3000;
+                        SplashWindow.Current.Show();
 #endif
+                    }
+
+                    mainForm = new MainForm(start, mode, gamePath, hwnd, noDirectX);
+
+                    System.Windows.Forms.Application.Run(mainForm);
                 }
-                
-                mainForm = new MainForm(start, mode, gamePath, hwnd, noDirectX);
 
-				System.Windows.Forms.Application.Run(mainForm);
-			}
+                // When we get to here, the app is shutting down because the Application.Run command has returned
+                appMutex.ReleaseMutex();
+                appMutex.Close();
 
-			// When we get to here, the app is shutting down because the Application.Run command has returned
-			appMutex.ReleaseMutex();
-			appMutex.Close();
-
-			if (relaunch)
-			{
-				Debug.WriteLine("Relaunching...");
-
-				// We separate commandline arguments with "|" since this is an invalid character for a file name
-				string configLine = "";
-				switch (mainForm.screenSaverMode)
-				{
-					case ScreenSaverMode.RunLoadTerrarium:
-						configLine += "|/loadterrarium|" + mainForm.gamePath;
-						break;
-
-					case ScreenSaverMode.RunNewTerrarium:
-						configLine += "|/newterrarium|" + mainForm.gamePath;
-						break;
-
-					case ScreenSaverMode.Run:
-                        configLine += "|/s";
-						break;
-				}
-
-                if (blacklistCheckOnRestart)
+                if (relaunch)
                 {
-                    configLine += "|/blacklistcheck" + configLine;
+                    Debug.WriteLine("Relaunching...");
+
+                    // We separate commandline arguments with "|" since this is an invalid character for a file name
+                    string configLine = "";
+                    switch (mainForm.screenSaverMode)
+                    {
+                        case ScreenSaverMode.RunLoadTerrarium:
+                            configLine += "|/loadterrarium|" + mainForm.gamePath;
+                            break;
+
+                        case ScreenSaverMode.RunNewTerrarium:
+                            configLine += "|/newterrarium|" + mainForm.gamePath;
+                            break;
+
+                        case ScreenSaverMode.Run:
+                            configLine += "|/s";
+                            break;
+                    }
+
+                    if (blacklistCheckOnRestart)
+                    {
+                        configLine += "|/blacklistcheck" + configLine;
+                    }
+
+                    // Let's not display the splash screen on a restart
+                    configLine += "|/skipSplashScreen";
+
+                    // Add the current window size, position, and state
+                    configLine += "|/windowRectangle|" + mainForm.Location.X.ToString() + "," + mainForm.Location.X.ToString() + "," + mainForm.Size.Width.ToString() + "," + mainForm.Size.Height.ToString();
+
+                    if (mainForm.Visible == false && mainForm.taskBar.Visible == true)
+                    {
+                        windowState = FormWindowState.Minimized;
+                    }
+                    else
+                    {
+                        windowState = mainForm.WindowState;
+                    }
+
+                    configLine += "|windowState|" + windowState.ToString();
+
+                    GameConfig.RelaunchCommandLine = configLine;
+                    Application.Restart();
                 }
 
-                // Let's not display the splash screen on a restart
-                configLine += "|/skipSplashScreen";
-
-                // Add the current window size, position, and state
-                configLine += "|/windowRectangle|" + mainForm.Location.X.ToString() + "," + mainForm.Location.X.ToString() + "," + mainForm.Size.Width.ToString() + "," + mainForm.Size.Height.ToString();
-
-                if (mainForm.Visible == false && mainForm.taskBar.Visible == true)
+                Debug.Listeners.Clear();
+                if (maliciousOrganism)
                 {
-                    windowState = FormWindowState.Minimized;
+                    Environment.Exit(0);
                 }
-                else
-                {
-                    windowState = mainForm.WindowState;
-                }
-
-                configLine += "|windowState|" + windowState.ToString();
-
-                GameConfig.RelaunchCommandLine = configLine;
-                Application.Restart();
-			}
-
-			Debug.Listeners.Clear();
-			if (maliciousOrganism)
-			{
-				Environment.Exit(0);
-			}
-			return 0;
-		}
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return -1;
+            }
+        }
 
         static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
