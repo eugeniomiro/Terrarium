@@ -10,9 +10,6 @@ namespace Terrarium.Server.Reporting
 {
     public partial class Default : Page
     {
-        private string lastSortExpression = "";
-        private bool sortAscending;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -32,10 +29,8 @@ namespace Terrarium.Server.Reporting
                 UserAliasLabel.Text = alias;
 
                 UserTodayLabel.Text = UsageReporting.GetUserUsage(alias, UsagePeriod.Today).TotalHours + " hours";
-                UserWeekLabel.Text = UsageReporting.GetUserUsage(alias, UsagePeriod.Week).TotalHours + " hours";
+                UserWeekLabel.Text  = UsageReporting.GetUserUsage(alias, UsagePeriod.Week).TotalHours + " hours";
                 UserTotalLabel.Text = UsageReporting.GetUserUsage(alias, UsagePeriod.Total).TotalHours + " hours";
-
-                int inCount = 0, outCount = 0, percentage = 0;
 
                 TeamUsageSummary teamSummary = UsageReporting.GetTeamUsageForUser(alias, UsagePeriod.Today);
 

@@ -112,9 +112,9 @@ namespace Terrarium.Server
     {
         public static UserUsageSummary GetUserUsage(string alias, UsagePeriod period)
         {
-            SqlConnection connection = null;
-            SqlCommand command = null;
-            SqlDataReader reader = null;
+            SqlConnection   connection = null;
+            SqlCommand      command = null;
+            SqlDataReader   reader = null;
 
             try
             {
@@ -132,10 +132,10 @@ namespace Terrarium.Server
                 DateTime endDate = DateTime.MinValue;
 
                 GetPeriodDates(period, ref startDate, ref endDate);
-
-                command.Parameters.AddWithValue("@StartDate", startDate.ToString());
-                command.Parameters.AddWithValue("@EndDate", endDate.ToString());
-
+                
+                command.Parameters.AddWithValue("@StartDate", startDate);
+                command.Parameters.AddWithValue("@EndDate", endDate);
+                
                 reader = command.ExecuteReader();
 
                 UserUsageSummary summary = new UserUsageSummary();
@@ -204,8 +204,8 @@ namespace Terrarium.Server
 
                 GetPeriodDates(period, ref startDate, ref endDate);
 
-                command.Parameters.AddWithValue("@StartDate", startDate.ToString());
-                command.Parameters.AddWithValue("@EndDate", endDate.ToString());
+                command.Parameters.AddWithValue("@StartDate", startDate);
+                command.Parameters.AddWithValue("@EndDate", endDate);
 
                 reader = command.ExecuteReader();
 
@@ -406,8 +406,8 @@ namespace Terrarium.Server
 
                     GetPeriodDates(period, ref startDate, ref endDate);
 
-                    command.Parameters.AddWithValue("@StartDate", startDate.ToString());
-                    command.Parameters.AddWithValue("@EndDate", endDate.ToString());
+                    command.Parameters.AddWithValue("@StartDate",   startDate);
+                    command.Parameters.AddWithValue("@EndDate",     endDate);
 
                     reader = command.ExecuteReader();
 
@@ -475,8 +475,8 @@ namespace Terrarium.Server
 
                 GetPeriodDates(period, ref startDate, ref endDate);
 
-                command.Parameters.AddWithValue("@StartDate", startDate.ToString());
-                command.Parameters.AddWithValue("@EndDate", endDate.ToString());
+                command.Parameters.AddWithValue("@StartDate",   startDate);
+                command.Parameters.AddWithValue("@EndDate",     endDate);
 
                 reader = command.ExecuteReader();
 
