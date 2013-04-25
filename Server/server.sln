@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{69B380C9-06DE-428D-B171-83A461CB0C6F}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
@@ -8,13 +8,10 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerItems", "..\Tools\ServerConfig\InstallerItems\InstallerItems.csproj", "{64B30CEC-FB6D-48BD-B1FD-D8D5480C8E4A}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\Website\", "Website\", "{B2C32557-4CFE-4DC3-8DCA-A298633708C0}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Website", "Website\", "{B2C32557-4CFE-4DC3-8DCA-A298633708C0}"
 	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
 		Debug.AspNetCompiler.VirtualPath = "/Website"
 		Debug.AspNetCompiler.PhysicalPath = "Website\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Website\"
@@ -64,16 +61,16 @@ Global
 		{64B30CEC-FB6D-48BD-B1FD-D8D5480C8E4A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{64B30CEC-FB6D-48BD-B1FD-D8D5480C8E4A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{64B30CEC-FB6D-48BD-B1FD-D8D5480C8E4A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Debug|.NET.ActiveCfg = Debug|.NET
-		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Debug|.NET.Build.0 = Debug|.NET
-		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Debug|Any CPU.ActiveCfg = Debug|.NET
-		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Debug|Mixed Platforms.ActiveCfg = Debug|.NET
-		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Debug|Mixed Platforms.Build.0 = Debug|.NET
-		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Release|.NET.ActiveCfg = Debug|.NET
-		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Release|.NET.Build.0 = Debug|.NET
-		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Release|Any CPU.ActiveCfg = Debug|.NET
-		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Release|Mixed Platforms.ActiveCfg = Debug|.NET
-		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Release|Mixed Platforms.Build.0 = Debug|.NET
+		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Release|.NET.ActiveCfg = Debug|Any CPU
+		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B2C32557-4CFE-4DC3-8DCA-A298633708C0}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

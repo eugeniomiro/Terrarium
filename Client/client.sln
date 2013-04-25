@@ -1,5 +1,5 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terrarium", "Terrarium\Terrarium.csproj", "{0F3C0D45-0DCC-43C9-BC43-C34C2029FFF4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpListener", "HttpListener\HttpListener.csproj", "{E3EC9E4B-7AA9-4DA9-B6FE-A5E73FE1A8D0}"
