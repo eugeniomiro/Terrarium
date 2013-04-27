@@ -2,39 +2,28 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                               
 //------------------------------------------------------------------------------
 
-
+using DxVBLib;
+using Microsoft.Win32;
+using OrganismBase;
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Threading;
-using System.Web;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Data;
-
-using Microsoft.Win32;
-
 using Terrarium.Client.SplashScreen;
 using Terrarium.Configuration;
 using Terrarium.Forms;
 using Terrarium.Game;
-using Terrarium.Hosting;
 using Terrarium.Glass;
+using Terrarium.Hosting;
 using Terrarium.PeerToPeer;
 using Terrarium.Renderer;
-//using Terrarium.Renderer.DirectX;
-using DxVBLib;
-using Terrarium.Tools;
 using Terrarium.Services.Species;
-
-using OrganismBase;
-
+using Terrarium.Tools;
 
 namespace Terrarium.Client
 {
@@ -51,7 +40,7 @@ namespace Terrarium.Client
 	///   processing most Screen Saver related command line parameters.
 	///  </para>
 	/// </summary>
-	internal class MainForm : System.Windows.Forms.Form
+	internal class MainForm : Form
 	{
 		// Need to have a variable to hold the form instance or it will be
 		// garbage collected and go away.  It is private since nothing should be
@@ -59,12 +48,12 @@ namespace Terrarium.Client
 		private static MainForm mainForm;
 
 		//get the screen size and calculate the viewport location
-		private Size screenSize;
-		private Rectangle virtualScreen;
-		private Rectangle viewPort;
-		private Rectangle controlStripTop;
-		private Rectangle controlStripBottom;
-		private Rectangle screenRectangle;
+		private Size            screenSize;
+		private Rectangle       virtualScreen;
+		private Rectangle       viewPort;
+		private Rectangle       controlStripTop;
+		private Rectangle       controlStripBottom;
+		private Rectangle       screenRectangle;
 
 		private static TerrariumTraceListener traceListener;
 
@@ -72,13 +61,13 @@ namespace Terrarium.Client
 
 		private static string[] commandLineArgs;
 
-		private bool alreadyRunningTimer = false;
 		private const Boolean traceEnabled = true;
-		private bool runningBlockedVersion = false;
+		private bool    alreadyRunningTimer = false;
+		private bool    runningBlockedVersion = false;
 
 		// Mutex to detect multiple versions of the game
-        private static string appMutexName = "{2AED158D-74C9-4297-B83B-13B87FCA6BFC}";
-        private static Mutex appMutex;
+        private static string   appMutexName = "{2AED158D-74C9-4297-B83B-13B87FCA6BFC}";
+        private static Mutex    appMutex;
 
 		private Random random = new Random(Environment.TickCount);
 

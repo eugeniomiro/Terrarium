@@ -1,8 +1,8 @@
+using OrganismBase;
 using System;
 using System.Collections;
 using System.Drawing;
 using System.IO;
-using OrganismBase;
 
 namespace Herbivore
 {

@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using OrganismBase;
 using Terrarium.Hosting;
 
@@ -18,66 +20,69 @@ namespace Terrarium.Game
         /// <summary>
         ///  All of the attack actions that organisms have performed in this tick.
         /// </summary>
-        private readonly Hashtable _attackActions = new Hashtable();
+        private readonly Dictionary<String, AttackAction> _attackActions = new Dictionary<String, AttackAction>();
 
         /// <summary>
         ///  All of the defend actions that organisms have performed in this tick.
         /// </summary>
-        private readonly Hashtable _defendActions = new Hashtable();
+        private readonly Dictionary<String, DefendAction> _defendActions = new Dictionary<String, DefendAction>();
 
         /// <summary>
         ///  All of the eat actions that organisms have performed in this tick.
         /// </summary>
-        private readonly Hashtable _eatActions = new Hashtable();
+        private readonly Dictionary<String, EatAction>  _eatActions = new Dictionary<String, EatAction>();
 
         /// <summary>
         ///  All of the movement actions that organisms have performed in this tick.
         /// </summary>
-        private readonly Hashtable _moveToActions = new Hashtable();
+        private readonly Dictionary<String, MoveToAction> _moveToActions = new Dictionary<String, MoveToAction>();
 
         /// <summary>
         ///  All of the reproduce actions that organisms have performed in this tick.
         /// </summary>
-        private readonly Hashtable _reproduceActions = new Hashtable();
+        private readonly Dictionary<String, ReproduceAction> _reproduceActions = new Dictionary<String, ReproduceAction>();
 
         /// <summary>
         ///  Provides access to the Movement actions.
         /// </summary>
-        public Hashtable MoveToActions
+        public IEnumerable<MoveToAction> MoveToActions
         {
-            get { return (Hashtable) _moveToActions.Clone(); }
+            get { return _moveToActions.Values.ToArray(); }
         }
 
         /// <summary>
         ///  Provides access to the Attack actions.
         /// </summary>
-        public Hashtable AttackActions
+        public IEnumerable<AttackAction> AttackActions
         {
-            get { return (Hashtable) _attackActions.Clone(); }
+            get { return _attackActions.Values.ToArray(); }
         }
 
         /// <summary>
         ///  Provides access to the Eat actions.
         /// </summary>
-        public Hashtable EatActions
+        public IEnumerable<EatAction> EatActions
         {
-            get { return (Hashtable) _eatActions.Clone(); }
+            get { return _eatActions.Values.ToArray(); }
         }
 
         /// <summary>
         ///  Provides access to the Reproduction actions.
         /// </summary>
-        public Hashtable ReproduceActions
+        public IEnumerable<ReproduceAction> ReproduceActions
         {
-            get { return (Hashtable) _reproduceActions.Clone(); }
+            get { return _reproduceActions.Values.ToArray(); }
         }
 
         /// <summary>
         ///  Provides access to the Defend actions.
         /// </summary>
-        public Hashtable DefendActions
+        public IDictionary<String, DefendAction> DefendActions
         {
-            get { return (Hashtable) _defendActions.Clone(); }
+            get
+            {
+                return _defendActions.ToDictionary(k => k.Key, v => v.Value);
+            }
         }
 
         /// <summary>
@@ -89,7 +94,7 @@ namespace Terrarium.Game
         {
             foreach (Organism organism in scheduler.Organisms)
             {
-                var pendingActions = organism.GetThenErasePendingActions();
+                PendingActions pendingActions = organism.GetThenErasePendingActions();
                 if (pendingActions.MoveToAction != null)
                 {
                     _moveToActions[organism.ID] = pendingActions.MoveToAction;

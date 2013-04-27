@@ -14,6 +14,7 @@ using Terrarium.Hosting;
 using Terrarium.PeerToPeer;
 using Terrarium.Services.Species;
 using Terrarium.Tools;
+using System.Collections.Generic;
 
 namespace Terrarium.Game
 {
@@ -1564,7 +1565,7 @@ namespace Terrarium.Game
         /// </summary>
         private void changeMovementVectors()
         {
-            ICollection moveToActions = CurrentVector.Actions.MoveToActions.Values;
+            IEnumerable<MoveToAction> moveToActions = CurrentVector.Actions.MoveToActions;
             foreach (MoveToAction action in moveToActions)
             {
                 OrganismState state = _newWorldState.GetOrganismState(action.OrganismID);
@@ -1601,8 +1602,8 @@ namespace Terrarium.Game
         /// </summary>
         private void doDefends()
         {
-            ICollection defendActions = CurrentVector.Actions.DefendActions.Values;
-            foreach (DefendAction action in defendActions)
+            IDictionary<String, DefendAction> defendActions = CurrentVector.Actions.DefendActions;
+            foreach (DefendAction action in defendActions.Values)
             {
                 AnimalState defenderState = (AnimalState) _newWorldState.GetOrganismState(action.OrganismID);
                 if (defenderState != null && defenderState.IsAlive)
@@ -1614,7 +1615,8 @@ namespace Terrarium.Game
 
         private void doAttacks()
         {
-            ICollection attackActions = CurrentVector.Actions.AttackActions.Values;
+            IEnumerable<AttackAction> attackActions = CurrentVector.Actions.AttackActions;
+
             foreach (AttackAction action in attackActions)
             {
                 AnimalState attackerState = (AnimalState) _newWorldState.GetOrganismState(action.OrganismID);
@@ -2173,7 +2175,7 @@ namespace Terrarium.Game
 
         private void startReproduction()
         {
-            ICollection reproduceActions = CurrentVector.Actions.ReproduceActions.Values;
+            IEnumerable<ReproduceAction> reproduceActions = CurrentVector.Actions.ReproduceActions;
             foreach (ReproduceAction action in reproduceActions)
             {
                 OrganismState state = _newWorldState.GetOrganismState(action.OrganismID);
@@ -2190,7 +2192,7 @@ namespace Terrarium.Game
         /// </summary>
         private void doBites()
         {
-            ICollection eatActions = CurrentVector.Actions.EatActions.Values;
+            IEnumerable<EatAction> eatActions = CurrentVector.Actions.EatActions;
             foreach (EatAction action in eatActions)
             {
                 // Only animals can bite

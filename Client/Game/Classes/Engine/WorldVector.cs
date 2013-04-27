@@ -37,7 +37,7 @@ namespace Terrarium.Game
         /// <summary>
         ///  Provides access to the rolled up tick actions for the state object.
         /// </summary>
-        public TickActions Actions
+        public TickActions  Actions
         {
             get { return _currentActions; }
 
@@ -55,6 +55,6 @@ namespace Terrarium.Game
         /// <summary>
         ///  Provides access to the current world state.
         /// </summary>
-        public WorldState State { get; private set; }
+        public WorldState   State { get; private set; }
     }
 }

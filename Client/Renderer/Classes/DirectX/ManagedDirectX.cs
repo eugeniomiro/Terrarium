@@ -17,17 +17,17 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  Holds an instance of the DirectX7 native object
         /// </summary>
-        static DirectX7            directX;
+        private static DirectX7 directX;
         /// <summary>
         ///  Holds an instance of the DirectDraw7 native object
         /// </summary>
-        static DirectDraw7         directDraw;
+        private static DirectDraw7 directDraw;
 
 #if TRACE
         /// <summary>
         ///  Holds an instance of the DirectDrawProfiler timing object.
         /// </summary>
-        static Profiler  directDrawProfiler;
+        private static Profiler directDrawProfiler;
 
         /// <summary>
         ///  Provides access to the DirectDrawProfiler timing object.

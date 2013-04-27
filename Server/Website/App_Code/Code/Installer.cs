@@ -11,6 +11,7 @@ using System.Xml.Serialization;
 using System.Reflection;
 using System.IO;
 using System.Collections;
+using System.Security;
 
 namespace Terrarium.Server {
     [RunInstaller(true)]
@@ -91,7 +92,14 @@ namespace Terrarium.Server {
 
             EventLog myLog = new EventLog();
             myLog.Source = source;
-            myLog.WriteEntry(entry, type);
+            try
+            {
+                myLog.WriteEntry(entry, type);
+            }
+            catch (SecurityException ex)
+            {
+                Trace.TraceError("A SecurityException has occurred {0}", ex.Message);
+            }
         }
 
         public static PerformanceCounter CreatePerformanceCounter(string id) {
