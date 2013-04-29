@@ -10,7 +10,7 @@ using OrganismBase;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Herbivore")]
-[assembly: AssemblyCopyright("Copyright ©  2008")]
+[assembly: AssemblyCopyright("Copyright © Eugenio Miró 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,8 +31,7 @@ using OrganismBase;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.*")]
 
 [assembly: OrganismClass("Herbivore.SimpleHerbivore")]
 [assembly: AuthorInformation("Bil Simser", "emailme@bilsimser.com")]
