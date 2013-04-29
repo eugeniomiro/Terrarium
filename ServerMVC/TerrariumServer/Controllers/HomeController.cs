@@ -10,8 +10,23 @@ namespace TerrariumServer.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            ViewBag.Message = "Welcome to .NET Terrarium 3.0";
 
+            return View();
+        }
+
+        public ActionResult UsageStats()
+        {
+            return View();
+        }
+
+        public ActionResult Documentation()
+        {
+            return View();
+        }
+
+        public ActionResult Charts()
+        {
             return View();
         }
 
