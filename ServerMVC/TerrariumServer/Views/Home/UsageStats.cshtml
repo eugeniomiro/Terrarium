@@ -1,137 +1,45 @@
-﻿@{
+﻿@using TerrariumServer.Models
+
+@model UserStatsViewModel
+@{
     ViewBag.Title = "UsageStats";
 }
 
 <h2>Usage Statistics</h2>
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-        <!-- LEFT SHADOW -->
-        <td width="30px">
-            <img src="~/images/border_left.png" width="30px" height="100%" /></td>
-        <td bgcolor="#FFFFFF" width="*" valign="top">
-            <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+<article>
+    <h3>Usage Summary</h3>
+    Below are the statistics for you.<br />
+    <div class="heading">Your Statistics(@Model.UserAlias)</div>
+    <div class="userStats">
+        <span class="inlineTitle">Today's hours</span>
+        <span class="inlineValue">@Model.TodaysHours hours</span>
+        <span class="inlineTitle">This Week's Hours</span>
+        <span class="inlineValue">@Model.WeekHours hours</span>
+        <span class="inlineTitle">Total Hours</span>
+        <span class="inlineValue">@Model.TotalHours hours</span>
+    </div>
+</article>
+<article>
+    <h3>Top 10 Participants</h3>
+    <span class="individual-period">Period @Html.DropDownList("Period", Model.IndividualPeriod)</span>
+    <div>These are the top 10 participants based on total hours that they have run Terrarium.  Use the dropdown list to choose which period to view.</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Alias</th>
+                <th>Hours</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Participant participant in Model.Participants)
+            {
                 <tr>
-                    <td width="24px" height="100%">&nbsp;</td>
-                    <td width="*" valign="top">
-                        <form>
-                            <table border="0" cellspacing="0" cellpadding="0" style="padding-left: 0px; padding-right: 16px;" width="00%">
-                                <tr>
-                                    <td width="30000px" align="left" valign="top">
-                                        <table class="SectionPanel" border="0" cellpadding="0" cellspacing="0" width="100%">
-                                            <tr>
-                                                <td colspan="6">
-                                                    <div align="left" class="SectionTitle">Usage Summary</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="6">
-                                                    <div style="height: 12px">Below are the statistics for you.</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="6" class="ReportHeader"><b>Your Statistics (<asp:label id="UserAliasLabel" runat="server" />)</b></td>
-                                            </tr>
-                                            <tr style="background-color: White">
-                                                <td>Today's Hours</td>
-                                                <td>
-                                                    <asp:label cssclass="NormalValue" id="UserTodayLabel" runat="server" />
-                                                </td>
-                                                <td>This Week's Hours</td>
-                                                <td>
-                                                    <asp:label cssclass="NormalValue" id="UserWeekLabel" runat="server" />
-                                                </td>
-                                                <td>Total Hours</td>
-                                                <td>
-                                                    <asp:label cssclass="NormalValue" id="UserTotalLabel" runat="server" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td width="30000px" align="left" valign="top">
-                                        <table class="SectionPanel" border="0" cellpadding="0" cellspacing="0" width="100%">
-                                            <tr>
-                                                <td>
-                                                    <div align="left" class="SectionTitle">Top 10 Participants</div>
-                                                </td>
-                                                <td align="right" valign="middle">
-                                                    <b>Period</b>
-                                                    <asp:dropdownlist font-size="1.0em" id="IndividualPeriodDropDown" runat="server" autopostback="true">
-													<asp:ListItem>Today</asp:ListItem>
-													<asp:ListItem Selected="true">Week</asp:ListItem>
-													<asp:ListItem>Total</asp:ListItem>
-												</asp:dropdownlist>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <div style="height: 12px">These are the top 10 participants based on total hours that they have run Terrarium.  Use the dropdown list to choose which period to view.</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <asp:datagrid cellpadding="4" gridlines="None" width="100%" id="individualDataGrid" runat="server" autogeneratecolumns="False" enableviewstate="False">
-                                                    <ItemStyle HorizontalAlign="Left" VerticalAlign="Middle" Font-Size="0.75em" BackColor="White" ForeColor="Black"/>
-                                                    <AlternatingItemStyle HorizontalAlign="Left" VerticalAlign="Middle" Font-Size="0.75em" BackColor="#F0F0F0" ForeColor="Black"/>
-													<Columns>                                            
-                                                        <asp:TemplateColumn HeaderText="Rank">
-                                                            <HeaderStyle Width="64px" />
-                                                            <ItemTemplate>
-                                                                <span><%# (Container.DataSetIndex + 1).ToString() %></span>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateColumn>
-                                                        <asp:TemplateColumn>                                                                                                      
-                                                            <HeaderTemplate>
-                                                            Alias
-                                                            </HeaderTemplate>
-                                                            <HeaderStyle Font-Bold="True"/>
-                                                            <ItemTemplate>
-                                                                <span><%# GetUserUsageSummary(Container.DataItem).Alias%></span>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateColumn>
-                                                        <asp:TemplateColumn>                                                                                                      
-                                                            <HeaderTemplate>
-                                                            Hours
-                                                            </HeaderTemplate>
-                                                            <HeaderStyle CssClass="TypeGridNameHeader" Width="96px" />
-                                                            <ItemTemplate>
-                                                                <span><%# GetUserUsageSummary(Container.DataItem).TotalHours%></span>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateColumn>
-                                                    </Columns>
-                                                    <HeaderStyle BackColor="#808080" Font-Bold="True" Font-Size="0.75em" ForeColor="White"
-                                                        HorizontalAlign="Left" VerticalAlign="Middle" />
-												</asp:datagrid>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                </tr>
-                            </table>
-                        </form>
-                    </td>
-                    <td valign="top">
-                        <table border="0" cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td class="MenuBar" align="center" valign="top">
-                                    <controls:infobar id="InfoBar1" runat="server" />
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td width="24px" height="100%">&nbsp;</td>
-                    <!-- END RIGHT MENU BAR -->
+                    <td>@participant.Rank</td>
+                    <td>@participant.Alias</td>
+                    <td>@participant.Hours</td>
                 </tr>
-            </table>
-        </td>
-        <td width="30px">
-            <img src="~/images/border_right.png" width="30px" height="100%" runat="server" /></td>
-    </tr>
-</table>
+            }
+        </tbody>
+    </table>
+</article>

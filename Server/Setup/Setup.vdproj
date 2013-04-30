@@ -15,14 +15,14 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_5CB552EF0F0840FFA9E9367A8DF2F9E2"
+        "MsmKey" = "8:_31BC51E5EF1B4D9CA0722B7BCC4329FA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5CB552EF0F0840FFA9E9367A8DF2F9E2"
+        "OwnerKey" = "8:_31BC51E5EF1B4D9CA0722B7BCC4329FA"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -689,7 +689,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5CB552EF0F0840FFA9E9367A8DF2F9E2"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4E51F18048A14265AF9C35C04E5BCBD4"
             {
             "SourcePath" = "8:..\\..\\Tools\\ServerConfig\\InstallerItems\\obj\\Debug\\InstallerItems.dll"
             "TargetName" = "8:"
@@ -711,7 +711,7 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{64B30CEC-FB6D-48BD-B1FD-D8D5480C8E4A}"
+            "OutputProjectGuid" = "8:{04FD2F70-B4B1-4497-A432-AD7A23388EEC}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
@@ -720,6 +720,6 @@
         }
         "VJSharpPlugin"
         {
-        }
-    }
+		}
+	}
 }

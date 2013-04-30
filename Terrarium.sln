@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrariumServer.Tests", "Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrariumServer", "ServerMVC\TerrariumServer\TerrariumServer.csproj", "{851F0117-2695-4E9C-982C-842526A85981}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terrarium.Server", "Terrarium.Server\Terrarium.Server.csproj", "{BE8A5E63-4A48-447C-A26E-27DDAF792455}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,16 @@ Global
 		{851F0117-2695-4E9C-982C-842526A85981}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{851F0117-2695-4E9C-982C-842526A85981}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{851F0117-2695-4E9C-982C-842526A85981}.Release|x86.ActiveCfg = Release|Any CPU
+		{BE8A5E63-4A48-447C-A26E-27DDAF792455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE8A5E63-4A48-447C-A26E-27DDAF792455}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE8A5E63-4A48-447C-A26E-27DDAF792455}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BE8A5E63-4A48-447C-A26E-27DDAF792455}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BE8A5E63-4A48-447C-A26E-27DDAF792455}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BE8A5E63-4A48-447C-A26E-27DDAF792455}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE8A5E63-4A48-447C-A26E-27DDAF792455}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE8A5E63-4A48-447C-A26E-27DDAF792455}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BE8A5E63-4A48-447C-A26E-27DDAF792455}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BE8A5E63-4A48-447C-A26E-27DDAF792455}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -190,6 +202,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3D063489-6CAF-4333-8D9F-938B52BC14A4} = {E815C1CD-64AD-48A7-A415-60B92A41438F}
 		{851F0117-2695-4E9C-982C-842526A85981} = {E815C1CD-64AD-48A7-A415-60B92A41438F}
+		{BE8A5E63-4A48-447C-A26E-27DDAF792455} = {E815C1CD-64AD-48A7-A415-60B92A41438F}
 		{3D2667BE-7F22-4FB5-AFD1-351F10C30518} = {B2ED17CF-4419-4953-88A0-F770A43D91EA}
 		{23D60335-486E-48CD-B675-02F703F802A3} = {B2ED17CF-4419-4953-88A0-F770A43D91EA}
 		{40F1FA19-BE5F-4F6E-8D4B-9E083E053CBF} = {B2ED17CF-4419-4953-88A0-F770A43D91EA}

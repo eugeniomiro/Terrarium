@@ -121,11 +121,11 @@ namespace Terrarium.Server
 
 				version = new Version(version).ToString(3);
         
-				bool nameInappropriate = WordFilter.RunQuickWordFilter(name);
-				bool authInappropriate = WordFilter.RunQuickWordFilter(author);
+				bool nameInappropriate  = WordFilter.RunQuickWordFilter(name);
+				bool authInappropriate  = WordFilter.RunQuickWordFilter(author);
 				bool emailInappropriate = WordFilter.RunQuickWordFilter(email);
-				bool inappropriate = nameInappropriate | authInappropriate | emailInappropriate;
-				bool insertComplete = false;
+				bool inappropriate      = nameInappropriate | authInappropriate | emailInappropriate;
+				bool insertComplete     = false;
 
 				bool allow = !Throttle.Throttled(
 					Context.Request.ServerVariables["REMOTE_ADDR"].ToString(),
@@ -154,28 +154,16 @@ namespace Terrarium.Server
 
 						SqlCommand mySqlCommand = new SqlCommand("TerrariumInsertSpecies", myConnection, transaction);
 						mySqlCommand.CommandType = CommandType.StoredProcedure;
-
-						SqlParameter parmName = mySqlCommand.Parameters.Add("@Name", SqlDbType.VarChar, 255);
-						parmName.Value = name;
-						SqlParameter parmVersion = mySqlCommand.Parameters.Add("@Version", SqlDbType.VarChar, 255);
-						parmVersion.Value = version;
-						SqlParameter parmType = mySqlCommand.Parameters.Add("@Type", SqlDbType.VarChar, 50);
-						parmType.Value = type;
-
-						SqlParameter parmAuthor = mySqlCommand.Parameters.Add("@Author", SqlDbType.VarChar, 255);
-						parmAuthor.Value = author;
-						SqlParameter parmAuthorEmail = mySqlCommand.Parameters.Add("@AuthorEmail", SqlDbType.VarChar, 255);
-						parmAuthorEmail.Value = email;
-
-						SqlParameter parmExtinct = mySqlCommand.Parameters.Add("@Extinct", SqlDbType.TinyInt, 1);
-						parmExtinct.Value = 0;
-						SqlParameter parmDateAdded = mySqlCommand.Parameters.Add("@DateAdded", SqlDbType.DateTime, 8);
-						parmDateAdded.Value = DateTime.Now;
-						SqlParameter parmAssembly = mySqlCommand.Parameters.Add("@AssemblyFullName", SqlDbType.Text, 16);
-						parmAssembly.Value = assemblyFullName;
-                
-						SqlParameter parmBlackListed = mySqlCommand.Parameters.Add("@BlackListed", SqlDbType.Bit, 1);
-						parmBlackListed.Value = inappropriate;
+                        SqlParameterCollection cmdParms = mySqlCommand.Parameters;
+						SqlParameter parmName           = cmdParms.Add("@Name",             SqlDbType.VarChar, 255);   			parmName.Value      = name;
+						SqlParameter parmVersion        = cmdParms.Add("@Version",          SqlDbType.VarChar, 255);			parmVersion.Value   = version;
+						SqlParameter parmType           = cmdParms.Add("@Type",             SqlDbType.VarChar, 50);				parmType.Value      = type;
+						SqlParameter parmAuthor         = cmdParms.Add("@Author",           SqlDbType.VarChar, 255);			parmAuthor.Value    = author;
+						SqlParameter parmAuthorEmail    = cmdParms.Add("@AuthorEmail",      SqlDbType.VarChar, 255);			parmAuthorEmail.Value = email;
+						SqlParameter parmExtinct        = cmdParms.Add("@Extinct",          SqlDbType.TinyInt, 1);				parmExtinct.Value   = 0;
+						SqlParameter parmDateAdded      = cmdParms.Add("@DateAdded",        SqlDbType.DateTime, 8);				parmDateAdded.Value = DateTime.Now;
+						SqlParameter parmAssembly       = cmdParms.Add("@AssemblyFullName", SqlDbType.Text, Int32.MaxValue);    parmAssembly.Value  = assemblyFullName;
+                        SqlParameter parmBlackListed    = cmdParms.Add("@BlackListed",      SqlDbType.Bit, 1);					parmBlackListed.Value = inappropriate;
 
 						try 
 						{
