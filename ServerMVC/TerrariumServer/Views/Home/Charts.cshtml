@@ -1,5 +1,91 @@
-﻿@{
+﻿@using TerrariumServer.Models
+@model ChartsViewModel
+@{
     ViewBag.Title = "Charts";
 }
 
 <h2>Charts</h2>
+<div>
+    <h3>Full Creature List</h3>
+    <h4>Charting</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Charting</th>
+                <th>Population</th>
+                <th>Species Name</th>
+                <th>Author Name</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Creature creature in Model.Creatures)
+            {
+            <tr>
+                <td>@creature.Charting</td>
+                <td>@creature.Population</td>
+                <td>@creature.SpeciesName</td>
+                <td>@creature.AuthorName</td>
+                <td>@creature.Type</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <span>Filter Column:</span>
+    @Html.DropDownList("FilterColumn", Model.Filter)
+    <span>Filter:</span>
+    <input style="width:200px" type="text" />
+    <span>Version:</span>
+    @Html.DropDownList("versions", Model.Versions)
+    <button>Apply Filter</button>
+</div>
+<div>
+    <h3>Selected Creatures</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Charting</th>
+                <th>Population</th>
+                <th>Species Name</th>
+                <th>Birth</th>
+                <th>Starved</th>
+                <th>Killed</th>
+                <th>Errors</th>
+                <th>Timeouts</th>
+                <th>Sick</th>
+                <th>Old</th>
+                <th>Security Violation</th>
+            </tr>
+        </thead>
+        @foreach (var creature in Model.SelectedCreatures)
+        {
+            <tbody>
+                <tr>
+                    <td>@creature.Charting</td>
+                    <td>@creature.Population</td>
+                    <td>@creature.SpeciesName</td>
+                    <td>@creature.BirthCount</td>
+                    <td>@creature.StarvedCount</td>
+                    <td>@creature.KilledCount</td>
+                    <td>@creature.ErrorCount</td>
+                    <td>@creature.TimeoutCount</td>
+                    <td>@creature.SickCount</td>
+                    <td>@creature.OldAgeCount</td>
+                    <td>@creature.SecurityViolation</td>
+                </tr>
+            </tbody>
+        }
+    </table>
+    <span>Start Time:</span>
+    @Html.DropDownList("StartTime", Model.StartTimes)
+    <!--Calendar?-->
+    <!--<asp:Calendar id="Calendar1" runat="server" BorderColor="Black">
+										<DayStyle CssClass="CalendarDay"></DayStyle>
+										<DayHeaderStyle CssClass="CalendarDayHeader"></DayHeaderStyle>
+										<SelectedDayStyle CssClass="CalendarSelectedDay"></SelectedDayStyle>
+										<TitleStyle CssClass="CalendarTitle"></TitleStyle>
+									</asp:Calendar>-->
+</div>
+

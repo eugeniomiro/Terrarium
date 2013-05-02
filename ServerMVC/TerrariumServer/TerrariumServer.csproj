@@ -183,12 +183,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\ChartsViewModel.cs" />
+    <Compile Include="Models\Creature.cs" />
     <Compile Include="Models\InfoBarViewModel.cs" />
     <Compile Include="Models\Participant.cs" />
     <Compile Include="Models\Species.cs" />
@@ -197,6 +200,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Documentation\Images\image001.jpg" />
+    <Content Include="Content\Documentation\Images\image002.jpg" />
+    <Content Include="Content\Documentation\Images\image003.jpg" />
+    <Content Include="Content\Documentation\Images\image004.jpg" />
+    <Content Include="Content\Documentation\Images\image005.jpg" />
+    <Content Include="Content\Documentation\Images\screenshot.jpg" />
+    <Content Include="Content\Documentation\Images\tutorial_image001.jpg" />
+    <Content Include="Content\Documentation\Images\tutorial_image002.jpg" />
+    <Content Include="Content\Documentation\Images\tutorial_image003.jpg" />
+    <Content Include="Content\Documentation\Images\tutorial_image004.jpg" />
+    <Content Include="Content\Documentation\Images\whidbey_bottombar.jpg" />
+    <Content Include="Content\Documentation\Images\whidbey_developerpanel.jpg" />
+    <Content Include="Content\Documentation\Images\whidbey_gameview.jpg" />
+    <Content Include="Content\Documentation\Images\whidbey_image001.jpg" />
+    <Content Include="Content\Documentation\Images\whidbey_image003.jpg" />
+    <Content Include="Content\Documentation\Images\whidbey_overview.jpg" />
+    <Content Include="Content\Documentation\Images\whidbey_topbar.jpg" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -316,9 +336,40 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\UsageStats.cshtml" />
-    <Content Include="Views\Home\Documentation.cshtml" />
     <Content Include="Views\Home\Charts.cshtml" />
     <Content Include="Views\Shared\_InfoBar.cshtml" />
+    <Content Include="Views\Documentation\Index.cshtml" />
+    <Content Include="Views\Documentation\_Layout.cshtml" />
+    <Content Include="Views\Documentation\About.cshtml" />
+    <Content Include="Views\Documentation\UserInterface.cshtml" />
+    <Content Include="Views\Documentation\CSTutorial.cshtml" />
+    <Content Include="Views\Documentation\CSTutorial1.cshtml" />
+    <Content Include="Views\Documentation\CSTutorial2.cshtml" />
+    <Content Include="Views\Documentation\CSTutorial3.cshtml" />
+    <Content Include="Views\Documentation\CSTutorial4.cshtml" />
+    <Content Include="Views\Documentation\VBTutorial.cshtml" />
+    <Content Include="Views\Documentation\VBTutorial1.cshtml" />
+    <Content Include="Views\Documentation\VBTutorial2.cshtml" />
+    <Content Include="Views\Documentation\VBTutorial3.cshtml" />
+    <Content Include="Views\Documentation\VBTutorial4.cshtml" />
+    <Content Include="Views\Documentation\UsingSdk.cshtml" />
+    <Content Include="Views\Documentation\Samples.cshtml" />
+    <Content Include="Views\Documentation\Samples_herbivorecs0.cshtml" />
+    <Content Include="Views\Documentation\Samples_carnivorecs3.cshtml" />
+    <Content Include="Views\Documentation\Samples_carnivorecs2.cshtml" />
+    <Content Include="Views\Documentation\Samples_carnivorecs1.cshtml" />
+    <Content Include="Views\Documentation\Samples_carnivorecs0.cshtml" />
+    <Content Include="Views\Documentation\Samples_herbivorecs3.cshtml" />
+    <Content Include="Views\Documentation\Samples_herbivorecs2.cshtml" />
+    <Content Include="Views\Documentation\Samples_herbivorecs1.cshtml" />
+    <Content Include="Views\Documentation\Samples_carnivorevb0.cshtml" />
+    <Content Include="Views\Documentation\Samples_carnivorevb1.cshtml" />
+    <Content Include="Views\Documentation\Samples_carnivorevb2.cshtml" />
+    <Content Include="Views\Documentation\Samples_carnivorevb3.cshtml" />
+    <Content Include="Views\Documentation\Samples_herbivorevb0.cshtml" />
+    <Content Include="Views\Documentation\Samples_herbivorevb1.cshtml" />
+    <Content Include="Views\Documentation\Samples_herbivorevb2.cshtml" />
+    <Content Include="Views\Documentation\Samples_herbivorevb3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

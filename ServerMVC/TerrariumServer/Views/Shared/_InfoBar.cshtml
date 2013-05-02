@@ -2,35 +2,33 @@
 @using TerrariumServer.Models
 @model InfoBarViewModel
 
-<aside class="infobar">
-    <div class="server-status">
-        <h3>Server Status</h3>
-        <span class="subTitle">Web Services:</span> <span class="@Model.ServicesStatusClass">@Model.ServicesStatusText</span><br />
-        <span class="subTitle">Database:</span> <span class="@Model.DatabaseStatusClass">@Model.DatabaseStatusText</span><br />
-        <span class="subTitle">Peers:</span> @Model.PeerCount
-    </div>
-    <div class="top-critters">
-        <h3>Top Critters</h3>
-        @if (Model.Error != null)
+<div class="server-status">
+    <h3>Server Status</h3>
+    <span class="subTitle">Web Services:</span> <span class="@Model.ServicesStatusClass">@Model.ServicesStatusText</span><br />
+    <span class="subTitle">Database:</span> <span class="@Model.DatabaseStatusClass">@Model.DatabaseStatusText</span><br />
+    <span class="subTitle">Peers:</span> @Model.PeerCount
+</div>
+<div class="top-critters">
+    <h3>Top Critters</h3>
+    @if (Model.Error != null)
+    {
+        <span class="error">@Model.Error</span>
+    }
+    else { 
+        for (OrganismType org = OrganismType.Carnivore; org <= OrganismType.Plant; org++)
         {
-            <span class="error">@Model.Error</span>
+            <span class="subTitle">@org</span><br />
+            <ol type="1" class="critterList">
+                @foreach (Species row in Model.TopOrganisms[org].Species)
+	            {
+		            <li>@String.Format("{0}({1})", row.Name, row.Population)</li>
+	            }
+            </ol>
         }
-        else { 
-            for (OrganismType org = OrganismType.Carnivore; org <= OrganismType.Plant; org++)
-            {
-                <span class="subTitle">@org</span><br />
-                <ol type="1" class="critterList">
-                    @foreach (Species row in Model.TopOrganisms[org].Species)
-	                {
-		                <li>@String.Format("{0}({1})", row.Name, row.Population)</li>
-	                }
-                </ol>
-            }
-        }
-        @Html.ActionLink("more...", "Charts", null, new { @class = "smallLink" })
-    </div>
-    <div class="random-tip">
-        <h3>Random Tip</h3>
-        @Model.Tip
-    </div>
-</aside>
+    }
+    @Html.ActionLink("more...", "Charts", null, new { @class = "smallLink" })
+</div>
+<div class="random-tip">
+    <h3>Random Tip</h3>
+    @Model.Tip
+</div>

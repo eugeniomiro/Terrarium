@@ -1,0 +1,289 @@
+﻿@{
+    ViewBag.Title = "VBTutorial";
+    Layout = "~/Views/Documentation/_Layout.cshtml";
+}
+
+<h2>Lab 1: Create a Herbivore</h2>
+<h3>Lab Objective </h3>
+<p>The objective of this lab is to build a fully functional organism for Terrarium.  
+    You will begin by creating a simple organism and then add more advanced functionality.  
+    Once you are happy with the way it is performing, you can introduce it to the Terrarium 
+    Ecosystem and have it compete against other attendees’ organisms.</p>
+
+<h3>Exercise 1 – Create a Simple Herbivore</h3>
+<h4>Create a Simple Herbivore</h4>
+<p>An animal is simply a class you write that derives from a special class (Animal) exposed by the Terrarium.  
+    The code in this class gets executed by the game and controls the behavior and characteristics of your animal 
+    in the game. 
+</p>
+<p>In this exercise, you will create a simple Herbivore Animal in Visual Basic. You will use Microsoft Visual Studio .NET 2003 
+    to create, compile, and run this lab. 
+</p>
+<cite> Please substitute your name wherever you see the text &lt;YOUR NAME&gt; below since each animal introduced into 
+    the .NET Terrarium must have a unique name. </cite>
+
+<ol>
+    <li>
+        <h4>Create a new Terrarium Animal project in Visual Studio</h4>
+        <ul>
+            <li>Click Start-&gt;All Programs-&gt;Microsoft Visual Studio .NET 2003-&gt;Microsoft Visual Studio .NET 2003</li>
+            <li>Click File-&gt;New-&gt;Project </li>
+            <li>In the Project Types pane, click Visual Visual Basic Projects </li>
+            <li>In the Templates pane, click Terrarium Animal </li>
+            <li>Type &lt;YOUR NAME&gt; in the Name field</li>
+            <li>Click OK</li>
+        </ul>
+    </li>
+    <li>
+        <h4>Add your name and email address to your animal. </h4>
+        Update the AuthorInformation assembly attribute with your name and email address.<br />
+        <br />
+        <code>&lt;Assembly: AuthorInformation(&quot;Your Name&quot;, &quot;someone@microsoft.com&quot;)&gt;</code>
+    </li>
+    <li>
+        <h4>Set the CarnivoreAttribute to false</h4>
+        The Carnivore attribute indicates that your animal is an Herbivore.  
+        Set the CarnivoreAttribute to false. <br /><br />
+        <code>Carnivore(False), _</code>
+    </li>
+    <li>
+        <h4>Select an AnimalSkin for your animal. </h4>
+        The AnimalSkin attribute defines what kind of creature your animal looks like.<br /><br />
+        <code>AnimalSkin(AnimalSkinFamily.Beetle), _</code>
+    </li>
+    <li>
+        <h4>Assign values to each of your animal characteristic properties.  
+            The sum of the property values must not exceed 100.</h4>
+        <code><pre>
+MaximumEnergyPoints(20), _
+EatingSpeedPointsAttribute(0), _
+AttackDamagePointsAttribute(12), _
+DefendDamagePointsAttribute(12), _
+MaximumSpeedPointsAttribute(16), _
+CamouflagePointsAttribute(10), _
+EyesightPointsAttribute(20) _
+        </pre></code>
+    </li>
+    <li>
+        <h4>Add the targetPlant field to the MyAnimal class.</h4>
+        <p>Because your animal is a Herbivore, it eats plants.  targetPlant stores the reference to the plant your 
+            herbivore wants to eat.  Place this above the Initialize method.</p>
+        <code><pre>
+' The current plant we're going after 
+Dim targetPlant As PlantState = Nothing 
+              </pre></code>
+    </li>
+    <li>
+        <h4>Subscribe to the IdleEvent. </h4>
+        
+        The IdleEvent is the last event fired on every turn.  
+        This line tells the game engine to call the MyAnimal_Idle method each time the IdleEvent is fired.  
+        Add the following line to the Initialize method.<br /><br />
+        <code>AddHandler Idle, AddressOf MyAnimal_Idle</code>
+    </li>
+    <li>
+        <h4>Add the IdleEvent handler. </h4>
+        <br />This method provides most of the logic for your simple herbivore.  
+        First, if your animal is ready to reproduce, it begins a reproduction cycle.  
+        Next it attempts to eat.  If it already has a targetPlant, it walks to the targetPlant and begins eating.  
+        If it doesn’t have a target plant, it tries to find one by scanning its surroundings.  
+        Add the following two methods to the MyAnimal class.<br />
+        <code>
+            <pre>
+' Fired after all other events are fired during a turn 
+Sub MyAnimal_Idle(ByVal sender As Object, ByVal e As IdleEventArgs)
+    Try
+        ' Reproduce as often as possible 
+        If (CanReproduce) Then
+            BeginReproduction(Nothing)
+        End If
+ 
+        ' If we can eat and we have a target plant, eat 
+        If (CanEat) Then
+            WriteTrace("Hungry.")
+            If Not (IsEating) Then
+                WriteTrace("Not eating: Have target plant?")
+                If Not (targetPlant Is Nothing) Then
+                    WriteTrace("Yes, Have target plant already.")
+                    If (WithinEatingRange(targetPlant)) Then
+                        WriteTrace("Within Range, Start eating.")
+                        BeginEating(targetPlant)
+                        If (IsMoving) Then
+                            WriteTrace("Stop while eating.")
+                            StopMoving()
+                        End If
+                    Else
+                        If Not (IsMoving) Then
+                            WriteTrace("Move to Target Plant")
+                            BeginMoving(New MovementVector(targetPlant.Position, 2))
+                        End If
+                    End If
+                Else
+                    WriteTrace("Don't have target plant.")
+                    If Not (ScanForTargetPlant()) Then
+                        If Not (IsMoving) Then
+                            WriteTrace("No plant found, so pick a random point and move there")
+                            Dim RandomX As Integer = OrganismRandom.Next(0, WorldWidth - 1)
+                            Dim RandomY As Integer = OrganismRandom.Next(0, WorldHeight - 1)
+                            BeginMoving(New MovementVector(New Point(RandomX, RandomY), 2))
+                        Else
+                            WriteTrace("Moving and Looking...")
+                        End If
+                    End If
+                End If
+            Else
+                WriteTrace("Eating.")
+                If (IsMoving) Then
+                    WriteTrace("Stop moving while eating.")
+                    StopMoving()
+                End If
+            End If
+        Else
+            WriteTrace("Full: do nothing.")
+            If (IsMoving) Then
+                StopMoving()
+            End If
+        End If
+    Catch exc As Exception
+        WriteTrace(exc.ToString())
+    End Try
+End Sub
+ 
+' Looks for target plants, and starts moving towards 
+' the first one it finds 
+Function ScanForTargetPlant() As Boolean
+    Try
+        Dim foundCreatures As System.Collections.ArrayList = Scan()
+        If (foundCreatures.Count > 0) Then
+            Dim orgState As OrganismState
+            ' Always move after closest plant 
+            ' or defend closest creature if there is one 
+            For Each orgState In foundCreatures
+                If (TypeOf orgState Is PlantState) Then
+                    targetPlant = CType(orgState, PlantState)
+                    BeginMoving(New MovementVector(orgState.Position, 2))
+                    Return True
+                End If
+            Next
+        End If
+    Catch exc As Exception
+        WriteTrace(exc.ToString())
+    End Try
+    Return False
+End Function
+            </pre>
+        </code>
+    </li>
+    <li>
+        <h4>Subscribe to the LoadEvent.</h4>
+        The LoadEvent is the first event fired on every turn.  This line calls the MyAnimal_Load method (defined in Task 1.7) each time the LoadEvent is fired.  Add the following line to the Initialize method.
+<br /><br />
+        <code>AddHandler Load, AddressOf MyAnimal_Load</code>
+    </li>
+    <li>
+        <h4>Add the LoadEvent handler. </h4>
+        <br /><br />
+        <p>In the LoadEvent, your animal verifies the targetPlant still exists (it may have been teleported or eaten).  Add the following method to the MyAnimal class.</p>
+        <code><pre>
+    ' First event fired on an organism each turn 
+    Sub MyAnimal_Load(ByVal sender As Object, ByVal e As LoadEventArgs)
+        Try
+            If Not (targetPlant Is Nothing) Then
+                ' See if our target plant still exists 
+                ' (it may have died) 
+                ' LookFor returns null if it isn't found 
+                targetPlant = CType(LookFor(targetPlant), PlantState)
+                If (targetPlant Is Nothing) Then
+ 
+                    ' WriteTrace is the best way to debug your creatures. 
+                    WriteTrace("Target plant disappeared.")
+                End If
+            End If
+        Catch exc As Exception
+            WriteTrace(exc.ToString())
+        End Try
+    End Sub
+
+      </pre></code>
+    </li>
+    <li>
+        <h4>Build the animal DLL.</h4>
+        <br /><br />
+        Build the animal DLL by selecting Build | Build Solution 
+    </li>
+    <li>
+        <h4>Introduce the Herbivore into the Terrarium in Terrarium Mode.  </h4>
+        <p>
+            Terrarium supports two game modes, Terrarium mode and Ecosystem mode.  In Ecosystem mode, your animal competes 
+        against animals submitted by other developers.
+        </p>
+        <p>
+        Terrarium mode is the Terrarium test mode.  
+        In Terrarium mode you can test your animal in a controlled environment.
+        </p>
+        <p>
+        Start the Terrarium by clicking Start-&gt;Programs-&gt;.NET Terrarium 1.2-&gt;.NET Terrarium 1.2.  
+        The Terrarium 1.2 client will open in Ecosystem mode.
+        </p>
+        <p>
+        There are two modes that Terrarium 1.2 can run in.  The default is Ecosystem mode.  This is where everyone who 
+        is running the client in this mode participates together.  The peers will discover each other, 
+        teleport organisms to each other and report their statistics to the server.  This mode is the more interesting 
+        of the two. 
+        </p>
+        <p>
+        The other mode is called Terrarium mode.  This is an &quot;offline&quot; mode that is perfect for 
+        testing your organisms.  In Terrarium mode, you are not communicating with other peers, so no teleportation 
+        occurs. You also don’t report your statistics to the server.  You can save the state of the Terrarium whenever you like,
+        create a new one to start fresh whenever, or open an existing one.  You can see how this mode really does aid 
+        in creating and testing your organisms. 
+        </p>
+        <p>
+        For this exercise, we do not want to introduce the animal into the 
+        Ecosystem since the animal may not be advanced enough to survive long. Instead, we change into Terrarium 
+        mode and this allows you to test your animal before introducing it to the Ecosystem. 
+        </p>
+        <p>
+        To switch to Terrarium 
+        Mode, click the <strong>New Terrarium</strong> button.  Enter Lab01 as the name and click Save.  
+        This will restart the client in Terrarium mode.
+        </p>
+        <img src="~/content/documentation/images/tutorial_image001.jpg" alt="New Terrarium" />
+        <p>The next step is to add some plants into the Terrarium so that your Herbivore will have something to eat 
+            when it is introduced. To do that, click on the Add button, then click the Server List button and you 
+            will get a list of several animals that have already been introduced.</p>
+        <img src="~/content/documentation/images/tutorial_image002.jpg" alt="Add Animal" />
+        <p>For the purpose of this lab, and as is usual in the real world, there are several plant species you can 
+            choose from. Simply select any of the species of Type “plant” and click OK. This will introduce 10 plants 
+            of the type you selected to the Terrarium. </p>
+        <p>Add several more plants by selecting the plant in the drop down box and clicking the Insert button so you 
+            have a lot of plants in the Terrarium. </p>
+        <img src="~/content/documentation/images/tutorial_image003.jpg" alt="Insert Animal" />
+        <p>Finally introduce your animal. To do this, click on Add button click Browse and browse to the dll you 
+            created (&lt;YOUR NAME&gt;.dll). This dll will be located in the Bin folder of your project.</p>
+        <p>You should see 10 instances of your creature in the Terrarium.  To add more, you can use the Combo Box 
+            and Insert button like you did with the plants.</p>
+
+    </li>
+</ol>
+<h3>Note</h3>
+<p>The base characteristics of your animal can't be changed when the code is running -- capabilities 
+    characteristics like: how fast it can move, how well it attacks, how large it gets, etc.  
+    These are defined on your animal by applying special attributes to the class you create.  
+    You can see the list of available characteristic attributes in the Attributes section of the 
+    Organism Documentation.  Some characteristics require points to be applied to decide &quot;how much&quot; 
+    of them you get.  Each animal has 100 points to divide among these attributes.  So, for example, 
+    you could decide that your animal will be really fast by applying many points to the 
+    MaximumSpeedPointsAttribute, but it won't have good eyesight since you’ll have fewer points left 
+    to apply to the EyesightPointsAttribute. </p>
+<p>Once you've defined the characteristics your animal will have, then you write code that controls the 
+    behavior of the animal.  Look at the methods, properties and events on the Animal and Organism classes 
+    (Animal derives from Organism) in the Organism Documentation to see what you can do in your code.  
+    These methods define all the actions your animal can take.  Note that many of the method names start 
+    with &quot;Begin...&quot;.  These methods are asynchronous.  When you call them, code execution will return 
+    immediately from the method.  When the action completes, the corresponding event will fire on your 
+    organism to tell you it is done. </p>
+<h3>Exercise Summary</h3>
+<p>In this Exercise, you’ve created a simple Herbivore, tested it in your local Terrarium.
+</p>
+<h3>@Html.ActionLink("Next > Exercise 2 – Handling an Attacked Event", "VBTutorial", new { id = 2 })</h3>

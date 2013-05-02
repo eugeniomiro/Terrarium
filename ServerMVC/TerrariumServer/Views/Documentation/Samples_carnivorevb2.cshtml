@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Samples";
+    Layout = "~/Views/Documentation/_Layout.cshtml";
+}
+
+<h4>Samples and Solutions</h4>
+<p>
+This page contains links to various sample code and examples.
+</p>
+<h5>Skeletons</h5>
+<p>
+Skeletons are the basic building block for your critter.  Choose the language and the type of critter you want to build, then copy the code and get started!
+</p>
+<h6>C#</h6>
+<ul>
+	<li>@Html.ActionLink("Herbivore", "Samples", new { id = 0, kind = "herbivore", lang="cs" })</li>
+	<li>@Html.ActionLink("Carnivore", "Samples", new { id = 0, kind = "carnivore", lang="cs" })</li>
+</ul>
+<h6>VB.NET</h6>
+<ul>
+	<li>@Html.ActionLink("Herbivore", "Samples", new { id = 0, kind = "herbivore", lang="vb" })</li>
+	<li>@Html.ActionLink("Carnivore", "Samples", new { id = 0, kind = "carnivore", lang="vb" })</li>
+</ul>
+<h5>Tutorial Solutions</h5>
+<p>
+Included here are the solutions to the tutorials, broken down by exercise.
+</p>
+<h6>C#</h6>
+<ul>
+	<li>@Html.ActionLink("Exercise 1", "Samples", new { id = 1, kind = "herbivore", lang="cs" })</li>
+	<li>@Html.ActionLink("Exercise 2", "Samples", new { id = 2, kind = "herbivore", lang="cs" })</li>
+	<li>@Html.ActionLink("Exercise 3", "Samples", new { id = 3, kind = "herbivore", lang="cs" })</li>
+</ul>
+<h6>VB.NET</h6>
+<ul>
+	<li>@Html.ActionLink("Exercise 1", "Samples", new { id = 1, kind = "herbivore", lang="vb" })</li>
+	<li>@Html.ActionLink("Exercise 2", "Samples", new { id = 2, kind = "herbivore", lang="vb" })</li>
+	<li>@Html.ActionLink("Exercise 3", "Samples", new { id = 3, kind = "herbivore", lang="vb" })</li>
+</ul>
+											

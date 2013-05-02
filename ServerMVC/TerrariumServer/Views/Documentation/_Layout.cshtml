@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section infobar{
+    <ul>
+        <li>@Html.ActionLink("What is Terrarium", "About", "Documentation")</li>
+        <li>@Html.ActionLink("User Interface", "UserInterface", "Documentation") </li>
+        <li>@Html.ActionLink("C# Tutorial", "CSTutorial", "Documentation") </li>
+        <li>@Html.ActionLink("VB.NET Tutorial", "VBTutorial", "Documentation") </li>
+        <li>@Html.ActionLink("Using the .NET SDK", "UsingSdk", "Documentation") </li>
+        <li>@Html.ActionLink("Samples", "Samples", "Documentation")</li>
+    </ul>
+}
+@RenderBody()

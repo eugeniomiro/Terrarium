@@ -6,7 +6,7 @@
 }
 
 <h2>Usage Statistics</h2>
-<article>
+<div>
     <h3>Usage Summary</h3>
     Below are the statistics for you.<br />
     <div class="heading">Your Statistics(@Model.UserAlias)</div>
@@ -18,8 +18,8 @@
         <span class="inlineTitle">Total Hours</span>
         <span class="inlineValue">@Model.TotalHours hours</span>
     </div>
-</article>
-<article>
+</div>
+<div>
     <h3>Top 10 Participants</h3>
     <span class="individual-period">Period @Html.DropDownList("Period", Model.IndividualPeriod)</span>
     <div>These are the top 10 participants based on total hours that they have run Terrarium.  Use the dropdown list to choose which period to view.</div>
@@ -42,4 +42,4 @@
             }
         </tbody>
     </table>
-</article>
+</div>

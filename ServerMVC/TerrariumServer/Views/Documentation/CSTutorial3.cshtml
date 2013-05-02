@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "CSTutorial";
+    Layout = "~/Views/Documentation/_Layout.cshtml";
+}
+
+<h2>Lab 1: Create a Herbivore</h2>
+<h3>Lab Objective </h3>
+<p>The objective of this lab is to build a fully functional organism for Terrarium.  
+    You will begin by creating a simple organism and then add more advanced functionality.  
+    Once you are happy with the way it is performing, you can introduce it to the Terrarium 
+    Ecosystem and have it compete against other attendees’ organisms.</p>
+
+<h3>Exercise 3 – Communication</h3>
+<p>In this hands-on lab you will use the animal’s Antenna property to communicate with other animals.  
+    The state of the antenna is visible to all animals.  By changing the value of the antenna your animal can 
+    communicate with the other animals in the Ecosystem.  In this lab, you will update your animal to signal 
+    when another animal is blocking a target plant.  In response, the blocking animal will move out of the way, 
+    giving your animal access to the target plant.
+</p>
+<p>Please substitute your name wherever you see the text &lt;YOUR NAME&gt; below since each animal introduced into 
+    the .NET Terrarium must have a unique name. 
+</p>
+<ol>
+    <li>
+        <h4>Open the animal you created in Exercise 1 (Simple Herbivore)</h4>
+        <ul>
+            <li>Click Start->All Programs->Microsoft Visual Studio .NET 2003->Microsoft Visual Studio  .NET 2003</li>
+            <li>Select File | Open | Project.  This will open the standard file open dialogue. </li>
+            <li>Browse to the folder where you saved the project in Exercise 2. </li>
+            <li>Click the file named &lt;YOUR NAME&gt; and then click Open.</li>
+            <li>If the source file does not open in the main window, double-click the MyAnimal.cs icon from the 
+                Solution Explorer window. The source then opens in the main window</li>
+        </ul>
+    </li>
+    <li>
+        <h4>Subscribe to the MoveCompletedEvent</h4>
+        <p>The MoveCompletedEvent is fired when your animal has stopped moving.  This line tells the game engine to 
+            call the MyAnimal_MoveCompleted method each time the MoveCompletedEvent is fired.</p>
+        <code>MoveCompleted +=new MoveCompletedEventHandler(MyAnimal_MoveCompleted);</code>
+    </li>
+    <li>
+        <h4>Add the MoveCompletedEvent handler.</h4>
+        <p>There are two reasons an animal will complete its move event; the animal has reached its destination or 
+            its path is blocked.  If the animal’s path is being blocked, we want to signal the blocking animal to 
+            move out of the way.  The signal we use is the antenna value of 13.  Add the following method to the 
+            MyAnimal class. </p>
+        <code><pre>
+// Fired when we've finished moving.
+private void MyAnimal_MoveCompleted(object sender, MoveCompletedEventArgs e)
+{
+    // Reset the antenna value
+    this.Antennas.AntennaValue = 0;
+    
+    // If we've stopped because something is blocking us...
+    if (e.Reason == ReasonForStop.Blocked)
+    { 
+        WriteTrace("Something's blocking my way.");
+        if (e.BlockingOrganism is AnimalState)
+        { 
+            AnimalState blockingAnimal = (AnimalState)e.BlockingOrganism;
+            if (blockingAnimal.AnimalSpecies.IsSameSpecies(this.Species))
+            { 
+                // Signal to our friend to move out of our way.
+                WriteTrace("One of my friends is blocking my way.  I'll ask him to move.");
+                this.Antennas.AntennaValue = 13;
+            }
+        }
+    }
+}
+
+              </pre></code>
+    </li>
+    <li>
+        <h4>Add the logic to move out of the way when blocking our friends.  </h4>
+        <p>On every turn, we need to look around for animals signaling they’re being blocked.  
+            The ShouldIMoveForMyFriend method looks for animals signaling “13.”  If any are found, the animal moves 
+            out of the way of the blocked animal.  Add the following method to the MyAnimal class. </p>
+        <code><pre>
+// Routine to move out of the way when blocking our friends.
+void ShouldIMoveForMyFriend()
+{
+    try
+    {
+        ArrayList foundAnimals = Scan();
+ 
+        if (foundAnimals.Count > 0)
+        {
+            foreach (OrganismState organismState in foundAnimals)
+            {
+                if (organismState is AnimalState)
+                {
+                    AnimalState visibleAnimal = (AnimalState)organismState;
+
+                    // Only move if the animal is one of our friends (IsSameSpecies).
+                    if (visibleAnimal.Species.IsSameSpecies(this.Species))
+                    {
+                        // If the animal's antenna value is 13, it means they're blocked (see the MoveCompletedEvent method).
+                        if (visibleAnimal.Antennas.AntennaValue == 13)
+                        {
+                            // We're blocking our friend, so we should move.
+                            WriteTrace("I'm blocking one of my friends.  I should move.");
+ 
+                            int newX = this.Position.X - (visibleAnimal.Position.X - this.Position.X);
+                            int newY = this.Position.Y - (visibleAnimal.Position.Y - this.Position.Y);
+ 
+                            BeginMoving(new MovementVector(new Point(newX, newY), 2));
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    catch (Exception exc)
+    {
+        WriteTrace(exc.ToString());
+    }
+}
+              </pre></code>
+    </li>
+    <li>
+        <h4>Call the ShouldIMoveForMyFriend() method at the end of each turn.</h4>
+        <p>At the end of every turn, we need to call the ShouldIMoveForMyFriend method to unblock any of our friends.  
+            Since the IdleEvent is fired on each turn, add a call to the ShouldIMoveForMyFriend method at the end of the 
+            MyAnimal_Idle method.  Add the following method call as the last line of the MyAnimal_Idle method. </p>
+        <code>ShouldIMoveForMyFriend()</code>
+    </li>
+    <li>
+        <h4>Rename and Build the animal DLL.</h4>
+        <ul>
+            <li>Select Project | Properties.  This will open the Project Properties dialog.</li>
+            <li>In Common Properties | General, change the Assembly Name field to &lt;YOUR NAME&gt;_Ex3.</li>
+            <li>Build the animal DLL from within the IDE by selecting Build | Make Solution</li>
+        </ul>
+    </li>
+    <li>
+        <h4>Introduce the Herbivore into the Terrarium in Terrarium Mode.</h4>
+        <p>Terrarium supports two game modes, Terrarium mode and Ecosystem mode.  </p>
+        <p>In Ecosystem mode, your animal competes against animals submitted by other developers.  </p>
+        <p>To switch to Terrarium Mode, click the New Terrarium button.  Enter Lab01 as the name and click Save.  
+            This will restart the client in Terrarium mode.</p>
+        <img src="~/content/documentation/images/tutorial_image001.jpg" alt="New Terrarium" />
+        <p>The next step is to add some plants into the Terrarium so that your Herbivore will have something to eat 
+            when it is introduced. To do that, click on the Add button, then click the Server List button and you will 
+            get a list of several animals that have already been introduced.</p>
+        <img src="~/content/documentation/images/tutorial_image002.jpg" alt="Add Animal" />
+        <p>For the purpose of this lab, and as is usual in the real world, there are several plant species you can 
+            choose from. Simply select any of the species of Type “plant” and click OK. This will introduce 10 plants 
+            of the type you selected to the Terrarium. </p>
+        <img src="~/content/documentation/images/tutorial_image003.jpg" alt="Insert Animal" />
+        <p>Finally introduce your animal. To do this, click on Add button click Browse and browse to the dll you 
+            created (&lt;YOUR NAME&gt;.dll). This dll will be located in the Bin folder of your project.</p>
+        <p>You should see 10 instances of your creature in the Terrarium.  To add more, you can use the Combo Box 
+            and Insert button like you did with the plants.</p>
+        <p>To test the new functionality, increase the population of your animal by clicking the Insert button.  
+            Notice that when one of your animals is blocked from a food source, the blocking animal moves out 
+            of the way.</p>
+    </li>
+    
+</ol>
+<h3>Exercise Summary</h3>
+<p>Your Herbivores are now talking to each other.  You could now take communication and combine it with the attacked 
+    event logic.  Maybe you can have your herbivore signal to all of his friends that he is being attacked and they 
+    should all come and help.  Or they should all run away!
+</p>
+<h3>@Html.ActionLink("Exercise 2 – Handling an Attacked Event < Previous", "CSTutorial", new { id = 2 })</h3>
+<h3>@Html.ActionLink("Next > Exercise 4 – Introduction into the Ecosystem", "CSTutorial", new { id = 4 })</h3>

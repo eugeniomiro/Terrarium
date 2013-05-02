@@ -21,19 +21,44 @@ namespace TerrariumServer.Controllers
         {
             UserStatsViewModel vm   = new UserStatsViewModel();
             vm.UserAlias            = "Eugenio";
-            vm.IndividualPeriod     = new List<SelectListItem>();
-            vm.Participants         = new List<Participant>();
+            vm.IndividualPeriod     = new List<SelectListItem>() 
+            { 
+                new SelectListItem { Text="Today", Value = "Today", Selected=false }, 
+                new SelectListItem { Text="Week", Value = "Week", Selected=true } ,
+                new SelectListItem { Text="Total", Value = "Total", Selected=false } 
+            };
+            vm.Participants = new List<Participant>() { 
+                new Participant{ Alias="Alias1", Rank=20, Hours=345 },
+                new Participant{ Alias="Alias5", Rank=19, Hours=265 },
+                new Participant{ Alias="Alias1", Rank=18, Hours=165 },
+                new Participant{ Alias="Alias2", Rank=10, Hours=99 },
+                new Participant{ Alias="Alias6", Rank=5, Hours=4 },
+            };
             return View(vm);
-        }
-
-        public ActionResult Documentation()
-        {
-            return View();
         }
 
         public ActionResult Charts()
         {
-            return View();
+            ChartsViewModel vm      = new ChartsViewModel();
+            vm.Creatures            = new List<Creature>();
+            vm.Filter               = new List<SelectListItem>{
+                new SelectListItem { Text = "Population", Selected = false, Value = "Population" },
+                new SelectListItem { Text = "Species Name", Selected = false, Value = "SpeciesName" },
+                new SelectListItem { Text = "Author Name", Selected = false, Value = "AuthorName" },
+                new SelectListItem { Text = "Type", Selected = false, Value = "Type" }
+            };
+        
+
+            vm.SelectedCreatures    = new List<Creature>();
+            vm.Versions             = new List<SelectListItem>{
+                new SelectListItem { Text = "All Versions", Selected = true, Value = "" },
+                new SelectListItem { Text = "2.1.0", Selected = true, Value = "2.1.0" }
+            };
+            vm.StartTimes           = new List<SelectListItem> { 
+                new SelectListItem { Text = "Last 24 Hours", Selected = true, Value = "" },
+            };
+            
+            return View(vm);
         }
 
         [ChildActionOnly]
@@ -77,14 +102,14 @@ namespace TerrariumServer.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your app description page.";
+            ViewBag.Message = "Welcome to .NET Terrarium 3.0";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Welcome to .NET Terrarium 3.0";
 
             return View();
         }

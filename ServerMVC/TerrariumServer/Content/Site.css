@@ -789,7 +789,7 @@ a.smallLink:hover
     font-weight:bold;
 }
 .inlineTitle {
-    min-width:100px;
+    min-width:80px;
     display:block;
     float:left;
     margin-right:5px;
@@ -801,3 +801,18 @@ a.smallLink:hover
     float:left;
     margin-right:5px;
 }
+table {
+    width:100%;
+}
+thead {
+    color : white;
+    background-color : #7ac0da;
+}
+    thead th {
+        border-color:white;
+        border-width:1px;
+        border-style:solid;
+        padding:2px;
+        text-align:center;
+        font-size:small;
+    }

@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "CSTutorial";
+    Layout = "~/Views/Documentation/_Layout.cshtml";
+}
+
+<h2>Lab 1: Create a Herbivore</h2>
+<h3>Lab Objective </h3>
+<p>The objective of this lab is to build a fully functional organism for Terrarium.  
+    You will begin by creating a simple organism and then add more advanced functionality.  
+    Once you are happy with the way it is performing, you can introduce it to the Terrarium 
+    Ecosystem and have it compete against other attendees’ organisms.</p>
+
+<h3>Exercise 2 – Handling an Attacked Event</h3>
+<p>In this hands-on lab you will use the event model of the Terrarium to handle an Attacked event.  
+    An Attacked event is fired when you are attacked by another animal. This is just one of the many events 
+    that you can handle, to see the full list, refer to the Organism Documentation.
+</p>
+<p>Please substitute your name wherever you see the text &lt;YOUR NAME&gt; below since each animal introduced into the 
+    .NET Terrarium must have a unique name. 
+</p>
+<ol>
+    <li>
+        <h4>Open the animal you created in @Html.ActionLink("Exercise 1 (Simple Herbivore)", "CSTutorial", new { id = 1 }) </h4>
+        <br /><br />
+        <ul>
+            <li>Click Start-&gt;All Programs-&gt;Microsoft Visual Studio .NET 2003-&gt;Microsoft Visual Studio .NET 2003</li>
+            <li>Select File | Open | Project.  This will open the standard file open dialogue.</li>
+            <li>Browse to the folder where you saved the project in Exercise 1. </li>
+            <li>Click the file named &lt;YOUR NAME&gt; and then click Open.</li>
+            <li>If the source file does not open in the main window, double-click the MyAnimal.cs icon from the 
+                Solution Explorer window. The source then opens in the main window</li>
+        </ul>
+    </li>
+    <li>
+        <h4>Subscribe to the AttackedEvent.</h4>
+        <p>The AttackedEvent is fired when your animal is attacked by another animal.  This line tells the game engine 
+            to call the MyAnimal_Attacked method each time the AttackedEvent is fired.  Add the following line to the 
+            Initialize method: </p>
+        <code>Attacked += new AttackedEventHandler(MyAnimal_Attacked);</code>
+    </li>
+    <li>
+        <h4>Add the AttackedEvent handler.</h4>
+        <p>When your animal is attacked, it first tries to defend itself against its attacker.  It then tries to run 
+            away from the attacker by moving to a random location on the game board.  Add the following method to the 
+            MyAnimal class. </p>
+        <code><pre>
+// Fired if we're being attacked 
+void MyAnimal_Attacked(object sender, AttackedEventArgs e) { 
+   if(e.Attacker.IsAlive) 
+   { 
+     AnimalState theAttacker = e.Attacker; 
+     BeginDefending(theAttacker); //defend against the attacker 
+   
+     WriteTrace("Run away to some random point"); 
+     int X= OrganismRandom.Next(0, WorldWidth - 1); 
+     int Y= OrganismRandom.Next(0, WorldHeight - 1); 
+     BeginMoving(new MovementVector(new Point(X,Y), 10)); 
+   } 
+}  
+</pre></code>
+    </li>
+    <li>
+        <h4>Rename and Build the animal DLL.</h4>
+        <ul>
+            <li>Select Project Properties.  This will open the Project Properties dialog.</li>
+            <li>In Common Properties | General, change the Assembly Name field to &lt;YOUR NAME&gt;_Ex2 and click OK.</li>
+            <li>Build the animal DLL from within the IDE by selecting Build | Build Solution</li>
+        </ul>
+    </li>
+    <li>
+        <h4>Introduce the Herbivore into the Terrarium in Terrarium Mode.</h4>
+        <p>Terrarium supports two game modes, Terrarium mode and Ecosystem mode.  </p>
+        <p>In Ecosystem mode, your animal competes against animals submitted by other developers.  </p>
+        <p>Terrarium mode is the Terrarium test mode.  In Terrarium mode you can test your animal in a 
+            controlled environment.</p>
+        <p>To switch to Terrarium Mode, click the New Terrarium button.  Enter Lab01 as the name and click Save.  
+            This will restart the client in Terrarium mode.</p>
+        <img src="~/content/documentation/images/tutorial_image001.jpg" alt="New Terrarium" />
+        <p>The next step is to add some plants into the Terrarium so that your Herbivore will have something to eat 
+            when it is introduced. To do that, click on the Add button, then click the Server List button and you will 
+            get a list of several animals that have already been introduced.</p>
+        <img src="~/content/documentation/images/tutorial_image002.jpg" alt="Add Animal" />
+        <p>For the purpose of this lab, and as is usual in the real world, there are several plant species you can 
+            choose from. Simply select any of the species of Type “plant” and click OK. This will introduce 10 plants 
+            of the type you selected to the Terrarium. </p>
+        <img src="~/content/documentation/images/tutorial_image003.jpg" alt="Insert Animal" />
+        <p>Finally introduce your animal. To do this, click on Add button click Browse and browse to the dll you created 
+        (&lt;YOUR NAME&gt;.dll). This dll will be located in the Bin folder of your project.</p>
+        <p>You should see 10 instances of your creature in the Terrarium.  To add more, you can use the Combo Box and 
+            Insert button like you did with the plants.</p>
+    </li>
+</ol>
+<h3>Exercise Summary</h3>
+<p>In this Exercise, you’ve modified your Herbivore to be able to detect when it is being attacked and to respond to 
+    this attack. </p>
+<h3>@Html.ActionLink("Exercise 1 – Create a Simple Herbivore < Previous", "CSTutorial", new { id = 1 })</h3>
+<h3>@Html.ActionLink("Next > Exercise 3 – Communication", "CSTutorial", new { id = 3 })</h3>

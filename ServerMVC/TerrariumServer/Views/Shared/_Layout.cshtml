@@ -22,7 +22,7 @@
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("Usage Stats", "UsageStats", "Home")</li>
-                            <li>@Html.ActionLink("Documentation", "Documentation", "Home")</li>
+                            <li>@Html.ActionLink("Documentation", "Index", "Documentation")</li>
                             <li>@Html.ActionLink("Charts", "Charts", "Home")</li>
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
@@ -35,7 +35,10 @@
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
                 <article>@RenderBody()</article>
-                @Html.Action("InfoBar", "Home")
+                <aside class="infobar">
+                    @RenderSection("infobar", required:false)
+                    @Html.Action("InfoBar", "Home")
+                </aside>
             </section>
         </div>
         <footer>
