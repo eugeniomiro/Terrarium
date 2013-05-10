@@ -2,13 +2,13 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                             
 //------------------------------------------------------------------------------
 
+using DxVBLib;
+using OrganismBase;
 using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using DxVBLib;
-using OrganismBase;
 using Terrarium.Game;
 using Terrarium.Renderer.DirectX;
 using Terrarium.Tools;
@@ -871,8 +871,8 @@ namespace Terrarium.Renderer
 #if TRACE
             Profiler.Start("TerrariumDirectDrawGameView.RenderFrame()");
 #else
-			TimeMonitor tm = new TimeMonitor();
-			tm.Start();
+            TimeMonitor tm = new TimeMonitor();
+            tm.Start();
 #endif
             // Don't draw while we are resizing the viewer
             // This might happen on a secondary thread so
@@ -1011,8 +1011,8 @@ namespace Terrarium.Renderer
 #if TRACE
             Profiler.End("TerrariumDirectDrawGameView.RenderFrame()");
 #else
-			renderTime += tm.EndGetMicroseconds();
-			samples++;
+            renderTime += tm.EndGetMicroseconds();
+            samples++;
 #endif
         }
 

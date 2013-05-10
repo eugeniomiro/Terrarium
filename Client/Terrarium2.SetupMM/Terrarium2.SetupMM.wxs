@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define ComponentRules="OneToOne"?>
+  <!-- SourceDir instructs IsWiX the location of the directory that contains files for this merge module -->
+  <?define SourceDir="..\Deploy"?>
+  <Module Id="Terrarium2.SetupMM" Language="1033" Version="1.0.0.0">
+    <Package Id="5c5f0c59-a85f-463a-9fa7-487190512d54" Manufacturer="Terrarium2.SetupMM" InstallerVersion="200" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="MergeRedirectFolder">
+        <Component Id="owcA1B8B41E36AB4977FE1CB2A11F66555E" Guid="138c48cf-4850-4e02-38dc-55312ec3891c">
+          <File Id="owfA1B8B41E36AB4977FE1CB2A11F66555E" Source="$(var.SourceDir)\ant24.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc8A7FDCB94A45B7EBDCE265462F8A96C3" Guid="80e44466-9407-411e-28e1-584740713726">
+          <File Id="owf8A7FDCB94A45B7EBDCE265462F8A96C3" Source="$(var.SourceDir)\ant48.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc6B4152FD600EF33EDB495F5F0DA195F6" Guid="db57dd27-6bef-e56b-d581-61b16e6a321f">
+          <File Id="owf6B4152FD600EF33EDB495F5F0DA195F6" Source="$(var.SourceDir)\background.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc970E1EE99CAC985127CA67B0872223E8" Guid="c8a0f4ba-35d4-170f-ac85-7cc41d7b8648">
+          <File Id="owf970E1EE99CAC985127CA67B0872223E8" Source="$(var.SourceDir)\beetle24.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc124BD36A222D9E289F4C50BFCEF1EE66" Guid="51b8e189-f9f6-cfa8-3321-cff1ed43d305">
+          <File Id="owf124BD36A222D9E289F4C50BFCEF1EE66" Source="$(var.SourceDir)\beetle48.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc9DF0E27D89A1E8485B34B7D3BBD74A0B" Guid="4544ff23-df10-7c03-0a20-55240bbb157c">
+          <File Id="owf9DF0E27D89A1E8485B34B7D3BBD74A0B" Source="$(var.SourceDir)\Configuration.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="owc72C5A500DD7DBF1B65C17ED2C2BFFE34" Guid="62168ed4-37ce-2539-5351-545e64e0596f">
+          <File Id="owf72C5A500DD7DBF1B65C17ED2C2BFFE34" Source="$(var.SourceDir)\Controls.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="owc4EC91562307F2CB4A92E9553353F3667" Guid="21a8182a-d3df-79bf-0d84-8515e18e7989">
+          <File Id="owf4EC91562307F2CB4A92E9553353F3667" Source="$(var.SourceDir)\cursor.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owcA82AEDC12F1CE28B4DE5247240E77D27" Guid="b4eeff65-23ad-e9fc-58f7-dc2a2c399dff">
+          <File Id="owfA82AEDC12F1CE28B4DE5247240E77D27" Source="$(var.SourceDir)\dirt.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc5469EF0A1E676BBF1DC367497EE25248" Guid="aac377b4-ad56-4345-30ad-7670fbbb97a2">
+          <File Id="owf5469EF0A1E676BBF1DC367497EE25248" Source="$(var.SourceDir)\DXVBLib.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="owc48F96B0EDC78C314C7E4A9925A162D73" Guid="f34d8ce0-8821-e9c7-d0d6-14b904d182f3">
+          <File Id="owf48F96B0EDC78C314C7E4A9925A162D73" Source="$(var.SourceDir)\Game.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="owc2C1BA4538762824A54BDB4C3D7D6D369" Guid="b961f125-fd80-fabb-d308-66de0ee6c059">
+          <File Id="owf2C1BA4538762824A54BDB4C3D7D6D369" Source="$(var.SourceDir)\Glass.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="owc241188168B2BFE63C96110E47A4118F2" Guid="ee793813-e0b0-7efe-89fb-37e98fe7d5a5">
+          <File Id="owf241188168B2BFE63C96110E47A4118F2" Source="$(var.SourceDir)\HttpListener.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="owcFBA9BFF0B43D8E6E66EBE54195270A0A" Guid="f54c81ce-81ca-1ba9-d59f-be20ecc1057e">
+          <File Id="owfFBA9BFF0B43D8E6E66EBE54195270A0A" Source="$(var.SourceDir)\inchworm24.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owcB57BE466D59915322907D5795DCF1C18" Guid="b941a846-2faa-816c-f3e3-0d4eadfcf575">
+          <File Id="owfB57BE466D59915322907D5795DCF1C18" Source="$(var.SourceDir)\inchworm48.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc4C2077BB888CEFE43B41CE0090A75659" Guid="a3401021-08bb-058d-8c71-14a87edf98a7">
+          <File Id="owf4C2077BB888CEFE43B41CE0090A75659" Source="$(var.SourceDir)\OrganismBase.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="owc988F35A2792E6BB509DAAB849A85B0A5" Guid="5f6dd65e-9743-ce1d-6fe5-020ce4e8e9fd">
+          <File Id="owf988F35A2792E6BB509DAAB849A85B0A5" Source="$(var.SourceDir)\plant24.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc3839062733664F262979701EC767C52C" Guid="76a9c9ec-46b6-13cd-18e1-9c8109c7005d">
+          <File Id="owf3839062733664F262979701EC767C52C" Source="$(var.SourceDir)\plant48.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owcFE3608D31F59079745A821EB5EDE5306" Guid="da49426d-221e-fa5b-36d4-382ab87cdf2d">
+          <File Id="owfFE3608D31F59079745A821EB5EDE5306" Source="$(var.SourceDir)\plantone24.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc58F3CFF4C691EF8B87F19386E4F6BEE7" Guid="e8bc89d3-1bde-0db6-1472-1a6c0af00dad">
+          <File Id="owf58F3CFF4C691EF8B87F19386E4F6BEE7" Source="$(var.SourceDir)\plantone48.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owcE2B8D62A473405AB96FF33D2E27AB867" Guid="d9c7dc55-0ef2-207d-c1c4-629f68f6aa28">
+          <File Id="owfE2B8D62A473405AB96FF33D2E27AB867" Source="$(var.SourceDir)\plantthree24.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc86D05AACBA497269188785D0FA697BCC" Guid="70441501-676e-fa44-1996-87320fb9156f">
+          <File Id="owf86D05AACBA497269188785D0FA697BCC" Source="$(var.SourceDir)\plantthree48.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc4AB0BA081CDB6810FE59B04788F4BD2F" Guid="80157fed-5578-c0fb-7e36-7706f6973028">
+          <File Id="owf4AB0BA081CDB6810FE59B04788F4BD2F" Source="$(var.SourceDir)\planttwo24.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc109422252C4B1C4A4F68671A1513313F" Guid="0d17c97a-43c4-9b80-99bb-c7e883d3fe2e">
+          <File Id="owf109422252C4B1C4A4F68671A1513313F" Source="$(var.SourceDir)\planttwo48.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owcEF031B003B3661D82E54025573A270BC" Guid="01a77527-df6b-4362-d602-cbbce46000e5">
+          <File Id="owfEF031B003B3661D82E54025573A270BC" Source="$(var.SourceDir)\Renderer.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="owc915C6AA1670978A5C7E9A97174D9ED17" Guid="fde3dc31-8b00-b634-4bad-677cf876bb47">
+          <File Id="owf915C6AA1670978A5C7E9A97174D9ED17" Source="$(var.SourceDir)\scorpion24.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owcBB9F14E8B7800733CB123012CA706779" Guid="aa09ef95-bf20-ba0c-86c4-3cdf99d3cb4d">
+          <File Id="owfBB9F14E8B7800733CB123012CA706779" Source="$(var.SourceDir)\scorpion48.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owc00BF13CB38EF780F776798E1C08389FD" Guid="cc86beff-08f1-278d-5923-ad65d4a1f3f1">
+          <File Id="owf00BF13CB38EF780F776798E1C08389FD" Source="$(var.SourceDir)\screensaver.png" KeyPath="yes" />
+        </Component>
+        <Component Id="owc06160B3AB1EBA9AEA5997B4D65168A04" Guid="bb6258f8-6903-ce49-5171-5a9b4c0f7d82">
+          <File Id="owf06160B3AB1EBA9AEA5997B4D65168A04" Source="$(var.SourceDir)\Services.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="owc5B70C7D0783B60A7739120018A4350AF" Guid="4de67542-9aed-7557-727a-ee7ec72e10f9">
+          <File Id="owf5B70C7D0783B60A7739120018A4350AF" Source="$(var.SourceDir)\spider24.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owcCF3979FCDD3D38D3DDAD0A91FA2B0DAB" Guid="4726c199-b580-e583-e9ad-52c223c3a972">
+          <File Id="owfCF3979FCDD3D38D3DDAD0A91FA2B0DAB" Source="$(var.SourceDir)\spider48.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owcB62289CE53E4D612366538E545C207D5" Guid="386d7d06-fb31-fe9e-0729-1a68880499c5">
+          <File Id="owfB62289CE53E4D612366538E545C207D5" Source="$(var.SourceDir)\splashscreen.png" KeyPath="yes" />
+        </Component>
+        <Component Id="owcC08E8BA874B76EFFC0651BE5C1150E8A" Guid="dde0c004-53bc-13b0-06aa-48d982160666">
+          <File Id="owfC08E8BA874B76EFFC0651BE5C1150E8A" Source="$(var.SourceDir)\teleporter.bmp" KeyPath="yes" />
+        </Component>
+        <Component Id="owcEA21443091880BE51FB47C05362754FE" Guid="17d9f8a3-2ead-d73a-dd47-653dbdbcb083">
+          <File Id="owfEA21443091880BE51FB47C05362754FE" Source="$(var.SourceDir)\Terrarium.exe" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </Directory>
+  </Module>
+</Wix>

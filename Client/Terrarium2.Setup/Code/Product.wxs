@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <!-- 
+  MSIProductVersion is defined in Terrarium2.Setup.wixproj as 0.0.1 for local desktop builds.  
+  You should pass in the MSBuild Property 'MSIProductVersion' to override it during an automated build.
+  See http://msdn.microsoft.com/en-us/library/windows/desktop/aa370859%28v=vs.85%29.aspx for information on allowable values.
+  
+  The Product@Id attribute (ProductCode Property) will be a random GUID for each build.  This is to support "Major Upgrades" where each install 
+  is a seamless uninstall/reinstall.
+  -->
+  <Product Id="*" Name="Terrarium 2.0" Language="1033" Version="$(var.MSIProductVersion)" Manufacturer="Eugenio Miró" UpgradeCode="c295a307-5698-4383-9479-45a6a86c04b4">
+    <Package InstallerVersion="301" Compressed="yes" InstallScope="perMachine" />
+    <MediaTemplate EmbedCab="yes" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    
+    <!--Launch Conditions-->
+    <PropertyRef Id="NETFRAMEWORK40FULL"/>
+    <Condition Message="[ProductName] requires .NET Framework 4.0.">Installed OR NETFRAMEWORK40FULL</Condition>
+
+    <!-- User Interface Experience -->
+    <Icon Id="Icon.ico" SourceFile="Resources\Icon.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="Icon.ico"></Property>    
+    <UIRef Id="UI"/>
+    
+    <!-- Features-->
+    <FeatureGroupRef Id="features"/>
+
+  </Product>
+</Wix>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment> 
+    
+    <FeatureGroup Id="features">
+      <Feature Id="Terrarium2.Setup" Title="Terrarium 2.0" Description="Installs all the files needed for Terrarium 2.0" Level="1" AllowAdvertise="no" ConfigurableDirectory="INSTALLLOCATION">
+        <MergeRef Id="Terrarium2.SetupMM"/>
+      </Feature>
+    </FeatureGroup>
+
+    <!-- Content -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="CompanyFolder" Name="Eugenio Miró">
+          <Directory Id="INSTALLLOCATION" Name="Terrarium 2.0">
+            <Merge Id="Terrarium2.SetupMM" SourceFile="$(var.Terrarium2.SetupMM.TargetPath)" DiskId="1" Language="1033"/>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+    
+  </Fragment>
+</Wix>

@@ -209,7 +209,7 @@ namespace Terrarium.Renderer
             }
 
             var basepath = GameConfig.MediaDirectory + "\\" + key;
-            var bmppath = basepath + ".bmp";
+            var bmppath = basepath + ".png";
             if (File.Exists(bmppath))
             {
                 var tss = new TerrariumSpriteSurface();

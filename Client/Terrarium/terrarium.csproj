@@ -8,10 +8,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ApplicationIcon>tericon32.ico</ApplicationIcon>
-    <AssemblyKeyContainerName>
-    </AssemblyKeyContainerName>
     <AssemblyName>Terrarium</AssemblyName>
-    <AssemblyOriginatorKeyFile>development.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Terrarium.pfx</AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -32,7 +30,6 @@
     <WebPageEnabled>true</WebPageEnabled>
     <SignManifests>true</SignManifests>
     <ManifestCertificateThumbprint>EC13F3640926A078D6C271D9EE6E18AF1E387164</ManifestCertificateThumbprint>
-    <ManifestKeyFile>Terrarium_TemporaryKey.pfx</ManifestKeyFile>
     <TargetZone>LocalIntranet</TargetZone>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
@@ -60,6 +57,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -131,6 +129,7 @@
   <ItemGroup>
     <Reference Include="DXVBLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0271974b642e7a95">
       <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\DXVBLib\DXVBLib.dll</HintPath>
     </Reference>
     <Reference Include="System">
@@ -247,9 +246,11 @@
     </Compile>
     <EmbeddedResource Include="..\Graphics\UI\screensaver.png">
       <Link>screensaver.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="..\Graphics\UI\splashscreen.png">
       <Link>splashscreen.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Classes\UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -296,69 +297,91 @@
   <ItemGroup>
     <Content Include="..\Graphics\SpriteSheets\ant24.bmp">
       <Link>ant24.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\ant48.bmp">
       <Link>ant48.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\background.bmp">
       <Link>background.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\beetle24.bmp">
       <Link>beetle24.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\beetle48.bmp">
       <Link>beetle48.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\cursor.bmp">
       <Link>cursor.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\dirt.bmp">
       <Link>dirt.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\inchworm24.bmp">
       <Link>inchworm24.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\inchworm48.bmp">
       <Link>inchworm48.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\plant24.bmp">
       <Link>plant24.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\plant48.bmp">
       <Link>plant48.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\plantone24.bmp">
       <Link>plantone24.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\plantone48.bmp">
       <Link>plantone48.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\plantthree24.bmp">
       <Link>plantthree24.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\plantthree48.bmp">
       <Link>plantthree48.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\planttwo24.bmp">
       <Link>planttwo24.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\planttwo48.bmp">
       <Link>planttwo48.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\scorpion24.bmp">
       <Link>scorpion24.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\scorpion48.bmp">
       <Link>scorpion48.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\spider24.bmp">
       <Link>spider24.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\spider48.bmp">
       <Link>spider48.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Graphics\SpriteSheets\teleporter.bmp">
       <Link>teleporter.bmp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="tericon32.ico" />
   </ItemGroup>
@@ -402,17 +425,15 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Terrarium.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="development.snk" />
-    <None Include="Development2.snk" />
-    <None Include="Terrarium_TemporaryKey.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>copy ..\..\..\Graphics\SpriteSheets\*.bmp "$(TargetDir)"
-</PostBuildEvent>
+    <PostBuildEvent>xcopy /iery "$(TargetDir)*.*" "$(SolutionDir)\Deploy"</PostBuildEvent>
   </PropertyGroup>
 </Project>

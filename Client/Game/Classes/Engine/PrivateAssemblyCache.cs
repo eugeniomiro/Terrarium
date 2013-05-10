@@ -348,7 +348,7 @@ namespace Terrarium.Game
         /// <returns>True if the assembly exists, false otherwise.</returns>
         public Boolean Exists(string fullName)
         {
-            bool exists;
+            bool exists = false;
             var asmDir = Path.GetFullPath(AssemblyDirectory);
 
             // Make sure we can't be hacked to return whether files exist by only allowing our code

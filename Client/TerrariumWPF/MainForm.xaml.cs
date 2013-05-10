@@ -24,9 +24,9 @@ namespace TerrariumWPF
         {
             if(!DesignerProperties.GetIsInDesignMode(this))
             {
-                if (_tddGameView.InitializeDirectDraw(false))
-                {
-                }
+                ////if (_tddGameView.InitializeDirectDraw(false))
+                ////{
+                ////}
             }
         }
     }

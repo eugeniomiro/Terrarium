@@ -9,13 +9,13 @@ using Terrarium.Glass;
 
 namespace Terrarium.Client
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public class AboutForm : System.Windows.Forms.Form
-	{
-		private Label lastUpdateLabel;
-		private Label updatesEnabledLabel;
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AboutForm : System.Windows.Forms.Form
+    {
+        private Label lastUpdateLabel;
+        private Label updatesEnabledLabel;
         private Label clientVersionLabel;
         private GlassLabel glassLabel4;
         private GlassButton closeButton;
@@ -23,20 +23,20 @@ namespace Terrarium.Client
         private GlassLabel GlassLabel2;
         private GlassLabel GlassLabel1;
         private Label nextUpdateLabel;
-		/// <summary>
-		/// Default constructor
-		/// </summary>
-		public AboutForm()
-		{
-			InitializeComponent();
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public AboutForm()
+        {
+            InitializeComponent();
 
-			this.clientVersionLabel.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            this.clientVersionLabel.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-			this.BackColor = GlassStyleManager.Active.DialogColor;
-		}
+            this.BackColor = GlassStyleManager.Active.DialogColor;
+        }
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.lastUpdateLabel = new System.Windows.Forms.Label();
             this.updatesEnabledLabel = new System.Windows.Forms.Label();
@@ -202,8 +202,8 @@ namespace Terrarium.Client
         }
 
         private void closeButton_Click(object sender, System.EventArgs e)
-		{
-			this.Close();
-		}
-	}
+        {
+            this.Close();
+        }
+    }
 }

@@ -1116,7 +1116,6 @@ namespace Terrarium.Game
                             "Organism assemblies can only be introduced once into a Terrarium. \r\n - If you are just trying to add more of these animals, select your animal in the 'Species' dropdown below and push the 'add' button.\r\n - If you are developing an animal and have a new assembly to try, create a new terrarium and introduce it there.");
                     }
                     // The server should prevent
-                    Debug.Assert(false);
                     throw new GameEngineException(
                         "Can't add this species because you already have an assembly with the same name in your Ecosystem.");
                 }
