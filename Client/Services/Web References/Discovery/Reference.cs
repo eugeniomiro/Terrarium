@@ -34,6 +34,8 @@ namespace Terrarium.Services.Discovery {
         
         private System.Threading.SendOrPostCallback GetNumPeersOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetTotalNumPeersOperationCompleted;
+        
         private System.Threading.SendOrPostCallback ValidatePeerOperationCompleted;
         
         private System.Threading.SendOrPostCallback RegisterMyPeerGetCountAndPeerListOperationCompleted;
@@ -83,6 +85,9 @@ namespace Terrarium.Services.Discovery {
         
         /// <remarks/>
         public event GetNumPeersCompletedEventHandler GetNumPeersCompleted;
+        
+        /// <remarks/>
+        public event GetTotalNumPeersCompletedEventHandler GetTotalNumPeersCompleted;
         
         /// <remarks/>
         public event ValidatePeerCompletedEventHandler ValidatePeerCompleted;
@@ -175,6 +180,44 @@ namespace Terrarium.Services.Discovery {
             if ((this.GetNumPeersCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetNumPeersCompleted(this, new GetNumPeersCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetTotalNumPeers", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int GetTotalNumPeers() {
+            object[] results = this.Invoke("GetTotalNumPeers", new object[0]);
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public System.IAsyncResult BeginGetTotalNumPeers(System.AsyncCallback callback, object asyncState) {
+            return this.BeginInvoke("GetTotalNumPeers", new object[0], callback, asyncState);
+        }
+        
+        /// <remarks/>
+        public int EndGetTotalNumPeers(System.IAsyncResult asyncResult) {
+            object[] results = this.EndInvoke(asyncResult);
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetTotalNumPeersAsync() {
+            this.GetTotalNumPeersAsync(null);
+        }
+        
+        /// <remarks/>
+        public void GetTotalNumPeersAsync(object userState) {
+            if ((this.GetTotalNumPeersOperationCompleted == null)) {
+                this.GetTotalNumPeersOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetTotalNumPeersOperationCompleted);
+            }
+            this.InvokeAsync("GetTotalNumPeers", new object[0], this.GetTotalNumPeersOperationCompleted, userState);
+        }
+        
+        private void OnGetTotalNumPeersOperationCompleted(object arg) {
+            if ((this.GetTotalNumPeersCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetTotalNumPeersCompleted(this, new GetTotalNumPeersCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -384,6 +427,32 @@ namespace Terrarium.Services.Discovery {
         private object[] results;
         
         internal GetNumPeersCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
+    public delegate void GetTotalNumPeersCompletedEventHandler(object sender, GetTotalNumPeersCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetTotalNumPeersCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetTotalNumPeersCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

@@ -32,6 +32,16 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetTotalNumPeers">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetTotalNumPeersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetTotalNumPeersResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="ValidatePeer">
         <s:complexType />
       </s:element>
@@ -110,6 +120,12 @@
   <wsdl:message name="GetNumPeersSoapOut">
     <wsdl:part name="parameters" element="tns:GetNumPeersResponse" />
   </wsdl:message>
+  <wsdl:message name="GetTotalNumPeersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTotalNumPeers" />
+  </wsdl:message>
+  <wsdl:message name="GetTotalNumPeersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTotalNumPeersResponse" />
+  </wsdl:message>
   <wsdl:message name="ValidatePeerSoapIn">
     <wsdl:part name="parameters" element="tns:ValidatePeer" />
   </wsdl:message>
@@ -137,6 +153,10 @@
       <wsdl:input message="tns:GetNumPeersSoapIn" />
       <wsdl:output message="tns:GetNumPeersSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetTotalNumPeers">
+      <wsdl:input message="tns:GetTotalNumPeersSoapIn" />
+      <wsdl:output message="tns:GetTotalNumPeersSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ValidatePeer">
       <wsdl:input message="tns:ValidatePeerSoapIn" />
       <wsdl:output message="tns:ValidatePeerSoapOut" />
@@ -163,6 +183,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetNumPeers">
       <soap:operation soapAction="http://tempuri.org/GetNumPeers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTotalNumPeers">
+      <soap:operation soapAction="http://tempuri.org/GetTotalNumPeers" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -211,6 +240,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetNumPeers">
       <soap12:operation soapAction="http://tempuri.org/GetNumPeers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTotalNumPeers">
+      <soap12:operation soapAction="http://tempuri.org/GetTotalNumPeers" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
