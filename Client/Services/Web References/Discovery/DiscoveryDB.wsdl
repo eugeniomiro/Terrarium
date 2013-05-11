@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="RegisterUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegisterUserResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNumPeers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="channel" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNumPeersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetNumPeersResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidatePeer">
+        <s:complexType />
+      </s:element>
+      <s:element name="ValidatePeerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidatePeerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterMyPeerGetCountAndPeerList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="channel" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="guid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterMyPeerGetCountAndPeerListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegisterMyPeerGetCountAndPeerListResult" type="tns:RegisterPeerResult" />
+            <s:element minOccurs="0" maxOccurs="1" name="peers">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="RegisterPeerResult">
+        <s:restriction base="s:string">
+          <s:enumeration value="Success" />
+          <s:enumeration value="Failure" />
+          <s:enumeration value="GlobalFailure" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="IsVersionDisabled">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsVersionDisabledResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IsVersionDisabledResult" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="errorMessage" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RegisterUserSoapIn">
+    <wsdl:part name="parameters" element="tns:RegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="RegisterUserSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNumPeersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNumPeers" />
+  </wsdl:message>
+  <wsdl:message name="GetNumPeersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNumPeersResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidatePeerSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidatePeer" />
+  </wsdl:message>
+  <wsdl:message name="ValidatePeerSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidatePeerResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegisterMyPeerGetCountAndPeerListSoapIn">
+    <wsdl:part name="parameters" element="tns:RegisterMyPeerGetCountAndPeerList" />
+  </wsdl:message>
+  <wsdl:message name="RegisterMyPeerGetCountAndPeerListSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterMyPeerGetCountAndPeerListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsVersionDisabledSoapIn">
+    <wsdl:part name="parameters" element="tns:IsVersionDisabled" />
+  </wsdl:message>
+  <wsdl:message name="IsVersionDisabledSoapOut">
+    <wsdl:part name="parameters" element="tns:IsVersionDisabledResponse" />
+  </wsdl:message>
+  <wsdl:portType name="PeerDiscoveryServiceSoap">
+    <wsdl:operation name="RegisterUser">
+      <wsdl:input message="tns:RegisterUserSoapIn" />
+      <wsdl:output message="tns:RegisterUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNumPeers">
+      <wsdl:input message="tns:GetNumPeersSoapIn" />
+      <wsdl:output message="tns:GetNumPeersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePeer">
+      <wsdl:input message="tns:ValidatePeerSoapIn" />
+      <wsdl:output message="tns:ValidatePeerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterMyPeerGetCountAndPeerList">
+      <wsdl:input message="tns:RegisterMyPeerGetCountAndPeerListSoapIn" />
+      <wsdl:output message="tns:RegisterMyPeerGetCountAndPeerListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsVersionDisabled">
+      <wsdl:input message="tns:IsVersionDisabledSoapIn" />
+      <wsdl:output message="tns:IsVersionDisabledSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PeerDiscoveryServiceSoap" type="tns:PeerDiscoveryServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RegisterUser">
+      <soap:operation soapAction="http://tempuri.org/RegisterUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNumPeers">
+      <soap:operation soapAction="http://tempuri.org/GetNumPeers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePeer">
+      <soap:operation soapAction="http://tempuri.org/ValidatePeer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterMyPeerGetCountAndPeerList">
+      <soap:operation soapAction="http://tempuri.org/RegisterMyPeerGetCountAndPeerList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsVersionDisabled">
+      <soap:operation soapAction="http://tempuri.org/IsVersionDisabled" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PeerDiscoveryServiceSoap12" type="tns:PeerDiscoveryServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RegisterUser">
+      <soap12:operation soapAction="http://tempuri.org/RegisterUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNumPeers">
+      <soap12:operation soapAction="http://tempuri.org/GetNumPeers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePeer">
+      <soap12:operation soapAction="http://tempuri.org/ValidatePeer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterMyPeerGetCountAndPeerList">
+      <soap12:operation soapAction="http://tempuri.org/RegisterMyPeerGetCountAndPeerList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsVersionDisabled">
+      <soap12:operation soapAction="http://tempuri.org/IsVersionDisabled" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PeerDiscoveryService">
+    <wsdl:port name="PeerDiscoveryServiceSoap" binding="tns:PeerDiscoveryServiceSoap">
+      <soap:address location="http://localhost:56385/Website/Discovery/DiscoveryDB.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PeerDiscoveryServiceSoap12" binding="tns:PeerDiscoveryServiceSoap12">
+      <soap12:address location="http://localhost:56385/Website/Discovery/DiscoveryDB.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

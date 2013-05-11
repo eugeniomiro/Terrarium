@@ -190,6 +190,7 @@
     <None Include="..\..\Keys\development.snk">
       <Link>development.snk</Link>
     </None>
+    <None Include="app.config" />
     <None Include="Web References\Charts\chartservice.disco" />
     <None Include="Web References\Charts\chartservice.wsdl" />
     <None Include="Web References\Charts\Reference.map">
@@ -201,6 +202,9 @@
     <None Include="Web References\Discovery\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\Discovery\RegisterPeerResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\Messaging\messaging.disco" />
     <None Include="Web References\Messaging\messaging.wsdl" />
@@ -220,32 +224,71 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Web References\Species\SpeciesServiceStatus.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\Watson\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\Watson\watson.disco" />
     <None Include="Web References\Watson\watson.wsdl" />
-    <WebReferenceUrl Include="http://lhsdkter2/Terrarium/reporting/reportpopulation.asmx">
+    <WebReferenceUrl Include="http://localhost:56385/Website/reporting/reportpopulation.asmx">
       <RelPath>Web References\Reporting\</RelPath>
       <UrlBehavior>Static</UrlBehavior>
+      <UpdateFromURL>http://localhost:56385/Website/reporting/reportpopulation.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>
+      </CachedAppSettingsObjectName>
+      <CachedSettingsPropName>
+      </CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://lhsdkter2/Terrarium/Species/AddSpecies.asmx">
+    <WebReferenceUrl Include="http://localhost:56385/Website/Species/AddSpecies.asmx">
       <RelPath>Web References\Species\</RelPath>
       <UrlBehavior>Static</UrlBehavior>
+      <UpdateFromURL>http://localhost:56385/Website/Species/AddSpecies.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>
+      </CachedAppSettingsObjectName>
+      <CachedSettingsPropName>
+      </CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://lhsdkter2/Terrarium/watson/watson.asmx">
+    <WebReferenceUrl Include="http://localhost:56385/Website/watson/watson.asmx">
       <RelPath>Web References\Watson\</RelPath>
       <UrlBehavior>Static</UrlBehavior>
+      <UpdateFromURL>http://localhost:56385/Website/watson/watson.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>
+      </CachedAppSettingsObjectName>
+      <CachedSettingsPropName>
+      </CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://localhost/terrarium/charts/chartservice.asmx">
+    <WebReferenceUrl Include="http://localhost:56385/Website/charts/chartservice.asmx">
       <RelPath>Web References\Charts\</RelPath>
       <UrlBehavior>Static</UrlBehavior>
+      <UpdateFromURL>http://localhost:56385/Website/charts/chartservice.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>
+      </CachedAppSettingsObjectName>
+      <CachedSettingsPropName>
+      </CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://localhost:1837/Website/BugReporting/BugService.asmx">
+    <WebReferenceUrl Include="http://localhost:56385/Website/BugReporting/BugService.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\BugReporting\</RelPath>
-      <UpdateFromURL>http://localhost:1837/Website/BugReporting/BugService.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost:56385/Website/BugReporting/BugService.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -253,10 +296,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Services_BugReporting_BugService</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://localhost:1837/Website/Reporting/UsageService.asmx">
+    <WebReferenceUrl Include="http://localhost:56385/Website/Reporting/UsageService.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\Usage\</RelPath>
-      <UpdateFromURL>http://localhost:1837/Website/Reporting/UsageService.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost:56385/Website/Reporting/UsageService.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -264,13 +307,31 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Services_Usage_UsageService</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://TerrariumServer/Terrarium/Discovery/DiscoveryDB.asmx">
+    <WebReferenceUrl Include="http://localhost:56385/Website/Discovery/DiscoveryDB.asmx">
       <RelPath>Web References\Discovery\</RelPath>
       <UrlBehavior>Static</UrlBehavior>
+      <UpdateFromURL>http://localhost:56385/Website/Discovery/DiscoveryDB.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>
+      </CachedAppSettingsObjectName>
+      <CachedSettingsPropName>
+      </CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://TerrariumServer/terrarium/messaging/messaging.asmx">
+    <WebReferenceUrl Include="http://localhost:56385/Website/messaging/messaging.asmx">
       <RelPath>Web References\Messaging\</RelPath>
       <UrlBehavior>Static</UrlBehavior>
+      <UpdateFromURL>http://localhost:56385/Website/messaging/messaging.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>
+      </CachedAppSettingsObjectName>
+      <CachedSettingsPropName>
+      </CachedSettingsPropName>
     </WebReferenceUrl>
     <WebReferences Include="Web References\" />
     <AppDesigner Include="Properties\" />

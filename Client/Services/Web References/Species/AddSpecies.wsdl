@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="Add">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="author" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="assemblyFullName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="assemblyCode" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddResult" type="tns:SpeciesServiceStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="SpeciesServiceStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="Success" />
+          <s:enumeration value="AlreadyExists" />
+          <s:enumeration value="ServerDown" />
+          <s:enumeration value="VersionIncompatible" />
+          <s:enumeration value="FiveMinuteThrottle" />
+          <s:enumeration value="TwentyFourHourThrottle" />
+          <s:enumeration value="PoliCheckSpeciesNameFailure" />
+          <s:enumeration value="PoliCheckAuthorNameFailure" />
+          <s:enumeration value="PoliCheckEmailFailure" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetExtinctSpecies">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="filter" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExtinctSpeciesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetExtinctSpeciesResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllSpecies">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="filter" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllSpeciesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllSpeciesResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSpeciesAssembly">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSpeciesAssemblyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSpeciesAssemblyResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReintroduceSpecies">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="peerGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReintroduceSpeciesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReintroduceSpeciesResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBlacklistedSpecies">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetBlacklistedSpeciesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBlacklistedSpeciesResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AddSoapIn">
+    <wsdl:part name="parameters" element="tns:Add" />
+  </wsdl:message>
+  <wsdl:message name="AddSoapOut">
+    <wsdl:part name="parameters" element="tns:AddResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetExtinctSpeciesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetExtinctSpecies" />
+  </wsdl:message>
+  <wsdl:message name="GetExtinctSpeciesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetExtinctSpeciesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllSpeciesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllSpecies" />
+  </wsdl:message>
+  <wsdl:message name="GetAllSpeciesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllSpeciesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSpeciesAssemblySoapIn">
+    <wsdl:part name="parameters" element="tns:GetSpeciesAssembly" />
+  </wsdl:message>
+  <wsdl:message name="GetSpeciesAssemblySoapOut">
+    <wsdl:part name="parameters" element="tns:GetSpeciesAssemblyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReintroduceSpeciesSoapIn">
+    <wsdl:part name="parameters" element="tns:ReintroduceSpecies" />
+  </wsdl:message>
+  <wsdl:message name="ReintroduceSpeciesSoapOut">
+    <wsdl:part name="parameters" element="tns:ReintroduceSpeciesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBlacklistedSpeciesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBlacklistedSpecies" />
+  </wsdl:message>
+  <wsdl:message name="GetBlacklistedSpeciesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBlacklistedSpeciesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SpeciesServiceSoap">
+    <wsdl:operation name="Add">
+      <wsdl:input message="tns:AddSoapIn" />
+      <wsdl:output message="tns:AddSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExtinctSpecies">
+      <wsdl:input message="tns:GetExtinctSpeciesSoapIn" />
+      <wsdl:output message="tns:GetExtinctSpeciesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllSpecies">
+      <wsdl:input message="tns:GetAllSpeciesSoapIn" />
+      <wsdl:output message="tns:GetAllSpeciesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSpeciesAssembly">
+      <wsdl:input message="tns:GetSpeciesAssemblySoapIn" />
+      <wsdl:output message="tns:GetSpeciesAssemblySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReintroduceSpecies">
+      <wsdl:input message="tns:ReintroduceSpeciesSoapIn" />
+      <wsdl:output message="tns:ReintroduceSpeciesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBlacklistedSpecies">
+      <wsdl:input message="tns:GetBlacklistedSpeciesSoapIn" />
+      <wsdl:output message="tns:GetBlacklistedSpeciesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SpeciesServiceSoap" type="tns:SpeciesServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Add">
+      <soap:operation soapAction="http://tempuri.org/Add" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExtinctSpecies">
+      <soap:operation soapAction="http://tempuri.org/GetExtinctSpecies" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllSpecies">
+      <soap:operation soapAction="http://tempuri.org/GetAllSpecies" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSpeciesAssembly">
+      <soap:operation soapAction="http://tempuri.org/GetSpeciesAssembly" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReintroduceSpecies">
+      <soap:operation soapAction="http://tempuri.org/ReintroduceSpecies" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBlacklistedSpecies">
+      <soap:operation soapAction="http://tempuri.org/GetBlacklistedSpecies" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SpeciesServiceSoap12" type="tns:SpeciesServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Add">
+      <soap12:operation soapAction="http://tempuri.org/Add" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExtinctSpecies">
+      <soap12:operation soapAction="http://tempuri.org/GetExtinctSpecies" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllSpecies">
+      <soap12:operation soapAction="http://tempuri.org/GetAllSpecies" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSpeciesAssembly">
+      <soap12:operation soapAction="http://tempuri.org/GetSpeciesAssembly" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReintroduceSpecies">
+      <soap12:operation soapAction="http://tempuri.org/ReintroduceSpecies" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBlacklistedSpecies">
+      <soap12:operation soapAction="http://tempuri.org/GetBlacklistedSpecies" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SpeciesService">
+    <wsdl:port name="SpeciesServiceSoap" binding="tns:SpeciesServiceSoap">
+      <soap:address location="http://localhost:56385/Website/Species/AddSpecies.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SpeciesServiceSoap12" binding="tns:SpeciesServiceSoap12">
+      <soap12:address location="http://localhost:56385/Website/Species/AddSpecies.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

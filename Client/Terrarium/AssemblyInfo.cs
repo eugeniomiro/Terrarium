@@ -11,5 +11,5 @@ using System.Security;
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(false)]
 
-[assembly: AssemblyTitle("Terrarium")]
+[assembly: AssemblyTitle("Terrarium 2.0")]
 [assembly: AssemblyDescription("")]

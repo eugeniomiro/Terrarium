@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="ReportError">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="data">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportErrorResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ReportErrorSoapIn">
+    <wsdl:part name="parameters" element="tns:ReportError" />
+  </wsdl:message>
+  <wsdl:message name="ReportErrorSoapOut">
+    <wsdl:part name="parameters" element="tns:ReportErrorResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WatsonServiceSoap">
+    <wsdl:operation name="ReportError">
+      <wsdl:input message="tns:ReportErrorSoapIn" />
+      <wsdl:output message="tns:ReportErrorSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WatsonServiceSoap" type="tns:WatsonServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ReportError">
+      <soap:operation soapAction="http://tempuri.org/ReportError" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WatsonServiceSoap12" type="tns:WatsonServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ReportError">
+      <soap12:operation soapAction="http://tempuri.org/ReportError" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WatsonService">
+    <wsdl:port name="WatsonServiceSoap" binding="tns:WatsonServiceSoap">
+      <soap:address location="http://localhost:56385/Website/watson/watson.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WatsonServiceSoap12" binding="tns:WatsonServiceSoap12">
+      <soap12:address location="http://localhost:56385/Website/watson/watson.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

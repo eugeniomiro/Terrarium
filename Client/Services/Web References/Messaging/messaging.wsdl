@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetWelcomeMessage">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetWelcomeMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWelcomeMessageResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMessageOfTheDay">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetMessageOfTheDayResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMessageOfTheDayResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLatestVersion">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetLatestVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLatestVersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetWelcomeMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWelcomeMessage" />
+  </wsdl:message>
+  <wsdl:message name="GetWelcomeMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWelcomeMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMessageOfTheDaySoapIn">
+    <wsdl:part name="parameters" element="tns:GetMessageOfTheDay" />
+  </wsdl:message>
+  <wsdl:message name="GetMessageOfTheDaySoapOut">
+    <wsdl:part name="parameters" element="tns:GetMessageOfTheDayResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLatestVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLatestVersion" />
+  </wsdl:message>
+  <wsdl:message name="GetLatestVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLatestVersionResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MessagingSoap">
+    <wsdl:operation name="GetWelcomeMessage">
+      <wsdl:input message="tns:GetWelcomeMessageSoapIn" />
+      <wsdl:output message="tns:GetWelcomeMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessageOfTheDay">
+      <wsdl:input message="tns:GetMessageOfTheDaySoapIn" />
+      <wsdl:output message="tns:GetMessageOfTheDaySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestVersion">
+      <wsdl:input message="tns:GetLatestVersionSoapIn" />
+      <wsdl:output message="tns:GetLatestVersionSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MessagingSoap" type="tns:MessagingSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetWelcomeMessage">
+      <soap:operation soapAction="http://tempuri.org/GetWelcomeMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessageOfTheDay">
+      <soap:operation soapAction="http://tempuri.org/GetMessageOfTheDay" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestVersion">
+      <soap:operation soapAction="http://tempuri.org/GetLatestVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MessagingSoap12" type="tns:MessagingSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetWelcomeMessage">
+      <soap12:operation soapAction="http://tempuri.org/GetWelcomeMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessageOfTheDay">
+      <soap12:operation soapAction="http://tempuri.org/GetMessageOfTheDay" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestVersion">
+      <soap12:operation soapAction="http://tempuri.org/GetLatestVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Messaging">
+    <wsdl:port name="MessagingSoap" binding="tns:MessagingSoap">
+      <soap:address location="http://localhost:56385/Website/messaging/messaging.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MessagingSoap12" binding="tns:MessagingSoap12">
+      <soap12:address location="http://localhost:56385/Website/messaging/messaging.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

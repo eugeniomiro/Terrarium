@@ -28,16 +28,7 @@ namespace Terrarium.Server
             {
                 if (_wordListFile == null)
                 {
-                    string temp = ConfigurationManager.AppSettings["WordListFile"];
-                    if (string.IsNullOrEmpty(temp))
-                    {
-                        temp = InstallRoot;
-                        if (temp != string.Empty)
-                        {
-                            temp += "invalidwordlist.txt";
-                        }
-                    }
-                    _wordListFile = temp;
+                    _wordListFile = ConfigurationManager.AppSettings["WordListFile"] ?? "invalidwordlist.txt";
                 }
 
                 return _wordListFile;
@@ -201,7 +192,7 @@ namespace Terrarium.Server
                 {
                     try
                     {
-                        int temp = Int32.Parse(ConfigurationManager.AppSettings["MillisecondsToRollupData"]);
+                        int temp = Int32.Parse(ConfigurationManager.AppSettings["MillisecondsToRollupData"] ?? "450000");
                         _millisecondsToRollupData = temp;
                     }
                     catch

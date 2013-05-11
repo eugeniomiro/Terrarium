@@ -4,18 +4,10 @@
 
 
 using System;
-using System.Web.Services;
-using System.Net;
-using System.IO;
-using System.Text;
-using System.Collections.Specialized;
-using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Web;
 using System.Diagnostics;
-using Terrarium.Server;
+using System.Web.Services;
 
 namespace Terrarium.Server
 {
@@ -55,7 +47,7 @@ namespace Terrarium.Server
     /// getting peer counts and lists, and registering a peer.
     /// </summary>
 
-    public class PeerDiscoveryService : WebService 
+    public class PeerDiscoveryService : WebService, IPeerDiscoveryService 
     {
         /// <summary>
         /// PerformanceCounter for all monitored performance parameters on the Discovery Web Service.
@@ -153,11 +145,11 @@ namespace Terrarium.Server
                 return 0;
             }
 
-            version = new Version(version).ToString(3);
-
             try 
             {
-                using(SqlConnection myConnection = new SqlConnection(ServerSettings.SpeciesDsn)) 
+                version = new Version(version).ToString(3);
+
+                using (SqlConnection myConnection = new SqlConnection(ServerSettings.SpeciesDsn)) 
                 {
                     myConnection.Open();
 
@@ -189,7 +181,36 @@ namespace Terrarium.Server
                 return 0;
             }
         }
-        
+
+        [WebMethod]
+        public int GetTotalNumPeers()
+        {
+            try
+            {
+                using (SqlConnection myConnection = new SqlConnection(ServerSettings.SpeciesDsn)) 
+                {
+                    myConnection.Open();
+
+                    SqlCommand mySqlCommand = new SqlCommand("TerrariumGrabTotalNumPeers", myConnection);
+                    mySqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    object count = mySqlCommand.ExecuteScalar();
+
+                    if(discoveryAllPerformanceCounter != null)
+                        discoveryAllPerformanceCounter.Increment();
+
+                    if(Convert.IsDBNull(count))
+                        return 0;
+                    else
+                        return (int) count;
+                }
+
+            }
+            catch (Exception)
+            {                
+                throw;
+            }
+        }
         
         /// <summary>
         /// Validates a peer connection.
@@ -294,58 +315,58 @@ namespace Terrarium.Server
             return RegisterPeerResult.Failure;
         }
 
-		/// <summary>
-		/// Checks to see if a specific version is disabled or not.  Used by the client at start up.
-		/// This allows an admin to totally shutdown a version.
-		/// </summary>
-		/// <param name="version">String specifying the version number.</param>
-		/// <param name="errorMessage">Out Parameter.  This is an admin message that the client will display if the version is sidabled</param>
-		/// <returns>True if the version is enabled, false otherwise</returns>
-		[WebMethod]
-		public bool IsVersionDisabled( string version, out string errorMessage )
-		{
-			try
-			{
-				using (SqlConnection connection = new SqlConnection(ServerSettings.SpeciesDsn))
-				{
-					connection.Open();
+        /// <summary>
+        /// Checks to see if a specific version is disabled or not.  Used by the client at start up.
+        /// This allows an admin to totally shutdown a version.
+        /// </summary>
+        /// <param name="version">String specifying the version number.</param>
+        /// <param name="errorMessage">Out Parameter.  This is an admin message that the client will display if the version is sidabled</param>
+        /// <returns>True if the version is enabled, false otherwise</returns>
+        [WebMethod]
+        public bool IsVersionDisabled( string version, out string errorMessage )
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ServerSettings.SpeciesDsn))
+                {
+                    connection.Open();
 
-					SqlCommand command = new SqlCommand("TerrariumIsVersionDisabled", connection);
-					command.CommandType = CommandType.StoredProcedure;
-					
-					string fullVersion = new Version(version).ToString(4);
-					version = new Version(version).ToString(3);
+                    SqlCommand command = new SqlCommand("TerrariumIsVersionDisabled", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    
+                    string fullVersion = new Version(version).ToString(4);
+                    version = new Version(version).ToString(3);
 
-					SqlParameter versionParameter = command.Parameters.Add("@Version", SqlDbType.VarChar, 255);
-					versionParameter.Value = version;
-					SqlParameter fullVersionParameter = command.Parameters.Add("@FullVersion", SqlDbType.VarChar, 255);
-					fullVersionParameter.Value = fullVersion;
+                    SqlParameter versionParameter = command.Parameters.Add("@Version", SqlDbType.VarChar, 255);
+                    versionParameter.Value = version;
+                    SqlParameter fullVersionParameter = command.Parameters.Add("@FullVersion", SqlDbType.VarChar, 255);
+                    fullVersionParameter.Value = fullVersion;
 
-					SqlDataReader reader = command.ExecuteReader();
+                    SqlDataReader reader = command.ExecuteReader();
 
-					if (reader.Read() == true)
-					{
-						bool disabled = Convert.ToBoolean(reader["Disabled"]);
-						if ( disabled == true )
-							errorMessage = Convert.ToString(reader["Message"]);
-						else
-							errorMessage = "";
-						return disabled;
-					}
-					else
-					{
-						errorMessage = "";
-						return true;
-					}
-				}
-			}
-			catch(Exception e)
-			{
-				InstallerInfo.WriteEventLog("CheckVersion", e.ToString());
-				errorMessage = "";
-				return true;
-			}
+                    if (reader.Read() == true)
+                    {
+                        bool disabled = Convert.ToBoolean(reader["Disabled"]);
+                        if ( disabled == true )
+                            errorMessage = Convert.ToString(reader["Message"]);
+                        else
+                            errorMessage = "";
+                        return disabled;
+                    }
+                    else
+                    {
+                        errorMessage = "";
+                        return true;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                InstallerInfo.WriteEventLog("CheckVersion", e.ToString());
+                errorMessage = "";
+                return true;
+            }
 
-		}
+        }
     }
 }

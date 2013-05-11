@@ -140,39 +140,45 @@ namespace Terrarium.Services.Usage {
         
         private string aliasField;
         
+        private int animalCountField;
+        
+        private string clrVersionField;
+        
         private string domainField;
         
         private string gameVersionField;
         
-        private string peerChannelField;
-        
-        private int peerCountField;
-        
-        private int animalCountField;
-        
-        private int maxAnimalCountField;
-        
-        private int worldWidthField;
-        
-        private int worldHeightField;
+        private string iPAddressField;
         
         private string machineNameField;
         
-        private string oSVersionField;
-        
-        private int processorCountField;
-        
-        private string clrVersionField;
-        
-        private int workingSetField;
+        private int maxAnimalCountField;
         
         private int maxWorkingSetField;
         
         private int minWorkingSetField;
         
+        private string oSVersionField;
+        
+        private string peerChannelField;
+        
+        private int peerCountField;
+        
+        private int processorCountField;
+        
         private int processorTimeInSecondsField;
         
         private System.DateTime processStartTimeField;
+        
+        private System.DateTime tickTimeField;
+        
+        private int usageMinutesField;
+        
+        private int workingSetField;
+        
+        private int worldHeightField;
+        
+        private int worldWidthField;
         
         /// <remarks/>
         public string Alias {
@@ -181,6 +187,26 @@ namespace Terrarium.Services.Usage {
             }
             set {
                 this.aliasField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int AnimalCount {
+            get {
+                return this.animalCountField;
+            }
+            set {
+                this.animalCountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ClrVersion {
+            get {
+                return this.clrVersionField;
+            }
+            set {
+                this.clrVersionField = value;
             }
         }
         
@@ -205,62 +231,12 @@ namespace Terrarium.Services.Usage {
         }
         
         /// <remarks/>
-        public string PeerChannel {
+        public string IPAddress {
             get {
-                return this.peerChannelField;
+                return this.iPAddressField;
             }
             set {
-                this.peerChannelField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int PeerCount {
-            get {
-                return this.peerCountField;
-            }
-            set {
-                this.peerCountField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int AnimalCount {
-            get {
-                return this.animalCountField;
-            }
-            set {
-                this.animalCountField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int MaxAnimalCount {
-            get {
-                return this.maxAnimalCountField;
-            }
-            set {
-                this.maxAnimalCountField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int WorldWidth {
-            get {
-                return this.worldWidthField;
-            }
-            set {
-                this.worldWidthField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int WorldHeight {
-            get {
-                return this.worldHeightField;
-            }
-            set {
-                this.worldHeightField = value;
+                this.iPAddressField = value;
             }
         }
         
@@ -275,42 +251,12 @@ namespace Terrarium.Services.Usage {
         }
         
         /// <remarks/>
-        public string OSVersion {
+        public int MaxAnimalCount {
             get {
-                return this.oSVersionField;
+                return this.maxAnimalCountField;
             }
             set {
-                this.oSVersionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int ProcessorCount {
-            get {
-                return this.processorCountField;
-            }
-            set {
-                this.processorCountField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ClrVersion {
-            get {
-                return this.clrVersionField;
-            }
-            set {
-                this.clrVersionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int WorkingSet {
-            get {
-                return this.workingSetField;
-            }
-            set {
-                this.workingSetField = value;
+                this.maxAnimalCountField = value;
             }
         }
         
@@ -335,6 +281,46 @@ namespace Terrarium.Services.Usage {
         }
         
         /// <remarks/>
+        public string OSVersion {
+            get {
+                return this.oSVersionField;
+            }
+            set {
+                this.oSVersionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PeerChannel {
+            get {
+                return this.peerChannelField;
+            }
+            set {
+                this.peerChannelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int PeerCount {
+            get {
+                return this.peerCountField;
+            }
+            set {
+                this.peerCountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ProcessorCount {
+            get {
+                return this.processorCountField;
+            }
+            set {
+                this.processorCountField = value;
+            }
+        }
+        
+        /// <remarks/>
         public int ProcessorTimeInSeconds {
             get {
                 return this.processorTimeInSecondsField;
@@ -351,6 +337,56 @@ namespace Terrarium.Services.Usage {
             }
             set {
                 this.processStartTimeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime TickTime {
+            get {
+                return this.tickTimeField;
+            }
+            set {
+                this.tickTimeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int UsageMinutes {
+            get {
+                return this.usageMinutesField;
+            }
+            set {
+                this.usageMinutesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int WorkingSet {
+            get {
+                return this.workingSetField;
+            }
+            set {
+                this.workingSetField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int WorldHeight {
+            get {
+                return this.worldHeightField;
+            }
+            set {
+                this.worldHeightField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int WorldWidth {
+            get {
+                return this.worldWidthField;
+            }
+            set {
+                this.worldWidthField = value;
             }
         }
     }
