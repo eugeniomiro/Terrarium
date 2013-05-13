@@ -3,12 +3,14 @@
 //------------------------------------------------------------------------------
 
 using OrganismBase;
+using System;
 
 namespace Terrarium.Renderer
 {
     /// <summary>
     ///  An object used by the Graphics Engine to render a creature.
     /// </summary>
+    [Serializable]
     public class TerrariumSprite
     {
         /// <summary>

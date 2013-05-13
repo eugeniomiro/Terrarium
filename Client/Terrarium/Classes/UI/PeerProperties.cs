@@ -76,8 +76,8 @@ namespace Terrarium.Client
 		public PeerProperties()
 		{
 			InitializeComponent();
-			this.titleBar.ShowMaximizeButton = false;
-			this.titleBar.ShowMinimizeButton = false;
+			this._titleBar.ShowMaximizeButton = false;
+			this._titleBar.ShowMinimizeButton = false;
 
 			this.BackColor = GlassStyleManager.Active.DialogColor;
 			this.serverButton_Click( this, new EventArgs() );
@@ -146,7 +146,7 @@ namespace Terrarium.Client
 			this.lblGraphicsBoundingBoxes = new Terrarium.Glass.GlassLabel();
 			this.lblGraphicsBackgroundGrid = new Terrarium.Glass.GlassLabel();
 			this.lblGraphicsDestinationLines = new Terrarium.Glass.GlassLabel();
-			this.bottomPanel.SuspendLayout();
+			this._bottomPanel.SuspendLayout();
 			this.performancePanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.tbrPerformanceSlider)).BeginInit();
 			this.serverPanel.SuspendLayout();
@@ -155,18 +155,18 @@ namespace Terrarium.Client
 			// 
 			// titleBar
 			// 
-			this.titleBar.Size = new System.Drawing.Size(409, 32);
-			this.titleBar.Title = "Game Settings";
-			this.titleBar.CloseClicked += new System.EventHandler(this.Cancel_Click);
+			this._titleBar.Size = new System.Drawing.Size(409, 32);
+			this._titleBar.Title = "Game Settings";
+			this._titleBar.CloseClicked += new System.EventHandler(this.Cancel_Click);
 			// 
 			// bottomPanel
 			// 
-			this.bottomPanel.Controls.Add(this.cancelButton);
-			this.bottomPanel.Controls.Add(this.okButton);
-			this.bottomPanel.Gradient.Bottom = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.bottomPanel.Gradient.Top = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-			this.bottomPanel.Location = new System.Drawing.Point(0, 374);
-			this.bottomPanel.Size = new System.Drawing.Size(409, 40);
+			this._bottomPanel.Controls.Add(this.cancelButton);
+			this._bottomPanel.Controls.Add(this.okButton);
+			this._bottomPanel.Gradient.Bottom = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this._bottomPanel.Gradient.Top = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+			this._bottomPanel.Location = new System.Drawing.Point(0, 374);
+			this._bottomPanel.Size = new System.Drawing.Size(409, 40);
 			// 
 			// chkCommunityRegionInfo
 			// 
@@ -811,12 +811,12 @@ namespace Terrarium.Client
 			this.Controls.SetChildIndex(this.graphicsButton, 0);
 			this.Controls.SetChildIndex(this.performanceButton, 0);
 			this.Controls.SetChildIndex(this.serverButton, 0);
-			this.Controls.SetChildIndex(this.bottomPanel, 0);
-			this.Controls.SetChildIndex(this.titleBar, 0);
+			this.Controls.SetChildIndex(this._bottomPanel, 0);
+			this.Controls.SetChildIndex(this._titleBar, 0);
 			this.Controls.SetChildIndex(this.performancePanel, 0);
 			this.Controls.SetChildIndex(this.serverPanel, 0);
 			this.Controls.SetChildIndex(this.graphicsPanel, 0);
-			this.bottomPanel.ResumeLayout(false);
+			this._bottomPanel.ResumeLayout(false);
 			this.performancePanel.ResumeLayout(false);
 			this.performancePanel.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.tbrPerformanceSlider)).EndInit();

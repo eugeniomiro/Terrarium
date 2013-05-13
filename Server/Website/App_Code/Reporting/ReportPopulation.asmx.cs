@@ -65,7 +65,7 @@ namespace Terrarium.Server
 	/// species populations, etc.
 	/// </summary>
 	
-	public class ReportingService : WebService 
+    public class ReportingService : WebService, IReportingService
 	{
 		private static Hashtable _lastGuid = new Hashtable();
 		private static PerformanceCounter reportingAllPerformanceCounter;
@@ -117,7 +117,7 @@ namespace Terrarium.Server
 		/// <returns>A possible value from the ReturnCode enumeration.</returns>
 		
 		[WebMethod(EnableSession=true)]
-		public int ReportPopulation(DataSet data, Guid guid, int currentTick) 
+        public ReturnCode ReportPopulation(DataSet data, Guid guid, int currentTick)
 		{
 			try 
 			{
@@ -157,7 +157,7 @@ namespace Terrarium.Server
 					}
 					if (foundBlacklisted == true)
 					{
-						return (int) ReturnCode.OrganismBlacklisted;
+                        return ReturnCode.OrganismBlacklisted;
 					}
 				}
 
@@ -165,12 +165,12 @@ namespace Terrarium.Server
 				if ( Throttle.Throttled(
 					Context.Request.ServerVariables["REMOTE_ADDR"].ToString(),
 					"ReportPopulation3Mins") )
-					return (int) ReturnCode.Success;
+                    return ReturnCode.Success;
 
 				if ( Throttle.Throttled(
 					Context.Request.ServerVariables["REMOTE_ADDR"].ToString(),
 					"ReportPopulation12Hour") )
-					return (int) ReturnCode.Success;
+                    return ReturnCode.Success;
 
 				Throttle.AddThrottle(
 					Context.Request.ServerVariables["REMOTE_ADDR"].ToString(),
@@ -190,7 +190,7 @@ namespace Terrarium.Server
 							DateTime.Now.AddHours(12)
 							);
 						_lastGuid[Context.Request.ServerVariables["REMOTE_ADDR"].ToString()] = guid;
-						return (int) ReturnCode.Success;
+                        return ReturnCode.Success;
 					}
 				}
 
@@ -247,11 +247,11 @@ namespace Terrarium.Server
 						{
 							if((int)parmReturnVal.Value == 1)
 							{
-								return (int) ReturnCode.NodeTimedOut;
+                                return ReturnCode.NodeTimedOut;
 							}
 							else if((int)parmReturnVal.Value == 2)
 							{
-								return (int) ReturnCode.NodeCorrupted;
+                                return ReturnCode.NodeCorrupted;
 							}
 							else
 							{
@@ -261,7 +261,7 @@ namespace Terrarium.Server
 								{
 									reportingAllFailedPerformanceCounter.Increment();
 								}
-								return (int) ReturnCode.ServerDown;
+                                return ReturnCode.ServerDown;
 							}						
 						}
 					}
@@ -357,9 +357,9 @@ namespace Terrarium.Server
 					reportingAllPerformanceCounter.Increment();
 				
 				if ( blackListedPeers )
-					return (int) ReturnCode.OrganismBlacklisted;
+                    return ReturnCode.OrganismBlacklisted;
             
-				return (int) ReturnCode.Success;
+                return ReturnCode.Success;
 			}
 			catch(Exception e) 
 			{            
@@ -375,7 +375,7 @@ namespace Terrarium.Server
 
 				// Return success instead of ServerDown because, if the server is getting hammered, Success will tell clients to 
 				// stop retrying, where ServerDown will tell them to keep doing it.
-				return (int) ReturnCode.Success;
+                return ReturnCode.Success;
 			}
 		}
 	}

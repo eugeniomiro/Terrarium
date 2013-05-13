@@ -303,13 +303,13 @@ namespace Terrarium.Game
 
                 switch (resultCode)
                 {
-                    case 3:
+                    case ReturnCode.NodeTimedOut:
                         _timedOut = true;
                         break;
-                    case 4:
+                    case ReturnCode.NodeCorrupted:
                         _nodeCorrupted = true;
                         break;
-                    case 5:
+                    case ReturnCode.OrganismBlacklisted:
                         _organismBlacklisted = true;
                         break;
                     default:

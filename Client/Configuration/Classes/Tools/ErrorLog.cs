@@ -50,15 +50,11 @@ namespace Terrarium.Tools
         /// <param name="e">Exception to handle</param>
         public static void LogHandledException(Exception e)
         {
-#if DEBUG
             try
             {
-                Trace.WriteLine("[DEBUGGING ONLY] HANDLED Exception: " + FormatException(e));
+                Trace.WriteLine("HANDLED Exception: " + FormatException(e));
             }
-            catch
-            {
-            }
-#endif
+            catch { }
         }
 
         /// <summary>

@@ -66,25 +66,25 @@ namespace Terrarium.Client
             this.dataGridTextBoxColumn12 = new System.Windows.Forms.DataGridTextBoxColumn();
             this.dataGridTextBoxColumn11 = new System.Windows.Forms.DataGridTextBoxColumn();
             this.resizeBar1 = new Terrarium.Forms.ResizeBar();
-            this.bottomPanel.SuspendLayout();
+            this._bottomPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // titleBar
             // 
-            this.titleBar.Size = new System.Drawing.Size(434, 32);
-            this.titleBar.Title = "Local Statistics";
-            this.titleBar.CloseClicked += new System.EventHandler(this.CloseForm_Click);
+            this._titleBar.Size = new System.Drawing.Size(434, 32);
+            this._titleBar.Title = "Local Statistics";
+            this._titleBar.CloseClicked += new System.EventHandler(this.CloseForm_Click);
             // 
             // bottomPanel
             // 
-            this.bottomPanel.Controls.Add(this.resizeBar1);
-            this.bottomPanel.Controls.Add(this.closeButton);
-            this.bottomPanel.Controls.Add(this.refreshButton);
-            this.bottomPanel.Gradient.Bottom = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.bottomPanel.Gradient.Top = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.bottomPanel.Location = new System.Drawing.Point(0, 328);
-            this.bottomPanel.Size = new System.Drawing.Size(434, 40);
+            this._bottomPanel.Controls.Add(this.resizeBar1);
+            this._bottomPanel.Controls.Add(this.closeButton);
+            this._bottomPanel.Controls.Add(this.refreshButton);
+            this._bottomPanel.Gradient.Bottom = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this._bottomPanel.Gradient.Top = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this._bottomPanel.Location = new System.Drawing.Point(0, 328);
+            this._bottomPanel.Size = new System.Drawing.Size(434, 40);
             // 
             // timerAutoRefresh
             // 
@@ -330,9 +330,9 @@ namespace Terrarium.Client
             this.Name = "ReportStats";
             this.Title = "Population Statistics";
             this.Controls.SetChildIndex(this.dataGrid1, 0);
-            this.Controls.SetChildIndex(this.titleBar, 0);
-            this.Controls.SetChildIndex(this.bottomPanel, 0);
-            this.bottomPanel.ResumeLayout(false);
+            this.Controls.SetChildIndex(this._titleBar, 0);
+            this.Controls.SetChildIndex(this._bottomPanel, 0);
+            this._bottomPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
             this.ResumeLayout(false);
 
@@ -346,15 +346,15 @@ namespace Terrarium.Client
         {
             InitializeComponent();
 
-            this.bottomPanel.Controls.Remove(this.resizeBar1);
-            this.bottomPanel.Controls.Add(this.resizeBar1);
+            this._bottomPanel.Controls.Remove(this.resizeBar1);
+            this._bottomPanel.Controls.Add(this.resizeBar1);
 
             // Initially refreshes form data.
             Refresh_Click(this.refreshButton, null);
 			this.timerAutoRefresh.Enabled = true;
 
-			this.titleBar.ShowMaximizeButton = false;
-			this.titleBar.ShowMinimizeButton = false;
+			this._titleBar.ShowMaximizeButton = false;
+			this._titleBar.ShowMinimizeButton = false;
         }
 
         /// <summary>

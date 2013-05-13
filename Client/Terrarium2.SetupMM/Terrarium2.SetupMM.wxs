@@ -109,6 +109,14 @@
         <Component Id="owcEA21443091880BE51FB47C05362754FE" Guid="17d9f8a3-2ead-d73a-dd47-653dbdbcb083">
           <File Id="owfEA21443091880BE51FB47C05362754FE" Source="$(var.SourceDir)\Terrarium.exe" KeyPath="yes" />
         </Component>
+        <Component Id="owcB48734BF512C42C84BD691A565099046" Guid="b994f75a-d77b-395a-36fc-1baf068e63d9">
+          <File Id="owfB48734BF512C42C84BD691A565099046" Source="$(var.SourceDir)\Terrarium.exe.config" KeyPath="yes" />
+        </Component>
+      </Directory>
+      <Directory Id="ProgramMenuFolder" >
+        <Component Id="ProgramsFolderTerrariumShorCut" Guid="d2c456bb-3063-44db-940c-1c54cec92a7b">
+          <Shortcut Id="ProgramsFolderTerrariumShorcut" Name="Terrarium 2.0" Target="[INSTALLDIR]Terrarium.exe" ></Shortcut>
+        </Component>
       </Directory>
     </Directory>
   </Module>

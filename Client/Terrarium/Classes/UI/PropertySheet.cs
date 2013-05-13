@@ -33,8 +33,8 @@ namespace Terrarium.Client
             // Required for Windows Form Designer support
             //
             InitializeComponent();
-			this.titleBar.ShowMaximizeButton = false;
-			this.titleBar.ShowMinimizeButton = false;
+			this._titleBar.ShowMaximizeButton = false;
+			this._titleBar.ShowMinimizeButton = false;
         }
 
         protected override void Dispose(bool disposing)
@@ -56,22 +56,22 @@ namespace Terrarium.Client
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.closeButton = new Terrarium.Glass.GlassButton();
             this.glassLabel1 = new Terrarium.Glass.GlassLabel();
-            this.bottomPanel.SuspendLayout();
+            this._bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // titleBar
             // 
-            this.titleBar.Size = new System.Drawing.Size(392, 32);
-            this.titleBar.Title = "Creature Details";
-            this.titleBar.CloseClicked += new System.EventHandler(this.CloseForm_Click);
+            this._titleBar.Size = new System.Drawing.Size(392, 32);
+            this._titleBar.Title = "Creature Details";
+            this._titleBar.CloseClicked += new System.EventHandler(this.CloseForm_Click);
             // 
             // bottomPanel
             // 
-            this.bottomPanel.Controls.Add(this.closeButton);
-            this.bottomPanel.Gradient.Bottom = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.bottomPanel.Gradient.Top = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.bottomPanel.Location = new System.Drawing.Point(0, 376);
-            this.bottomPanel.Size = new System.Drawing.Size(392, 40);
+            this._bottomPanel.Controls.Add(this.closeButton);
+            this._bottomPanel.Gradient.Bottom = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this._bottomPanel.Gradient.Top = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this._bottomPanel.Location = new System.Drawing.Point(0, 376);
+            this._bottomPanel.Size = new System.Drawing.Size(392, 40);
             // 
             // comboBox
             // 
@@ -155,12 +155,12 @@ namespace Terrarium.Client
             this.Title = "Organism Properties";
             this.Closed += new System.EventHandler(this.PropertySheet_Closed);
             this.Load += new System.EventHandler(this.PropertySheet_Load);
-            this.Controls.SetChildIndex(this.bottomPanel, 0);
-            this.Controls.SetChildIndex(this.titleBar, 0);
+            this.Controls.SetChildIndex(this._bottomPanel, 0);
+            this.Controls.SetChildIndex(this._titleBar, 0);
             this.Controls.SetChildIndex(this.comboBox, 0);
             this.Controls.SetChildIndex(this.propertyGrid, 0);
             this.Controls.SetChildIndex(this.glassLabel1, 0);
-            this.bottomPanel.ResumeLayout(false);
+            this._bottomPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

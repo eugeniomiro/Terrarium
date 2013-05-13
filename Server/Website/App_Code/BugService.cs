@@ -16,7 +16,7 @@ using System.Web.Services.Protocols;
 
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    public class BugService : System.Web.Services.WebService
+    public class BugService : WebService, IBugService
     {
         [WebMethod]
         public void ReportBug(Bug bug)

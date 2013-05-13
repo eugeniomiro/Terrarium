@@ -444,14 +444,19 @@
              control boxes.
             </summary>
         </member>
-        <member name="F:Terrarium.Forms.TerrariumForm.titleBar">
+        <member name="F:Terrarium.Forms.TerrariumForm._titleBar">
             <summary>
-            
+            TitleBar backing store
             </summary>
         </member>
-        <member name="F:Terrarium.Forms.TerrariumForm.bottomPanel">
+        <member name="F:Terrarium.Forms.TerrariumForm._bottomPanel">
             <summary>
-            
+            BottomPanel backing store
+            </summary>
+        </member>
+        <member name="F:Terrarium.Forms.TerrariumForm._dialogDescriptionLabel">
+            <summary>
+            Description Backing Store
             </summary>
         </member>
         <member name="M:Terrarium.Forms.TerrariumForm.#ctor">

@@ -21,7 +21,7 @@ namespace Terrarium.Server
 	/// <summary>
 	/// Enables logging of errors from Terrarium clients.
 	/// </summary>
-	public class WatsonService : WebService 
+	public class WatsonService : WebService, IWatsonService
 	{
 		/*
 			Method:      ReportError

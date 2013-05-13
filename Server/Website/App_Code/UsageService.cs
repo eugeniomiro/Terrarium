@@ -10,7 +10,7 @@ namespace Terrarium.Server
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    public class UsageService : WebService
+    public class UsageService : WebService, IUsageService
     {
         [WebMethod]
         public void ReportUsage(UsageData data)

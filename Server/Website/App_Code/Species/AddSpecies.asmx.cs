@@ -54,7 +54,7 @@ namespace Terrarium.Server
         /// required to insert new creatures into the EcoSystem, and get
         /// creatures from the server during a reintroduction.
         /// </summary>
-        public class SpeciesService : WebService 
+        public class SpeciesService : WebService, ISpeciesService
         {
             private static PerformanceCounter speciesAllPerformanceCounter;
             private static PerformanceCounter speciesAllFailedPerformanceCounter;

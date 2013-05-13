@@ -16,7 +16,7 @@ namespace Terrarium.Server.Messaging
 	/// <summary>
 	/// Summary description for Messaging.
 	/// </summary>
-	public class Messaging : System.Web.Services.WebService
+	public class Messaging : WebService, IMessaging
 	{
 		public Messaging()
 		{

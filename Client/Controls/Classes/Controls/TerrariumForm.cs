@@ -3,13 +3,8 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
 using System.Reflection;
-
+using System.Windows.Forms;
 using Terrarium.Glass;
 
 namespace Terrarium.Forms
@@ -20,19 +15,20 @@ namespace Terrarium.Forms
 	///  a basic font, dragging functionality, and Terrarium style
 	///  control boxes.
 	/// </summary>
-	public class TerrariumForm : System.Windows.Forms.Form
+    public class TerrariumForm : Form
 	{
-
 		/// <summary>
-		/// 
+        /// TitleBar backing store
 		/// </summary>
-        protected Terrarium.Forms.GlassTitleBar titleBar;
+        protected   GlassTitleBar   _titleBar;
         /// <summary>
-        /// 
+        /// BottomPanel backing store
         /// </summary>
-        protected GlassPanel bottomPanel;
-        
-        private GlassLabel dialogDescriptionLabel;
+        protected   GlassPanel      _bottomPanel;
+        /// <summary>
+        /// Description Backing Store
+        /// </summary>
+        private     GlassLabel      _dialogDescriptionLabel;
 
         /// <summary>
         ///  Creates a default TerrariumForm.  The TerrariumForm should be extended
@@ -46,7 +42,7 @@ namespace Terrarium.Forms
 			{
 				Assembly thisAssembly = typeof(TerrariumForm).Assembly;
 
-				this.Text = "Terrarium v" + thisAssembly.GetName().Version.ToString(2);
+                this.Text = "Terrarium v" + thisAssembly.GetName().Version.ToString(3);
 			}
 			catch{}
 
@@ -61,58 +57,58 @@ namespace Terrarium.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TerrariumForm));
-            this.titleBar = new Terrarium.Forms.GlassTitleBar();
-            this.dialogDescriptionLabel = new Terrarium.Glass.GlassLabel();
-            this.bottomPanel = new Terrarium.Glass.GlassPanel();
+            this._titleBar = new Terrarium.Forms.GlassTitleBar();
+            this._dialogDescriptionLabel = new Terrarium.Glass.GlassLabel();
+            this._bottomPanel = new Terrarium.Glass.GlassPanel();
             this.SuspendLayout();
             // 
             // titleBar
             // 
-            this.titleBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.titleBar.Font = new System.Drawing.Font("Verdana", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titleBar.ForeColor = System.Drawing.Color.White;
-            this.titleBar.Image = ((System.Drawing.Image)(resources.GetObject("titleBar.Image")));
-            this.titleBar.Location = new System.Drawing.Point(0, 0);
-            this.titleBar.Name = "titleBar";
-            this.titleBar.Size = new System.Drawing.Size(261, 32);
-            this.titleBar.TabIndex = 13;
-            this.titleBar.Title = "Form Title";
+            this._titleBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this._titleBar.Font = new System.Drawing.Font("Verdana", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._titleBar.ForeColor = System.Drawing.Color.White;
+            this._titleBar.Image = ((System.Drawing.Image)(resources.GetObject("titleBar.Image")));
+            this._titleBar.Location = new System.Drawing.Point(0, 0);
+            this._titleBar.Name = "titleBar";
+            this._titleBar.Size = new System.Drawing.Size(261, 32);
+            this._titleBar.TabIndex = 13;
+            this._titleBar.Title = "Form Title";
             // 
             // dialogDescriptionLabel
             // 
-            this.dialogDescriptionLabel.BackColor = System.Drawing.Color.Transparent;
-            this.dialogDescriptionLabel.Font = new System.Drawing.Font("Verdana", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dialogDescriptionLabel.ForeColor = System.Drawing.Color.White;
-            this.dialogDescriptionLabel.Location = new System.Drawing.Point(12, 35);
-            this.dialogDescriptionLabel.Name = "dialogDescriptionLabel";
-            this.dialogDescriptionLabel.NoWrap = false;
-            this.dialogDescriptionLabel.Size = new System.Drawing.Size(237, 32);
-            this.dialogDescriptionLabel.TabIndex = 14;
-            this.dialogDescriptionLabel.Text = "Form Title";
+            this._dialogDescriptionLabel.BackColor = System.Drawing.Color.Transparent;
+            this._dialogDescriptionLabel.Font = new System.Drawing.Font("Verdana", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._dialogDescriptionLabel.ForeColor = System.Drawing.Color.White;
+            this._dialogDescriptionLabel.Location = new System.Drawing.Point(12, 35);
+            this._dialogDescriptionLabel.Name = "dialogDescriptionLabel";
+            this._dialogDescriptionLabel.NoWrap = false;
+            this._dialogDescriptionLabel.Size = new System.Drawing.Size(237, 32);
+            this._dialogDescriptionLabel.TabIndex = 14;
+            this._dialogDescriptionLabel.Text = "Form Title";
             // 
             // bottomPanel
             // 
-            this.bottomPanel.Borders = ((Terrarium.Glass.GlassBorders)((((Terrarium.Glass.GlassBorders.Left | Terrarium.Glass.GlassBorders.Top)
+            this._bottomPanel.Borders = ((Terrarium.Glass.GlassBorders)((((Terrarium.Glass.GlassBorders.Left | Terrarium.Glass.GlassBorders.Top)
                         | Terrarium.Glass.GlassBorders.Right)
                         | Terrarium.Glass.GlassBorders.Bottom)));
-            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottomPanel.Gradient.Bottom = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.bottomPanel.Gradient.Top = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.bottomPanel.IsGlass = true;
-            this.bottomPanel.IsSunk = false;
-            this.bottomPanel.Location = new System.Drawing.Point(0, 302);
-            this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(261, 40);
-            this.bottomPanel.TabIndex = 15;
-            this.bottomPanel.UseStyles = true;
+            this._bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this._bottomPanel.Gradient.Bottom = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this._bottomPanel.Gradient.Top = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this._bottomPanel.IsGlass = true;
+            this._bottomPanel.IsSunk = false;
+            this._bottomPanel.Location = new System.Drawing.Point(0, 302);
+            this._bottomPanel.Name = "bottomPanel";
+            this._bottomPanel.Size = new System.Drawing.Size(261, 40);
+            this._bottomPanel.TabIndex = 15;
+            this._bottomPanel.UseStyles = true;
             // 
             // TerrariumForm
             // 
             this.BackColor = System.Drawing.Color.Fuchsia;
             this.ClientSize = new System.Drawing.Size(261, 342);
-            this.Controls.Add(this.bottomPanel);
-            this.Controls.Add(this.dialogDescriptionLabel);
-            this.Controls.Add(this.titleBar);
+            this.Controls.Add(this._bottomPanel);
+            this.Controls.Add(this._dialogDescriptionLabel);
+            this.Controls.Add(this._titleBar);
             this.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -145,11 +141,11 @@ namespace Terrarium.Forms
 		{
 			get
 			{
-				return this.titleBar.Text;
+                return _titleBar.Text;
 			}
 			set
 			{
-				this.titleBar.Text = value;
+                _titleBar.Text = value;
 			}
 		}
 
@@ -160,11 +156,11 @@ namespace Terrarium.Forms
 		{
 			get
 			{
-				return this.dialogDescriptionLabel.Text;
+                return _dialogDescriptionLabel.Text;
 			}
 			set
 			{
-				this.dialogDescriptionLabel.Text = value;
+                _dialogDescriptionLabel.Text = value;
 			}
 		}
 
@@ -175,7 +171,7 @@ namespace Terrarium.Forms
 		{
 			get
 			{
-				return this.titleBar;
+                return _titleBar;
 			}
 		}
 
@@ -186,7 +182,7 @@ namespace Terrarium.Forms
 		{
 			get
 			{
-				return this.bottomPanel;
+                return _bottomPanel;
 			}
 		}
 
@@ -197,7 +193,7 @@ namespace Terrarium.Forms
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint (e);
-			Terrarium.Glass.GlassHelper.DrawBorder( this.ClientRectangle, GlassBorders.All, e.Graphics );
+            GlassHelper.DrawBorder( this.ClientRectangle, GlassBorders.All, e.Graphics );
 		}
 
         /// <summary>
@@ -207,7 +203,7 @@ namespace Terrarium.Forms
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            this.dialogDescriptionLabel.Width = this.Width - 24;
+            _dialogDescriptionLabel.Width = this.Width - 24;
         }
 	}
 }

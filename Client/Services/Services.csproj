@@ -218,6 +218,9 @@
     </None>
     <None Include="Web References\Reporting\reportpopulation.disco" />
     <None Include="Web References\Reporting\reportpopulation.wsdl" />
+    <None Include="Web References\Reporting\ReturnCode.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\Species\AddSpecies.disco" />
     <None Include="Web References\Species\AddSpecies.wsdl" />
     <None Include="Web References\Species\Reference.map">

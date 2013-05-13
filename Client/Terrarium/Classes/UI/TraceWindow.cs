@@ -42,11 +42,11 @@ namespace Terrarium.Client
             //
             InitializeComponent();
 
-            this.bottomPanel.Controls.Remove(this.resizeBar1);
-            this.bottomPanel.Controls.Add(this.resizeBar1);
+            this._bottomPanel.Controls.Remove(this.resizeBar1);
+            this._bottomPanel.Controls.Add(this.resizeBar1);
 
-			this.titleBar.ShowMaximizeButton = false;
-			this.titleBar.ShowMinimizeButton = false;
+			this._titleBar.ShowMaximizeButton = false;
+			this._titleBar.ShowMinimizeButton = false;
 
 			this.BackColor = Terrarium.Glass.GlassStyleManager.Active.DialogColor;
 
@@ -79,23 +79,23 @@ namespace Terrarium.Client
             this.glassLabel5 = new Terrarium.Glass.GlassLabel();
             this.glassLabel6 = new Terrarium.Glass.GlassLabel();
             this.resizeBar1 = new Terrarium.Forms.ResizeBar();
-            this.bottomPanel.SuspendLayout();
+            this._bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // titleBar
             // 
-            this.titleBar.Size = new System.Drawing.Size(488, 32);
-            this.titleBar.Title = "Trace Window";
-            this.titleBar.CloseClicked += new System.EventHandler(this.CloseForm_Click);
+            this._titleBar.Size = new System.Drawing.Size(488, 32);
+            this._titleBar.Title = "Trace Window";
+            this._titleBar.CloseClicked += new System.EventHandler(this.CloseForm_Click);
             // 
             // bottomPanel
             // 
-            this.bottomPanel.Controls.Add(this.resizeBar1);
-            this.bottomPanel.Controls.Add(this.closeButton);
-            this.bottomPanel.Gradient.Bottom = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.bottomPanel.Gradient.Top = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.bottomPanel.Location = new System.Drawing.Point(0, 352);
-            this.bottomPanel.Size = new System.Drawing.Size(488, 40);
+            this._bottomPanel.Controls.Add(this.resizeBar1);
+            this._bottomPanel.Controls.Add(this.closeButton);
+            this._bottomPanel.Gradient.Bottom = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this._bottomPanel.Gradient.Top = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this._bottomPanel.Location = new System.Drawing.Point(0, 352);
+            this._bottomPanel.Size = new System.Drawing.Size(488, 40);
             // 
             // showTimings
             // 
@@ -286,8 +286,8 @@ namespace Terrarium.Client
             this.Title = "Trace Window";
             this.Closing += new System.ComponentModel.CancelEventHandler(this.Form_Closing);
             this.Load += new System.EventHandler(this.Form_Load);
-            this.Controls.SetChildIndex(this.bottomPanel, 0);
-            this.Controls.SetChildIndex(this.titleBar, 0);
+            this.Controls.SetChildIndex(this._bottomPanel, 0);
+            this.Controls.SetChildIndex(this._titleBar, 0);
             this.Controls.SetChildIndex(this.showSystemTraces, 0);
             this.Controls.SetChildIndex(this.showTimings, 0);
             this.Controls.SetChildIndex(this.showTraces, 0);
@@ -295,7 +295,7 @@ namespace Terrarium.Client
             this.Controls.SetChildIndex(this.glassLabel4, 0);
             this.Controls.SetChildIndex(this.glassLabel5, 0);
             this.Controls.SetChildIndex(this.glassLabel6, 0);
-            this.bottomPanel.ResumeLayout(false);
+            this._bottomPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
