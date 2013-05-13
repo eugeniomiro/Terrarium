@@ -49,54 +49,6 @@ TD
 -->
 
 </style>
-
-    <script language="JavaScript">
-<!--
-runtimeVersion = "2.0.0";
-directLink = "Terrarium.application";
-
-
-function window::onload()
-{
-  if (HasRuntimeVersion(runtimeVersion))
-  {
-    InstallButton.href = directLink;
-    BootstrapperSection.style.display = "none";
-  }
-}
-function HasRuntimeVersion(v)
-{
-  var va = GetVersion(v);
-  var i;
-  var a = navigator.userAgent.match(/\.NET CLR [0-9.]+/g);
-  if (a != null)
-    for (i = 0; i < a.length; ++i)
-      if (CompareVersions(va, GetVersion(a[i])) <= 0)
-		return true;
-  return false;
-}
-function GetVersion(v)
-{
-  var a = v.match(/([0-9]+)\.([0-9]+)\.([0-9]+)/i);
-    return a.slice(1);
-}
-function CompareVersions(v1, v2)
-{
-  for (i = 0; i < v1.length; ++i)
-  {
-    var n1 = new Number(v1[i]);
-    var n2 = new Number(v2[i]);
-    if (n1 < n2)
-      return -1;
-    if (n1 > n2)
-      return 1;
-  }
-  return 0;
-}
-
--->
-    </script>
-
 </head>
 <body>
     <!-- BEGIN CENTER ALIGNMENT TABLE -->
@@ -139,8 +91,7 @@ function CompareVersions(v1, v2)
                                                                     Install Terrarium</div>
                                                                 <br />
                                                                 <div align="left">
-                                                                    From this page you can install Terrarium by using Click-Once. Once deployed,
-                                                                    the application will keep itself updated automatically.</div>
+                                                                    From this page you can install Terrarium downloading it's setup package.</div>
                                                                 <br />
                                                                 <table width="100%" cellpadding="0" cellspacing="2" border="0">
                                                                     <!-- Begin Dialog -->
@@ -157,7 +108,7 @@ function CompareVersions(v1, v2)
                                                                                                     <spacer type="block" width="10" />
                                                                                                 </td>
                                                                                                 <td style="font-size: 0.75em;">
-                                                                                                    Terrarium Whidbey</td>
+                                                                                                    Terrarium 2.0</td>
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td style="font-size: 0.75em;">
@@ -166,7 +117,7 @@ function CompareVersions(v1, v2)
                                                                                                     <spacer type="block" width="10" />
                                                                                                 </td>
                                                                                                 <td style="font-size: 0.75em;">
-                                                                                                    2.0.50522.8</td>
+                                                                                                    2.1.4879</td>
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td style="font-size: 0.75em;">
@@ -175,7 +126,7 @@ function CompareVersions(v1, v2)
                                                                                                     <spacer type="block" width="10" />
                                                                                                 </td>
                                                                                                 <td style="font-size: 0.75em;">
-                                                                                                    Terrarium Whidbey</td>
+                                                                                                    Eugenio Miró</td>
                                                                                             </tr>
                                                                                         </table>
                                                                                         <!-- End AppInfo -->
@@ -191,15 +142,12 @@ function CompareVersions(v1, v2)
                                                                                                     &nbsp;</td>
                                                                                                 <td style="font-size: 0.75em;">
                                                                                                     <ul>
-                                                                                                        <li>.NET Framework 2.0 Beta</li>
+                                                                                                        <li>.NET Framework 3.5</li>
                                                                                                     </ul>
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td style="font-size: 0.75em;" colspan="2">
-                                                                                                    If these components are already installed, you can <span class="JustThisApp"><a href="Terrarium.application">
-                                                                                                        launch</a></span> the application now. Otherwise, click the button below to
-                                                                                                    install the prerequisites and run the application.
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tr>
@@ -231,7 +179,7 @@ function CompareVersions(v1, v2)
                                                                                                                                 <spacer type="block" width="20" height="1" />
                                                                                                                             </td>
                                                                                                                             <td style="font-size: 0.70em; height: 24px;">
-                                                                                                                                <a id="InstallButton" href="setup.exe"><b>Install</b></a>
+                                                                                                                                <a id="InstallButton" href="Terrarium2.Setup.msi"><b>Install</b></a>
                                                                                                                             </td>
                                                                                                                             <td width="20">
                                                                                                                                 <spacer type="block" width="20" height="1" />
