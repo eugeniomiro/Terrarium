@@ -6,14 +6,14 @@ using System.Text;
 
 namespace Plant
 {
-    // It's an herbivore
+    // It's a plant
     [Carnivore(false)]
     // This value must be between 24 and 48, 24 means faster reproduction
     // while 48 would give more defense and attack power
     // Make it smaller for reproduction
     [MatureSize(25)]
-    // AnimalSkin = AnimalSkinFamilyEnum.Beetle, you can be a Beetle
-    // an Ant, a Scorpion, an Inchworm, or a Spider
+    // PlantSkin = PlantSkinFamily.Plant, you can be one of the plants,
+    // Plant, PlantOne, PlantTwo or PlantThree
     // MarkingColor = KnownColor.Red, you can choose to mark your
     // creature with a color.  This does not affect appearance in
     // the game.
