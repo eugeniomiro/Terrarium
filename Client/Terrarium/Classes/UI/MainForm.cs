@@ -2,7 +2,6 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                               
 //------------------------------------------------------------------------------
 
-using DxVBLib;
 using Microsoft.Win32;
 using OrganismBase;
 using System;
@@ -108,8 +107,8 @@ namespace Terrarium.Client
         private const string emptyEcosystemServerDownMessage = "The Terrarium server is experiencing temporary difficulties.  This is probably why you aren't receiving any animals.";
         private const string emptyTerrariumMessage = "Introduce animals into your terrarium by clicking on the 'Introduce Animal' button below.";
 
-        private System.Windows.Forms.MenuItem menuItem1;
-        private System.Windows.Forms.NotifyIcon taskBar;
+        private MenuItem        menuItem1;
+        private NotifyIcon      taskBar;
 
         private System.Windows.Forms.Timer screenSaverTimer = null;
 

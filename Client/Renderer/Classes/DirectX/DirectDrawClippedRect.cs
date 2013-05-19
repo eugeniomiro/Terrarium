@@ -18,11 +18,11 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  The destination rectangle
         /// </summary>
-        public RECT Destination;
+        public DxVBLib.RECT Destination;
         /// <summary>
         ///  The source rectangle
         /// </summary>
-        public RECT Source;
+        public DxVBLib.RECT Source;
         /// <summary>
         ///  Has the sprite been clipped outside of the view
         /// </summary>

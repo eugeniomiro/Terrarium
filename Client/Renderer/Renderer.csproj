@@ -18,7 +18,7 @@
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
     <OutputType>Library</OutputType>
-    <RootNamespace>Terrarium.Graphics</RootNamespace>
+    <RootNamespace>Terrarium.Renderer</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <StartupObject>
     </StartupObject>
@@ -220,6 +220,7 @@
       <SubType>Code</SubType>
     </Compile>
     <AppDesigner Include="Properties\" />
+    <Compile Include="RECT.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\OrganismBase\development.snk">

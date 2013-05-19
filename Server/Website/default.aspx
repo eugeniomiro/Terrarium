@@ -104,6 +104,7 @@
                                                                     <li style="margin-bottom: 6;"><b>64-bit is not supported.</b><br />
                                                                         Unfortunately running on 64-bit machines is not supported at this time. This has
                                                                         to do with the COM-Interop that Terrarium uses for interfacing with DirectDraw.</li>
+                                                                    <li style="margin-bottom: 6;"><a href="Publish">Download</a></li>
                                                                 </ul>
                                                             </td>
                                                         </tr>

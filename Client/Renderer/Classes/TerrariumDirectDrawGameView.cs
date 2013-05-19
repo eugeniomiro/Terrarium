@@ -1,8 +1,6 @@
 //------------------------------------------------------------------------------  
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                             
 //------------------------------------------------------------------------------
-
-using DxVBLib;
 using OrganismBase;
 using System;
 using System.Collections;
@@ -487,9 +485,9 @@ namespace Terrarium.Renderer
                 {
                     ManagedDirectX.DirectDraw.SetCooperativeLevel(
                         Parent.Handle.ToInt32(),
-                        CONST_DDSCLFLAGS.DDSCL_FULLSCREEN |
-                        CONST_DDSCLFLAGS.DDSCL_EXCLUSIVE |
-                        CONST_DDSCLFLAGS.DDSCL_ALLOWREBOOT);
+                        DxVBLib.CONST_DDSCLFLAGS.DDSCL_FULLSCREEN |
+                        DxVBLib.CONST_DDSCLFLAGS.DDSCL_EXCLUSIVE |
+                        DxVBLib.CONST_DDSCLFLAGS.DDSCL_ALLOWREBOOT);
 
                     ManagedDirectX.DirectDraw.SetDisplayMode(640, 480, 16, 0, 0);
                     CreateFullScreenSurfaces();
@@ -499,7 +497,7 @@ namespace Terrarium.Renderer
                     Parent.Show();
                     ManagedDirectX.DirectDraw.SetCooperativeLevel(
                         Parent.Handle.ToInt32(),
-                        CONST_DDSCLFLAGS.DDSCL_NORMAL);
+                        DxVBLib.CONST_DDSCLFLAGS.DDSCL_NORMAL);
                     CreateWindowedSurfaces();
                 }
 
@@ -519,9 +517,9 @@ namespace Terrarium.Renderer
         /// <returns>True if the surfaces are created, otherwise false.</returns>
         public bool CreateWindowedSurfaces()
         {
-            var tempDescr = new DDSURFACEDESC2();
-            tempDescr.lFlags = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS;
-            tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE;
+            var tempDescr = new DxVBLib.DDSURFACEDESC2();
+            tempDescr.lFlags = DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_CAPS;
+            tempDescr.ddsCaps.lCaps = DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE;
             ScreenSurface = new DirectDrawSurface(tempDescr);
 
             Clipper = ManagedDirectX.DirectDraw.CreateClipper(0);
@@ -534,31 +532,31 @@ namespace Terrarium.Renderer
                 var workSurfaceWidth = Math.Min(Width, actualsize.Right);
                 var workSurfaceHeight = Math.Min(Height, actualsize.Bottom);
 
-                tempDescr = new DDSURFACEDESC2();
-                tempDescr.lFlags = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS |
-                                   CONST_DDSURFACEDESCFLAGS.DDSD_HEIGHT |
-                                   CONST_DDSURFACEDESCFLAGS.DDSD_WIDTH;
-                tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_OFFSCREENPLAIN;
+                tempDescr = new DxVBLib.DDSURFACEDESC2();
+                tempDescr.lFlags = DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_CAPS |
+                                   DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_HEIGHT |
+                                   DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_WIDTH;
+                tempDescr.ddsCaps.lCaps = DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_OFFSCREENPLAIN;
                 tempDescr.lWidth = workSurfaceWidth;
                 tempDescr.lHeight = workSurfaceHeight;
                 BackBufferSurface = new DirectDrawSurface(tempDescr);
                 Trace.WriteLine("Back Buffer Surface InVideo? " + BackBufferSurface.InVideo);
 
-                tempDescr = new DDSURFACEDESC2();
-                tempDescr.lFlags = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS |
-                                   CONST_DDSURFACEDESCFLAGS.DDSD_HEIGHT |
-                                   CONST_DDSURFACEDESCFLAGS.DDSD_WIDTH;
-                tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_OFFSCREENPLAIN;
+                tempDescr = new DxVBLib.DDSURFACEDESC2();
+                tempDescr.lFlags = DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_CAPS |
+                                   DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_HEIGHT |
+                                   DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_WIDTH;
+                tempDescr.ddsCaps.lCaps = DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_OFFSCREENPLAIN;
                 tempDescr.lWidth = workSurfaceWidth;
                 tempDescr.lHeight = workSurfaceHeight;
                 backgroundSurface = new DirectDrawSurface(tempDescr);
                 Trace.WriteLine("Background Surface InVideo? " + backgroundSurface.InVideo);
 
-                tempDescr = new DDSURFACEDESC2();
-                tempDescr.lFlags = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS |
-                                   CONST_DDSURFACEDESCFLAGS.DDSD_HEIGHT |
-                                   CONST_DDSURFACEDESCFLAGS.DDSD_WIDTH;
-                tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_OFFSCREENPLAIN;
+                tempDescr = new DxVBLib.DDSURFACEDESC2();
+                tempDescr.lFlags = DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_CAPS |
+                                   DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_HEIGHT |
+                                   DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_WIDTH;
+                tempDescr.ddsCaps.lCaps = DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_OFFSCREENPLAIN;
                 tempDescr.lWidth = workSurfaceWidth;
                 tempDescr.lHeight = workSurfaceHeight;
                 stagingSurface = new DirectDrawSurface(tempDescr);
@@ -586,16 +584,16 @@ namespace Terrarium.Renderer
         {
             if (doubleBuffer)
             {
-                var tempDescr = new DDSURFACEDESC2();
-                tempDescr.lFlags = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS;
-                tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE;
+                var tempDescr = new DxVBLib.DDSURFACEDESC2();
+                tempDescr.lFlags = DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_CAPS;
+                tempDescr.ddsCaps.lCaps = DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE;
                 ScreenSurface = new DirectDrawSurface(tempDescr);
 
                 if (ScreenSurface != null)
                 {
-                    tempDescr.lFlags = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS | CONST_DDSURFACEDESCFLAGS.DDSD_HEIGHT |
-                                       CONST_DDSURFACEDESCFLAGS.DDSD_WIDTH;
-                    tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_OFFSCREENPLAIN;
+                    tempDescr.lFlags = DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_CAPS | DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_HEIGHT |
+                                       DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_WIDTH;
+                    tempDescr.ddsCaps.lCaps = DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_OFFSCREENPLAIN;
                     tempDescr.lWidth = 640;
                     tempDescr.lHeight = 480;
                     BackBufferSurface = new DirectDrawSurface(tempDescr);
@@ -605,17 +603,17 @@ namespace Terrarium.Renderer
             }
             else
             {
-                var tempDescr = new DDSURFACEDESC2();
-                tempDescr.lFlags = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS | CONST_DDSURFACEDESCFLAGS.DDSD_BACKBUFFERCOUNT;
+                var tempDescr = new DxVBLib.DDSURFACEDESC2();
+                tempDescr.lFlags = DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_CAPS | DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_BACKBUFFERCOUNT;
                 tempDescr.lBackBufferCount = 1;
-                tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE |
-                                          CONST_DDSURFACECAPSFLAGS.DDSCAPS_COMPLEX |
-                                          CONST_DDSURFACECAPSFLAGS.DDSCAPS_FLIP;
+                tempDescr.ddsCaps.lCaps = DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE |
+                                          DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_COMPLEX |
+                                          DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_FLIP;
                 ScreenSurface = new DirectDrawSurface(tempDescr);
 
                 if (ScreenSurface != null)
                 {
-                    tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_BACKBUFFER;
+                    tempDescr.ddsCaps.lCaps = DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_BACKBUFFER;
                     BackBufferSurface =
                         new DirectDrawSurface(ScreenSurface.Surface.GetAttachedSurface(ref tempDescr.ddsCaps));
                 }
@@ -942,20 +940,26 @@ namespace Terrarium.Renderer
                             PaintCursor();
 
                             // Grab the Window RECT
-                            var windowRect = new RECT();
+                            var windowRect = new DxVBLib.RECT();
                             ManagedDirectX.DirectX.GetWindowRect(
                                 Handle.ToInt32(),
                                 ref windowRect);
 
                             // Set up a sample destination rectangle
-                            var destRect = new RECT();
+                            var destRect = new DxVBLib.RECT();
                             destRect.Left = windowRect.Left;
                             destRect.Top = windowRect.Top;
                             destRect.Right = windowRect.Right;
                             destRect.Bottom = windowRect.Bottom;
 
                             // Grab the Source Rectangle for the Bezel
-                            var srcRect = BackBufferSurface.Rect;
+                            var srcRect = new DxVBLib.RECT
+                            {
+                                Bottom = BackBufferSurface.Rect.Bottom,
+                                Top = BackBufferSurface.Rect.Top,
+                                Right = BackBufferSurface.Rect.Right,
+                                Left = BackBufferSurface.Rect.Left
+                            };
                             var destWidth = destRect.Right - destRect.Left;
                             var destHeight = destRect.Bottom - destRect.Top;
                             var srcWidth = srcRect.Right;
@@ -984,14 +988,19 @@ namespace Terrarium.Renderer
                                 {
                                     ScreenSurface.Surface.BltColorFill(ref windowRect, 0);
                                 }
-                                bezelRect = destRect;
+                                bezelRect = new RECT {
+                                    Bottom = destRect.Bottom,
+                                    Top = destRect.Top,
+                                    Left = destRect.Left,
+                                    Right = destRect.Right
+                                };
                             }
 
                             ScreenSurface.Surface.Blt(
                                 ref destRect,
                                 BackBufferSurface.Surface,
                                 ref srcRect,
-                                CONST_DDBLTFLAGS.DDBLT_WAIT);
+                                DxVBLib.CONST_DDBLTFLAGS.DDBLT_WAIT);
                         }
                     }
 #if TRACE
@@ -1094,7 +1103,7 @@ namespace Terrarium.Renderer
                     {
                         BackBufferSurface.Surface.BltFast(ddClipRect.Destination.Left, ddClipRect.Destination.Top,
                                                           workSurface.SpriteSurface.Surface, ref ddClipRect.Source,
-                                                          CONST_DDBLTFASTFLAGS.DDBLTFAST_SRCCOLORKEY);
+                                                          DxVBLib.CONST_DDBLTFASTFLAGS.DDBLTFAST_SRCCOLORKEY);
                     }
                 }
             }
@@ -1207,7 +1216,7 @@ namespace Terrarium.Renderer
                 if (!ddClipRect.Invisible)
                 {
                     BackBufferSurface.Surface.Blt(ref ddClipRect.Destination, workSurface.SpriteSurface.Surface,
-                                                  ref ddClipRect.Source, CONST_DDBLTFLAGS.DDBLT_KEYSRC);
+                                                  ref ddClipRect.Source, DxVBLib.CONST_DDBLTFLAGS.DDBLT_KEYSRC);
                 }
             }
         }
@@ -1426,7 +1435,7 @@ namespace Terrarium.Renderer
                                 ddClipRect.Destination.Top,
                                 workSurface.SpriteSurface.Surface,
                                 ref ddClipRect.Source,
-                                CONST_DDBLTFASTFLAGS.DDBLTFAST_SRCCOLORKEY);
+                                DxVBLib.CONST_DDBLTFASTFLAGS.DDBLTFAST_SRCCOLORKEY);
 
                             if (drawtext && !PlantsOnly)
                             {
@@ -1438,7 +1447,7 @@ namespace Terrarium.Renderer
                                         ddClipRect.Destination.Top - 14,
                                         textSurface.Surface,
                                         ref TerrariumTextSurfaceManager.StandardFontRect,
-                                        CONST_DDBLTFASTFLAGS.DDBLTFAST_SRCCOLORKEY);
+                                        DxVBLib.CONST_DDBLTFASTFLAGS.DDBLTFAST_SRCCOLORKEY);
                                 }
                             }
 
@@ -1712,13 +1721,13 @@ namespace Terrarium.Renderer
         /// </summary>
         private void ClearBackground()
         {
-            var clearRect = new RECT();
+            var clearRect = new DxVBLib.RECT();
             BackBufferSurface.Surface.BltColorFill(ref clearRect, 0);
 
-            clearRect = new RECT();
+            clearRect = new DxVBLib.RECT();
             backgroundSurface.Surface.BltColorFill(ref clearRect, 0);
 
-            clearRect = new RECT();
+            clearRect = new DxVBLib.RECT();
             stagingSurface.Surface.BltColorFill(ref clearRect, 0);
         }
 
@@ -1740,8 +1749,8 @@ namespace Terrarium.Renderer
                 return;
             }
 
-            RECT srcRect;
-            RECT destRect;
+            DxVBLib.RECT srcRect;
+            DxVBLib.RECT destRect;
 
             if (viewchanged)
             {
@@ -1805,8 +1814,8 @@ namespace Terrarium.Renderer
                                     ddClipRect.Destination.Top,
                                     workSurface.SpriteSurface.Surface,
                                     ref ddClipRect.Source,
-                                    CONST_DDBLTFASTFLAGS.DDBLTFAST_WAIT |
-                                    CONST_DDBLTFASTFLAGS.DDBLTFAST_SRCCOLORKEY);
+                                    DxVBLib.CONST_DDBLTFASTFLAGS.DDBLTFAST_WAIT |
+                                    DxVBLib.CONST_DDBLTFASTFLAGS.DDBLTFAST_SRCCOLORKEY);
                             }
                         }
                     }
@@ -1817,20 +1826,41 @@ namespace Terrarium.Renderer
 
             if (paintPlants)
             {
-                srcRect = backgroundSurface.Rect;
-                destRect = stagingSurface.Rect;
+                srcRect = new DxVBLib.RECT {
+                    Bottom = backgroundSurface.Rect.Bottom,
+                    Top = backgroundSurface.Rect.Top,
+                    Right = backgroundSurface.Rect.Right,
+                    Left = backgroundSurface.Rect.Left
+                };
+                destRect = new DxVBLib.RECT {
+                    Bottom = stagingSurface.Rect.Bottom,
+                    Top = stagingSurface.Rect.Top,
+                    Right = stagingSurface.Rect.Right,
+                    Left = stagingSurface.Rect.Left
+                };
 
                 stagingSurface.Surface.Blt(ref destRect, backgroundSurface.Surface, ref srcRect,
-                                           CONST_DDBLTFLAGS.DDBLT_WAIT);
+                                           DxVBLib.CONST_DDBLTFLAGS.DDBLT_WAIT);
 
                 PaintSprites(stagingSurface, true);
                 paintPlants = false;
             }
 
-
-            srcRect = stagingSurface.Rect;
-            destRect = BackBufferSurface.Rect;
-            BackBufferSurface.Surface.Blt(ref destRect, stagingSurface.Surface, ref srcRect, CONST_DDBLTFLAGS.DDBLT_WAIT);
+            srcRect = new DxVBLib.RECT
+            {
+                Bottom = stagingSurface.Rect.Bottom,
+                Top = stagingSurface.Rect.Top,
+                Right = stagingSurface.Rect.Right,
+                Left = stagingSurface.Rect.Left
+            };
+            destRect = new DxVBLib.RECT
+            {
+                Bottom = BackBufferSurface.Rect.Bottom,
+                Top = BackBufferSurface.Rect.Top,
+                Right = BackBufferSurface.Rect.Right,
+                Left = BackBufferSurface.Rect.Left
+            };
+            BackBufferSurface.Surface.Blt(ref destRect, stagingSurface.Surface, ref srcRect, DxVBLib.CONST_DDBLTFLAGS.DDBLT_WAIT);
 #if TRACE
             Profiler.End("TerrariumDirectDrawGameView.PaintBackground()");
 #endif

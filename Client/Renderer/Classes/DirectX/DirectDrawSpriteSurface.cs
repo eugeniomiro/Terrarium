@@ -163,7 +163,7 @@ namespace Terrarium.Renderer.DirectX
                 throw new Exception("Sprite request is out of range");
             }
 
-            var spriteRect = new RECT();
+            var spriteRect = new DxVBLib.RECT();
             spriteRect.Top = yFrame*frameHeight;
             spriteRect.Bottom = spriteRect.Top;
             spriteRect.Bottom += frameHeight;
@@ -173,7 +173,13 @@ namespace Terrarium.Renderer.DirectX
             spriteRect.Right += frameWidth;
 
             var ddClipRect = new DirectDrawClippedRect();
-            ddClipRect.Destination = dest;
+            ddClipRect.Destination = new DxVBLib.RECT
+            {
+                Bottom = dest.Bottom,
+                Top = dest.Top,
+                Right = dest.Right,
+                Left = dest.Left,
+            };
             ddClipRect.Source = spriteRect;
 
             if (dest.Left >= bounds.Right || dest.Right <= bounds.Left || dest.Top >= bounds.Bottom ||
@@ -242,7 +248,7 @@ namespace Terrarium.Renderer.DirectX
                 throw new Exception("Sprite request is out of range");
             }
 
-            var spriteRect = new RECT();
+            var spriteRect = new DxVBLib.RECT();
             spriteRect.Top = yFrame*frameHeight;
             spriteRect.Bottom = spriteRect.Top;
             spriteRect.Bottom += frameHeight;
@@ -252,7 +258,13 @@ namespace Terrarium.Renderer.DirectX
             spriteRect.Right += frameWidth;
 
             var ddClipRect = new DirectDrawClippedRect();
-            ddClipRect.Destination = dest;
+            ddClipRect.Destination = new DxVBLib.RECT
+            {
+                Bottom = dest.Bottom,
+                Top = dest.Top,
+                Right = dest.Right,
+                Left = dest.Left,
+            };
             ddClipRect.Source = spriteRect;
 
             if (dest.Left >= bounds.Right || dest.Right <= bounds.Left || dest.Top >= bounds.Bottom ||

@@ -147,7 +147,7 @@
             <param name="yFrame">Retrieve the Yth vertical frame.</param>
             <returns></returns>
         </member>
-        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.GrabSprite(System.Int32,System.Int32,DxVBLib.RECT,DxVBLib.RECT)">
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.GrabSprite(System.Int32,System.Int32,Terrarium.Renderer.RECT,Terrarium.Renderer.RECT)">
             <summary>
              Retreive a sprite that has to be drawn within the given destination
              rectangle, given the bounds of the viewport.
@@ -158,7 +158,7 @@
             <param name="bounds">The view rectangle bounds.</param>
             <returns></returns>
         </member>
-        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.GrabSprite(System.Int32,System.Int32,DxVBLib.RECT,DxVBLib.RECT,System.Int32)">
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.GrabSprite(System.Int32,System.Int32,Terrarium.Renderer.RECT,Terrarium.Renderer.RECT,System.Int32)">
             <summary>
              Retreive a sprite that has to be drawn within the given destination
              rectangle, given the bounds of the viewport.  Also contains a scaling
@@ -1363,6 +1363,31 @@
         <member name="P:Terrarium.Renderer.World.YMapTiles">
             <summary>
              The number of map tiles in the Y direction
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.RECT">
+            <summary>
+
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.RECT.Bottom">
+            <summary>
+
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.RECT.Left">
+            <summary>
+
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.RECT.Right">
+            <summary>
+
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.RECT.Top">
+            <summary>
+
             </summary>
         </member>
     </members>

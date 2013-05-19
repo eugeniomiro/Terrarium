@@ -43,7 +43,7 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  The size of the surface.
         /// </summary>
-        private RECT rect;
+        private DxVBLib.RECT rect;
 
         /// <summary>
         ///  Pointer to the real DirectDrawSurface7 class
@@ -302,7 +302,16 @@ namespace Terrarium.Renderer.DirectX
         /// </summary>
         public RECT Rect
         {
-            get { return rect; }
+            get
+            {
+                return new RECT
+                {
+                    Bottom = rect.Bottom,
+                    Top = rect.Top,
+                    Left = rect.Left,
+                    Right = rect.Right
+                };
+            }
         }
 
         /// <summary>

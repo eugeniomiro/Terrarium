@@ -23,7 +23,7 @@ namespace Terrarium.Renderer
         ///  within.  Each text surface is made exactly this
         ///  size.
         /// </summary>
-        internal static RECT StandardFontRect;
+        internal static DxVBLib.RECT StandardFontRect;
 
         /// <summary>
         ///  The sprites associated with each bit of text.
@@ -35,7 +35,7 @@ namespace Terrarium.Renderer
         /// </summary>
         static TerrariumTextSurfaceManager()
         {
-            StandardFontRect = new RECT();
+            StandardFontRect = new DxVBLib.RECT();
             StandardFontRect.Top = 0;
             StandardFontRect.Left = 0;
             StandardFontRect.Bottom = 15;
@@ -97,7 +97,7 @@ namespace Terrarium.Renderer
             }
 
             // Set up the surface
-            var rect = new RECT();
+            var rect = new DxVBLib.RECT();
             var ddSurface = new DirectDrawSurface(StandardFontRect.Right, StandardFontRect.Bottom)
                                 {
                                     TransparencyKey = DirectDrawSurface.MagentaColorKey
