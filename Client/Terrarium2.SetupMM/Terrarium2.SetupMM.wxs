@@ -113,11 +113,6 @@
           <File Id="owfB48734BF512C42C84BD691A565099046" Source="$(var.SourceDir)\Terrarium.exe.config" KeyPath="yes" />
         </Component>
       </Directory>
-      <Directory Id="ProgramMenuFolder" >
-        <Component Id="ProgramsFolderTerrariumShorCut" Guid="d2c456bb-3063-44db-940c-1c54cec92a7b">
-          <Shortcut Id="ProgramsFolderTerrariumShorcut" Name="Terrarium 2.0" Target="[INSTALLDIR]Terrarium.exe" ></Shortcut>
-        </Component>
-      </Directory>
     </Directory>
   </Module>
 </Wix>
