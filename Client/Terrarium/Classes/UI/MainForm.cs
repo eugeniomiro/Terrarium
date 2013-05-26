@@ -2,7 +2,6 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                               
 //------------------------------------------------------------------------------
 
-using DxVBLib;
 using Microsoft.Win32;
 using OrganismBase;
 using System;
@@ -831,10 +830,10 @@ namespace Terrarium.Client
                 return;
             }
 
-            RECT worldSize = tddGameView.CreateWorld(xPixels, yPixels);
+            Rectangle worldSize = tddGameView.CreateWorld(xPixels, yPixels);
+
             this.developerPanel.LandSize = new Size(tddGameView.ActualSize.Right, tddGameView.ActualSize.Bottom);
             this.developerPanel.MiniMap = tddGameView.MiniMap;
-
             this.developerPanel.GenerateMiniMap(worldSize.Right - worldSize.Left, worldSize.Bottom - worldSize.Top);
         }
 

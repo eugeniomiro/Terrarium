@@ -253,17 +253,17 @@ namespace Terrarium.Renderer
         /// <summary>
         ///  Returns the size of the viewport window.
         /// </summary>
-        public RECT ViewSize
+        public Rectangle ViewSize
         {
-            get { return viewsize; }
+            get { return Rectangle.FromLTRB(viewsize.Left, viewsize.Top, viewsize.Right, viewsize.Bottom); }
         }
 
         /// <summary>
         ///  Returns the full size of the world.
         /// </summary>
-        public RECT ActualSize
+        public Rectangle ActualSize
         {
-            get { return actualsize; }
+            get { return Rectangle.FromLTRB(actualsize.Left, actualsize.Top, actualsize.Right, actualsize.Bottom); }
         }
 
         /// <summary>
@@ -782,14 +782,14 @@ namespace Terrarium.Renderer
         /// <param name="xPixels">The number of world pixels</param>
         /// <param name="yPixels">The number of world pixels</param>
         /// <returns></returns>
-        public RECT CreateWorld(int xPixels, int yPixels)
+        public Rectangle CreateWorld(int xPixels, int yPixels)
         {
             wld = new World();
             actualsize = wld.CreateWorld(xPixels, yPixels);
 
             ResetTerrarium();
             viewchanged = true;
-            return actualsize;
+            return ActualSize;
         }
 
         /// <summary>
