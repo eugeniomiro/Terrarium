@@ -40,7 +40,7 @@ namespace Terrarium.Client
     ///   processing most Screen Saver related command line parameters.
     ///  </para>
     /// </summary>
-	internal class MainForm : Form
+    internal class MainForm : Form
     {
         // Need to have a variable to hold the form instance or it will be
         // garbage collected and go away.  It is private since nothing should be
@@ -55,14 +55,13 @@ namespace Terrarium.Client
         private Rectangle       controlStripBottom;
         private Rectangle       screenRectangle;
 
-        private static TerrariumTraceListener traceListener;
-
+        //private static TerrariumTraceListener traceListener;
         private const string ecosystemStateFileName = "\\Ecosystem.bin";
 
         private static string[] commandLineArgs;
 
-		private const Boolean traceEnabled = true;
-		private bool alreadyRunningTimer = false;
+        private const Boolean traceEnabled = true;
+        private bool alreadyRunningTimer = false;
         private bool    runningBlockedVersion = false;
 
         // Mutex to detect multiple versions of the game
@@ -380,7 +379,7 @@ namespace Terrarium.Client
             Int32 hwnd = 0;
             Boolean start = true;
             string gamePath = "";
-            Boolean enableLogging = false;
+            //Boolean enableLogging = false;
             Boolean noDirectX = false;
 
             try
@@ -429,9 +428,9 @@ namespace Terrarium.Client
                                     i++;
                                     gamePath = args[i];
                                     break;
-                                case "enablelogging":
-                                    enableLogging = true;
-                                    break;
+                                //case "enablelogging":
+                                //    enableLogging = true;
+                                //    break;
                                 case "blacklistcheck":
                                     performBlacklistCheck = true;
                                     break;
@@ -469,9 +468,9 @@ namespace Terrarium.Client
 
                 // Catch toplevel exceptions and assertions so we can stop the timer
                 // and report them properly
-                Debug.Listeners.Clear();
-                traceListener = new TerrariumTraceListener(enableLogging);
-                Debug.Listeners.Add(traceListener);
+                //Debug.Listeners.Clear();
+                //traceListener = new TerrariumTraceListener(enableLogging);
+                //Debug.Listeners.Add(traceListener);
 
                 // Create/Open a global named mutex that indicates if the app is already running
                 // if we can get the mutex, then we are the only version running
@@ -601,7 +600,7 @@ namespace Terrarium.Client
                     Application.Restart();
                 }
 
-                Debug.Listeners.Clear();
+                //Debug.Listeners.Clear();
                 if (maliciousOrganism)
                 {
                     Environment.Exit(0);
@@ -710,7 +709,7 @@ namespace Terrarium.Client
             this.bottomPanel.StatisticsButton.Click += new EventHandler(StatisticsButton_Click);
             this.bottomPanel.TraceButton.Click += new EventHandler(TraceButton_Click);
             this.bottomPanel.DeveloperButton.Click += new EventHandler(DeveloperButton_Click);
-            traceListener.TimerToStop = this.timer1;
+            //traceListener.TimerToStop = this.timer1;
             SystemEvents.PowerModeChanged += new PowerModeChangedEventHandler(PowerModeChanged);
 
             this.taskBar = new NotifyIcon();
