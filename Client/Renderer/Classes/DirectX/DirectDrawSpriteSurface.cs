@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------
 
 
-using System;
 using DxVBLib;
+using System;
 
 namespace Terrarium.Renderer.DirectX
 {

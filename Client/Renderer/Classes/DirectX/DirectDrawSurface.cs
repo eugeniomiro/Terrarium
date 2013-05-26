@@ -3,10 +3,10 @@
 //------------------------------------------------------------------------------
 
 
+using DxVBLib;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using DxVBLib;
 
 namespace Terrarium.Renderer.DirectX
 {

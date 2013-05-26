@@ -5,15 +5,10 @@
 
 namespace Terrarium.Forms
 {
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using System.Drawing.Drawing2D;
-	using System.ComponentModel;
-	using System.ComponentModel.Design;
-	using System.Drawing.Design;
-
-	using Terrarium.Glass;
+    using System;
+    using System.ComponentModel;
+    using System.Windows.Forms;
+    using Terrarium.Glass;
 
 	/// <summary>
 	/// 

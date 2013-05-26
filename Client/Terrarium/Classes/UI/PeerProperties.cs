@@ -3,15 +3,11 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.Drawing;
 using System.Windows.Forms;
-
 using Terrarium.Configuration;
-using Terrarium.Tools;
-using Terrarium.Forms;
-using Terrarium.Services.Discovery;
-
 using Terrarium.Glass;
+using Terrarium.Services.Discovery;
+using Terrarium.Tools;
 
 namespace Terrarium.Client 
 {

@@ -2,11 +2,11 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                              
 //------------------------------------------------------------------------------
 
+using OrganismBase;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using OrganismBase;
 using Terrarium.Hosting;
 
 namespace Terrarium.PeerToPeer

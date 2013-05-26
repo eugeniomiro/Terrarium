@@ -2,9 +2,9 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                             
 //------------------------------------------------------------------------------
 
+using DxVBLib;
 using System;
 using System.Drawing;
-using DxVBLib;
 
 namespace Terrarium.Renderer
 {

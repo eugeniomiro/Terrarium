@@ -2,12 +2,12 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                               
 //------------------------------------------------------------------------------
 
+using Microsoft.Win32;
 using System;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
-using Microsoft.Win32;
 
 namespace Terrarium.Hosting
 {

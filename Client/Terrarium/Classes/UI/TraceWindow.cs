@@ -2,17 +2,11 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                               
 //------------------------------------------------------------------------------
 
-using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
-using System.Text;
-using System.Windows.Forms;
-
 using OrganismBase;
+using System.Text;
+using Terrarium.Forms;
 using Terrarium.Game;
 using Terrarium.Renderer;
-using Terrarium.Forms;
 
 namespace Terrarium.Client 
 {

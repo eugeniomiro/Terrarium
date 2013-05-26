@@ -5,11 +5,9 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
-
 using Terrarium.Configuration;
-using Terrarium.Tools;
-
 using Terrarium.Services.Watson;
+using Terrarium.Tools;
 
 namespace Terrarium.Forms
 {

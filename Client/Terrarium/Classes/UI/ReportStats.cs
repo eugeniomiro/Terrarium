@@ -2,12 +2,9 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                               
 //------------------------------------------------------------------------------
 
-using System;
 using System.Data;
-using System.Windows.Forms;
-
-using Terrarium.Game;
 using Terrarium.Forms;
+using Terrarium.Game;
 
 namespace Terrarium.Client 
 {

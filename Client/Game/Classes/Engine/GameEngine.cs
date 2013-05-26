@@ -1,5 +1,7 @@
+using OrganismBase;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -7,14 +9,12 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
-using OrganismBase;
 using Terrarium.Configuration;
 using Terrarium.Forms;
 using Terrarium.Hosting;
 using Terrarium.PeerToPeer;
 using Terrarium.Services.Species;
 using Terrarium.Tools;
-using System.Collections.Generic;
 
 namespace Terrarium.Game
 {
