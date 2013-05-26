@@ -12,7 +12,7 @@
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>Renderer</AssemblyName>
-    <AssemblyOriginatorKeyFile>Renderer.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Renderer.snk</AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -225,7 +225,7 @@
     <None Include="..\OrganismBase\development.snk">
       <Link>development.snk</Link>
     </None>
-    <None Include="Renderer.pfx" />
+    <None Include="Renderer.snk" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

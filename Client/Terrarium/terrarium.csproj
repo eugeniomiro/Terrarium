@@ -9,7 +9,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ApplicationIcon>tericon32.ico</ApplicationIcon>
     <AssemblyName>Terrarium</AssemblyName>
-    <AssemblyOriginatorKeyFile>Terrarium.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Terrarium.snk</AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -28,7 +28,7 @@
     <FallbackCulture>en-US</FallbackCulture>
     <UpdateUrlEnabled>false</UpdateUrlEnabled>
     <WebPageEnabled>true</WebPageEnabled>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <ManifestCertificateThumbprint>EC13F3640926A078D6C271D9EE6E18AF1E387164</ManifestCertificateThumbprint>
     <TargetZone>LocalIntranet</TargetZone>
     <UpgradeBackupLocation>
@@ -426,7 +426,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Terrarium.pfx" />
+    <None Include="Terrarium.snk" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
@@ -434,6 +434,7 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>xcopy /iery "$(TargetDir)*.*" "$(SolutionDir)\Deploy"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

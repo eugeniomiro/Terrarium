@@ -75,12 +75,12 @@ namespace Terrarium.Services.Reporting {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ReportPopulation", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public int ReportPopulation(System.Data.DataSet data, System.Guid guid, int currentTick) {
+        public ReturnCode ReportPopulation(System.Data.DataSet data, System.Guid guid, int currentTick) {
             object[] results = this.Invoke("ReportPopulation", new object[] {
                         data,
                         guid,
                         currentTick});
-            return ((int)(results[0]));
+            return ((ReturnCode)(results[0]));
         }
         
         /// <remarks/>
@@ -92,9 +92,9 @@ namespace Terrarium.Services.Reporting {
         }
         
         /// <remarks/>
-        public int EndReportPopulation(System.IAsyncResult asyncResult) {
+        public ReturnCode EndReportPopulation(System.IAsyncResult asyncResult) {
             object[] results = this.EndInvoke(asyncResult);
-            return ((int)(results[0]));
+            return ((ReturnCode)(results[0]));
         }
         
         /// <remarks/>
@@ -140,6 +140,31 @@ namespace Terrarium.Services.Reporting {
     }
     
     /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18033")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public enum ReturnCode {
+        
+        /// <remarks/>
+        Success,
+        
+        /// <remarks/>
+        AlreadyExists,
+        
+        /// <remarks/>
+        ServerDown,
+        
+        /// <remarks/>
+        NodeTimedOut,
+        
+        /// <remarks/>
+        NodeCorrupted,
+        
+        /// <remarks/>
+        OrganismBlacklisted,
+    }
+    
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
     public delegate void ReportPopulationCompletedEventHandler(object sender, ReportPopulationCompletedEventArgs e);
     
@@ -157,10 +182,10 @@ namespace Terrarium.Services.Reporting {
         }
         
         /// <remarks/>
-        public int Result {
+        public ReturnCode Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((int)(this.results[0]));
+                return ((ReturnCode)(this.results[0]));
             }
         }
     }
