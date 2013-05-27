@@ -768,16 +768,16 @@ tr.pager td {
     }
 a.smallLink
 {
-	font-family: Tahoma, Arial;
-	font-size: 0.7em;
-	font-weight: bold;
-	text-decoration: none;
-	padding-left: 8px;
+    font-family: Tahoma, Arial;
+    font-size: 0.7em;
+    font-weight: bold;
+    text-decoration: none;
+    padding-left: 8px;
 }
 
 a.smallLink:hover
 {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .Up {
