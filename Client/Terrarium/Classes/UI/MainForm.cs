@@ -46,6 +46,22 @@ namespace Terrarium.Client
         // referencing the main form
         private static MainForm mainForm;
 
+        // Mutex to detect multiple versions of the game
+        private static string   appMutexName = "{2AED158D-74C9-4297-B83B-13B87FCA6BFC}";
+        private static Mutex    appMutex;
+
+        private static string[] commandLineArgs;
+        private static bool     maliciousOrganism = false;
+        private static bool     relaunch = false;
+        private static bool     performBlacklistCheck = false;
+        private static bool     blacklistCheckOnRestart = false;
+
+        // New command line option holders
+        private static bool     wasRelaunched = false;
+        private static bool     skipSplashScreen = false;
+        private static Rectangle windowRectangle;
+        private static FormWindowState windowState = FormWindowState.Normal;
+
         //get the screen size and calculate the viewport location
         private Size            screenSize;
         private Rectangle       virtualScreen;
@@ -54,65 +70,43 @@ namespace Terrarium.Client
         private Rectangle       controlStripBottom;
         private Rectangle       screenRectangle;
 
-        //private static TerrariumTraceListener traceListener;
-        private const string ecosystemStateFileName = "\\Ecosystem.bin";
+        private const Boolean   traceEnabled = true;
+        private bool            alreadyRunningTimer = false;
+        private bool            runningBlockedVersion = false;
 
-        private static string[] commandLineArgs;
-
-        private const Boolean traceEnabled = true;
-        private bool alreadyRunningTimer = false;
-        private bool    runningBlockedVersion = false;
-
-        // Mutex to detect multiple versions of the game
-        private static string   appMutexName = "{2AED158D-74C9-4297-B83B-13B87FCA6BFC}";
-        private static Mutex    appMutex;
-
-        private Random random = new Random(Environment.TickCount);
-
-        private WorldVector oldVector;      // current state - 1
-        private WorldVector newVector;      // current state
-
-        private int frameNumber = 0;
+        private Random          random = new Random(Environment.TickCount);
+        private WorldVector     oldVector;      // current state - 1
+        private WorldVector     newVector;      // current state
+        private int             frameNumber = 0;
 
         // Command line arguments / Screensaver support
-        private Boolean startAtStartup;
+        private Boolean         startAtStartup;
         private ScreenSaverMode screenSaverMode = ScreenSaverMode.NoScreenSaver;
-        private Int32 hwndScreenSaverParent = 0;
-        private int turnOffDirectXCounter = 0;
-        private Boolean turnOffDirectX = false;
-        private Boolean noDirectX = false;
-        private string gamePath = null;
-        private bool firstActivate;
+        private Int32           hwndScreenSaverParent = 0;
+        private int             turnOffDirectXCounter = 0;
+        private Boolean         turnOffDirectX = false;
+        private Boolean         noDirectX = false;
+        private string          gamePath = null;
+        private bool            firstActivate;
 
         // Window Resizing and Fullscreen support
-        private bool fullScreen = false;
-        private bool showUI = true;
-        private Point originalLocation;
-        private Size originalSize;
-
-        private static bool maliciousOrganism = false;
-        private static bool relaunch = false;
-        private static bool performBlacklistCheck = false;
-        private static bool blacklistCheckOnRestart = false;
-
-        // New command line option holders
-        private static bool wasRelaunched = false;
-        private static bool skipSplashScreen = false;
-        private static Rectangle windowRectangle;
-        private static FormWindowState windowState = FormWindowState.Normal;
+        private bool            fullScreen = false;
+        private bool            showUI = true;
+        private Point           originalLocation;
+        private Size            originalSize;
 
         // Screen messages
-        private const string emptyEcosystemMessage = "Waiting for animals to be teleported from other peers running Terrarium...";
-        private const string emptyEcosystemServerDownMessage = "The Terrarium server is experiencing temporary difficulties.  This is probably why you aren't receiving any animals.";
-        private const string emptyTerrariumMessage = "Introduce animals into your terrarium by clicking on the 'Introduce Animal' button below.";
+        private const string    emptyEcosystemMessage = "Waiting for animals to be teleported from other peers running Terrarium...";
+        private const string    emptyEcosystemServerDownMessage = "The Terrarium server is experiencing temporary difficulties.  This is probably why you aren't receiving any animals.";
+        private const string    emptyTerrariumMessage = "Introduce animals into your terrarium by clicking on the 'Introduce Animal' button below.";
+        private const string    ecosystemStateFileName = "\\Ecosystem.bin";
 
         private System.Windows.Forms.MenuItem menuItem1;
         private System.Windows.Forms.NotifyIcon taskBar;
-
         private System.Windows.Forms.Timer screenSaverTimer = null;
 
         // Used to force a save when restarting.  Used by auto-updates
-        private bool forceSave = false;
+        private bool            forceSave = false;
 
         #region Designer Generated Fields
         private System.ComponentModel.IContainer components;
@@ -355,14 +349,11 @@ namespace Terrarium.Client
             Application.EnableVisualStyles();
             Application.DoEvents();
 
-            Trace.WriteLine("");
             Trace.WriteLine("*****");
             Trace.WriteLine("Environment.CommandLine: " + Environment.CommandLine);
             Trace.WriteLine("GameConfig.RelaunchCommandLine: " + GameConfig.RelaunchCommandLine);
             Trace.WriteLine("MainForm.SpecialUserAppDataPath: " + MainForm.SpecialUserAppDataPath);
             Trace.WriteLine("*****");
-            Trace.WriteLine("");
-
 
             // Let's see if we've been relaunched.  If so, these command line args trump the default one.
             if (GameConfig.RelaunchCommandLine != null && GameConfig.RelaunchCommandLine.Length > 0)

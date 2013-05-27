@@ -222,9 +222,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\OrganismBase\development.snk">
-      <Link>development.snk</Link>
-    </None>
     <None Include="Renderer.snk" />
   </ItemGroup>
   <ItemGroup>
