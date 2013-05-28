@@ -43,7 +43,7 @@ namespace Terrarium.Graphics.Engine
         public static IGraphicsEngine Current {
             get { 
                 if (_internalGraphicsEngine == null){
-                    _internalGraphicsEngine = new ManagedDirectX7();
+                    _internalGraphicsEngine = new DirectX7GraphicsEngine();
                 }
                 return _internalGraphicsEngine; 
             }

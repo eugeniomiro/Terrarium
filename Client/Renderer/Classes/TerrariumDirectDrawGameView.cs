@@ -944,9 +944,7 @@ namespace Terrarium.Renderer
 
                             // Grab the Window RECT
                             var windowRect = new RECT();
-                            GraphicsEngine.Current.DirectX.GetWindowRect(
-                                Handle.ToInt32(),
-                                ref windowRect);
+                            GraphicsEngine.Current.GetWindowRect(Handle, ref windowRect);
 
                             // Set up a sample destination rectangle
                             var destRect = new RECT();

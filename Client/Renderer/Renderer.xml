@@ -381,7 +381,7 @@
             <param name="msg">Custom message</param>
             <param name="inner">The original exception</param>
         </member>
-        <member name="T:Terrarium.Renderer.DirectX.ManagedDirectX7">
+        <member name="T:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine">
             <summary>
              Provides access to the DirectDraw and DirectX interfaces
             </summary>
@@ -391,34 +391,38 @@
             
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.Engine.IGraphicsEngine.DirectX">
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
             <summary>
             
             </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
         </member>
         <member name="P:Terrarium.Renderer.Engine.IGraphicsEngine.DirectDraw">
             <summary>
             
             </summary>
         </member>
-        <member name="F:Terrarium.Renderer.DirectX.ManagedDirectX7.directX">
+        <member name="F:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.directX">
             <summary>
              Holds an instance of the DirectX7 native object
             </summary>
         </member>
-        <member name="F:Terrarium.Renderer.DirectX.ManagedDirectX7.directDraw">
+        <member name="F:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.directDraw">
             <summary>
              Holds an instance of the DirectDraw7 native object
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.DirectX.ManagedDirectX7.DirectDraw">
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.DirectDraw">
             <summary>
              Provides access to the native DirectDraw7 object
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.DirectX.ManagedDirectX7.DirectX">
-            <summary>
-             Provides access to the native DirectX7 object
             </summary>
         </member>
         <member name="T:Terrarium.Renderer.Engine.DirectX10GraphicsEngine">
@@ -426,27 +430,14 @@
             
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.DirectX">
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
             <summary>
             
             </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
         </member>
         <member name="P:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.DirectDraw">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:Terrarium.Renderer.Engine.DirectX7GraphicsEngine">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.Engine.DirectX7GraphicsEngine.DirectX">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.Engine.DirectX7GraphicsEngine.DirectDraw">
             <summary>
             
             </summary>
@@ -456,10 +447,12 @@
             
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.DirectX">
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
             <summary>
             
             </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
         </member>
         <member name="P:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.DirectDraw">
             <summary>
@@ -491,10 +484,12 @@
             
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.DirectX">
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
             <summary>
             
             </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
         </member>
         <member name="P:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.DirectDraw">
             <summary>
@@ -506,10 +501,12 @@
             
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.Engine.XnaGraphicsEngine.DirectX">
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
             <summary>
             
             </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
         </member>
         <member name="P:Terrarium.Renderer.Engine.XnaGraphicsEngine.DirectDraw">
             <summary>

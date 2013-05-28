@@ -13,10 +13,12 @@ namespace Terrarium.Renderer.Engine
         /// <summary>
         /// 
         /// </summary>
-        DirectX7 DirectX { get; }
+        DirectDraw7 DirectDraw { get; }
         /// <summary>
         /// 
         /// </summary>
-        DirectDraw7 DirectDraw { get; }
+        /// <param name="handle"></param>
+        /// <param name="windowRect"></param>
+        void GetWindowRect(System.IntPtr handle, ref RECT windowRect);
     }
 }
