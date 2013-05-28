@@ -21,7 +21,7 @@ namespace Terrarium.Renderer
     ///  View.  This class makes heavy use of the DirectDraw APIs in
     ///  order to provide high speed animation.
     /// </summary>
-    public class TerrariumDirectDrawGameView : DirectDrawPictureBox
+    public class TerrariumGameView : PictureBox
     {
         private readonly TerrariumTextSurfaceManager tfm = new TerrariumTextSurfaceManager();
         private readonly TerrariumSpriteSurfaceManager tsm = new TerrariumSpriteSurfaceManager();
@@ -75,9 +75,47 @@ namespace Terrarium.Renderer
 #endif
 
         /// <summary>
+        ///  The Clipper object assigned to the PictureBox
+        /// </summary>
+        protected DirectDrawClipper Clipper { get; set; }
+
+        /// <summary>
+        ///  The primary screen surface for the picture box.
+        /// </summary>
+        protected DirectDrawSurface ScreenSurface { get; set; }
+
+        /// <summary>
+        ///  The back buffer surface used with the picture box.
+        /// </summary>
+        protected DirectDrawSurface BackBufferSurface { get; set; }
+
+        /// <summary>
+        ///  Overrides the Painting logic because painting will be handled
+        ///  using timers and DirectX.  If the control is in design mode, then
+        ///  clear it because DirectX isn't available yet.
+        /// </summary>
+        /// <param name="e">Graphics context objects</param>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (DesignMode)
+            {
+                e.Graphics.Clear(BackColor);
+            }
+        }
+
+        /// <summary>
+        ///  Don't paint the background when a background erase is requested.
+        ///  Hurts performance and causes flicker.
+        /// </summary>
+        /// <param name="e">Graphics context objects</param>
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+        }
+
+        /// <summary>
         ///  Creates a new instance of the game view and initializes any properties.
         /// </summary>
-        public TerrariumDirectDrawGameView()
+        public TerrariumGameView()
         {
             InitializeComponent();
         }

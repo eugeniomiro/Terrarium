@@ -137,7 +137,7 @@ namespace Terrarium.Client
         private PropertySheet propertySheet;
         private TraceWindow traceWindow;
         private string engineStateText;        
-        private TerrariumDirectDrawGameView tddGameView;
+        private TerrariumGameView tddGameView;
         private Terrarium.Forms.Classes.Controls.DeveloperPanel developerPanel;
         private GlassBottomPanel bottomPanel;
         private ResizeBar resizeBar;
@@ -159,7 +159,7 @@ namespace Terrarium.Client
             this.menuItemText = new System.Windows.Forms.MenuItem();
             this.menuItemDamage = new System.Windows.Forms.MenuItem();
             this.menuItemEnergy = new System.Windows.Forms.MenuItem();
-            this.tddGameView = new Terrarium.Renderer.TerrariumDirectDrawGameView();
+            this.tddGameView = new Terrarium.Renderer.TerrariumGameView();
             this.developerPanel = new Terrarium.Forms.Classes.Controls.DeveloperPanel();
             this.bottomPanel = new Terrarium.Forms.GlassBottomPanel();
             this.resizeBar = new Terrarium.Forms.ResizeBar();

@@ -16,7 +16,7 @@ namespace Terrarium.Renderer.Engine
         /// </summary>
         /// <param name="handle"></param>
         /// <param name="windowRect"></param>
-        void GetWindowRect(System.IntPtr handle, ref RECT windowRect);
+        void GetWindowRect(IntPtr handle, ref RECT windowRect);
         /// <summary>
         /// 
         /// </summary>

@@ -48,48 +48,6 @@
              Has the sprite been clipped along the right.
             </summary>
         </member>
-        <member name="T:Terrarium.Renderer.DirectX.DirectDrawPictureBox">
-            <summary>
-             Contains the logic required to use a PictureBox
-             surface as a DirectDraw rendering surface.
-            </summary>
-        </member>
-        <member name="M:Terrarium.Renderer.DirectX.DirectDrawPictureBox.#ctor">
-            <summary>
-             Creates a new DirectDrawPictureBox and performs any
-             initial setup.
-            </summary>
-        </member>
-        <member name="M:Terrarium.Renderer.DirectX.DirectDrawPictureBox.OnPaint(System.Windows.Forms.PaintEventArgs)">
-            <summary>
-             Overrides the Painting logic because painting will be handled
-             using timers and DirectX.  If the control is in design mode, then
-             clear it because DirectX isn't available yet.
-            </summary>
-            <param name="e">Graphics context objects</param>
-        </member>
-        <member name="M:Terrarium.Renderer.DirectX.DirectDrawPictureBox.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
-            <summary>
-             Don't paint the background when a background erase is requested.
-             Hurts performance and causes flicker.
-            </summary>
-            <param name="e">Graphics context objects</param>
-        </member>
-        <member name="P:Terrarium.Renderer.DirectX.DirectDrawPictureBox.Clipper">
-            <summary>
-             The Clipper object assigned to the PictureBox
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.DirectX.DirectDrawPictureBox.ScreenSurface">
-            <summary>
-             The primary screen surface for the picture box.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.DirectX.DirectDrawPictureBox.BackBufferSurface">
-            <summary>
-             The back buffer surface used with the picture box.
-            </summary>
-        </member>
         <member name="T:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface">
             <summary>
              Encapsulate the logic for implementing a sprite surface capable
@@ -798,53 +756,68 @@
              that a creature has been clicked in the game view.
             </summary>
         </member>
-        <member name="T:Terrarium.Renderer.TerrariumDirectDrawGameView">
+        <member name="T:Terrarium.Renderer.TerrariumGameView">
             <summary>
              Encapsulates all of the drawing code for the Terrarium Game
              View.  This class makes heavy use of the DirectDraw APIs in
              order to provide high speed animation.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.#ctor">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+             Overrides the Painting logic because painting will be handled
+             using timers and DirectX.  If the control is in design mode, then
+             clear it because DirectX isn't available yet.
+            </summary>
+            <param name="e">Graphics context objects</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+             Don't paint the background when a background erase is requested.
+             Hurts performance and causes flicker.
+            </summary>
+            <param name="e">Graphics context objects</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.#ctor">
             <summary>
              Creates a new instance of the game view and initializes any properties.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.InitializeComponent">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.InitializeComponent">
             <summary>
              Initialize Component
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.ClearProfiler">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ClearProfiler">
             <summary>
              Clear the profiler
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.OnMouseMove(System.Windows.Forms.MouseEventArgs)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnMouseMove(System.Windows.Forms.MouseEventArgs)">
             <summary>
              Overrides OnMouseMove to enable custom cursor rendering.
             </summary>
             <param name="e"></param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.CheckScroll">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.CheckScroll">
             <summary>
              Computes whether scrolling should occur based on mouse location and
              hovering.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.OnMouseLeave(System.EventArgs)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnMouseLeave(System.EventArgs)">
             <summary>
              Overrides the OnMouseLeave event to provide custom cursor manipulation
             </summary>
             <param name="e">Null</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.OnMouseEnter(System.EventArgs)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnMouseEnter(System.EventArgs)">
             <summary>
              Overrides the OnMouseEnter event to provide custom cursor manipulation
             </summary>
             <param name="e">Null</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.InitializeGraphicEngine(System.Boolean)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.InitializeGraphicEngine(System.Boolean)">
             <summary>
              Initializes DirectDraw rendering APIs.  The function can be called to initialize
              both Windowed and FullScreen mode, but FullScreen mode isn't fully
@@ -853,40 +826,40 @@
             <param name="fullscreen">If true then fullscreen will be enabled.</param>
             <returns>True if DirectDraw is initialized.</returns>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.CreateWindowedSurfaces">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.CreateWindowedSurfaces">
             <summary>
              Method used to create the necessary surfaces required for windowed
              mode.
             </summary>
             <returns>True if the surfaces are created, otherwise false.</returns>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.CreateFullScreenSurfaces">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.CreateFullScreenSurfaces">
             <summary>
              Creates the surfaces required for full screen operation.
             </summary>
             <returns>True if the surfaces are initialized, false otherwise.</returns>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.OnMouseUp(System.Windows.Forms.MouseEventArgs)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnMouseUp(System.Windows.Forms.MouseEventArgs)">
             <summary>
              Overrides OnMouseUp in order to enable creature selection.
             </summary>
             <param name="e"></param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.SelectAnimalFromPoint(System.Drawing.Point,System.Boolean)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.SelectAnimalFromPoint(System.Drawing.Point,System.Boolean)">
             <summary>
              Attempts to select a creature given the world offset point.
             </summary>
             <param name="p">Point to check for creature intersection.</param>
             <param name="selectThisAnimalOnly">Determines if this creature should be added to the selection</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.OnMiniMapUpdated(Terrarium.Renderer.MiniMapUpdatedEventArgs)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnMiniMapUpdated(Terrarium.Renderer.MiniMapUpdatedEventArgs)">
             <summary>
              Helper function for firing the MiniMapUpdated event
              whenever a new mini-map becomes available.
             </summary>
             <param name="e">Mini-map event arguments containing the newest map.</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.OnOrganismClicked(Terrarium.Renderer.OrganismClickedEventArgs)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnOrganismClicked(Terrarium.Renderer.OrganismClickedEventArgs)">
             <summary>
              Helper function for firing the OrganismClicked event
              whenever an organism is selected within the game
@@ -894,21 +867,21 @@
             </summary>
             <param name="e">Event arguments detailing which organism was clicked.</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.AddBackgroundSlide">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.AddBackgroundSlide">
             <summary>
              Used to change the background slide of the Terrarium.
              Only a single background slide can be added with this
              revision.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.AddSpriteSurface(System.String)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.AddSpriteSurface(System.String)">
             <summary>
              Adds a generic 10frame by 40frame sprite surface that
              is compatible with creature animation.
             </summary>
             <param name="name">The name of the sprite sheet.</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.AddComplexSpriteSurface(System.String,System.Int32,System.Int32)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.AddComplexSpriteSurface(System.String,System.Int32,System.Int32)">
             <summary>
              Add a complex sprite surface given the number of frames.
             </summary>
@@ -916,7 +889,7 @@
             <param name="xFrames">The number of frames width-wise.</param>
             <param name="yFrames">The number of frames height-wise.</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.AddComplexSizedSpriteSurface(System.String,System.Int32,System.Int32)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.AddComplexSizedSpriteSurface(System.String,System.Int32,System.Int32)">
             <summary>
              Add a complex sprite surface that takes advantage of sized sprites
             </summary>
@@ -924,7 +897,7 @@
             <param name="xFrames">The number of frames width wise.</param>
             <param name="yFrames">The number of frames height wise.</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.CreateWorld(System.Int32,System.Int32)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.CreateWorld(System.Int32,System.Int32)">
             <summary>
              Tell the game view to create a new world and reset the rendering
              surfaces.
@@ -933,7 +906,7 @@
             <param name="yPixels">The number of world pixels</param>
             <returns></returns>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.ReInitSurfaces">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ReInitSurfaces">
             <summary>
              Reinitialize all surfaces after they have been lost.
              This method invokes the garbage collector to make sure
@@ -941,25 +914,25 @@
              renewal won't work correctly.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.ResizeViewer">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ResizeViewer">
             <summary>
             Handles logic for resizing the game view
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.RenderFrame">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.RenderFrame">
             <summary>
              Renders a new frame of animation.  This is the entry point for drawing
              code and is required every time a new frame is to be drawn.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.TeleporterZIndex">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.TeleporterZIndex">
             <summary>
              ZIndexes the teleporters so they can be properly rendered
              on the screen.
             </summary>
             <returns>The z-indices for the teleporters</returns>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.RenderTeleporter(System.Int32,System.Int32)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.RenderTeleporter(System.Int32,System.Int32)">
             <summary>
              Renders any teleporters that exist between the given z
              ordered locations.
@@ -967,21 +940,21 @@
             <param name="lowZ">The minimum z index.</param>
             <param name="highZ">The maximum z index.</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.PaintMessage">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.PaintMessage">
             <summary>
              Controls the rendering of textual messages to the Terrarium
              client screen.  Since DrawText is invoked each time, this method
              is slow.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.PaintCursor">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.PaintCursor">
             <summary>
              Paints a custom cursor rather than the default windows cursors.
              Can be used to enable cursor animation, but in the current
              revision simply paints a custom cursor based on mouse location.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.PaintSprites(Terrarium.Renderer.DirectX.DirectDrawSurface,System.Boolean)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.PaintSprites(Terrarium.Renderer.DirectX.DirectDrawSurface,System.Boolean)">
             <summary>
              Paint sprites on the given surface.  This method is the meat
              of the graphics engine.  Normally, creatures are painted to
@@ -994,7 +967,7 @@
             <param name="dds">The surface to render to.</param>
             <param name="PlantsOnly">True to render plants, false to render animals.</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.GetBoundsOfState(OrganismBase.OrganismState)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.GetBoundsOfState(OrganismBase.OrganismState)">
             <summary>
              Uses the bounding box computation methods to compute a
              box that can be printed within the graphics engine.  This
@@ -1003,7 +976,7 @@
             <param name="orgState">The state of the creature to compute a bounding box for.</param>
             <returns>A bounding box.</returns>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.InitTeleporter(Terrarium.Game.TeleportZone)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.InitTeleporter(Terrarium.Game.TeleportZone)">
             <summary>
              Sets up the hack table with teleporter information.
              The hack table is used to quickly implement new types
@@ -1012,7 +985,7 @@
             </summary>
             <param name="zone">The teleporter zone to initialize.</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.InitOrganism(OrganismBase.OrganismState)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.InitOrganism(OrganismBase.OrganismState)">
             <summary>
              Initializes a new organism state by computed and
              attaching a TerrariumSprite class that can be used
@@ -1021,20 +994,20 @@
             </summary>
             <param name="orgState">The organism state to attach the sprite animation information to.</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.UpdateWorld(Terrarium.Game.WorldVector)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.UpdateWorld(Terrarium.Game.WorldVector)">
             <summary>
              Updates the sprites controlled by the game view by providing a new
              world vector from the game engine.
             </summary>
             <param name="worldVector">The new world vector of organisms.</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.ResetTerrarium">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ResetTerrarium">
             <summary>
              Resets the Terrarium and prepares it for a new world, without
              having to reboot the entire game.  
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.ClearBackground">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ClearBackground">
             <summary>
              Clear any background surfaces to black.  This helps
              find rendering artifacts where portions of a scene
@@ -1042,42 +1015,42 @@
              black, the portions not updated are clearly visible.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.PaintBackground">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.PaintBackground">
             <summary>
              Renders the Terrarium background image.  Also renders
              plants on the background for static plant drawing to
              enable higher performance.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.ScrollUp(System.Int32)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ScrollUp(System.Int32)">
             <summary>
              Controls scrolling of the viewport around the world map.
             </summary>
             <param name="pixels">The number of pixels to scroll up</param>
             <returns>The number of pixels actually scrolled.</returns>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.ScrollDown(System.Int32)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ScrollDown(System.Int32)">
             <summary>
              Controls scrolling of the viewport around the world map.
             </summary>
             <param name="pixels">The number of pixels to scroll down</param>
             <returns>The number of pixels actually scrolled.</returns>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.ScrollLeft(System.Int32)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ScrollLeft(System.Int32)">
             <summary>
              Controls scrolling of the viewport around the world map.
             </summary>
             <param name="pixels">The number of pixels to scroll left</param>
             <returns>The number of pixels actually scrolled.</returns>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.ScrollRight(System.Int32)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ScrollRight(System.Int32)">
             <summary>
              Controls scrolling of the viewport around the world map.
             </summary>
             <param name="pixels">The number of pixels to scroll right</param>
             <returns>The number of pixels actually scrolled.</returns>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.CenterTo(System.Int32,System.Int32)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.CenterTo(System.Int32,System.Int32)">
             <summary>
              Controls scrolling of the viewport around the world map.  Attempts
              to center the view to the defined point.
@@ -1085,103 +1058,118 @@
             <param name="xOffset">X location to center to.</param>
             <param name="yOffset">Y location to center to.</param>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.Profiler">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.Clipper">
+            <summary>
+             The Clipper object assigned to the PictureBox
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.ScreenSurface">
+            <summary>
+             The primary screen surface for the picture box.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.BackBufferSurface">
+            <summary>
+             The back buffer surface used with the picture box.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.Profiler">
             <summary>
              Provides access to the game profiler.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.RenderTime">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.RenderTime">
             <summary>
              Returns the amount of time required to render a scene.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.Samples">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.Samples">
             <summary>
              Returns the number of samples (frames) obtained.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.Paused">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.Paused">
             <summary>
              Pauses the TerrariumGameView and stops rendering.  A call to 
              RenderFrame will automatically unpause the animation.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.MiniMap">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.MiniMap">
             <summary>
              Provides access to the bitmap representing the minimap for the
              currently loaded world.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.TerrariumMessage">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.TerrariumMessage">
             <summary>
              Enables the textual display of a message over top of
              the Terrarium view.  This property accepts newlines and
              centers the text on the screen.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.DrawDestinationLines">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawDestinationLines">
             <summary>
              Enables the drawing of organism destination lines
              within the Terrarium Client
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.DrawScreen">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawScreen">
             <summary>
              Controls the rendering of the entire game view.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.DrawBoundingBox">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawBoundingBox">
             <summary>
              Controls the rendering of organism bounding boxes useful
              for movement debugging.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.DrawBackgroundGrid">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawBackgroundGrid">
             <summary>
              Controls rendering of a special background that contains
              a grid overlay that mimics the Terrarium application's
              cell grid.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.Cursor">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.Cursor">
             <summary>
              Overrides the cursor property so that
              custom cursors can be implement.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.DrawText">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawText">
             <summary>
              Determines if sprite labels should be drawn.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.VideoMemory">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.VideoMemory">
             <summary>
              Determines if the primary surfaces are in video memory
              or not.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.ViewSize">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.ViewSize">
             <summary>
              Returns the size of the viewport window.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.ActualSize">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.ActualSize">
             <summary>
              Returns the full size of the world.
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.TerrariumDirectDrawGameView.DrawCursor">
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawCursor">
             <summary>
             Determines whether to 
             </summary>
         </member>
-        <member name="E:Terrarium.Renderer.TerrariumDirectDrawGameView.OrganismClicked">
+        <member name="E:Terrarium.Renderer.TerrariumGameView.OrganismClicked">
             <summary>
              Clients can connect to this event and be notified of
              click events that correspond to creatures within the view.
             </summary>
         </member>
-        <member name="E:Terrarium.Renderer.TerrariumDirectDrawGameView.MiniMapUpdated">
+        <member name="E:Terrarium.Renderer.TerrariumGameView.MiniMapUpdated">
             <summary>
              Clients can connect to this event and be notified of
              mini map changes that occur during map transitions.
