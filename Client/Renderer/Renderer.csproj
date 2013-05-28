@@ -18,7 +18,7 @@
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
     <OutputType>Library</OutputType>
-    <RootNamespace>Terrarium.Graphics</RootNamespace>
+    <RootNamespace>Terrarium.Renderer</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <StartupObject>
     </StartupObject>
@@ -184,6 +184,7 @@
     <Compile Include="Classes\Engine\DirectX9GraphicsEngine.cs" />
     <Compile Include="Classes\Engine\GraphicsEngine.cs" />
     <Compile Include="Classes\Engine\IGraphicsEngine.cs" />
+    <Compile Include="Classes\Engine\IGraphicsSurface.cs" />
     <Compile Include="Classes\Engine\ManagedDirectXGraphicsEngine.cs" />
     <Compile Include="Classes\Engine\XnaGraphicsEngine.cs" />
     <Compile Include="Classes\HeightMap.cs">

@@ -10,8 +10,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Terrarium.Game;
-using Terrarium.Graphics.Engine;
 using Terrarium.Renderer.DirectX;
+using Terrarium.Renderer.Engine;
 using Terrarium.Tools;
 
 namespace Terrarium.Renderer
@@ -478,7 +478,7 @@ namespace Terrarium.Renderer
         /// </summary>
         /// <param name="fullscreen">If true then fullscreen will be enabled.</param>
         /// <returns>True if DirectDraw is initialized.</returns>
-        public bool InitializeDirectDraw(bool fullscreen)
+        public bool InitializeGraphicEngine(bool fullscreen)
         {
             try
             {
@@ -486,21 +486,13 @@ namespace Terrarium.Renderer
 
                 if (fullscreen)
                 {
-                    GraphicsEngine.Current.DirectDraw.SetCooperativeLevel(
-                        Parent.Handle.ToInt32(),
-                        CONST_DDSCLFLAGS.DDSCL_FULLSCREEN |
-                        CONST_DDSCLFLAGS.DDSCL_EXCLUSIVE |
-                        CONST_DDSCLFLAGS.DDSCL_ALLOWREBOOT);
-
-                    GraphicsEngine.Current.DirectDraw.SetDisplayMode(640, 480, 16, 0, 0);
+                    GraphicsEngine.Current.SetFullScreenMode(Parent.Handle);
                     CreateFullScreenSurfaces();
                 }
                 else
                 {
                     Parent.Show();
-                    GraphicsEngine.Current.DirectDraw.SetCooperativeLevel(
-                        Parent.Handle.ToInt32(),
-                        CONST_DDSCLFLAGS.DDSCL_NORMAL);
+                    GraphicsEngine.Current.SetWindow(Parent.Handle);                    
                     CreateWindowedSurfaces();
                 }
 
@@ -525,7 +517,7 @@ namespace Terrarium.Renderer
             tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE;
             ScreenSurface = new DirectDrawSurface(tempDescr);
 
-            Clipper = GraphicsEngine.Current.DirectDraw.CreateClipper(0);
+            Clipper = ((DirectX7GraphicsEngine)(GraphicsEngine.Current)).DirectDraw.CreateClipper(0);
             Clipper.SetHWnd(Handle.ToInt32());
             ScreenSurface.Surface.SetClipper(Clipper);
             Trace.WriteLine("Primary Surface InVideo? " + ScreenSurface.InVideo);

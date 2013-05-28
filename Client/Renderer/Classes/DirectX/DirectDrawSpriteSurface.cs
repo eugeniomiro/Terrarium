@@ -5,7 +5,7 @@
 
 using DxVBLib;
 using System;
-using Terrarium.Graphics.Engine;
+using Terrarium.Renderer.Engine;
 
 namespace Terrarium.Renderer.DirectX
 {

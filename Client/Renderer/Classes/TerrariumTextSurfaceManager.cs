@@ -96,6 +96,13 @@ namespace Terrarium.Renderer
                 return;
             }
 
+            var text = key;
+            if (text.Length > 16)
+            {
+                text = text.Substring(0, 16);
+                text += "...";
+            }
+
             // Set up the surface
             var rect = new RECT();
             var ddSurface = new DirectDrawSurface(StandardFontRect.Right, StandardFontRect.Bottom)
@@ -106,13 +113,6 @@ namespace Terrarium.Renderer
             // Color in the back and add the text
             ddSurface.Surface.BltColorFill(ref rect, DirectDrawSurface.MagentaColorKey.low);
             ddSurface.Surface.SetForeColor(0);
-
-            var text = key;
-            if (text.Length > 16)
-            {
-                text = text.Substring(0, 16);
-                text += "...";
-            }
 
             var dcHandle = new IntPtr(ddSurface.Surface.GetDC());
 

@@ -398,10 +398,16 @@
             <param name="handle"></param>
             <param name="windowRect"></param>
         </member>
-        <member name="P:Terrarium.Renderer.Engine.IGraphicsEngine.DirectDraw">
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.SetFullScreenMode(System.IntPtr)">
             <summary>
             
             </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
         </member>
         <member name="F:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.directX">
             <summary>
@@ -420,6 +426,18 @@
             <param name="handle"></param>
             <param name="windowRect"></param>
         </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.SetFullScreenMode(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
         <member name="P:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.DirectDraw">
             <summary>
              Provides access to the native DirectDraw7 object
@@ -437,10 +455,17 @@
             <param name="handle"></param>
             <param name="windowRect"></param>
         </member>
-        <member name="P:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.DirectDraw">
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.SetFullScreenMode(System.IntPtr)">
             <summary>
             
             </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
         </member>
         <member name="T:Terrarium.Renderer.Engine.DirectX9GraphicsEngine">
             <summary>
@@ -454,27 +479,34 @@
             <param name="handle"></param>
             <param name="windowRect"></param>
         </member>
-        <member name="P:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.DirectDraw">
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.SetFullScreenMode(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.GraphicsEngine">
             <summary>
             
             </summary>
         </member>
-        <member name="T:Terrarium.Graphics.Engine.GraphicsEngine">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:Terrarium.Graphics.Engine.GraphicsEngine._profiler">
+        <member name="F:Terrarium.Renderer.Engine.GraphicsEngine._profiler">
             <summary>
              Holds an instance of the DirectDrawProfiler timing object.
             </summary>
         </member>
-        <member name="P:Terrarium.Graphics.Engine.GraphicsEngine.Profiler">
+        <member name="P:Terrarium.Renderer.Engine.GraphicsEngine.Profiler">
             <summary>
              Provides access to the DirectDrawProfiler timing object.
             </summary>
         </member>
-        <member name="P:Terrarium.Graphics.Engine.GraphicsEngine.Current">
+        <member name="P:Terrarium.Renderer.Engine.GraphicsEngine.Current">
             <summary>
             Currently configured GraphicsEngine
             </summary>
@@ -491,10 +523,17 @@
             <param name="handle"></param>
             <param name="windowRect"></param>
         </member>
-        <member name="P:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.DirectDraw">
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.SetFullScreenMode(System.IntPtr)">
             <summary>
             
             </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
         </member>
         <member name="T:Terrarium.Renderer.Engine.XnaGraphicsEngine">
             <summary>
@@ -508,10 +547,17 @@
             <param name="handle"></param>
             <param name="windowRect"></param>
         </member>
-        <member name="P:Terrarium.Renderer.Engine.XnaGraphicsEngine.DirectDraw">
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.SetFullScreenMode(System.IntPtr)">
             <summary>
             
             </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
         </member>
         <member name="T:Terrarium.Renderer.HeightMap">
             <summary>
@@ -798,7 +844,7 @@
             </summary>
             <param name="e">Null</param>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.InitializeDirectDraw(System.Boolean)">
+        <member name="M:Terrarium.Renderer.TerrariumDirectDrawGameView.InitializeGraphicEngine(System.Boolean)">
             <summary>
              Initializes DirectDraw rendering APIs.  The function can be called to initialize
              both Windowed and FullScreen mode, but FullScreen mode isn't fully

@@ -12,17 +12,27 @@ namespace Terrarium.Renderer.Engine
         /// <summary>
         /// 
         /// </summary>
-        public DxVBLib.DirectDraw7 DirectDraw
+        /// <param name="handle"></param>
+        /// <param name="windowRect"></param>
+        public void GetWindowRect(System.IntPtr handle, ref DxVBLib.RECT windowRect)
         {
-            get { throw new System.NotImplementedException(); }
+            throw new System.NotImplementedException();
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="handle"></param>
-        /// <param name="windowRect"></param>
-        public void GetWindowRect(System.IntPtr handle, ref DxVBLib.RECT windowRect)
+        public void SetFullScreenMode(System.IntPtr handle)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handle"></param>
+        public void SetWindow(System.IntPtr handle)
         {
             throw new System.NotImplementedException();
         }

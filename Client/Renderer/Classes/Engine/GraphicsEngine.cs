@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Terrarium.Renderer.DirectX;
-using Terrarium.Renderer.Engine;
 using Terrarium.Tools;
 
-namespace Terrarium.Graphics.Engine
+namespace Terrarium.Renderer.Engine
 {
     /// <summary>
     /// 

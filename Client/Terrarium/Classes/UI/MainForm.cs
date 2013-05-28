@@ -717,7 +717,7 @@ namespace Terrarium.Client
             // Set up the game view
             if (!this.DesignMode)
             {
-                if (!tddGameView.InitializeDirectDraw(false))
+                if (!tddGameView.InitializeGraphicEngine(false))
                 {
                     noDirectX = true;
                 }

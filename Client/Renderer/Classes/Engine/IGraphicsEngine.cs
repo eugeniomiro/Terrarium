@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 
 using DxVBLib;
+using System;
 namespace Terrarium.Renderer.Engine
 {
     /// <summary>
@@ -13,12 +14,17 @@ namespace Terrarium.Renderer.Engine
         /// <summary>
         /// 
         /// </summary>
-        DirectDraw7 DirectDraw { get; }
+        /// <param name="handle"></param>
+        /// <param name="windowRect"></param>
+        void GetWindowRect(System.IntPtr handle, ref RECT windowRect);
+        /// <summary>
+        /// 
+        /// </summary>
+        void SetFullScreenMode(IntPtr handle);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="handle"></param>
-        /// <param name="windowRect"></param>
-        void GetWindowRect(System.IntPtr handle, ref RECT windowRect);
+        void SetWindow(IntPtr handle);
     }
 }

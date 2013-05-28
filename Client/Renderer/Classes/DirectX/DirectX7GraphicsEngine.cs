@@ -73,5 +73,31 @@ namespace Terrarium.Renderer.DirectX
         {
             DirectX.GetWindowRect(handle.ToInt32(), ref windowRect);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handle"></param>
+        public void SetFullScreenMode(IntPtr handle)
+        {
+            DirectDraw.SetCooperativeLevel(
+               handle.ToInt32(),
+               CONST_DDSCLFLAGS.DDSCL_FULLSCREEN |
+               CONST_DDSCLFLAGS.DDSCL_EXCLUSIVE |
+               CONST_DDSCLFLAGS.DDSCL_ALLOWREBOOT);
+
+            DirectDraw.SetDisplayMode(640, 480, 16, 0, 0);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handle"></param>
+        public void SetWindow(IntPtr handle)
+        {
+            DirectDraw.SetCooperativeLevel(
+                        handle.ToInt32(),
+                        CONST_DDSCLFLAGS.DDSCL_NORMAL);
+        }
     }
 }
