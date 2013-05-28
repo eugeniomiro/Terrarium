@@ -74,100 +74,100 @@ namespace Terrarium.Forms
         /// </summary>
         private void InitializeComponent()
         {
-			this.Send = new System.Windows.Forms.Button();
-			this.DontSend = new System.Windows.Forms.Button();
-			this.label1 = new System.Windows.Forms.Label();
-			this.Information = new System.Windows.Forms.TextBox();
-			this.Email = new System.Windows.Forms.TextBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.EmailLabel = new System.Windows.Forms.Label();
-			this.SuspendLayout();
-			// 
-			// Send
-			// 
-			this.Send.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.Send.Location = new System.Drawing.Point(112, 352);
-			this.Send.Name = "Send";
-			this.Send.Size = new System.Drawing.Size(75, 32);
-			this.Send.TabIndex = 0;
-			this.Send.Text = "Send";
-			this.Send.Click += new System.EventHandler(this.Send_Click);
-			// 
-			// DontSend
-			// 
-			this.DontSend.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.DontSend.Location = new System.Drawing.Point(208, 352);
-			this.DontSend.Name = "DontSend";
-			this.DontSend.Size = new System.Drawing.Size(75, 32);
-			this.DontSend.TabIndex = 1;
-			this.DontSend.Text = "Don\'t Send";
-			this.DontSend.Click += new System.EventHandler(this.DontSend_Click);
-			// 
-			// label1
-			// 
-			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
-			this.label1.Location = new System.Drawing.Point(24, 16);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(376, 32);
-			this.label1.TabIndex = 2;
-			this.label1.Text = "The version of the game you\'re running, and the operating system you\'re running w" +
-				"ill automatically be included.";
-			// 
-			// Information
-			// 
-			this.Information.Location = new System.Drawing.Point(24, 128);
-			this.Information.Multiline = true;
-			this.Information.Name = "Information";
-			this.Information.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.Information.Size = new System.Drawing.Size(368, 216);
-			this.Information.TabIndex = 6;
-			this.Information.Text = "[Enter steps to reproduce the problem]\r\n\r\n[Enter Expected Behavior Here]\r\n\r\n[Ente" +
-				"r actual behavior here]";
-			this.Information.TextChanged += new System.EventHandler(this.Information_TextChanged);
-			// 
-			// Email
-			// 
-			this.Email.Location = new System.Drawing.Point(24, 80);
-			this.Email.Name = "Email";
-			this.Email.Size = new System.Drawing.Size(376, 20);
-			this.Email.TabIndex = 4;
-			this.Email.Text = "";
-			// 
-			// label2
-			// 
-			this.label2.Location = new System.Drawing.Point(24, 112);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(344, 16);
-			this.label2.TabIndex = 5;
-			this.label2.Text = "Enter the suggestion or bug description here:";
-			// 
-			// EmailLabel
-			// 
-			this.EmailLabel.Location = new System.Drawing.Point(24, 64);
-			this.EmailLabel.Name = "EmailLabel";
-			this.EmailLabel.Size = new System.Drawing.Size(376, 16);
-			this.EmailLabel.TabIndex = 3;
-			this.EmailLabel.Text = "Email (not required):";
-			// 
-			// ReportBug
-			// 
+            this.Send = new System.Windows.Forms.Button();
+            this.DontSend = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Information = new System.Windows.Forms.TextBox();
+            this.Email = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.EmailLabel = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // Send
+            // 
+            this.Send.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.Send.Location = new System.Drawing.Point(112, 352);
+            this.Send.Name = "Send";
+            this.Send.Size = new System.Drawing.Size(75, 32);
+            this.Send.TabIndex = 0;
+            this.Send.Text = "Send";
+            this.Send.Click += new System.EventHandler(this.Send_Click);
+            // 
+            // DontSend
+            // 
+            this.DontSend.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.DontSend.Location = new System.Drawing.Point(208, 352);
+            this.DontSend.Name = "DontSend";
+            this.DontSend.Size = new System.Drawing.Size(75, 32);
+            this.DontSend.TabIndex = 1;
+            this.DontSend.Text = "Don\'t Send";
+            this.DontSend.Click += new System.EventHandler(this.DontSend_Click);
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+            this.label1.Location = new System.Drawing.Point(24, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(376, 32);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "The version of the game you\'re running, and the operating system you\'re running w" +
+                "ill automatically be included.";
+            // 
+            // Information
+            // 
+            this.Information.Location = new System.Drawing.Point(24, 128);
+            this.Information.Multiline = true;
+            this.Information.Name = "Information";
+            this.Information.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.Information.Size = new System.Drawing.Size(368, 216);
+            this.Information.TabIndex = 6;
+            this.Information.Text = "[Enter steps to reproduce the problem]\r\n\r\n[Enter Expected Behavior Here]\r\n\r\n[Ente" +
+                "r actual behavior here]";
+            this.Information.TextChanged += new System.EventHandler(this.Information_TextChanged);
+            // 
+            // Email
+            // 
+            this.Email.Location = new System.Drawing.Point(24, 80);
+            this.Email.Name = "Email";
+            this.Email.Size = new System.Drawing.Size(376, 20);
+            this.Email.TabIndex = 4;
+            this.Email.Text = "";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(24, 112);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(344, 16);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Enter the suggestion or bug description here:";
+            // 
+            // EmailLabel
+            // 
+            this.EmailLabel.Location = new System.Drawing.Point(24, 64);
+            this.EmailLabel.Name = "EmailLabel";
+            this.EmailLabel.Size = new System.Drawing.Size(376, 16);
+            this.EmailLabel.TabIndex = 3;
+            this.EmailLabel.Text = "Email (not required):";
+            // 
+            // ReportBug
+            // 
             
             this.AutoScaleDimensions = new System.Drawing.SizeF(5, 13);
             // this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(408, 390);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.EmailLabel);
-			this.Controls.Add(this.Email);
-			this.Controls.Add(this.Information);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.DontSend);
-			this.Controls.Add(this.Send);
-			this.Name = "ReportBug";
-			this.Text = "Report a Bug or Suggestion";
-			this.Load += new System.EventHandler(this.Form_Load);
-			this.ResumeLayout(false);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.EmailLabel);
+            this.Controls.Add(this.Email);
+            this.Controls.Add(this.Information);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.DontSend);
+            this.Controls.Add(this.Send);
+            this.Name = "ReportBug";
+            this.Text = "Report a Bug or Suggestion";
+            this.Load += new System.EventHandler(this.Form_Load);
+            this.ResumeLayout(false);
 
-		}
+        }
     #endregion
 
         /// <summary>

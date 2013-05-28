@@ -339,7 +339,7 @@ namespace Terrarium.Client.SplashScreen
 
                         if (hdc != IntPtr.Zero)
                         {
-                            var g = Graphics.FromHdcInternal(hdc);
+                            var g = System.Drawing.Graphics.FromHdcInternal(hdc);
                             g.DrawImage(_image, 0, 0, _width, _height);
                             if (_customizer != null)
                             {

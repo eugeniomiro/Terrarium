@@ -10,49 +10,49 @@ namespace Terrarium.Forms
     using System.Windows.Forms;
     using Terrarium.Glass;
 
-	/// <summary>
-	/// 
-	/// </summary>
-	public class GlassBottomPanel : UserControl
-	{
+    /// <summary>
+    /// 
+    /// </summary>
+    public class GlassBottomPanel : UserControl
+    {
 
-		/// <summary>
-		///  The current game mode used to enable some features
-		///  and disable others as well as set up initial tab
-		///  display.
-		/// </summary>
-		private GameModes mode;
-		private GlassPanel GlassPanel1;
-		private ToolTip controlsToolTip;
+        /// <summary>
+        ///  The current game mode used to enable some features
+        ///  and disable others as well as set up initial tab
+        ///  display.
+        /// </summary>
+        private GameModes mode;
+        private GlassPanel GlassPanel1;
+        private ToolTip controlsToolTip;
         private IContainer components;
-		private Panel panel1;
-		private Panel controlsMasterPanel;
-		private GlassButton loadTerrariumButton;
-		private GlassButton newTerrariumButton;
-		private GlassButton joinEcosystemButton;
-		private Panel panel2;
-		private Panel ecosystemControlsPanel;
-		private GlassButton reintroduceAnimalButton;
-		private GlassButton introduceAnimalEcosystemButton;
-		private Panel terrariumControlsPanel;
-		private GlassButton pauseButton;
-		private GlassButton addAnimalButton;
-		private GlassButton introduceAnimalTerrariumButton;
+        private Panel panel1;
+        private Panel controlsMasterPanel;
+        private GlassButton loadTerrariumButton;
+        private GlassButton newTerrariumButton;
+        private GlassButton joinEcosystemButton;
+        private Panel panel2;
+        private Panel ecosystemControlsPanel;
+        private GlassButton reintroduceAnimalButton;
+        private GlassButton introduceAnimalEcosystemButton;
+        private Panel terrariumControlsPanel;
+        private GlassButton pauseButton;
+        private GlassButton addAnimalButton;
+        private GlassButton introduceAnimalTerrariumButton;
         private ComboBox addAnimalComboBox;
-		private Panel buttonsPanel;
-		private GlassButton traceButton;
-		private GlassButton statisticsButton;
-		private GlassButton detailsButton;
+        private Panel buttonsPanel;
+        private GlassButton traceButton;
+        private GlassButton statisticsButton;
+        private GlassButton detailsButton;
         private GlassButton settingsButton;
         private TickerBar tickerBar;
         private GlassButton developerPanelButton;
-		/// <summary>
-		///  The current screen saver mode used to enable some
-		///  features and disable others.
-		/// </summary>
-		private ScreenSaverMode screenSaverMode;
+        /// <summary>
+        ///  The current screen saver mode used to enable some
+        ///  features and disable others.
+        /// </summary>
+        private ScreenSaverMode screenSaverMode;
 
-		#region Terrarium Bottom Panel Public Control Fields
+        #region Terrarium Bottom Panel Public Control Fields
 
         /// <summary>
         ///  Access to the SettingsButton
@@ -66,302 +66,302 @@ namespace Terrarium.Forms
             }
         }
 
-		/// <summary>
-		///  Access to the SettingsButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton SettingsButton
-		{
-			get
-			{
-				return this.settingsButton;
-			}
-		}
+        /// <summary>
+        ///  Access to the SettingsButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton SettingsButton
+        {
+            get
+            {
+                return this.settingsButton;
+            }
+        }
 
-		/// <summary>
-		///  Access to the DetailsButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton DetailsButton
-		{
-			get
-			{
-				return this.detailsButton;
-			}
-		}
-		
-		/// <summary>
-		///  Access to the StatisticsButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton StatisticsButton
-		{
-			get
-			{
-				return this.statisticsButton;
-			}
-		}
-
-		/// <summary>
-		///  Access to the TraceButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton TraceButton
-		{
-			get
-			{
-				return this.traceButton;
-			}
-		}
-
-		/// <summary>
-		///  Access to the AddAnimalComboBox
-		/// </summary>
-		[Browsable(false)]
-		public ComboBox AddAnimalComboBox
-		{
-			get
-			{
-				return addAnimalComboBox;
-			}
-		}
-
-		/// <summary>
-		///  Access to the AddAnimalButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton AddAnimalButton
-		{
-			get
-			{
-				return addAnimalButton;
-			}
-		}
-
-		/// <summary>
-		///  Access to the IntroduceAnimalEcosystemButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton IntroduceAnimalEcosystemButton
-		{
-			get
-			{
-				return introduceAnimalEcosystemButton;
-			}
-		}
-
-		/// <summary>
-		///  Access to the IntroduceAnimalTerrariumButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton IntroduceAnimalTerrariumButton
-		{
-			get
-			{
-				return introduceAnimalTerrariumButton;
-			}
-		}
-
-		/// <summary>
-		///  Access to the JoinEcosystemButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton JoinEcosystemButton
-		{
-			get
-			{
-				return joinEcosystemButton;
-			}
-		}
-
-		/// <summary>
-		///  Access to the LoadTerrariumButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton LoadTerrariumButton
-		{
-			get
-			{
-				return loadTerrariumButton;
-			}
-		}
-
-		/// <summary>
-		///  Access to the NewTerrariumButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton NewTerrariumButton
-		{
-			get
-			{
-				return newTerrariumButton;
-			}
-		}
-
-		/// <summary>
-		///  Access to the PauseButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton PauseButton
-		{
-			get
-			{
-				return pauseButton;
-			}
-		}
-
-		/// <summary>
-		///  Access to the ReintroduceAnimalButton
-		/// </summary>
-		[Browsable(false)]
-		public GlassButton ReintroduceAnimalButton
-		{
-			get
-			{
-				return reintroduceAnimalButton;
-			}
-		}
-
-		#endregion
-
-		/// <summary>
-		///  Current game running mode.  Used to disable features.
-		/// </summary>
-		public ScreenSaverMode Mode
-		{
-			get
-			{
-				return screenSaverMode;
-			}
+        /// <summary>
+        ///  Access to the DetailsButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton DetailsButton
+        {
+            get
+            {
+                return this.detailsButton;
+            }
+        }
         
-			set
-			{
-				screenSaverMode = value;
-			}
-		}
+        /// <summary>
+        ///  Access to the StatisticsButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton StatisticsButton
+        {
+            get
+            {
+                return this.statisticsButton;
+            }
+        }
 
-		/// <summary>
-		///  Current game mode.  Either Terrarium or EcoSystem.
-		/// </summary>
-		public GameModes GameMode
-		{
-			get
-			{
-				return mode;
-			}
+        /// <summary>
+        ///  Access to the TraceButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton TraceButton
+        {
+            get
+            {
+                return this.traceButton;
+            }
+        }
 
-			set
-			{
-				mode = value;
-				if (mode == GameModes.Ecosystem)
-				{
-					this.ecosystemControlsPanel.Visible = true;
-					this.terrariumControlsPanel.Visible = false;
-				}
-				else
-				{
-					this.terrariumControlsPanel.Visible = true;
-					this.ecosystemControlsPanel.Visible = false;
-				}
+        /// <summary>
+        ///  Access to the AddAnimalComboBox
+        /// </summary>
+        [Browsable(false)]
+        public ComboBox AddAnimalComboBox
+        {
+            get
+            {
+                return addAnimalComboBox;
+            }
+        }
 
-				int panelWidth = 0;
-				foreach (Control childControl in this.GlassPanel1.Controls)
-				{
-					if (childControl.Visible == true)
-						panelWidth += childControl.Width;
-				}
-				this.GlassPanel1.Width = panelWidth;
+        /// <summary>
+        ///  Access to the AddAnimalButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton AddAnimalButton
+        {
+            get
+            {
+                return addAnimalButton;
+            }
+        }
 
-				pauseButton.Enabled = (mode == GameModes.Terrarium);
-				addAnimalButton.Enabled = (mode == GameModes.Terrarium);
-				addAnimalComboBox.Enabled = (mode == GameModes.Terrarium);
-				introduceAnimalTerrariumButton.Enabled = (mode == GameModes.Terrarium);
-				joinEcosystemButton.Enabled = (mode == GameModes.Terrarium);
+        /// <summary>
+        ///  Access to the IntroduceAnimalEcosystemButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton IntroduceAnimalEcosystemButton
+        {
+            get
+            {
+                return introduceAnimalEcosystemButton;
+            }
+        }
 
-				introduceAnimalEcosystemButton.Enabled = (mode == GameModes.Ecosystem);
-				reintroduceAnimalButton.Enabled = (mode == GameModes.Ecosystem);
-			}
-		}
+        /// <summary>
+        ///  Access to the IntroduceAnimalTerrariumButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton IntroduceAnimalTerrariumButton
+        {
+            get
+            {
+                return introduceAnimalTerrariumButton;
+            }
+        }
 
-		/// <summary>
-		/// The messaging ticker
-		/// </summary>
-		public TickerBar Ticker
-		{
-			get
-			{
-				return this.tickerBar;
-			}
-		}
+        /// <summary>
+        ///  Access to the JoinEcosystemButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton JoinEcosystemButton
+        {
+            get
+            {
+                return joinEcosystemButton;
+            }
+        }
 
-		#region Event Handlers
-		private void InvalidateViewportRect()
-		{
-			//viewPortSizeOnMap = new Size((viewPortSize.Width * this.navigatePictureBox.Width) / landSize.Width,
-			//    (viewPortSize.Height * this.navigatePictureBox.Height) / landSize.Height);
-		}
+        /// <summary>
+        ///  Access to the LoadTerrariumButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton LoadTerrariumButton
+        {
+            get
+            {
+                return loadTerrariumButton;
+            }
+        }
 
-		/// <summary>
-		///  Make sure we invalidate the viewport rectangle if the size of the
-		///  picture box changes.  In the current implementation this won't
-		///  happen, but this will help enable a skinning mode.
-		/// </summary>
-		/// <param name="sender">PictureBox</param>
-		/// <param name="e">Empty event arguments</param>
-		private void navigatePictureBox_Resize(object sender, System.EventArgs e)
-		{
-			InvalidateViewportRect();
-		}
-		  
-		#endregion
+        /// <summary>
+        ///  Access to the NewTerrariumButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton NewTerrariumButton
+        {
+            get
+            {
+                return newTerrariumButton;
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnResize(EventArgs e)
-		{
-			base.OnResize (e);
+        /// <summary>
+        ///  Access to the PauseButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton PauseButton
+        {
+            get
+            {
+                return pauseButton;
+            }
+        }
 
-			//int totalWidth = this.Width;
-			//int subPanelWidth = (totalWidth-miniMapWidth) / 2;
-			//int buttonsPanelWidth = buttonsPanel.Width;
+        /// <summary>
+        ///  Access to the ReintroduceAnimalButton
+        /// </summary>
+        [Browsable(false)]
+        public GlassButton ReintroduceAnimalButton
+        {
+            get
+            {
+                return reintroduceAnimalButton;
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        ///  Current game running mode.  Used to disable features.
+        /// </summary>
+        public ScreenSaverMode Mode
+        {
+            get
+            {
+                return screenSaverMode;
+            }
+        
+            set
+            {
+                screenSaverMode = value;
+            }
+        }
+
+        /// <summary>
+        ///  Current game mode.  Either Terrarium or EcoSystem.
+        /// </summary>
+        public GameModes GameMode
+        {
+            get
+            {
+                return mode;
+            }
+
+            set
+            {
+                mode = value;
+                if (mode == GameModes.Ecosystem)
+                {
+                    this.ecosystemControlsPanel.Visible = true;
+                    this.terrariumControlsPanel.Visible = false;
+                }
+                else
+                {
+                    this.terrariumControlsPanel.Visible = true;
+                    this.ecosystemControlsPanel.Visible = false;
+                }
+
+                int panelWidth = 0;
+                foreach (Control childControl in this.GlassPanel1.Controls)
+                {
+                    if (childControl.Visible == true)
+                        panelWidth += childControl.Width;
+                }
+                this.GlassPanel1.Width = panelWidth;
+
+                pauseButton.Enabled = (mode == GameModes.Terrarium);
+                addAnimalButton.Enabled = (mode == GameModes.Terrarium);
+                addAnimalComboBox.Enabled = (mode == GameModes.Terrarium);
+                introduceAnimalTerrariumButton.Enabled = (mode == GameModes.Terrarium);
+                joinEcosystemButton.Enabled = (mode == GameModes.Terrarium);
+
+                introduceAnimalEcosystemButton.Enabled = (mode == GameModes.Ecosystem);
+                reintroduceAnimalButton.Enabled = (mode == GameModes.Ecosystem);
+            }
+        }
+
+        /// <summary>
+        /// The messaging ticker
+        /// </summary>
+        public TickerBar Ticker
+        {
+            get
+            {
+                return this.tickerBar;
+            }
+        }
+
+        #region Event Handlers
+        private void InvalidateViewportRect()
+        {
+            //viewPortSizeOnMap = new Size((viewPortSize.Width * this.navigatePictureBox.Width) / landSize.Width,
+            //    (viewPortSize.Height * this.navigatePictureBox.Height) / landSize.Height);
+        }
+
+        /// <summary>
+        ///  Make sure we invalidate the viewport rectangle if the size of the
+        ///  picture box changes.  In the current implementation this won't
+        ///  happen, but this will help enable a skinning mode.
+        /// </summary>
+        /// <param name="sender">PictureBox</param>
+        /// <param name="e">Empty event arguments</param>
+        private void navigatePictureBox_Resize(object sender, System.EventArgs e)
+        {
+            InvalidateViewportRect();
+        }
+          
+        #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize (e);
+
+            //int totalWidth = this.Width;
+            //int subPanelWidth = (totalWidth-miniMapWidth) / 2;
+            //int buttonsPanelWidth = buttonsPanel.Width;
 
 
-			//controlsMasterPanel.Left = subPanelWidth/2 - controlsMasterPanel.Width/2;
+            //controlsMasterPanel.Left = subPanelWidth/2 - controlsMasterPanel.Width/2;
 
-			//traceTextBox.Left = (subPanelWidth/2 - traceTextBox.Width/2) + subPanelWidth + miniMapWidth;
+            //traceTextBox.Left = (subPanelWidth/2 - traceTextBox.Width/2) + subPanelWidth + miniMapWidth;
 
-			//buttonsPanel.Left = 16; //totalWidth/2 - buttonsPanelWidth/2;
+            //buttonsPanel.Left = 16; //totalWidth/2 - buttonsPanelWidth/2;
 
-			//tickerBar.Width = totalWidth - buttonsPanel.Width - 48;
+            //tickerBar.Width = totalWidth - buttonsPanel.Width - 48;
 
-			//tickerBar.Left = buttonsPanel.Left + buttonsPanel.Width + 16;
+            //tickerBar.Left = buttonsPanel.Left + buttonsPanel.Width + 16;
 
-		}
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public GlassBottomPanel()
-		{
-			InitializeComponent();
+        /// <summary>
+        /// 
+        /// </summary>
+        public GlassBottomPanel()
+        {
+            InitializeComponent();
 
-			controlsToolTip.SetToolTip(this.settingsButton, "View and change current game settings.");
-			controlsToolTip.SetToolTip(this.detailsButton, "View details about the selected organism.");
-			controlsToolTip.SetToolTip(this.statisticsButton, "Open the statistics window for your local Ecosystem.");
-			controlsToolTip.SetToolTip(this.traceButton, "Open the diagnostic trace window.");
+            controlsToolTip.SetToolTip(this.settingsButton, "View and change current game settings.");
+            controlsToolTip.SetToolTip(this.detailsButton, "View details about the selected organism.");
+            controlsToolTip.SetToolTip(this.statisticsButton, "Open the statistics window for your local Ecosystem.");
+            controlsToolTip.SetToolTip(this.traceButton, "Open the diagnostic trace window.");
 
-			controlsToolTip.SetToolTip(this.joinEcosystemButton, "Switch to Ecosystem mode.");
-			controlsToolTip.SetToolTip(this.newTerrariumButton, "Switch to Terrarium mode and create a new Terrarium.");
-			controlsToolTip.SetToolTip(this.loadTerrariumButton, "Switch to Terrarium mode and load an existing Terrarium.");
+            controlsToolTip.SetToolTip(this.joinEcosystemButton, "Switch to Ecosystem mode.");
+            controlsToolTip.SetToolTip(this.newTerrariumButton, "Switch to Terrarium mode and create a new Terrarium.");
+            controlsToolTip.SetToolTip(this.loadTerrariumButton, "Switch to Terrarium mode and load an existing Terrarium.");
 
             controlsToolTip.SetToolTip(this.developerPanelButton, "Show or Hide the Developer Panel.");
 
-		}
+        }
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlassBottomPanel));
             this.GlassPanel1 = new Terrarium.Glass.GlassPanel();
@@ -888,6 +888,6 @@ namespace Terrarium.Forms
             this.terrariumControlsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
-		}
-	}
+        }
+    }
 }

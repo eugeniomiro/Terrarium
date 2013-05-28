@@ -116,7 +116,7 @@ namespace Terrarium.Renderer
 
             var dcHandle = new IntPtr(ddSurface.Surface.GetDC());
 
-            var graphics = Graphics.FromHdc(dcHandle);
+            var graphics = System.Drawing.Graphics.FromHdc(dcHandle);
 
             var font = new Font("Verdana", 6.75f, FontStyle.Regular);
 

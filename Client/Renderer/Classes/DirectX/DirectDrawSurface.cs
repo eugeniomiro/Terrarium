@@ -7,6 +7,7 @@ using DxVBLib;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Terrarium.Graphics.Engine;
 
 namespace Terrarium.Renderer.DirectX
 {
@@ -155,7 +156,7 @@ namespace Terrarium.Renderer.DirectX
             {
                 var ddck = new DDCOLORKEY();
                 var ddsd2 = new DDSURFACEDESC2();
-                ManagedDirectX.DirectDraw.GetDisplayMode(ref ddsd2);
+                GraphicsEngine.Current.DirectDraw.GetDisplayMode(ref ddsd2);
 
                 if ((ddsd2.ddpfPixelFormat.lFlags & CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8) ==
                     CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8)
@@ -182,7 +183,7 @@ namespace Terrarium.Renderer.DirectX
             {
                 var ddck = new DDCOLORKEY();
                 var ddsd2 = new DDSURFACEDESC2();
-                ManagedDirectX.DirectDraw.GetDisplayMode(ref ddsd2);
+                GraphicsEngine.Current.DirectDraw.GetDisplayMode(ref ddsd2);
 
                 if ((ddsd2.ddpfPixelFormat.lFlags & CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8) ==
                     CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8)
@@ -211,7 +212,7 @@ namespace Terrarium.Renderer.DirectX
             {
                 var ddck = new DDCOLORKEY();
                 var ddsd2 = new DDSURFACEDESC2();
-                ManagedDirectX.DirectDraw.GetDisplayMode(ref ddsd2);
+                GraphicsEngine.Current.DirectDraw.GetDisplayMode(ref ddsd2);
 
                 if ((ddsd2.ddpfPixelFormat.lFlags & CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8) ==
                     CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8)
@@ -326,7 +327,7 @@ namespace Terrarium.Renderer.DirectX
             // different bit depths together
             var ddck = new DDCOLORKEY();
             var ddsd2 = new DDSURFACEDESC2();
-            ManagedDirectX.DirectDraw.GetDisplayMode(ref ddsd2);
+            GraphicsEngine.Current.DirectDraw.GetDisplayMode(ref ddsd2);
 
             var bBitCount = CountBits(ddsd2.ddpfPixelFormat.lBBitMask);
             var gBitCount = CountBits(ddsd2.ddpfPixelFormat.lGBitMask);
@@ -385,13 +386,13 @@ namespace Terrarium.Renderer.DirectX
         private void CreateSurface()
         {
 #if TRACE
-            ManagedDirectX.Profiler.Start("CreateSurface");
+            GraphicsEngine.Profiler.Start("CreateSurface");
 #endif
             try
             {
                 if (string.IsNullOrEmpty(image))
                 {
-                    surface = ManagedDirectX.DirectDraw.CreateSurface(ref descriptor);
+                    surface = GraphicsEngine.Current.DirectDraw.CreateSurface(ref descriptor);
                     if (surface != null)
                     {
                         rect.Bottom = descriptor.lHeight;
@@ -405,12 +406,12 @@ namespace Terrarium.Renderer.DirectX
                         Trace.WriteLine(image);
                         try
                         {
-                            surface = ManagedDirectX.DirectDraw.CreateSurfaceFromFile(image, ref descriptor);
+                            surface = GraphicsEngine.Current.DirectDraw.CreateSurfaceFromFile(image, ref descriptor);
                         }
                         catch (ArgumentException)
                         {
                             descriptor = SystemMemorySurfaceDescription;
-                            surface = ManagedDirectX.DirectDraw.CreateSurfaceFromFile(image, ref descriptor);
+                            surface = GraphicsEngine.Current.DirectDraw.CreateSurfaceFromFile(image, ref descriptor);
                         }
                     }
                     catch (COMException e)
@@ -442,7 +443,7 @@ namespace Terrarium.Renderer.DirectX
                 throw new DirectXException("Error Creating a DirectDraw Surface", exc);
             }
 #if TRACE
-            ManagedDirectX.Profiler.End("DirectDrawSurface.CreateSurface");
+            GraphicsEngine.Profiler.End("DirectDrawSurface.CreateSurface");
 #endif
         }
     }

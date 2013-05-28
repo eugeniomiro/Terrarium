@@ -9,5 +9,19 @@ namespace Terrarium.Renderer.Engine
     /// </summary>
     public class XnaGraphicsEngine : IGraphicsEngine
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public DxVBLib.DirectX7 DirectX
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DxVBLib.DirectDraw7 DirectDraw
+        {
+            get { throw new System.NotImplementedException(); }
+        }
     }
 }

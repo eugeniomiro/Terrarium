@@ -5,6 +5,7 @@
 
 using DxVBLib;
 using System;
+using Terrarium.Graphics.Engine;
 
 namespace Terrarium.Renderer.DirectX
 {
@@ -58,7 +59,7 @@ namespace Terrarium.Renderer.DirectX
         public DirectDrawSpriteSurface(string spriteName, string spriteImagePath, int xFrames, int yFrames)
         {
 #if TRACE
-            ManagedDirectX.Profiler.Start("DirectDrawSpriteSurface..ctor()");
+            GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface..ctor()");
 #endif
             this.spriteName = spriteName;
 
@@ -75,7 +76,7 @@ namespace Terrarium.Renderer.DirectX
             frameHeight = ddsurface.Rect.Bottom/animationTypes;
             frameWidth = ddsurface.Rect.Right/animationFrames;
 #if TRACE
-            ManagedDirectX.Profiler.End("DirectDrawSpriteSurface..ctor()");
+            GraphicsEngine.Profiler.End("DirectDrawSpriteSurface..ctor()");
 #endif
         }
 
@@ -120,7 +121,7 @@ namespace Terrarium.Renderer.DirectX
         public RECT GrabSprite(int xFrame, int yFrame)
         {
 #if TRACE
-            ManagedDirectX.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int)");
+            GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int)");
 #endif
             if (xFrame < 0 || xFrame >= animationFrames ||
                 yFrame < 0 || yFrame >= animationTypes)
@@ -138,7 +139,7 @@ namespace Terrarium.Renderer.DirectX
             spriteRect.Right += frameWidth;
 
 #if TRACE
-            ManagedDirectX.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int)");
+            GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int)");
 #endif
             return spriteRect;
         }
@@ -155,7 +156,7 @@ namespace Terrarium.Renderer.DirectX
         public DirectDrawClippedRect GrabSprite(int xFrame, int yFrame, RECT dest, RECT bounds)
         {
 #if TRACE
-            ManagedDirectX.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
+            GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
 #endif
             if (xFrame < 0 || xFrame >= animationFrames ||
                 yFrame < 0 || yFrame >= animationTypes)
@@ -181,7 +182,7 @@ namespace Terrarium.Renderer.DirectX
             {
                 ddClipRect.Invisible = true;
 #if TRACE
-                ManagedDirectX.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
+                GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
 #endif
                 return ddClipRect;
             }
@@ -215,7 +216,7 @@ namespace Terrarium.Renderer.DirectX
             }
 
 #if TRACE
-            ManagedDirectX.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
+            GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
 #endif
             return ddClipRect;
         }
@@ -234,7 +235,7 @@ namespace Terrarium.Renderer.DirectX
         public DirectDrawClippedRect GrabSprite(int xFrame, int yFrame, RECT dest, RECT bounds, int factor)
         {
 #if TRACE
-            ManagedDirectX.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
+            GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
 #endif
             if (xFrame < 0 || xFrame >= animationFrames ||
                 yFrame < 0 || yFrame >= animationTypes)
@@ -260,7 +261,7 @@ namespace Terrarium.Renderer.DirectX
             {
                 ddClipRect.Invisible = true;
 #if TRACE
-                ManagedDirectX.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
+                GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
 #endif
                 return ddClipRect;
             }
@@ -294,7 +295,7 @@ namespace Terrarium.Renderer.DirectX
             }
 
 #if TRACE
-            ManagedDirectX.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
+            GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
 #endif
             return ddClipRect;
         }

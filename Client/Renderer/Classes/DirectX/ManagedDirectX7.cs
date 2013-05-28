@@ -4,6 +4,7 @@
 
 using DxVBLib;
 using System;
+using Terrarium.Renderer.Engine;
 using Terrarium.Tools;
 
 namespace Terrarium.Renderer.DirectX 
@@ -11,44 +12,21 @@ namespace Terrarium.Renderer.DirectX
     /// <summary>
     ///  Provides access to the DirectDraw and DirectX interfaces
     /// </summary>
-    public class ManagedDirectX
+    public class ManagedDirectX7 : IGraphicsEngine
     {
         /// <summary>
         ///  Holds an instance of the DirectX7 native object
         /// </summary>
-        private static DirectX7 directX;
+        private DirectX7 directX;
         /// <summary>
         ///  Holds an instance of the DirectDraw7 native object
         /// </summary>
-        private static DirectDraw7 directDraw;
-
-#if TRACE
-        /// <summary>
-        ///  Holds an instance of the DirectDrawProfiler timing object.
-        /// </summary>
-        private static Profiler directDrawProfiler;
-
-        /// <summary>
-        ///  Provides access to the DirectDrawProfiler timing object.
-        /// </summary>
-        public static Profiler Profiler
-        {
-            get
-            {
-                if (directDrawProfiler == null)
-                {
-                    directDrawProfiler = new Profiler();
-                }
-
-                return directDrawProfiler;
-            }
-        }
-#endif
+        private DirectDraw7 directDraw;
 
         /// <summary>
         ///  Provides access to the native DirectDraw7 object
         /// </summary>
-        public static DirectDraw7 DirectDraw
+        public DirectDraw7 DirectDraw
         {
             get
             {
@@ -71,7 +49,7 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  Provides access to the native DirectX7 object
         /// </summary>
-        public static DirectX7 DirectX
+        public DirectX7 DirectX
         {
             get
             {

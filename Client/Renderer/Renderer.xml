@@ -381,37 +381,42 @@
             <param name="msg">Custom message</param>
             <param name="inner">The original exception</param>
         </member>
-        <member name="T:Terrarium.Renderer.DirectX.ManagedDirectX">
+        <member name="T:Terrarium.Renderer.DirectX.ManagedDirectX7">
             <summary>
              Provides access to the DirectDraw and DirectX interfaces
             </summary>
         </member>
-        <member name="F:Terrarium.Renderer.DirectX.ManagedDirectX.directX">
+        <member name="T:Terrarium.Renderer.Engine.IGraphicsEngine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.IGraphicsEngine.DirectX">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.IGraphicsEngine.DirectDraw">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.ManagedDirectX7.directX">
             <summary>
              Holds an instance of the DirectX7 native object
             </summary>
         </member>
-        <member name="F:Terrarium.Renderer.DirectX.ManagedDirectX.directDraw">
+        <member name="F:Terrarium.Renderer.DirectX.ManagedDirectX7.directDraw">
             <summary>
              Holds an instance of the DirectDraw7 native object
             </summary>
         </member>
-        <member name="F:Terrarium.Renderer.DirectX.ManagedDirectX.directDrawProfiler">
-            <summary>
-             Holds an instance of the DirectDrawProfiler timing object.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.DirectX.ManagedDirectX.Profiler">
-            <summary>
-             Provides access to the DirectDrawProfiler timing object.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.DirectX.ManagedDirectX.DirectDraw">
+        <member name="P:Terrarium.Renderer.DirectX.ManagedDirectX7.DirectDraw">
             <summary>
              Provides access to the native DirectDraw7 object
             </summary>
         </member>
-        <member name="P:Terrarium.Renderer.DirectX.ManagedDirectX.DirectX">
+        <member name="P:Terrarium.Renderer.DirectX.ManagedDirectX7.DirectX">
             <summary>
              Provides access to the native DirectX7 object
             </summary>
@@ -421,7 +426,12 @@
             
             </summary>
         </member>
-        <member name="T:Terrarium.Renderer.Engine.IGraphicsEngine">
+        <member name="P:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.DirectX">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.DirectDraw">
             <summary>
             
             </summary>
@@ -431,9 +441,49 @@
             
             </summary>
         </member>
+        <member name="P:Terrarium.Renderer.Engine.DirectX7GraphicsEngine.DirectX">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.DirectX7GraphicsEngine.DirectDraw">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Terrarium.Renderer.Engine.DirectX9GraphicsEngine">
             <summary>
             
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.DirectX">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.DirectDraw">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Terrarium.Graphics.Engine.GraphicsEngine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Graphics.Engine.GraphicsEngine._profiler">
+            <summary>
+             Holds an instance of the DirectDrawProfiler timing object.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Graphics.Engine.GraphicsEngine.Profiler">
+            <summary>
+             Provides access to the DirectDrawProfiler timing object.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Graphics.Engine.GraphicsEngine.Current">
+            <summary>
+            Currently configured GraphicsEngine
             </summary>
         </member>
         <member name="T:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine">
@@ -441,7 +491,27 @@
             
             </summary>
         </member>
+        <member name="P:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.DirectX">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.DirectDraw">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Terrarium.Renderer.Engine.XnaGraphicsEngine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.XnaGraphicsEngine.DirectX">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.XnaGraphicsEngine.DirectDraw">
             <summary>
             
             </summary>

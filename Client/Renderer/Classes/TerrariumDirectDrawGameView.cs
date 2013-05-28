@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Terrarium.Game;
+using Terrarium.Graphics.Engine;
 using Terrarium.Renderer.DirectX;
 using Terrarium.Tools;
 
@@ -137,7 +138,7 @@ namespace Terrarium.Renderer
                         //this.miniMap = new Bitmap(wld.MiniMap);
                         miniMap = new Bitmap(wld.MiniMap, (actualsize.Right - actualsize.Left)/4,
                                              (actualsize.Bottom - actualsize.Top)/4);
-                        var graphics = Graphics.FromImage(miniMap);
+                        var graphics = System.Drawing.Graphics.FromImage(miniMap);
                         graphics.Clear(Color.Transparent);
                         graphics.Dispose();
                     }
@@ -485,19 +486,19 @@ namespace Terrarium.Renderer
 
                 if (fullscreen)
                 {
-                    ManagedDirectX.DirectDraw.SetCooperativeLevel(
+                    GraphicsEngine.Current.DirectDraw.SetCooperativeLevel(
                         Parent.Handle.ToInt32(),
                         CONST_DDSCLFLAGS.DDSCL_FULLSCREEN |
                         CONST_DDSCLFLAGS.DDSCL_EXCLUSIVE |
                         CONST_DDSCLFLAGS.DDSCL_ALLOWREBOOT);
 
-                    ManagedDirectX.DirectDraw.SetDisplayMode(640, 480, 16, 0, 0);
+                    GraphicsEngine.Current.DirectDraw.SetDisplayMode(640, 480, 16, 0, 0);
                     CreateFullScreenSurfaces();
                 }
                 else
                 {
                     Parent.Show();
-                    ManagedDirectX.DirectDraw.SetCooperativeLevel(
+                    GraphicsEngine.Current.DirectDraw.SetCooperativeLevel(
                         Parent.Handle.ToInt32(),
                         CONST_DDSCLFLAGS.DDSCL_NORMAL);
                     CreateWindowedSurfaces();
@@ -524,7 +525,7 @@ namespace Terrarium.Renderer
             tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE;
             ScreenSurface = new DirectDrawSurface(tempDescr);
 
-            Clipper = ManagedDirectX.DirectDraw.CreateClipper(0);
+            Clipper = GraphicsEngine.Current.DirectDraw.CreateClipper(0);
             Clipper.SetHWnd(Handle.ToInt32());
             ScreenSurface.Surface.SetClipper(Clipper);
             Trace.WriteLine("Primary Surface InVideo? " + ScreenSurface.InVideo);
@@ -922,7 +923,7 @@ namespace Terrarium.Renderer
                         }
                         if (miniMap != null)
                         {
-                            var graphics = Graphics.FromImage(miniMap);
+                            var graphics = System.Drawing.Graphics.FromImage(miniMap);
                             graphics.Clear(Color.Transparent);
                             graphics.Dispose();
                         }
@@ -943,7 +944,7 @@ namespace Terrarium.Renderer
 
                             // Grab the Window RECT
                             var windowRect = new RECT();
-                            ManagedDirectX.DirectX.GetWindowRect(
+                            GraphicsEngine.Current.DirectX.GetWindowRect(
                                 Handle.ToInt32(),
                                 ref windowRect);
 
@@ -1083,7 +1084,7 @@ namespace Terrarium.Renderer
                         var miniMapY = (int) (tsSprite.YPosition*miniMap.Height)/actualsize.Bottom;
                         miniMapY = (miniMapY > (miniMap.Height - 1)) ? (miniMap.Height - 1) : miniMapY;
                         //this.miniMap.SetPixel(miniMapX, miniMapY, Color.Blue);
-                        var miniMapGraphics = Graphics.FromImage(miniMap);
+                        var miniMapGraphics = System.Drawing.Graphics.FromImage(miniMap);
                         miniMapGraphics.FillRectangle(Brushes.SkyBlue, miniMapX, miniMapY, 12, 12);
                         miniMapGraphics.Dispose();
                     }
@@ -1117,7 +1118,7 @@ namespace Terrarium.Renderer
 
             var dcHandle = new IntPtr(BackBufferSurface.Surface.GetDC());
 
-            var graphics = Graphics.FromHdc(dcHandle);
+            var graphics = System.Drawing.Graphics.FromHdc(dcHandle);
 
             var font = new Font("Verdana", 6.75f, FontStyle.Bold);
 
@@ -1368,7 +1369,7 @@ namespace Terrarium.Renderer
 
                             Brush orgBrush = new SolidBrush(brushColor);
 
-                            var miniMapGraphics = Graphics.FromImage(miniMap);
+                            var miniMapGraphics = System.Drawing.Graphics.FromImage(miniMap);
                             miniMapGraphics.FillRectangle(orgBrush, miniMapX, miniMapY, 12, 12);
                             miniMapGraphics.Dispose();
                             orgBrush.Dispose();

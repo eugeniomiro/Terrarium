@@ -9,17 +9,17 @@ using Terrarium.Glass;
 
 namespace Terrarium.Forms
 {
-	/// <summary>
-	///  Base Terrarium Form for use with Terrarium based dialogs.
-	///  Controls painting of form borders, automatic set-up of
-	///  a basic font, dragging functionality, and Terrarium style
-	///  control boxes.
-	/// </summary>
+    /// <summary>
+    ///  Base Terrarium Form for use with Terrarium based dialogs.
+    ///  Controls painting of form borders, automatic set-up of
+    ///  a basic font, dragging functionality, and Terrarium style
+    ///  control boxes.
+    /// </summary>
     public class TerrariumForm : Form
-	{
-		/// <summary>
+    {
+        /// <summary>
         /// TitleBar backing store
-		/// </summary>
+        /// </summary>
         protected   GlassTitleBar   _titleBar;
         /// <summary>
         /// BottomPanel backing store
@@ -34,19 +34,19 @@ namespace Terrarium.Forms
         ///  Creates a default TerrariumForm.  The TerrariumForm should be extended
         ///  and not created directly.
         /// </summary>
-		public TerrariumForm() 
+        public TerrariumForm() 
         {
-			InitializeComponent();
+            InitializeComponent();
 
             try
-			{
-				Assembly thisAssembly = typeof(TerrariumForm).Assembly;
+            {
+                Assembly thisAssembly = typeof(TerrariumForm).Assembly;
 
                 this.Text = "Terrarium v" + thisAssembly.GetName().Version.ToString(3);
-			}
-			catch{}
+            }
+            catch{}
 
-			this.BackColor = GlassStyleManager.Active.DialogColor;
+            this.BackColor = GlassStyleManager.Active.DialogColor;
         }
 
     #region Windows Form Designer generated code
@@ -120,81 +120,81 @@ namespace Terrarium.Forms
             this.Text = "Terrarium";
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		/// <summary>
-		///  Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        ///  Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose( bool disposing )
+        {
+            if( disposing )
+            {
+            }
+            base.Dispose( disposing );
+        }
 
-		/// <summary>
-		/// Represents the Title text displayed at the top of the dialog
-		/// </summary>
-		public string Title
-		{
-			get
-			{
+        /// <summary>
+        /// Represents the Title text displayed at the top of the dialog
+        /// </summary>
+        public string Title
+        {
+            get
+            {
                 return _titleBar.Text;
-			}
-			set
-			{
+            }
+            set
+            {
                 _titleBar.Text = value;
-			}
-		}
+            }
+        }
 
-		/// <summary>
-		/// Represents the brief description text displayed at the top of the dialog
-		/// </summary>
-		public string Description
-		{
-			get
-			{
+        /// <summary>
+        /// Represents the brief description text displayed at the top of the dialog
+        /// </summary>
+        public string Description
+        {
+            get
+            {
                 return _dialogDescriptionLabel.Text;
-			}
-			set
-			{
+            }
+            set
+            {
                 _dialogDescriptionLabel.Text = value;
-			}
-		}
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public GlassTitleBar TitleBar
-		{
-			get
-			{
+        /// <summary>
+        /// 
+        /// </summary>
+        public GlassTitleBar TitleBar
+        {
+            get
+            {
                 return _titleBar;
-			}
-		}
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public GlassPanel BottomBar
-		{
-			get
-			{
+        /// <summary>
+        /// 
+        /// </summary>
+        public GlassPanel BottomBar
+        {
+            get
+            {
                 return _bottomPanel;
-			}
-		}
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			base.OnPaint (e);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint (e);
             GlassHelper.DrawBorder( this.ClientRectangle, GlassBorders.All, e.Graphics );
-		}
+        }
 
         /// <summary>
         /// 
@@ -205,5 +205,5 @@ namespace Terrarium.Forms
             base.OnResize(e);
             _dialogDescriptionLabel.Width = this.Width - 24;
         }
-	}
+    }
 }
