@@ -154,6 +154,57 @@
              Managed Wrapper for a DirectX7 DirectDraw Surface.
             </summary>
         </member>
+        <member name="T:Terrarium.Renderer.Engine.IGraphicsSurface">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.BltColorFill(DxVBLib.RECT@,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="rect"></param>
+            <param name="fillvalue"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.SetForeColor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="color"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.GetDC">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.ReleaseDC(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.IsLost">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.IGraphicsSurface.TransparencyKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.IGraphicsSurface.InVideo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.IGraphicsSurface.Rect">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="F:Terrarium.Renderer.DirectX.DirectDrawSurface.DefaultSurfaceDescription">
             <summary>
              Defines a default surface description
@@ -263,6 +314,37 @@
              Helper function used to complete initialization of a surface.
             </summary>
         </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.BltColorFill(DxVBLib.RECT@,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="rect"></param>
+            <param name="fillvalue"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.SetForeColor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="color"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.GetDC">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.ReleaseDC(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.IsLost">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.DefaultColorKey">
             <summary>
              The default transparency color key.  Points to the MagentaColorKey
@@ -367,6 +449,29 @@
             </summary>
             <param name="handle"></param>
         </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
         <member name="F:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.directX">
             <summary>
              Holds an instance of the DirectX7 native object
@@ -395,6 +500,29 @@
             
             </summary>
             <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
         </member>
         <member name="P:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.DirectDraw">
             <summary>
@@ -425,6 +553,35 @@
             </summary>
             <param name="handle"></param>
         </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.CreatePrimarySurface">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
         <member name="T:Terrarium.Renderer.Engine.DirectX9GraphicsEngine">
             <summary>
             
@@ -448,6 +605,35 @@
             
             </summary>
             <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.CreatePrimarySurface">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
         </member>
         <member name="T:Terrarium.Renderer.Engine.GraphicsEngine">
             <summary>
@@ -493,6 +679,29 @@
             </summary>
             <param name="handle"></param>
         </member>
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
         <member name="T:Terrarium.Renderer.Engine.XnaGraphicsEngine">
             <summary>
             
@@ -516,6 +725,35 @@
             
             </summary>
             <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.CreatePrimarySurface">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
         </member>
         <member name="T:Terrarium.Renderer.HeightMap">
             <summary>
@@ -763,6 +1001,21 @@
              order to provide high speed animation.
             </summary>
         </member>
+        <member name="F:Terrarium.Renderer.TerrariumGameView._screenSurface">
+            <summary>
+             The primary screen surface for the picture box.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TerrariumGameView._backBufferSurface">
+            <summary>
+             The back buffer surface used with the picture box.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TerrariumGameView._clipper">
+            <summary>
+             The Clipper object assigned to the PictureBox
+            </summary>
+        </member>
         <member name="M:Terrarium.Renderer.TerrariumGameView.OnPaint(System.Windows.Forms.PaintEventArgs)">
             <summary>
              Overrides the Painting logic because painting will be handled
@@ -954,7 +1207,7 @@
              revision simply paints a custom cursor based on mouse location.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.TerrariumGameView.PaintSprites(Terrarium.Renderer.DirectX.DirectDrawSurface,System.Boolean)">
+        <member name="M:Terrarium.Renderer.TerrariumGameView.PaintSprites(Terrarium.Renderer.Engine.IGraphicsSurface,System.Boolean)">
             <summary>
              Paint sprites on the given surface.  This method is the meat
              of the graphics engine.  Normally, creatures are painted to
@@ -964,7 +1217,7 @@
              code or examine the Terrarium Graphics Engine whitepaper for more
              information.
             </summary>
-            <param name="dds">The surface to render to.</param>
+            <param name="surf">The surface to render to.</param>
             <param name="PlantsOnly">True to render plants, false to render animals.</param>
         </member>
         <member name="M:Terrarium.Renderer.TerrariumGameView.GetBoundsOfState(OrganismBase.OrganismState)">
@@ -1057,21 +1310,6 @@
             </summary>
             <param name="xOffset">X location to center to.</param>
             <param name="yOffset">Y location to center to.</param>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumGameView.Clipper">
-            <summary>
-             The Clipper object assigned to the PictureBox
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumGameView.ScreenSurface">
-            <summary>
-             The primary screen surface for the picture box.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumGameView.BackBufferSurface">
-            <summary>
-             The back buffer surface used with the picture box.
-            </summary>
         </member>
         <member name="P:Terrarium.Renderer.TerrariumGameView.Profiler">
             <summary>

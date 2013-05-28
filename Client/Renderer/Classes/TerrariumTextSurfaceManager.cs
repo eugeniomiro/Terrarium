@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Drawing;
+using Terrarium.Renderer.Engine;
 using Terrarium.Renderer.DirectX;
 
 namespace Terrarium.Renderer
@@ -104,30 +105,26 @@ namespace Terrarium.Renderer
             }
 
             // Set up the surface
+            IGraphicsSurface ddSurface = GraphicsEngine.Current.CreateSurface(StandardFontRect.Right, StandardFontRect.Bottom);
+            ddSurface.TransparencyKey = DirectDrawSurface.MagentaColorKey;
+
             var rect = new RECT();
-            var ddSurface = new DirectDrawSurface(StandardFontRect.Right, StandardFontRect.Bottom)
-                                {
-                                    TransparencyKey = DirectDrawSurface.MagentaColorKey
-                                };
-
             // Color in the back and add the text
-            ddSurface.Surface.BltColorFill(ref rect, DirectDrawSurface.MagentaColorKey.low);
-            ddSurface.Surface.SetForeColor(0);
+            ddSurface.BltColorFill(ref rect, DirectDrawSurface.MagentaColorKey.low);
+            ddSurface.SetForeColor(0);
 
-            var dcHandle = new IntPtr(ddSurface.Surface.GetDC());
+            using (var font = new Font("Verdana", 6.75f, FontStyle.Regular))
+            {
+                IntPtr dcHandle = ddSurface.GetDC();
 
-            var graphics = System.Drawing.Graphics.FromHdc(dcHandle);
+                using (var graphics = Graphics.FromHdc(dcHandle))
+                {
+                    graphics.DrawString(text, font, Brushes.Black, 1, 1);
+                    graphics.DrawString(text, font, Brushes.WhiteSmoke, 0, 0);
+                }
+                ddSurface.ReleaseDC(dcHandle);
 
-            var font = new Font("Verdana", 6.75f, FontStyle.Regular);
-
-            graphics.DrawString(text, font, Brushes.Black, 1, 1);
-            graphics.DrawString(text, font, Brushes.WhiteSmoke, 0, 0);
-
-            font.Dispose();
-
-            graphics.Dispose();
-
-            ddSurface.Surface.ReleaseDC(dcHandle.ToInt32());
+            }
 
             sprites.Add(key, ddSurface);
         }

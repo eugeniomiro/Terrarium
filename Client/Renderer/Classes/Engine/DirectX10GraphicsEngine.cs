@@ -36,5 +36,46 @@ namespace Terrarium.Renderer.Engine
         {
             throw new System.NotImplementedException();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public IGraphicsSurface CreateSurface(int width, int height)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IGraphicsSurface CreatePrimarySurface()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <returns></returns>
+        public IGraphicsSurface CreatePrimarySurface(System.IntPtr handle)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public IGraphicsSurface CreateWorkSurface(int width, int height)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

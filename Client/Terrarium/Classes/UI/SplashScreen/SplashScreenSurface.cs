@@ -13,14 +13,14 @@ namespace Terrarium.Client.SplashScreen
     internal class SplashScreenSurface
     {
         internal Rectangle bounds;
-        internal System.Drawing.Graphics graphics;
+        internal Graphics graphics;
 
         /// <summary>
         ///  Creates a new SplashScreenSurface class.
         /// </summary>
         /// <param name="g">The graphics context used for drawing.</param>
         /// <param name="r">The rectangular drawing region.</param>
-        internal SplashScreenSurface(System.Drawing.Graphics g, Rectangle r)
+        internal SplashScreenSurface(Graphics g, Rectangle r)
         {
             graphics = g;
             bounds = r;

@@ -7,7 +7,6 @@ using DxVBLib;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Terrarium.Renderer.Classes.Engine;
 using Terrarium.Renderer.Engine;
 
 namespace Terrarium.Renderer.DirectX
@@ -446,6 +445,52 @@ namespace Terrarium.Renderer.DirectX
 #if TRACE
             GraphicsEngine.Profiler.End("DirectDrawSurface.CreateSurface");
 #endif
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <param name="fillvalue"></param>
+        public void BltColorFill(ref RECT rect, int fillvalue)
+        {
+            Surface.BltColorFill(rect, fillvalue);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="color"></param>
+        public void SetForeColor(int color)
+        {
+            Surface.SetFillColor(color);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IntPtr GetDC()
+        {
+            return new IntPtr(Surface.GetDC());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handle"></param>
+        public void ReleaseDC(IntPtr handle)
+        {
+            Surface.ReleaseDC(handle.ToInt32());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public int IsLost()
+        {
+            return Surface.isLost();
         }
     }
 }

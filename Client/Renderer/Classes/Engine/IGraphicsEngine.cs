@@ -26,5 +26,27 @@ namespace Terrarium.Renderer.Engine
         /// </summary>
         /// <param name="handle"></param>
         void SetWindow(IntPtr handle);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        IGraphicsSurface CreateSurface(int width, int height);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <returns></returns>
+        IGraphicsSurface CreatePrimarySurface(IntPtr handle);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        IGraphicsSurface CreateWorkSurface(int width, int height);
     }
 }

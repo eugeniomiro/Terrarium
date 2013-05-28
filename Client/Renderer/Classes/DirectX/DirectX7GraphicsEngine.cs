@@ -99,5 +99,54 @@ namespace Terrarium.Renderer.DirectX
                         handle.ToInt32(),
                         CONST_DDSCLFLAGS.DDSCL_NORMAL);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public IGraphicsSurface CreateSurface(int width, int height)
+        {
+            return new DirectDrawSurface(width, height);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <returns></returns>
+        public IGraphicsSurface CreatePrimarySurface(IntPtr handle)
+        {
+            var tempDescr = new DDSURFACEDESC2();
+            tempDescr.lFlags = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS;
+            tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE;
+            var surface = new DirectDrawSurface(tempDescr);
+
+            DirectDrawClipper clipper = DirectDraw.CreateClipper(0);
+            clipper.SetHWnd(handle.ToInt32());
+            surface.Surface.SetClipper(clipper);
+
+            return surface;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public IGraphicsSurface CreateWorkSurface(int width, int height)
+        {
+            DDSURFACEDESC2 tempDescr = new DDSURFACEDESC2();
+
+            tempDescr.lFlags = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS |
+                               CONST_DDSURFACEDESCFLAGS.DDSD_HEIGHT |
+                               CONST_DDSURFACEDESCFLAGS.DDSD_WIDTH;
+            tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_OFFSCREENPLAIN;
+            tempDescr.lWidth = width;
+            tempDescr.lHeight = height;
+            return new DirectDrawSurface(tempDescr);
+        }
     }
 }
