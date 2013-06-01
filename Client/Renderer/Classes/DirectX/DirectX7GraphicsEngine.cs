@@ -4,6 +4,7 @@
 
 using DxVBLib;
 using System;
+using System.Drawing;
 using Terrarium.Renderer.Engine;
 using Terrarium.Tools;
 
@@ -69,9 +70,16 @@ namespace Terrarium.Renderer.DirectX
         /// </summary>
         /// <param name="handle"></param>
         /// <param name="windowRect"></param>
-        public void GetWindowRect(IntPtr handle, ref RECT windowRect)
+        public void GetWindowRect(IntPtr handle, ref Rectangle windowRect)
         {
-            DirectX.GetWindowRect(handle.ToInt32(), ref windowRect);
+            RECT innerWindowRect = new RECT { 
+                Bottom = windowRect.Bottom, 
+                Right = windowRect.Right,  
+                Left = windowRect.Left,
+                Top = windowRect.Top
+            };
+            DirectX.GetWindowRect(handle.ToInt32(), ref innerWindowRect);
+            windowRect = Rectangle.FromLTRB(innerWindowRect.Left, innerWindowRect.Top, innerWindowRect.Right, innerWindowRect.Bottom);
         }
 
         /// <summary>
@@ -115,13 +123,29 @@ namespace Terrarium.Renderer.DirectX
         /// 
         /// </summary>
         /// <param name="handle"></param>
+        /// <param name="fullScreen"></param>
+        /// <param name="doubleBuffer"></param>
         /// <returns></returns>
-        public IGraphicsSurface CreatePrimarySurface(IntPtr handle)
+        public IGraphicsSurface CreatePrimarySurface(IntPtr handle, Boolean fullScreen, Boolean doubleBuffer)
         {
-            var tempDescr = new DDSURFACEDESC2();
-            tempDescr.lFlags = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS;
-            tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE;
-            var surface = new DirectDrawSurface(tempDescr);
+            DDSURFACEDESC2 tempDescr    = new DDSURFACEDESC2();
+            tempDescr.lFlags            = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS;
+            tempDescr.ddsCaps.lCaps     = CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE;
+
+            if (doubleBuffer)
+            {
+                tempDescr.lFlags |= CONST_DDSURFACEDESCFLAGS.DDSD_BACKBUFFERCOUNT;
+                tempDescr.lBackBufferCount = 1;
+                tempDescr.ddsCaps.lCaps |= CONST_DDSURFACECAPSFLAGS.DDSCAPS_COMPLEX |
+                                           CONST_DDSURFACECAPSFLAGS.DDSCAPS_FLIP;
+            }
+
+            DirectDrawSurface surface = new DirectDrawSurface(tempDescr);
+
+            if (fullScreen)
+            {
+                return surface;
+            }
 
             DirectDrawClipper clipper = DirectDraw.CreateClipper(0);
             clipper.SetHWnd(handle.ToInt32());

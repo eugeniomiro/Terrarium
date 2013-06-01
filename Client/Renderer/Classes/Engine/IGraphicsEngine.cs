@@ -2,8 +2,8 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                             
 //------------------------------------------------------------------------------
 
-using DxVBLib;
 using System;
+using System.Drawing;
 namespace Terrarium.Renderer.Engine
 {
     /// <summary>
@@ -16,7 +16,7 @@ namespace Terrarium.Renderer.Engine
         /// </summary>
         /// <param name="handle"></param>
         /// <param name="windowRect"></param>
-        void GetWindowRect(IntPtr handle, ref RECT windowRect);
+        void GetWindowRect(IntPtr handle, ref Rectangle windowRect);
         /// <summary>
         /// 
         /// </summary>
@@ -38,8 +38,10 @@ namespace Terrarium.Renderer.Engine
         /// 
         /// </summary>
         /// <param name="handle"></param>
+        /// <param name="fullScreen"></param>
+        /// <param name="doubleBuffer"></param>
         /// <returns></returns>
-        IGraphicsSurface CreatePrimarySurface(IntPtr handle);
+        IGraphicsSurface CreatePrimarySurface(IntPtr handle, Boolean fullScreen, Boolean doubleBuffer);
 
         /// <summary>
         /// 

@@ -1,6 +1,6 @@
-﻿using DxVBLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -14,13 +14,13 @@ namespace Terrarium.Renderer.Engine
         /// <summary>
         /// 
         /// </summary>
-        DDCOLORKEY TransparencyKey { get; set; }
+        ColorKey TransparencyKey { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="rect"></param>
         /// <param name="fillvalue"></param>
-        void BltColorFill(ref RECT rect, int fillvalue);
+        void BltColorFill(ref Rectangle rect, int fillvalue);
         /// <summary>
         /// 
         /// </summary>
@@ -51,6 +51,31 @@ namespace Terrarium.Renderer.Engine
         /// <summary>
         /// 
         /// </summary>
-        RECT Rect { get; }
+        Rectangle Rect { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IGraphicsSurface GetBackBufferSurface();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="destRect"></param>
+        /// <param name="surface"></param>
+        /// <param name="srcRect"></param>
+        /// <param name="flags"></param>
+        void Blt(ref Rectangle destRect, IGraphicsSurface surface, ref Rectangle srcRect, BltFlags flags);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="surface"></param>
+        /// <param name="rectangle"></param>
+        /// <param name="flags"></param>
+        void BltFast(int x, int y, IGraphicsSurface surface, ref Rectangle rectangle, BltFastFlags flags);
     }
 }

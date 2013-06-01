@@ -66,7 +66,7 @@ namespace Terrarium.Renderer
         /// <param name="xPixels">The width of the world in pixels.</param>
         /// <param name="yPixels">The height of the world in pixels.</param>
         /// <returns>An updated size that has been rounded up to the nearest world boundary.</returns>
-        internal RECT CreateWorld(int xPixels, int yPixels)
+        internal Rectangle CreateWorld(int xPixels, int yPixels)
         {
             var worldSize = new RECT();
 
@@ -103,7 +103,7 @@ namespace Terrarium.Renderer
             TileOffsetPass();
             MiniMapPass();
 
-            return worldSize;
+            return Rectangle.FromLTRB(worldSize.Left, worldSize.Top, worldSize.Right, worldSize.Bottom);
         }
 
         /// <summary>

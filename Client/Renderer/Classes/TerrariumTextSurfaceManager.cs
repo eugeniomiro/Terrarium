@@ -24,7 +24,7 @@ namespace Terrarium.Renderer
         ///  within.  Each text surface is made exactly this
         ///  size.
         /// </summary>
-        internal static RECT StandardFontRect;
+        internal static Rectangle StandardFontRect;
 
         /// <summary>
         ///  The sprites associated with each bit of text.
@@ -36,11 +36,7 @@ namespace Terrarium.Renderer
         /// </summary>
         static TerrariumTextSurfaceManager()
         {
-            StandardFontRect = new RECT();
-            StandardFontRect.Top = 0;
-            StandardFontRect.Left = 0;
-            StandardFontRect.Bottom = 15;
-            StandardFontRect.Right = 100;
+            StandardFontRect = Rectangle.FromLTRB(0, 0, 100, 15);
         }
 
         /// <summary>
@@ -106,9 +102,9 @@ namespace Terrarium.Renderer
 
             // Set up the surface
             IGraphicsSurface ddSurface = GraphicsEngine.Current.CreateSurface(StandardFontRect.Right, StandardFontRect.Bottom);
-            ddSurface.TransparencyKey = DirectDrawSurface.MagentaColorKey;
+            ddSurface.TransparencyKey = new ColorKey(DirectDrawSurface.MagentaColorKey);
 
-            var rect = new RECT();
+            var rect = new Rectangle();
             // Color in the back and add the text
             ddSurface.BltColorFill(ref rect, DirectDrawSurface.MagentaColorKey.low);
             ddSurface.SetForeColor(0);

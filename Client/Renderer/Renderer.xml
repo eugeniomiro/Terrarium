@@ -48,6 +48,14 @@
              Has the sprite been clipped along the right.
             </summary>
         </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawClippedRect.ClipRectBounds(System.Drawing.Rectangle,System.Drawing.Rectangle,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="dest"></param>
+            <param name="bounds"></param>
+            <param name="factor"></param>
+        </member>
         <member name="T:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface">
             <summary>
              Encapsulate the logic for implementing a sprite surface capable
@@ -105,7 +113,7 @@
             <param name="yFrame">Retrieve the Yth vertical frame.</param>
             <returns></returns>
         </member>
-        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.GrabSprite(System.Int32,System.Int32,DxVBLib.RECT,DxVBLib.RECT)">
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.GrabSprite(System.Int32,System.Int32,System.Drawing.Rectangle,System.Drawing.Rectangle)">
             <summary>
              Retreive a sprite that has to be drawn within the given destination
              rectangle, given the bounds of the viewport.
@@ -116,7 +124,7 @@
             <param name="bounds">The view rectangle bounds.</param>
             <returns></returns>
         </member>
-        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.GrabSprite(System.Int32,System.Int32,DxVBLib.RECT,DxVBLib.RECT,System.Int32)">
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.GrabSprite(System.Int32,System.Int32,System.Drawing.Rectangle,System.Drawing.Rectangle,System.Int32)">
             <summary>
              Retreive a sprite that has to be drawn within the given destination
              rectangle, given the bounds of the viewport.  Also contains a scaling
@@ -159,7 +167,7 @@
             
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.BltColorFill(DxVBLib.RECT@,System.Int32)">
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.BltColorFill(System.Drawing.Rectangle@,System.Int32)">
             <summary>
             
             </summary>
@@ -189,6 +197,31 @@
             
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.GetBackBufferSurface">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.Blt(System.Drawing.Rectangle@,Terrarium.Renderer.Engine.IGraphicsSurface,System.Drawing.Rectangle@,Terrarium.Renderer.Engine.BltFlags)">
+            <summary>
+            
+            </summary>
+            <param name="destRect"></param>
+            <param name="surface"></param>
+            <param name="srcRect"></param>
+            <param name="flags"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.BltFast(System.Int32,System.Int32,Terrarium.Renderer.Engine.IGraphicsSurface,System.Drawing.Rectangle@,Terrarium.Renderer.Engine.BltFastFlags)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="surface"></param>
+            <param name="rectangle"></param>
+            <param name="flags"></param>
         </member>
         <member name="P:Terrarium.Renderer.Engine.IGraphicsSurface.TransparencyKey">
             <summary>
@@ -314,7 +347,7 @@
              Helper function used to complete initialization of a surface.
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.BltColorFill(DxVBLib.RECT@,System.Int32)">
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.BltColorFill(System.Drawing.Rectangle@,System.Int32)">
             <summary>
             
             </summary>
@@ -344,6 +377,31 @@
             
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.GetBackBufferSurface">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.Blt(System.Drawing.Rectangle@,Terrarium.Renderer.Engine.IGraphicsSurface,System.Drawing.Rectangle@,Terrarium.Renderer.Engine.BltFlags)">
+            <summary>
+            
+            </summary>
+            <param name="destRect"></param>
+            <param name="surface"></param>
+            <param name="srcRect"></param>
+            <param name="flags"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.BltFast(System.Int32,System.Int32,Terrarium.Renderer.Engine.IGraphicsSurface,System.Drawing.Rectangle@,Terrarium.Renderer.Engine.BltFastFlags)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="surface"></param>
+            <param name="rectangle"></param>
+            <param name="flags"></param>
         </member>
         <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.DefaultColorKey">
             <summary>
@@ -431,7 +489,7 @@
             
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
             <summary>
             
             </summary>
@@ -457,11 +515,13 @@
             <param name="height"></param>
             <returns></returns>
         </member>
-        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
             <summary>
             
             </summary>
             <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
             <returns></returns>
         </member>
         <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
@@ -482,7 +542,7 @@
              Holds an instance of the DirectDraw7 native object
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
             <summary>
             
             </summary>
@@ -509,11 +569,13 @@
             <param name="height"></param>
             <returns></returns>
         </member>
-        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
             <summary>
             
             </summary>
             <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
             <returns></returns>
         </member>
         <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
@@ -529,12 +591,57 @@
              Provides access to the native DirectDraw7 object
             </summary>
         </member>
+        <member name="T:Terrarium.Renderer.Engine.BltFlags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.BltFlags.KeySrc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.BltFlags.BltWait">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.ColorKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.ColorKey.High">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.ColorKey.Low">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.BltFastFlags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.BltFastFlags.SrcColorKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.BltFastFlags.FastWait">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Terrarium.Renderer.Engine.DirectX10GraphicsEngine">
             <summary>
             
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
             <summary>
             
             </summary>
@@ -561,17 +668,13 @@
             <param name="height"></param>
             <returns></returns>
         </member>
-        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.CreatePrimarySurface">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
             <summary>
             
             </summary>
             <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
             <returns></returns>
         </member>
         <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
@@ -587,7 +690,7 @@
             
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
             <summary>
             
             </summary>
@@ -614,17 +717,13 @@
             <param name="height"></param>
             <returns></returns>
         </member>
-        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.CreatePrimarySurface">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
             <summary>
             
             </summary>
             <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
             <returns></returns>
         </member>
         <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
@@ -660,7 +759,7 @@
             
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
             <summary>
             
             </summary>
@@ -687,11 +786,13 @@
             <param name="height"></param>
             <returns></returns>
         </member>
-        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
             <summary>
             
             </summary>
             <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
             <returns></returns>
         </member>
         <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
@@ -707,7 +808,7 @@
             
             </summary>
         </member>
-        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.GetWindowRect(System.IntPtr,DxVBLib.RECT@)">
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
             <summary>
             
             </summary>
@@ -734,17 +835,13 @@
             <param name="height"></param>
             <returns></returns>
         </member>
-        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.CreatePrimarySurface">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.CreatePrimarySurface(System.IntPtr)">
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
             <summary>
             
             </summary>
             <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
             <returns></returns>
         </member>
         <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
@@ -1009,11 +1106,6 @@
         <member name="F:Terrarium.Renderer.TerrariumGameView._backBufferSurface">
             <summary>
              The back buffer surface used with the picture box.
-            </summary>
-        </member>
-        <member name="F:Terrarium.Renderer.TerrariumGameView._clipper">
-            <summary>
-             The Clipper object assigned to the PictureBox
             </summary>
         </member>
         <member name="M:Terrarium.Renderer.TerrariumGameView.OnPaint(System.Windows.Forms.PaintEventArgs)">
