@@ -2,9 +2,7 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                               
 //------------------------------------------------------------------------------
 
-using System;
 using System.Windows.Forms;
-using System.Drawing;
 using Terrarium.Glass;
 
 namespace Terrarium.Client

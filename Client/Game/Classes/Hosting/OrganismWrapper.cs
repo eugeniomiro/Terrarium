@@ -2,10 +2,10 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                             
 //------------------------------------------------------------------------------
 
+using OrganismBase;
 using System;
 using System.IO;
 using System.Runtime.Serialization;
-using OrganismBase;
 using Terrarium.Game;
 using Terrarium.Tools;
 

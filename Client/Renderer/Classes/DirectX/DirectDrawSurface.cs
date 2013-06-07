@@ -2,33 +2,34 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                             
 //------------------------------------------------------------------------------
 
-
+using DxVBLib;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
-using DxVBLib;
+using Terrarium.Renderer.Engine;
 
 namespace Terrarium.Renderer.DirectX
 {
     /// <summary>
     ///  Managed Wrapper for a DirectX7 DirectDraw Surface.
     /// </summary>
-    public class DirectDrawSurface
+    public class DirectDrawSurface : IGraphicsSurface
     {
         /// <summary>
         ///  Defines a default surface description
         /// </summary>
-        public static DDSURFACEDESC2 DefaultSurfaceDescription;
+        internal static DDSURFACEDESC2 DefaultSurfaceDescription;
 
         /// <summary>
         ///  Defines a surface description used for image surfaces
         /// </summary>
-        public static DDSURFACEDESC2 ImageSurfaceDescription;
+        internal static DDSURFACEDESC2 ImageSurfaceDescription;
 
         /// <summary>
         ///  Defines a surface description for a system memory surface.
         /// </summary>
-        public static DDSURFACEDESC2 SystemMemorySurfaceDescription;
+        internal static DDSURFACEDESC2 SystemMemorySurfaceDescription;
 
         /// <summary>
         ///  Pointer to the surface description used to create this surface.
@@ -43,7 +44,7 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  The size of the surface.
         /// </summary>
-        private DxVBLib.RECT rect;
+        private RECT rect;
 
         /// <summary>
         ///  Pointer to the real DirectDrawSurface7 class
@@ -81,7 +82,6 @@ namespace Terrarium.Renderer.DirectX
                                                            CONST_DDSURFACECAPSFLAGS.DDSCAPS_SYSTEMMEMORY;
         }
 
-
         /// <summary>
         ///  Creates a new DirectDrawSurface given a width and height.
         /// </summary>
@@ -104,7 +104,8 @@ namespace Terrarium.Renderer.DirectX
         ///  Create a new surface given a surface description.
         /// </summary>
         /// <param name="surfaceDescription">Surface Description</param>
-        public DirectDrawSurface(DDSURFACEDESC2 surfaceDescription) : this("", surfaceDescription)
+        internal DirectDrawSurface(DDSURFACEDESC2 surfaceDescription)
+            : this("", surfaceDescription)
         {
         }
 
@@ -121,7 +122,7 @@ namespace Terrarium.Renderer.DirectX
         /// </summary>
         /// <param name="imagePath">Path to an image file.</param>
         /// <param name="surfaceDescription">Surface Description.</param>
-        public DirectDrawSurface(String imagePath, DDSURFACEDESC2 surfaceDescription)
+        internal DirectDrawSurface(String imagePath, DDSURFACEDESC2 surfaceDescription)
         {
             descriptor = surfaceDescription;
             image = imagePath;
@@ -132,7 +133,7 @@ namespace Terrarium.Renderer.DirectX
         ///  Initialize a new surface based on a previously created surface
         /// </summary>
         /// <param name="directDrawSurface">The native DirectDraw surface used as reference.</param>
-        public DirectDrawSurface(DirectDrawSurface7 directDrawSurface)
+        internal DirectDrawSurface(DirectDrawSurface7 directDrawSurface)
         {
             directDrawSurface.GetSurfaceDesc(ref descriptor);
             surface = directDrawSurface;
@@ -141,7 +142,7 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  The default transparency color key.  Points to the MagentaColorKey
         /// </summary>
-        public static DDCOLORKEY DefaultColorKey
+        internal static DDCOLORKEY DefaultColorKey
         {
             get { return MagentaColorKey; }
         }
@@ -149,13 +150,13 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  Creates a transparency key for the color Magenta.
         /// </summary>
-        public static DDCOLORKEY MagentaColorKey
+        internal static DDCOLORKEY MagentaColorKey
         {
             get
             {
                 var ddck = new DDCOLORKEY();
                 var ddsd2 = new DDSURFACEDESC2();
-                ManagedDirectX.DirectDraw.GetDisplayMode(ref ddsd2);
+                ((DirectX7GraphicsEngine)(GraphicsEngine.Current)).DirectDraw.GetDisplayMode(ref ddsd2);
 
                 if ((ddsd2.ddpfPixelFormat.lFlags & CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8) ==
                     CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8)
@@ -176,13 +177,13 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  Creates a transparency key for the color White
         /// </summary>
-        public static DDCOLORKEY WhiteColorKey
+        internal static DDCOLORKEY WhiteColorKey
         {
             get
             {
                 var ddck = new DDCOLORKEY();
                 var ddsd2 = new DDSURFACEDESC2();
-                ManagedDirectX.DirectDraw.GetDisplayMode(ref ddsd2);
+                ((DirectX7GraphicsEngine)(GraphicsEngine.Current)).DirectDraw.GetDisplayMode(ref ddsd2);
 
                 if ((ddsd2.ddpfPixelFormat.lFlags & CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8) ==
                     CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8)
@@ -205,13 +206,13 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  Create a transparency key for the color Lime
         /// </summary>
-        public static DDCOLORKEY LimeColorKey
+        internal static DDCOLORKEY LimeColorKey
         {
             get
             {
                 var ddck = new DDCOLORKEY();
                 var ddsd2 = new DDSURFACEDESC2();
-                ManagedDirectX.DirectDraw.GetDisplayMode(ref ddsd2);
+                ((DirectX7GraphicsEngine)(GraphicsEngine.Current)).DirectDraw.GetDisplayMode(ref ddsd2);
 
                 if ((ddsd2.ddpfPixelFormat.lFlags & CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8) ==
                     CONST_DDPIXELFORMATFLAGS.DDPF_PALETTEINDEXED8)
@@ -274,12 +275,13 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  Sets the transparency key for this surface.
         /// </summary>
-        public DDCOLORKEY TransparencyKey
+        public ColorKey TransparencyKey
         {
-            get { return transparencyKey; }
+            get { return new ColorKey(transparencyKey); }
             set
             {
-                transparencyKey = value;
+                transparencyKey.high = value.High;
+                transparencyKey.low = value.Low;
                 transparencyEnabled = true;
                 if (surface != null)
                 {
@@ -291,7 +293,7 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  Modifies the Surface Description
         /// </summary>
-        public DDSURFACEDESC2 Descriptor
+        internal DDSURFACEDESC2 Descriptor
         {
             get { return descriptor; }
             set { descriptor = value; }
@@ -300,18 +302,9 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  Retrieves the size of this surface.
         /// </summary>
-        public RECT Rect
+        public Rectangle Rect
         {
-            get
-            {
-                return new RECT
-                {
-                    Bottom = rect.Bottom,
-                    Top = rect.Top,
-                    Left = rect.Left,
-                    Right = rect.Right
-                };
-            }
+            get { return Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right, rect.Bottom); }
         }
 
         /// <summary>
@@ -329,13 +322,13 @@ namespace Terrarium.Renderer.DirectX
         /// <param name="g">Green component</param>
         /// <param name="b">Blue component</param>
         /// <returns></returns>
-        public static DDCOLORKEY GenerateColorKey(byte r, byte g, byte b)
+        internal static DDCOLORKEY GenerateColorKey(byte r, byte g, byte b)
         {
             // This may not be perfect since we are going to have to average
             // different bit depths together
             var ddck = new DDCOLORKEY();
             var ddsd2 = new DDSURFACEDESC2();
-            ManagedDirectX.DirectDraw.GetDisplayMode(ref ddsd2);
+            ((DirectX7GraphicsEngine)(GraphicsEngine.Current)).DirectDraw.GetDisplayMode(ref ddsd2);
 
             var bBitCount = CountBits(ddsd2.ddpfPixelFormat.lBBitMask);
             var gBitCount = CountBits(ddsd2.ddpfPixelFormat.lGBitMask);
@@ -394,13 +387,13 @@ namespace Terrarium.Renderer.DirectX
         private void CreateSurface()
         {
 #if TRACE
-            ManagedDirectX.Profiler.Start("CreateSurface");
+            GraphicsEngine.Profiler.Start("CreateSurface");
 #endif
             try
             {
                 if (string.IsNullOrEmpty(image))
                 {
-                    surface = ManagedDirectX.DirectDraw.CreateSurface(ref descriptor);
+                    surface = ((DirectX7GraphicsEngine)(GraphicsEngine.Current)).DirectDraw.CreateSurface(ref descriptor);
                     if (surface != null)
                     {
                         rect.Bottom = descriptor.lHeight;
@@ -414,12 +407,12 @@ namespace Terrarium.Renderer.DirectX
                         Trace.WriteLine(image);
                         try
                         {
-                            surface = ManagedDirectX.DirectDraw.CreateSurfaceFromFile(image, ref descriptor);
+                            surface = ((DirectX7GraphicsEngine)(GraphicsEngine.Current)).DirectDraw.CreateSurfaceFromFile(image, ref descriptor);
                         }
                         catch (ArgumentException)
                         {
                             descriptor = SystemMemorySurfaceDescription;
-                            surface = ManagedDirectX.DirectDraw.CreateSurfaceFromFile(image, ref descriptor);
+                            surface = ((DirectX7GraphicsEngine)(GraphicsEngine.Current)).DirectDraw.CreateSurfaceFromFile(image, ref descriptor);
                         }
                     }
                     catch (COMException e)
@@ -451,8 +444,122 @@ namespace Terrarium.Renderer.DirectX
                 throw new DirectXException("Error Creating a DirectDraw Surface", exc);
             }
 #if TRACE
-            ManagedDirectX.Profiler.End("DirectDrawSurface.CreateSurface");
+            GraphicsEngine.Profiler.End("DirectDrawSurface.CreateSurface");
 #endif
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <param name="fillvalue"></param>
+        public void BltColorFill(ref Rectangle rect, int fillvalue)
+        {
+            RECT innerRect = new RECT
+            {
+                Left = rect.Left,
+                Top = rect.Top,
+                Bottom = rect.Bottom,
+                Right = rect.Right
+            };
+            Surface.BltColorFill(innerRect, fillvalue);
+            rect = Rectangle.FromLTRB(innerRect.Left, innerRect.Top, innerRect.Right, innerRect.Bottom);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="color"></param>
+        public void SetForeColor(int color)
+        {
+            Surface.SetFillColor(color);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IntPtr GetDC()
+        {
+            return new IntPtr(Surface.GetDC());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handle"></param>
+        public void ReleaseDC(IntPtr handle)
+        {
+            Surface.ReleaseDC(handle.ToInt32());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public int IsLost()
+        {
+            return Surface.isLost();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IGraphicsSurface GetBackBufferSurface()
+        {
+            DDSCAPS2 ddsCaps = new DDSCAPS2();
+            ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_BACKBUFFER;
+            return new DirectDrawSurface(Surface.GetAttachedSurface(ref ddsCaps));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="destRect"></param>
+        /// <param name="surface"></param>
+        /// <param name="srcRect"></param>
+        /// <param name="flags"></param>
+        public void Blt(ref Rectangle destRect, IGraphicsSurface surface, ref Rectangle srcRect, BltFlags flags)
+        {
+            RECT innerDestRect = new RECT
+            {
+                Left = destRect.Left,
+                Top = destRect.Top,
+                Right = destRect.Right,
+                Bottom = destRect.Bottom
+            };
+            RECT innerSrcRect = new RECT
+            {
+                Left = srcRect.Left,
+                Top = srcRect.Top,
+                Right = srcRect.Right,
+                Bottom = srcRect.Bottom
+            };
+            Surface.Blt(ref innerDestRect, ((DirectDrawSurface) surface).Surface, ref innerSrcRect, (CONST_DDBLTFLAGS)((int)flags));
+            destRect = Rectangle.FromLTRB(innerDestRect.Left, innerDestRect.Top, innerDestRect.Right, innerDestRect.Bottom);
+            srcRect = Rectangle.FromLTRB(innerSrcRect.Left, innerSrcRect.Top, innerSrcRect.Right, innerSrcRect.Bottom);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="surface"></param>
+        /// <param name="rectangle"></param>
+        /// <param name="flags"></param>
+        public void BltFast(int x, int y, IGraphicsSurface surface, ref Rectangle rectangle, BltFastFlags flags)
+        {
+            RECT innerRect = new RECT
+            {
+                Left = rectangle.Left,
+                Top = rectangle.Top,
+                Right = rectangle.Right,
+                Bottom = rectangle.Bottom
+            };
+            Surface.BltFast(x, y, ((DirectDrawSurface)surface).Surface, ref innerRect, (CONST_DDBLTFASTFLAGS)((int)flags));
+            rectangle = Rectangle.FromLTRB(innerRect.Left, innerRect.Top, innerRect.Right, innerRect.Bottom);
         }
     }
 }

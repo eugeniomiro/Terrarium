@@ -13,16 +13,10 @@
 // 
 #pragma warning disable 1591
 
-namespace Terrarium.Services.Reporting {
-    using System;
-    using System.Web.Services;
-    using System.Diagnostics;
-    using System.Web.Services.Protocols;
-    using System.Xml.Serialization;
-    using System.ComponentModel;
-    using System.Data;
-    
-    
+namespace Terrarium.Services.Reporting
+{
+
+
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -144,26 +138,26 @@ namespace Terrarium.Services.Reporting {
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
     public enum ReturnCode {
-
+        
         /// <remarks/>
         Success,
-
+        
         /// <remarks/>
         AlreadyExists,
-
+        
         /// <remarks/>
         ServerDown,
-
+        
         /// <remarks/>
         NodeTimedOut,
-
+        
         /// <remarks/>
         NodeCorrupted,
-
+        
         /// <remarks/>
         OrganismBlacklisted,
     }
-
+    
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.17929")]
     public delegate void ReportPopulationCompletedEventHandler(object sender, ReportPopulationCompletedEventArgs e);

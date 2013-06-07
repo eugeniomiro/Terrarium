@@ -25,7 +25,7 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>

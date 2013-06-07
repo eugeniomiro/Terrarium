@@ -2,10 +2,10 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                               
 //------------------------------------------------------------------------------
 
+using OrganismBase;
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using OrganismBase;
 
 namespace Terrarium.Game
 {

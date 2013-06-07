@@ -39,12 +39,28 @@ namespace Terrarium.Client
     ///   processing most Screen Saver related command line parameters.
     ///  </para>
     /// </summary>
-	internal class MainForm : Form
+    internal class MainForm : Form
     {
         // Need to have a variable to hold the form instance or it will be
         // garbage collected and go away.  It is private since nothing should be
         // referencing the main form
         private static MainForm mainForm;
+
+        // Mutex to detect multiple versions of the game
+        private static string   appMutexName = "{2AED158D-74C9-4297-B83B-13B87FCA6BFC}";
+        private static Mutex    appMutex;
+
+        private static string[] commandLineArgs;
+        private static bool     maliciousOrganism = false;
+        private static bool     relaunch = false;
+        private static bool     performBlacklistCheck = false;
+        private static bool     blacklistCheckOnRestart = false;
+
+        // New command line option holders
+        private static bool     wasRelaunched = false;
+        private static bool     skipSplashScreen = false;
+        private static Rectangle windowRectangle;
+        private static FormWindowState windowState = FormWindowState.Normal;
 
         //get the screen size and calculate the viewport location
         private Size            screenSize;
@@ -54,66 +70,43 @@ namespace Terrarium.Client
         private Rectangle       controlStripBottom;
         private Rectangle       screenRectangle;
 
-        private static TerrariumTraceListener traceListener;
+        private const Boolean   traceEnabled = true;
+        private bool            alreadyRunningTimer = false;
+        private bool            runningBlockedVersion = false;
 
-        private const string ecosystemStateFileName = "\\Ecosystem.bin";
-
-        private static string[] commandLineArgs;
-
-		private const Boolean traceEnabled = true;
-		private bool alreadyRunningTimer = false;
-        private bool    runningBlockedVersion = false;
-
-        // Mutex to detect multiple versions of the game
-        private static string   appMutexName = "{2AED158D-74C9-4297-B83B-13B87FCA6BFC}";
-        private static Mutex    appMutex;
-
-        private Random random = new Random(Environment.TickCount);
-
-        private WorldVector oldVector;      // current state - 1
-        private WorldVector newVector;      // current state
-
-        private int frameNumber = 0;
+        private Random          random = new Random(Environment.TickCount);
+        private WorldVector     oldVector;      // current state - 1
+        private WorldVector     newVector;      // current state
+        private int             frameNumber = 0;
 
         // Command line arguments / Screensaver support
-        private Boolean startAtStartup;
+        private Boolean         startAtStartup;
         private ScreenSaverMode screenSaverMode = ScreenSaverMode.NoScreenSaver;
-        private Int32 hwndScreenSaverParent = 0;
-        private int turnOffDirectXCounter = 0;
-        private Boolean turnOffDirectX = false;
-        private Boolean noDirectX = false;
-        private string gamePath = null;
-        private bool firstActivate;
+        private Int32           hwndScreenSaverParent = 0;
+        private int             turnOffDirectXCounter = 0;
+        private Boolean         turnOffDirectX = false;
+        private Boolean         noDirectX = false;
+        private string          gamePath = null;
+        private bool            firstActivate;
 
         // Window Resizing and Fullscreen support
-        private bool fullScreen = false;
-        private bool showUI = true;
-        private Point originalLocation;
-        private Size originalSize;
-
-        private static bool maliciousOrganism = false;
-        private static bool relaunch = false;
-        private static bool performBlacklistCheck = false;
-        private static bool blacklistCheckOnRestart = false;
-
-        // New command line option holders
-        private static bool wasRelaunched = false;
-        private static bool skipSplashScreen = false;
-        private static Rectangle windowRectangle;
-        private static FormWindowState windowState = FormWindowState.Normal;
+        private bool            fullScreen = false;
+        private bool            showUI = true;
+        private Point           originalLocation;
+        private Size            originalSize;
 
         // Screen messages
-        private const string emptyEcosystemMessage = "Waiting for animals to be teleported from other peers running Terrarium...";
-        private const string emptyEcosystemServerDownMessage = "The Terrarium server is experiencing temporary difficulties.  This is probably why you aren't receiving any animals.";
-        private const string emptyTerrariumMessage = "Introduce animals into your terrarium by clicking on the 'Introduce Animal' button below.";
+        private const string    emptyEcosystemMessage = "Waiting for animals to be teleported from other peers running Terrarium...";
+        private const string    emptyEcosystemServerDownMessage = "The Terrarium server is experiencing temporary difficulties.  This is probably why you aren't receiving any animals.";
+        private const string    emptyTerrariumMessage = "Introduce animals into your terrarium by clicking on the 'Introduce Animal' button below.";
+        private const string    ecosystemStateFileName = "\\Ecosystem.bin";
 
-        private MenuItem        menuItem1;
-        private NotifyIcon      taskBar;
-
+        private System.Windows.Forms.MenuItem menuItem1;
+        private System.Windows.Forms.NotifyIcon taskBar;
         private System.Windows.Forms.Timer screenSaverTimer = null;
 
         // Used to force a save when restarting.  Used by auto-updates
-        private bool forceSave = false;
+        private bool            forceSave = false;
 
         #region Designer Generated Fields
         private System.ComponentModel.IContainer components;
@@ -144,7 +137,7 @@ namespace Terrarium.Client
         private PropertySheet propertySheet;
         private TraceWindow traceWindow;
         private string engineStateText;        
-        private TerrariumDirectDrawGameView tddGameView;
+        private TerrariumGameView tddGameView;
         private Terrarium.Forms.Classes.Controls.DeveloperPanel developerPanel;
         private GlassBottomPanel bottomPanel;
         private ResizeBar resizeBar;
@@ -166,7 +159,7 @@ namespace Terrarium.Client
             this.menuItemText = new System.Windows.Forms.MenuItem();
             this.menuItemDamage = new System.Windows.Forms.MenuItem();
             this.menuItemEnergy = new System.Windows.Forms.MenuItem();
-            this.tddGameView = new Terrarium.Renderer.TerrariumDirectDrawGameView();
+            this.tddGameView = new Terrarium.Renderer.TerrariumGameView();
             this.developerPanel = new Terrarium.Forms.Classes.Controls.DeveloperPanel();
             this.bottomPanel = new Terrarium.Forms.GlassBottomPanel();
             this.resizeBar = new Terrarium.Forms.ResizeBar();
@@ -356,14 +349,11 @@ namespace Terrarium.Client
             Application.EnableVisualStyles();
             Application.DoEvents();
 
-            Trace.WriteLine("");
             Trace.WriteLine("*****");
             Trace.WriteLine("Environment.CommandLine: " + Environment.CommandLine);
             Trace.WriteLine("GameConfig.RelaunchCommandLine: " + GameConfig.RelaunchCommandLine);
             Trace.WriteLine("MainForm.SpecialUserAppDataPath: " + MainForm.SpecialUserAppDataPath);
             Trace.WriteLine("*****");
-            Trace.WriteLine("");
-
 
             // Let's see if we've been relaunched.  If so, these command line args trump the default one.
             if (GameConfig.RelaunchCommandLine != null && GameConfig.RelaunchCommandLine.Length > 0)
@@ -379,7 +369,7 @@ namespace Terrarium.Client
             Int32 hwnd = 0;
             Boolean start = true;
             string gamePath = "";
-            Boolean enableLogging = false;
+            //Boolean enableLogging = false;
             Boolean noDirectX = false;
 
             try
@@ -428,9 +418,9 @@ namespace Terrarium.Client
                                     i++;
                                     gamePath = args[i];
                                     break;
-                                case "enablelogging":
-                                    enableLogging = true;
-                                    break;
+                                //case "enablelogging":
+                                //    enableLogging = true;
+                                //    break;
                                 case "blacklistcheck":
                                     performBlacklistCheck = true;
                                     break;
@@ -468,9 +458,9 @@ namespace Terrarium.Client
 
                 // Catch toplevel exceptions and assertions so we can stop the timer
                 // and report them properly
-                Debug.Listeners.Clear();
-                traceListener = new TerrariumTraceListener(enableLogging);
-                Debug.Listeners.Add(traceListener);
+                //Debug.Listeners.Clear();
+                //traceListener = new TerrariumTraceListener(enableLogging);
+                //Debug.Listeners.Add(traceListener);
 
                 // Create/Open a global named mutex that indicates if the app is already running
                 // if we can get the mutex, then we are the only version running
@@ -600,7 +590,7 @@ namespace Terrarium.Client
                     Application.Restart();
                 }
 
-                Debug.Listeners.Clear();
+                //Debug.Listeners.Clear();
                 if (maliciousOrganism)
                 {
                     Environment.Exit(0);
@@ -709,7 +699,7 @@ namespace Terrarium.Client
             this.bottomPanel.StatisticsButton.Click += new EventHandler(StatisticsButton_Click);
             this.bottomPanel.TraceButton.Click += new EventHandler(TraceButton_Click);
             this.bottomPanel.DeveloperButton.Click += new EventHandler(DeveloperButton_Click);
-            traceListener.TimerToStop = this.timer1;
+            //traceListener.TimerToStop = this.timer1;
             SystemEvents.PowerModeChanged += new PowerModeChangedEventHandler(PowerModeChanged);
 
             this.taskBar = new NotifyIcon();
@@ -727,7 +717,7 @@ namespace Terrarium.Client
             // Set up the game view
             if (!this.DesignMode)
             {
-                if (!tddGameView.InitializeDirectDraw(false))
+                if (!tddGameView.InitializeGraphicEngine(false))
                 {
                     noDirectX = true;
                 }
@@ -831,10 +821,10 @@ namespace Terrarium.Client
                 return;
             }
 
-            RECT worldSize = tddGameView.CreateWorld(xPixels, yPixels);
+            Rectangle worldSize = tddGameView.CreateWorld(xPixels, yPixels);
+
             this.developerPanel.LandSize = new Size(tddGameView.ActualSize.Right, tddGameView.ActualSize.Bottom);
             this.developerPanel.MiniMap = tddGameView.MiniMap;
-
             this.developerPanel.GenerateMiniMap(worldSize.Right - worldSize.Left, worldSize.Bottom - worldSize.Top);
         }
 

@@ -2,11 +2,12 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                             
 //------------------------------------------------------------------------------
 
+using DxVBLib;
 using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Drawing;
-using DxVBLib;
+using Terrarium.Renderer.Engine;
 using Terrarium.Renderer.DirectX;
 
 namespace Terrarium.Renderer
@@ -23,7 +24,7 @@ namespace Terrarium.Renderer
         ///  within.  Each text surface is made exactly this
         ///  size.
         /// </summary>
-        internal static DxVBLib.RECT StandardFontRect;
+        internal static Rectangle StandardFontRect;
 
         /// <summary>
         ///  The sprites associated with each bit of text.
@@ -35,11 +36,7 @@ namespace Terrarium.Renderer
         /// </summary>
         static TerrariumTextSurfaceManager()
         {
-            StandardFontRect = new DxVBLib.RECT();
-            StandardFontRect.Top = 0;
-            StandardFontRect.Left = 0;
-            StandardFontRect.Bottom = 15;
-            StandardFontRect.Right = 100;
+            StandardFontRect = Rectangle.FromLTRB(0, 0, 100, 15);
         }
 
         /// <summary>
@@ -96,17 +93,6 @@ namespace Terrarium.Renderer
                 return;
             }
 
-            // Set up the surface
-            var rect = new DxVBLib.RECT();
-            var ddSurface = new DirectDrawSurface(StandardFontRect.Right, StandardFontRect.Bottom)
-                                {
-                                    TransparencyKey = DirectDrawSurface.MagentaColorKey
-                                };
-
-            // Color in the back and add the text
-            ddSurface.Surface.BltColorFill(ref rect, DirectDrawSurface.MagentaColorKey.low);
-            ddSurface.Surface.SetForeColor(0);
-
             var text = key;
             if (text.Length > 16)
             {
@@ -114,20 +100,27 @@ namespace Terrarium.Renderer
                 text += "...";
             }
 
-            var dcHandle = new IntPtr(ddSurface.Surface.GetDC());
+            // Set up the surface
+            IGraphicsSurface ddSurface = GraphicsEngine.Current.CreateSurface(StandardFontRect.Right, StandardFontRect.Bottom);
+            ddSurface.TransparencyKey = new ColorKey(DirectDrawSurface.MagentaColorKey);
 
-            var graphics = Graphics.FromHdc(dcHandle);
+            var rect = new Rectangle();
+            // Color in the back and add the text
+            ddSurface.BltColorFill(ref rect, DirectDrawSurface.MagentaColorKey.low);
+            ddSurface.SetForeColor(0);
 
-            var font = new Font("Verdana", 6.75f, FontStyle.Regular);
+            using (var font = new Font("Verdana", 6.75f, FontStyle.Regular))
+            {
+                IntPtr dcHandle = ddSurface.GetDC();
 
-            graphics.DrawString(text, font, Brushes.Black, 1, 1);
-            graphics.DrawString(text, font, Brushes.WhiteSmoke, 0, 0);
+                using (var graphics = Graphics.FromHdc(dcHandle))
+                {
+                    graphics.DrawString(text, font, Brushes.Black, 1, 1);
+                    graphics.DrawString(text, font, Brushes.WhiteSmoke, 0, 0);
+                }
+                ddSurface.ReleaseDC(dcHandle);
 
-            font.Dispose();
-
-            graphics.Dispose();
-
-            ddSurface.Surface.ReleaseDC(dcHandle.ToInt32());
+            }
 
             sprites.Add(key, ddSurface);
         }

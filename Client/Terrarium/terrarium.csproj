@@ -9,7 +9,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ApplicationIcon>tericon32.ico</ApplicationIcon>
     <AssemblyName>Terrarium</AssemblyName>
-    <AssemblyOriginatorKeyFile>Terrarium.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Terrarium.snk</AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -22,7 +22,7 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <GenerateManifests>true</GenerateManifests>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <FallbackCulture>en-US</FallbackCulture>
@@ -185,7 +185,7 @@
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
     </ProjectReference>
     <ProjectReference Include="..\Renderer\Renderer.csproj">
-      <Project>{228FD808-F488-426E-9015-F5557AD44A40}</Project>
+      <Project>{228fd808-f488-426e-9015-f5557ad44a40}</Project>
       <Name>Renderer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services\Services.csproj">
@@ -421,7 +421,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Terrarium.pfx" />
+    <None Include="Terrarium.snk" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
@@ -429,6 +429,7 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>xcopy /iery "$(TargetDir)*.*" "$(SolutionDir)\Deploy"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

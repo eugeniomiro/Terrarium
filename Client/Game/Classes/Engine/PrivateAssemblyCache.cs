@@ -2,6 +2,7 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                              
 //------------------------------------------------------------------------------
 
+using OrganismBase;
 using System;
 using System.Collections;
 using System.Diagnostics;
@@ -10,7 +11,6 @@ using System.IO;
 using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
-using OrganismBase;
 using Terrarium.Configuration;
 using Terrarium.Tools;
 
