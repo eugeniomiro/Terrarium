@@ -50,10 +50,8 @@ namespace Terrarium.Client
         private static string   appMutexName = "{2AED158D-74C9-4297-B83B-13B87FCA6BFC}";
         private static Mutex    appMutex;
 
-        private static string[] commandLineArgs;
         private static bool     maliciousOrganism = false;
         private static bool     relaunch = false;
-        private static bool     performBlacklistCheck = false;
         private static bool     blacklistCheckOnRestart = false;
 
         // New command line option holders
@@ -85,8 +83,7 @@ namespace Terrarium.Client
         private Int32           hwndScreenSaverParent = 0;
         private int             turnOffDirectXCounter = 0;
         private Boolean         turnOffDirectX = false;
-        private Boolean         noDirectX = false;
-        private string          gamePath = null;
+        private string          _gamePath = null;
         private bool            firstActivate;
 
         // Window Resizing and Fullscreen support
@@ -107,6 +104,8 @@ namespace Terrarium.Client
 
         // Used to force a save when restarting.  Used by auto-updates
         private bool            forceSave = false;
+
+        private static Options  _options     = new Options();
 
         #region Designer Generated Fields
         private System.ComponentModel.IContainer components;
@@ -362,94 +361,32 @@ namespace Terrarium.Client
                 args = GameConfig.RelaunchCommandLine.Split('|');
             }
 
-            commandLineArgs = args;
-
             // Parse the command line arguments
             ScreenSaverMode mode = ScreenSaverMode.NoScreenSaver;
-            Int32 hwnd = 0;
-            Boolean start = true;
-            string gamePath = "";
-            //Boolean enableLogging = false;
-            Boolean noDirectX = false;
+            Int32   hwnd        = 0;
+            string  gamePath    = "";
+            
+            CommandLine.Parser.Default.ParseArguments(args, _options);
+            if (_options.Modal)
+                // Show the Settings dialog box, modal to the foreground window
+                mode = ScreenSaverMode.ShowSettingsModal;
 
-            try
-            {
-                if (args.Length > 0)
-                {
-                    string commandName = "";
-
-                    for( int i = 0; i < args.Length; ++i)
-                    {
-                        if (args[i].Length == 0)
-                            continue;
-
-                        if (args[i][0] == '/' || args[i][0] == '-')
-                        {
-                            commandName = args[i].Substring(1).ToLower(CultureInfo.InvariantCulture);;
-
-                            switch(commandName)
-                            {
-                                case "c":
-                                    // Show the Settings dialog box, modal to the foreground window
-                                    mode = ScreenSaverMode.ShowSettingsModal;
-                                    break;
-                                case "p":
-                                    // Preview Screen Saver as child of window <HWND>
-                                    mode = ScreenSaverMode.Preview;
-                                    i++;
-                                    hwnd = Convert.ToInt32(args[i]);
-                                    break;
-                                case "s":
-                                    mode = ScreenSaverMode.Run;
-                                    break;
-                                case "nostart":
-                                    start = false;
-                                    break;
-                                case "nodirectx":
-                                    noDirectX = true;
-                                    break;
-                                case "loadterrarium":
-                                    mode = ScreenSaverMode.RunLoadTerrarium;
-                                    i++;
-                                    gamePath = args[i];
-                                    break;
-                                case "newterrarium":
-                                    mode = ScreenSaverMode.RunNewTerrarium;
-                                    i++;
-                                    gamePath = args[i];
-                                    break;
-                                //case "enablelogging":
-                                //    enableLogging = true;
-                                //    break;
-                                case "blacklistcheck":
-                                    performBlacklistCheck = true;
-                                    break;
-                                case "skipsplashScreen":
-                                    skipSplashScreen = true;
-                                    break;
-                                case "windowrectangle":
-                                    i++;
-                                    string[] rectangleValues = args[i].Split(',');
-                                    if (rectangleValues.Length != 4)
-                                        continue;
-                                    windowRectangle = new Rectangle(Convert.ToInt32(rectangleValues[0]), Convert.ToInt32(rectangleValues[1]), Convert.ToInt32(rectangleValues[2]), Convert.ToInt32(rectangleValues[3]));
-                                    break;
-                                case "windowstate":
-                                    i++;
-                                    windowState = (FormWindowState)Enum.Parse(typeof(FormWindowState), args[i]);
-                                    break;
-                            }
-                        }
-                    }
-                }
+            else if (_options.Preview != 0) {
+                mode = ScreenSaverMode.Preview;
+                hwnd = _options.Preview;
+            } else if (_options.ScrenSaver)
+                mode = ScreenSaverMode.Run;
+            else if (_options.LoadTerrarium != "") {
+                mode = ScreenSaverMode.RunLoadTerrarium;
+                gamePath = _options.LoadTerrarium;
+            } else if (_options.NetTerrarium != "") {
+                mode = ScreenSaverMode.RunNewTerrarium;
+                gamePath = _options.NetTerrarium;
             }
-            catch (Exception e)
-            {
-                ErrorLog.LogHandledException(e);
-                MessageBox.Show("Error reading command line arguments: " + e.ToString(), "CommandLine Error");
-                GameConfig.RelaunchCommandLine = "";
-                return 0;
-            }
+            Int32[] rectangleValues = _options.WindowRectangle;
+            if (rectangleValues.Length == 4)
+                windowRectangle = new Rectangle(rectangleValues[0], rectangleValues[1], rectangleValues[2], rectangleValues[3]);
+            windowState = _options.WindowState;
 
             try
             {
@@ -510,7 +447,7 @@ namespace Terrarium.Client
                 if (Screen.PrimaryScreen.Bounds.Width < 800 ||
                     Screen.PrimaryScreen.Bounds.Height < 600)
                 {
-                    noDirectX = true;
+                    _options.NoDirectX = true;
                 }
 
                 FileInfo info = new FileInfo(Assembly.GetEntryAssembly().Location);
@@ -534,7 +471,7 @@ namespace Terrarium.Client
 #endif
                     }
 
-                    mainForm = new MainForm(start, mode, gamePath, hwnd, noDirectX);
+                    mainForm = new MainForm(mode, gamePath, hwnd);
 
                     System.Windows.Forms.Application.Run(mainForm);
                 }
@@ -552,11 +489,11 @@ namespace Terrarium.Client
                     switch (mainForm.screenSaverMode)
                     {
                         case ScreenSaverMode.RunLoadTerrarium:
-                            configLine += "|/loadterrarium|" + mainForm.gamePath;
+                            configLine += "|/loadterrarium|" + mainForm._gamePath;
                             break;
 
                         case ScreenSaverMode.RunNewTerrarium:
-                            configLine += "|/newterrarium|" + mainForm.gamePath;
+                            configLine += "|/newterrarium|" + mainForm._gamePath;
                             break;
 
                         case ScreenSaverMode.Run:
@@ -617,19 +554,18 @@ namespace Terrarium.Client
         }
 
         internal MainForm()
-            : this(false, ScreenSaverMode.NoScreenSaver, null, 0, true)
+            : this(ScreenSaverMode.NoScreenSaver, null, 0)
         {
         }
 
-        internal MainForm(Boolean start, ScreenSaverMode mode, string gamePath, Int32 hwndParent, Boolean noDirectX)
+        internal MainForm(ScreenSaverMode mode, string gamePath, Int32 hwndParent)
         {
             firstActivate = true;
             screenSaverMode = mode;
-            this.gamePath = gamePath;
+            _gamePath = gamePath;
             hwndScreenSaverParent = hwndParent;
-            startAtStartup = start;
-            this.noDirectX = noDirectX;
-
+            startAtStartup = !_options.NoStart;
+            
             // Check to see if this version has been blocked by the server (because of a security issue)
             // if it has, then don't actually start the game and just wait for
             // an updated version to get downloaded.
@@ -719,7 +655,7 @@ namespace Terrarium.Client
             {
                 if (!tddGameView.InitializeGraphicEngine(false))
                 {
-                    noDirectX = true;
+                    _options.NoDirectX = true;
                 }
                 else
                 {
@@ -816,7 +752,7 @@ namespace Terrarium.Client
 
         private void InitializeGraphics(int xPixels, int yPixels)
         {
-            if (noDirectX)
+            if (_options.NoDirectX)
             {
                 return;
             }
@@ -848,7 +784,7 @@ namespace Terrarium.Client
 
                 this.Cursor = Cursors.WaitCursor;
 
-                if (performBlacklistCheck)
+                if (_options.BlackListCheck)
                 {
                     // We have been launched and asked to check for blacklisted species before
                     // we start up.  Call the server and ask.
@@ -884,10 +820,10 @@ namespace Terrarium.Client
                         GameEngine.LoadEcosystemGame(SpecialUserAppDataPath, ecosystemStateFileName, developerPanel.Leds);
                         break;
                     case ScreenSaverMode.RunLoadTerrarium:
-                        GameEngine.LoadTerrariumGame(Path.GetDirectoryName(gamePath), gamePath, developerPanel.Leds);
+                        GameEngine.LoadTerrariumGame(Path.GetDirectoryName(_gamePath), _gamePath, developerPanel.Leds);
                         break;
                     case ScreenSaverMode.RunNewTerrarium:
-                        GameEngine.LoadTerrariumGame(Path.GetDirectoryName(gamePath), gamePath, developerPanel.Leds);
+                        GameEngine.LoadTerrariumGame(Path.GetDirectoryName(_gamePath), _gamePath, developerPanel.Leds);
                         break;
                 }
             }
@@ -970,7 +906,7 @@ namespace Terrarium.Client
             }
 
             // Paint the screen
-            if (this.Visible == true && !this.resizeBar.Dragging && !noDirectX && !turnOffDirectX)
+            if (this.Visible == true && !this.resizeBar.Dragging && !_options.NoDirectX && !turnOffDirectX)
             {
                 TimeMonitor startRefreshTime = new TimeMonitor();
                 startRefreshTime.Start();
@@ -1340,7 +1276,7 @@ namespace Terrarium.Client
                 this.screenSaverMode = ScreenSaverMode.NoScreenSaver;
 
                 relaunch = true;
-                gamePath = "";
+                _gamePath = "";
 
                 this.Close();
             }
@@ -1383,7 +1319,7 @@ namespace Terrarium.Client
                     this.Hide();
                     FileInfo fileInfo = new FileInfo(save.FileName);
                     relaunch = true;
-                    gamePath = save.FileName;
+                    _gamePath = save.FileName;
                     screenSaverMode = ScreenSaverMode.RunLoadTerrarium;
                     this.Close();
                 }
@@ -1416,7 +1352,7 @@ namespace Terrarium.Client
                         this.Hide();
                         FileInfo fileInfo = new FileInfo(dialog.FileName);
                         relaunch = true;
-                        gamePath = dialog.FileName;
+                        _gamePath = dialog.FileName;
                         screenSaverMode = ScreenSaverMode.RunLoadTerrarium;
                         this.Close();
                     }
