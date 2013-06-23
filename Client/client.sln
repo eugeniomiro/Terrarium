@@ -22,6 +22,13 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Terrarium2.Setup", "Terrari
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Terrarium2.SetupMM", "Terrarium2.SetupMM\Terrarium2.SetupMM.wixproj", "{28516597-BF50-44AA-BDA4-1132DAD43274}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7C68E407-DAE3-48E1-AF39-AF0ED51FC1E0}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
