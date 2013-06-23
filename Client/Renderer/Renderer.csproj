@@ -24,7 +24,7 @@
     </StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
@@ -183,6 +183,7 @@
     <Compile Include="Classes\Engine\DirectX10GraphicsEngine.cs" />
     <Compile Include="Classes\Engine\DirectX7GraphicsEngine.cs" />
     <Compile Include="Classes\Engine\DirectX9GraphicsEngine.cs" />
+    <Compile Include="Classes\Engine\GraphicsEngine.cs" />
     <Compile Include="Classes\Engine\IGraphicsEngine.cs" />
     <Compile Include="Classes\Engine\ManagedDirectXGraphicsEngine.cs" />
     <Compile Include="Classes\Engine\XnaGraphicsEngine.cs" />

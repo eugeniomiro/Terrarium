@@ -1,7 +1,8 @@
 Terrarium Project
 =================
 
-This is the README file for the Terrarium Project hosted on [CodePlex][codeplex_project_site].
+This is the README file trom the Terrarium Project hosted on 
+[CodePlex][codeplex_project_site], updated for the current project.
 
 Project Structure
 -----------------

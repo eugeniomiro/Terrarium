@@ -22,13 +22,13 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <GenerateManifests>true</GenerateManifests>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <FallbackCulture>en-US</FallbackCulture>
     <UpdateUrlEnabled>false</UpdateUrlEnabled>
     <WebPageEnabled>true</WebPageEnabled>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <ManifestCertificateThumbprint>EC13F3640926A078D6C271D9EE6E18AF1E387164</ManifestCertificateThumbprint>
     <TargetZone>LocalIntranet</TargetZone>
     <UpgradeBackupLocation>
