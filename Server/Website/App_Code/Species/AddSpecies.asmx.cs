@@ -239,18 +239,14 @@ namespace Terrarium.Server
 
             FileIOPermission permission = new FileIOPermission(FileIOPermissionAccess.AllAccess, new string[] { assemblyRoot + "\\" + version });
             byte[] bytes = null;
-            try
-            {
+            try {
                 permission.PermitOnly();
 
-                using (FileStream sourceStream = File.OpenRead(assemblyRoot + "\\" + version + "\\" + assemblyFileName))
-                {
+                using (FileStream sourceStream = File.OpenRead(assemblyRoot + "\\" + version + "\\" + assemblyFileName)) {
                     bytes = new byte[sourceStream.Length];
-                    sourceStream.Read(bytes, 0, (int)sourceStream.Length);
+                    sourceStream.Read(bytes, 0, (int) sourceStream.Length);
                 }
-            }
-            finally
-            {
+            } finally {
                 CodeAccessPermission.RevertPermitOnly();
             }
 
@@ -272,14 +268,11 @@ namespace Terrarium.Server
                 return;
 
             FileIOPermission permission = new FileIOPermission(FileIOPermissionAccess.AllAccess, new string[] { assemblyRoot + "\\" + version });
-            try
-            {
+            try {
                 permission.PermitOnly();
                 if (File.Exists(assemblyRoot + "\\" + version + "\\" + assemblyFileName))
                     File.Delete(assemblyRoot + "\\" + version + "\\" + assemblyFileName);
-            }
-            finally
-            {
+            } finally {
                 CodeAccessPermission.RevertPermitOnly();
             }
         }
@@ -299,25 +292,19 @@ namespace Terrarium.Server
                 path.Create();
 
             FileIOPermission permission = new FileIOPermission(FileIOPermissionAccess.AllAccess, new string[] { assemblyRoot + "\\" + version });
-            try
-            {
+            try {
                 permission.PermitOnly();
 
                 // Use CreateNew to create so we get an exception if the file already exists -- it never should
                 string pathToAssembly = assemblyRoot + "\\" + version + "\\" + assemblyFileName;
-                if (File.Exists(pathToAssembly))
-                {
+                if (File.Exists(pathToAssembly)) {
                     throw new ApplicationException("an assembly with the same filename already exists in the server");
                 }
-                using (FileStream targetStream = File.Open(pathToAssembly, FileMode.CreateNew))
-                {
-                    try
-                    {
+                using (FileStream targetStream = File.Open(pathToAssembly, FileMode.CreateNew)) {
+                    try {
                         targetStream.Write(assemblyCode, 0, assemblyCode.Length);
                         targetStream.Close();
-                    }
-                    catch
-                    {
+                    } catch {
                         targetStream.Close();
 
                         // If something happens, delete the file so we don't have
@@ -327,9 +314,7 @@ namespace Terrarium.Server
                         throw;
                     }
                 }
-            }
-            finally
-            {
+            } finally {
                 CodeAccessPermission.RevertPermitOnly();
             }
         }
@@ -342,8 +327,7 @@ namespace Terrarium.Server
         [WebMethod]
         public DataSet GetExtinctSpecies(string version, string filter)
         {
-            if (version == null)
-            {
+            if (version == null) {
                 // Special versioning case, if all parameters are not specified then we return an appropriate error.
                 InstallerInfo.WriteEventLog("GetExtinctSpecies", "Suspect: " + Context.Request.ServerVariables["REMOTE_ADDR"].ToString());
                 return null;
@@ -354,15 +338,12 @@ namespace Terrarium.Server
 
             version = new Version(version).ToString(3);
 
-            try
-            {
-                using (SqlConnection myConnection = new SqlConnection(ServerSettings.SpeciesDsn))
-                {
+            try {
+                using (SqlConnection myConnection = new SqlConnection(ServerSettings.SpeciesDsn)) {
                     myConnection.Open();
 
                     SqlCommand mySqlCommand = null;
-                    switch (filter)
-                    {
+                    switch (filter) {
                         case "All":
                             mySqlCommand = new SqlCommand("TerrariumGrabExtinctSpecies", myConnection);
                             break;
@@ -370,8 +351,7 @@ namespace Terrarium.Server
                             mySqlCommand = new SqlCommand("TerrariumGrabExtinctRecentSpecies", myConnection);
                             break;
                     }
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(mySqlCommand))
-                    {
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(mySqlCommand)) {
                         mySqlCommand.CommandType = CommandType.StoredProcedure;
 
                         mySqlCommand.Parameters.Add("@Version", SqlDbType.VarChar, 255).Value = version;
@@ -381,9 +361,7 @@ namespace Terrarium.Server
                         return data;
                     }
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 InstallerInfo.WriteEventLog("GetExtinctSpecies", e.ToString());
                 return null;
             }
@@ -398,8 +376,7 @@ namespace Terrarium.Server
         [WebMethod]
         public DataSet GetAllSpecies(string version, string filter)
         {
-            if (version == null)
-            {
+            if (version == null) {
                 // Special versioning case, if all parameters are not specified then we return an appropriate error.
                 InstallerInfo.WriteEventLog("GetAllSpecies", "Suspect: " + Context.Request.ServerVariables["REMOTE_ADDR"].ToString());
                 return null;
@@ -408,8 +385,7 @@ namespace Terrarium.Server
             // Let's verify that this version is even allowed.
             string errorMessage = "";
             PeerDiscoveryService discoveryService = new PeerDiscoveryService();
-            if (discoveryService.IsVersionDisabled(version, out errorMessage) == true)
-            {
+            if (discoveryService.IsVersionDisabled(version, out errorMessage) == true) {
                 return null;
             }
 
@@ -418,15 +394,12 @@ namespace Terrarium.Server
 
             version = new Version(version).ToString(3);
 
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ServerSettings.SpeciesDsn))
-                {
+            try {
+                using (SqlConnection conn = new SqlConnection(ServerSettings.SpeciesDsn)) {
                     conn.Open();
                     String storedProcedure;
 
-                    switch (filter)
-                    {
+                    switch (filter) {
                         case "All":
                             storedProcedure = "TerrariumGrabAllSpecies";
                             break;
@@ -435,8 +408,7 @@ namespace Terrarium.Server
                             break;
                     }
                     using (SqlCommand cmd = new SqlCommand(storedProcedure, conn))
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
-                    {
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd)) {
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         cmd.Parameters.Add("@Version", SqlDbType.VarChar, 255).Value = version;
@@ -446,9 +418,7 @@ namespace Terrarium.Server
                         return data;
                     }
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 InstallerInfo.WriteEventLog("GetAllSpecies", e.ToString());
                 return null;
             }
@@ -463,8 +433,7 @@ namespace Terrarium.Server
         [WebMethod]
         public Byte[] GetSpeciesAssembly(string name, string version)
         {
-            if (name == null || version == null)
-            {
+            if (name == null || version == null) {
                 // Special versioning case, if all parameters are not specified then we return an appropriate error.
                 InstallerInfo.WriteEventLog("GetSpeciesAssembly", "Suspect: " + Context.Request.ServerVariables["REMOTE_ADDR"].ToString());
                 return null;
@@ -472,13 +441,10 @@ namespace Terrarium.Server
 
             version = new Version(version).ToString(3);
 
-            try
-            {
+            try {
                 byte[] species = LoadAssembly(version, name + ".dll");
                 return species;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 InstallerInfo.WriteEventLog("GetSpeciesAssembly", e.ToString());
                 return null;
             }
@@ -492,8 +458,7 @@ namespace Terrarium.Server
         [WebMethod]
         public Byte[] ReintroduceSpecies(string name, string version, Guid peerGuid)
         {
-            if (name == null || version == null || peerGuid == Guid.Empty)
-            {
+            if (name == null || version == null || peerGuid == Guid.Empty) {
                 // Special versioning case, if all parameters are not specified then we return an appropriate error.
                 InstallerInfo.WriteEventLog("ReintroduceSpecies", "Suspect: " + Context.Request.ServerVariables["REMOTE_ADDR"].ToString());
                 return null;
@@ -501,29 +466,23 @@ namespace Terrarium.Server
 
             version = new Version(version).ToString(3);
 
-            try
-            {
-                using (SqlConnection myConnection = new SqlConnection(ServerSettings.SpeciesDsn))
-                {
+            try {
+                using (SqlConnection myConnection = new SqlConnection(ServerSettings.SpeciesDsn)) {
                     myConnection.Open();
-                    using (SqlTransaction transaction = myConnection.BeginTransaction())
-                    {
-                        using (SqlCommand mySqlCommand = new SqlCommand("TerrariumCheckSpeciesExtinct", myConnection, transaction))
-                        {
+                    using (SqlTransaction transaction = myConnection.BeginTransaction()) {
+                        using (SqlCommand mySqlCommand = new SqlCommand("TerrariumCheckSpeciesExtinct", myConnection, transaction)) {
                             mySqlCommand.CommandType = CommandType.StoredProcedure;
 
                             mySqlCommand.Parameters.Add("@Name", SqlDbType.VarChar, 255).Value = name;
 
                             Object returnValue = mySqlCommand.ExecuteScalar();
-                            if (Convert.IsDBNull(returnValue) || ((int)returnValue) == 0)
-                            {
+                            if (Convert.IsDBNull(returnValue) || ((int) returnValue) == 0) {
                                 // the species has already been reintroduced
                                 transaction.Rollback();
                                 return null;
                             }
                         }
-                        using (SqlCommand mySqlCommand = new SqlCommand("TerrariumReintroduceSpecies", myConnection, transaction))
-                        {
+                        using (SqlCommand mySqlCommand = new SqlCommand("TerrariumReintroduceSpecies", myConnection, transaction)) {
                             mySqlCommand.CommandType = CommandType.StoredProcedure;
 
                             mySqlCommand.Parameters.Add("@ReintroductionNode", SqlDbType.UniqueIdentifier, 16).Value = peerGuid;
@@ -538,9 +497,7 @@ namespace Terrarium.Server
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 InstallerInfo.WriteEventLog("ReintroduceSpecies", "Species Name: " + name + "\r\n" + e.ToString());
                 return null;
             }
@@ -553,17 +510,13 @@ namespace Terrarium.Server
         [WebMethod]
         public string[] GetBlacklistedSpecies()
         {
-            try
-            {
-                using (SqlConnection cnn = new SqlConnection(ServerSettings.SpeciesDsn))
-                {
+            try {
+                using (SqlConnection cnn = new SqlConnection(ServerSettings.SpeciesDsn)) {
                     cnn.Open();
                     using (SqlCommand cmd = new SqlCommand("Select AssemblyFullName From Species Where BlackListed = 1", cnn))
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
+                    using (SqlDataReader dr = cmd.ExecuteReader()) {
                         List<String> blackListedSpecies = new List<String>();
-                        while (dr.Read())
-                        {
+                        while (dr.Read()) {
                             blackListedSpecies.Add(dr["AssemblyFullName"].ToString());
                         }
 
@@ -571,9 +524,7 @@ namespace Terrarium.Server
                             return blackListedSpecies.ToArray();
                     }
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 InstallerInfo.WriteEventLog("GetBlacklistedSpecies", e.ToString());
                 return null;
             }
