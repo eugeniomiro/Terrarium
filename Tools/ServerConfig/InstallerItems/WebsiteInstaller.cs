@@ -29,8 +29,7 @@ namespace Terrarium.Server
                 Installers.Add(myEventLogInstaller);
             }
 
-            foreach (PerformanceCounterCategoryInfo performanceCounter in info.PerformanceCounterCategoryInfos)
-            {
+            foreach (PerformanceCounterCategoryInfo performanceCounter in info.PerformanceCounterCategoryInfos) {
                 PerformanceCounterInstaller myCounterInstaller  = new PerformanceCounterInstaller {
                     CategoryHelp = performanceCounter.CategoryHelp,
                     CategoryName = performanceCounter.CategoryName
@@ -42,7 +41,7 @@ namespace Terrarium.Server
                                                          creationDataInfo.CounterType));
 
                 myCounterInstaller.Counters.AddRange(
-                    (CounterCreationData[]) counters.ToArray(typeof (CounterCreationData)));
+                    (CounterCreationData[]) counters.ToArray(typeof(CounterCreationData)));
                 Installers.Add(myCounterInstaller);
             }
         }

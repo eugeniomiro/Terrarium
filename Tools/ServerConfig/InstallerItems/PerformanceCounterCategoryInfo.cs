@@ -8,40 +8,24 @@ namespace Terrarium.Server
 {
     public class PerformanceCounterCategoryInfo
     {
-        private string categoryHelp;
-        private string categoryName;
-        private CounterCreationDataInfo[] counterCreationDataInfos;
-
         public PerformanceCounterCategoryInfo()
         {
         }
 
         public PerformanceCounterCategoryInfo(string categoryName, string categoryHelp,
-                                              CounterCreationDataInfo[] counterCreationDataInfos)
+                                              CounterCreationDataInfo[] counterCreationDataInfos) : this()
         {
-            this.categoryHelp = categoryHelp;
-            this.categoryName = categoryName;
-            this.counterCreationDataInfos = counterCreationDataInfos;
+            CategoryHelp = categoryHelp;
+            CategoryName = categoryName;
+            CounterCreationDataInfos = counterCreationDataInfos;
         }
 
         [XmlAttribute("categoryHelp")]
-        public string CategoryHelp
-        {
-            get { return categoryHelp; }
-            set { categoryHelp = value; }
-        }
+        public string CategoryHelp { get; set; }
 
         [XmlAttribute("categoryName")]
-        public string CategoryName
-        {
-            get { return categoryName; }
-            set { categoryName = value; }
-        }
+        public string CategoryName { get; set; }
 
-        public CounterCreationDataInfo[] CounterCreationDataInfos
-        {
-            get { return counterCreationDataInfos; }
-            set { counterCreationDataInfos = value; }
-        }
+        public CounterCreationDataInfo[] CounterCreationDataInfos { get; set; }
     }
 }
