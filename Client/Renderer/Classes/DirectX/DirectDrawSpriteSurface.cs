@@ -3,8 +3,10 @@
 //------------------------------------------------------------------------------
 
 
-using System;
 using DxVBLib;
+using System;
+using System.Drawing;
+using Terrarium.Renderer.Engine;
 
 namespace Terrarium.Renderer.DirectX
 {
@@ -58,7 +60,7 @@ namespace Terrarium.Renderer.DirectX
         public DirectDrawSpriteSurface(string spriteName, string spriteImagePath, int xFrames, int yFrames)
         {
 #if TRACE
-            ManagedDirectX.Profiler.Start("DirectDrawSpriteSurface..ctor()");
+            GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface..ctor()");
 #endif
             this.spriteName = spriteName;
 
@@ -67,7 +69,7 @@ namespace Terrarium.Renderer.DirectX
             {
                 ddsurface = new DirectDrawSurface(spriteImagePath, DirectDrawSurface.SystemMemorySurfaceDescription);
             }
-            ddsurface.TransparencyKey = DirectDrawSurface.DefaultColorKey;
+            ddsurface.TransparencyKey = new ColorKey(DirectDrawSurface.DefaultColorKey);
 
             animationFrames = xFrames;
             animationTypes = yFrames;
@@ -75,7 +77,7 @@ namespace Terrarium.Renderer.DirectX
             frameHeight = ddsurface.Rect.Bottom/animationTypes;
             frameWidth = ddsurface.Rect.Right/animationFrames;
 #if TRACE
-            ManagedDirectX.Profiler.End("DirectDrawSpriteSurface..ctor()");
+            GraphicsEngine.Profiler.End("DirectDrawSpriteSurface..ctor()");
 #endif
         }
 
@@ -120,7 +122,7 @@ namespace Terrarium.Renderer.DirectX
         public RECT GrabSprite(int xFrame, int yFrame)
         {
 #if TRACE
-            ManagedDirectX.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int)");
+            GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int)");
 #endif
             if (xFrame < 0 || xFrame >= animationFrames ||
                 yFrame < 0 || yFrame >= animationTypes)
@@ -138,7 +140,7 @@ namespace Terrarium.Renderer.DirectX
             spriteRect.Right += frameWidth;
 
 #if TRACE
-            ManagedDirectX.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int)");
+            GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int)");
 #endif
             return spriteRect;
         }
@@ -152,10 +154,10 @@ namespace Terrarium.Renderer.DirectX
         /// <param name="dest">The destination rectangle for the sprite.</param>
         /// <param name="bounds">The view rectangle bounds.</param>
         /// <returns></returns>
-        public DirectDrawClippedRect GrabSprite(int xFrame, int yFrame, RECT dest, RECT bounds)
+        public DirectDrawClippedRect GrabSprite(int xFrame, int yFrame, Rectangle dest, Rectangle bounds)
         {
 #if TRACE
-            ManagedDirectX.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
+            GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
 #endif
             if (xFrame < 0 || xFrame >= animationFrames ||
                 yFrame < 0 || yFrame >= animationTypes)
@@ -163,65 +165,32 @@ namespace Terrarium.Renderer.DirectX
                 throw new Exception("Sprite request is out of range");
             }
 
-            var spriteRect = new DxVBLib.RECT();
-            spriteRect.Top = yFrame*frameHeight;
+            var spriteRect = new RECT();
+            spriteRect.Top = yFrame * frameHeight;
             spriteRect.Bottom = spriteRect.Top;
             spriteRect.Bottom += frameHeight;
 
-            spriteRect.Left = xFrame*frameWidth;
+            spriteRect.Left = xFrame * frameWidth;
             spriteRect.Right = spriteRect.Left;
             spriteRect.Right += frameWidth;
 
             var ddClipRect = new DirectDrawClippedRect();
-            ddClipRect.Destination = new DxVBLib.RECT
-            {
-                Bottom = dest.Bottom,
-                Top = dest.Top,
-                Right = dest.Right,
-                Left = dest.Left,
-            };
-            ddClipRect.Source = spriteRect;
+            ddClipRect.Destination = dest;
+            ddClipRect.Source = Rectangle.FromLTRB(spriteRect.Left, spriteRect.Top, spriteRect.Right, spriteRect.Bottom);
 
             if (dest.Left >= bounds.Right || dest.Right <= bounds.Left || dest.Top >= bounds.Bottom ||
                 dest.Bottom <= bounds.Top)
             {
                 ddClipRect.Invisible = true;
 #if TRACE
-                ManagedDirectX.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
+                GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
 #endif
                 return ddClipRect;
             }
 
-            if (dest.Left < bounds.Left)
-            {
-                ddClipRect.Source.Left += (bounds.Left - dest.Left);
-                ddClipRect.Destination.Left = bounds.Left;
-                ddClipRect.ClipLeft = true;
-            }
-
-            if (dest.Top < bounds.Top)
-            {
-                ddClipRect.Source.Top += (bounds.Top - dest.Top);
-                ddClipRect.Destination.Top = bounds.Top;
-                ddClipRect.ClipTop = true;
-            }
-
-            if (dest.Right > bounds.Right)
-            {
-                ddClipRect.Source.Right -= (dest.Right - bounds.Right);
-                ddClipRect.Destination.Right = bounds.Right;
-                ddClipRect.ClipRight = true;
-            }
-
-            if (dest.Bottom > bounds.Bottom)
-            {
-                ddClipRect.Source.Bottom += (bounds.Bottom - dest.Bottom);
-                ddClipRect.Destination.Bottom = bounds.Bottom;
-                ddClipRect.ClipBottom = true;
-            }
-
+            ddClipRect.ClipRectBounds(dest, bounds);
 #if TRACE
-            ManagedDirectX.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
+            GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
 #endif
             return ddClipRect;
         }
@@ -237,10 +206,10 @@ namespace Terrarium.Renderer.DirectX
         /// <param name="bounds">The view rectangle bounds.</param>
         /// <param name="factor">A scaling factor.</param>
         /// <returns></returns>
-        public DirectDrawClippedRect GrabSprite(int xFrame, int yFrame, RECT dest, RECT bounds, int factor)
+        public DirectDrawClippedRect GrabSprite(int xFrame, int yFrame, Rectangle dest, Rectangle bounds, int factor)
         {
 #if TRACE
-            ManagedDirectX.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
+            GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
 #endif
             if (xFrame < 0 || xFrame >= animationFrames ||
                 yFrame < 0 || yFrame >= animationTypes)
@@ -248,65 +217,25 @@ namespace Terrarium.Renderer.DirectX
                 throw new Exception("Sprite request is out of range");
             }
 
-            var spriteRect = new DxVBLib.RECT();
-            spriteRect.Top = yFrame*frameHeight;
-            spriteRect.Bottom = spriteRect.Top;
-            spriteRect.Bottom += frameHeight;
-
-            spriteRect.Left = xFrame*frameWidth;
-            spriteRect.Right = spriteRect.Left;
-            spriteRect.Right += frameWidth;
+            var spriteRect = new Rectangle(xFrame, yFrame, frameWidth, frameHeight);
 
             var ddClipRect = new DirectDrawClippedRect();
-            ddClipRect.Destination = new DxVBLib.RECT
-            {
-                Bottom = dest.Bottom,
-                Top = dest.Top,
-                Right = dest.Right,
-                Left = dest.Left,
-            };
-            ddClipRect.Source = spriteRect;
+            ddClipRect.Destination  = dest;
+            ddClipRect.Source       = spriteRect;
 
             if (dest.Left >= bounds.Right || dest.Right <= bounds.Left || dest.Top >= bounds.Bottom ||
                 dest.Bottom <= bounds.Top)
             {
                 ddClipRect.Invisible = true;
 #if TRACE
-                ManagedDirectX.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
+                GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
 #endif
                 return ddClipRect;
             }
-
-            if (dest.Left < bounds.Left)
-            {
-                ddClipRect.Source.Left += (bounds.Left - dest.Left) << factor;
-                ddClipRect.Destination.Left = bounds.Left;
-                ddClipRect.ClipLeft = true;
-            }
-
-            if (dest.Top < bounds.Top)
-            {
-                ddClipRect.Source.Top += (bounds.Top - dest.Top) << factor;
-                ddClipRect.Destination.Top = bounds.Top;
-                ddClipRect.ClipTop = true;
-            }
-
-            if (dest.Right > bounds.Right)
-            {
-                ddClipRect.Source.Right -= (dest.Right - bounds.Right) << factor;
-                ddClipRect.Destination.Right = bounds.Right;
-                ddClipRect.ClipRight = true;
-            }
-
-            if (dest.Bottom > bounds.Bottom)
-            {
-                ddClipRect.Source.Bottom += (bounds.Bottom - dest.Bottom) << factor;
-                ddClipRect.Destination.Bottom = bounds.Bottom;
-                ddClipRect.ClipBottom = true;
-            }
+            ddClipRect.ClipRectBounds(dest, bounds, factor);
 
 #if TRACE
-            ManagedDirectX.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
+            GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
 #endif
             return ddClipRect;
         }

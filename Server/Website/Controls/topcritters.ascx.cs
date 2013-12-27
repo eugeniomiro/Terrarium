@@ -8,16 +8,13 @@ public partial class topcritters : UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        try
-        {
+        try {
             StringBuilder buffer = new StringBuilder(8192);
             addTopOrganisms(OrganismType.Plant, buffer);
             addTopOrganisms(OrganismType.Herbivore, buffer);
             addTopOrganisms(OrganismType.Carnivore, buffer);
             ContentSpan.InnerHtml = buffer.ToString();
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             ContentSpan.InnerHtml = string.Format("<span class=\"Error\">{0}</span>", ex);
         }
     }
@@ -29,13 +26,10 @@ public partial class topcritters : UserControl
         buffer.Append("<span class=\"SubTitle\">" + organismType + "</span>");
         buffer.Append("<ol type=\"1\" class=\"CritterList\">");
 
-        if (dataSet != null)
-        {
-            if (dataSet.Tables.Contains("Species"))
-            {
+        if (dataSet != null) {
+            if (dataSet.Tables.Contains("Species")) {
                 DataTable speciesTable = dataSet.Tables["Species"];
-                foreach (DataRow row in speciesTable.Rows)
-                {
+                foreach (DataRow row in speciesTable.Rows) {
                     buffer.Append("<li>");
                     buffer.Append(Convert.ToString(row["Name"]) + " (" + Convert.ToString(row["Population"]) + ")");
                     buffer.Append("</li>");

@@ -12,22 +12,9 @@ namespace Terrarium.Server
     public class InstallerInfo
     {
         private static InstallerInfo installerInfo;
-        private EventLogInfo[] eventLogInfos;
-        private PerformanceCounterCategoryInfo[] performanceCounterCategoryInfos;
 
-        public PerformanceCounterCategoryInfo[] PerformanceCounterCategoryInfos
-        {
-            get { return performanceCounterCategoryInfos; }
-
-            set { performanceCounterCategoryInfos = value; }
-        }
-
-        public EventLogInfo[] EventLogInfos
-        {
-            get { return eventLogInfos; }
-
-            set { eventLogInfos = value; }
-        }
+        public  PerformanceCounterCategoryInfo[]    PerformanceCounterCategoryInfos { get; set; }
+        public  EventLogInfo[]                      EventLogInfos                   { get; set; }
 
         public static string DefaultEventLogSource
         {
@@ -44,8 +31,7 @@ namespace Terrarium.Server
             InstallerInfo info = GetInstallerInfo();
             string source = DefaultEventLogSource;
 
-            foreach (EventLogInfo eventLogInfo in info.EventLogInfos)
-            {
+            foreach (EventLogInfo eventLogInfo in info.EventLogInfos) {
                 if (eventLogInfo.ID.ToLower() != id.ToLower()) continue;
                 source = eventLogInfo.Source;
                 break;
@@ -60,10 +46,8 @@ namespace Terrarium.Server
         {
             InstallerInfo info = GetInstallerInfo();
 
-            foreach (PerformanceCounterCategoryInfo categoryInfo in info.PerformanceCounterCategoryInfos)
-            {
-                foreach (CounterCreationDataInfo ccd in categoryInfo.CounterCreationDataInfos)
-                {
+            foreach (PerformanceCounterCategoryInfo categoryInfo in info.PerformanceCounterCategoryInfos) {
+                foreach (CounterCreationDataInfo ccd in categoryInfo.CounterCreationDataInfos) {
                     if (ccd.ID.ToLower() == id.ToLower())
                         return new PerformanceCounter(categoryInfo.CategoryName, ccd.CounterName, ccd.InstanceName, false);
                 }
@@ -77,12 +61,9 @@ namespace Terrarium.Server
             if (installerInfo != null)
                 return installerInfo;
 
-            XmlSerializer serializer = new XmlSerializer(typeof (InstallerInfo));
-            using (
-                TextReader reader =
-                    new StreamReader(
-                        Assembly.GetExecutingAssembly().GetManifestResourceStream("InstallerItems.install.xml")))
-            {
+            XmlSerializer serializer = new XmlSerializer(typeof(InstallerInfo));
+            using (TextReader reader = new StreamReader(Assembly.GetExecutingAssembly()
+                                                                .GetManifestResourceStream("InstallerItems.install.xml"))) {
                 installerInfo = (InstallerInfo) serializer.Deserialize(reader);
             }
 

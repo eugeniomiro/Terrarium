@@ -125,19 +125,14 @@ namespace Terrarium.Tools
             {
                 try
                 {
-                    using (
-                        var logFileStream = File.Open("logfile.txt", FileMode.OpenOrCreate, FileAccess.Write,
-                                                             FileShare.ReadWrite))
+                    using (var logFileStream = File.Open("logfile.txt", FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
                     {
                         logFileStream.Seek(0, SeekOrigin.End);
-                        var logFile = new StreamWriter(logFileStream);
-                        logFile.WriteLine(message);
-                        logFile.Close();
+                        using(var logFile = new StreamWriter(logFileStream))
+                            logFile.WriteLine(message);
                     }
                 }
-                catch
-                {
-                }
+                catch { }
             }
 
             _traceBuilder.Insert(0, message);

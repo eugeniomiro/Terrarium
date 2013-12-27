@@ -8,32 +8,22 @@ namespace Terrarium.Server
 {
     public class EventLogInfo
     {
-        private string id = "";
-        private string source = "";
-
         public EventLogInfo()
         {
+            ID = "";
+            Source = "";
         }
 
-        public EventLogInfo(string source)
+        public EventLogInfo(string source) 
+            : this()
         {
-            this.source = source;
+            source = source;
         }
 
         [XmlAttribute("source")]
-        public string Source
-        {
-            get { return source; }
-
-            set { source = value; }
-        }
+        public string Source { get; set; }
 
         [XmlAttribute("id")]
-        public string ID
-        {
-            get { return id; }
-
-            set { id = value; }
-        }
+        public string ID { get; set; }
     }
 }

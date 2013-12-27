@@ -13,6 +13,7 @@
     </AssemblyKeyContainerName>
     <AssemblyName>Renderer</AssemblyName>
     <AssemblyOriginatorKeyFile>Renderer.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Renderer.snk</AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -25,6 +26,7 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
@@ -185,6 +187,17 @@
     <Compile Include="Classes\Engine\DirectX9GraphicsEngine.cs" />
     <Compile Include="Classes\Engine\GraphicsEngine.cs" />
     <Compile Include="Classes\Engine\IGraphicsEngine.cs" />
+    <Compile Include="Classes\DirectX\DirectX7GraphicsEngine.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\Engine\BltFlags.cs" />
+    <Compile Include="Classes\Engine\ColorKey.cs" />
+    <Compile Include="Classes\Engine\BltFastFlags.cs" />
+    <Compile Include="Classes\Engine\DirectX10GraphicsEngine.cs" />
+    <Compile Include="Classes\Engine\DirectX9GraphicsEngine.cs" />
+    <Compile Include="Classes\Engine\GraphicsEngine.cs" />
+    <Compile Include="Classes\Engine\IGraphicsEngine.cs" />
+    <Compile Include="Classes\Engine\IGraphicsSurface.cs" />
     <Compile Include="Classes\Engine\ManagedDirectXGraphicsEngine.cs" />
     <Compile Include="Classes\Engine\XnaGraphicsEngine.cs" />
     <Compile Include="Classes\HeightMap.cs">
@@ -203,6 +216,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\TerrariumDirectDrawGameView.cs">
+    <Compile Include="Classes\TerrariumGameView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\TerrariumSpriteSurface.cs">
@@ -228,6 +242,9 @@
       <Link>development.snk</Link>
     </None>
     <None Include="Renderer.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Renderer.snk" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

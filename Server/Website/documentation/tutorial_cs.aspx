@@ -679,7 +679,7 @@ animal in the game. </p>
 <p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal>In this exercise, you will create a simple Herbivore Animal
-in C#. You will use Microsoft Visual Studio .NET 2003 to create, compile, and
+in C#. You will use Microsoft Visual Studio 2012/2013 create, compile, and
 run this lab. </p>
 
 <p class=MsoNormal>&nbsp;</p>
@@ -699,17 +699,19 @@ Animal project in Visual Studio</a> </h3>
 <p class=MsoNormal style='margin-left:45.0pt;text-indent:-9.0pt'><span
 style='font-size:10.0pt;font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span>Click <b>Start</b>-&gt;<b>All</b> <b>Programs</b>-&gt;<b>Microsoft</b>
-<b>Visual</b> <b>Studio</b> <b>.NET 2003</b>-&gt;<b>Microsoft</b> <b>Visual</b>
-<b>Studio .NET 2003</b></p>
+<b>Visual</b> <b>Studio</b> <b>2012/2013</b>-&gt;<b>Microsoft</b> <b>Visual</b>
+<b>Studio 2012/2013</b></p>
 
 <p class=MsoNormal style='margin-left:45.0pt;text-indent:-9.0pt'><span
 style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span>Click <b>File-&gt;New-&gt;Project</b> </p>
-
+    
+    <!-- Visual Studio 2012/2013 interface is different  -->
 <p class=MsoNormal style='margin-left:45.0pt;text-indent:-9.0pt'><span
 style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span>In the Project Types pane, click <b>Visual C# Projects</b> </p>
 
+    <!-- This template is not created, Issue #17  -->
 <p class=MsoNormal style='margin-left:45.0pt;text-indent:-9.0pt'><span
 style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 </span></span>In the Templates pane, click <b>Terrarium Animal</b> </p>
@@ -1338,9 +1340,9 @@ in Exercise 1 (Simple Herbivore)</a> </h3>
 
 <ul style='margin-top:0in' type=disc>
  <li class=MsoNormal>Click <b>Start</b>-&gt;<b>All</b> <b>Programs</b>-&gt;<b>Microsoft</b>
-     <b>Visual</b> <b>Studio</b> <b>.NET 2003</b>-&gt;<b>Microsoft</b> <b>Visual</b>
-     <b>Studio</b>  <b>.NET 2003</b></li>
- <li class=MsoNormal>Select <b>File</b> | <b>Open</b> | <b>Project</b>.&nbsp;
+     <b>Visual</b> <b>Studio</b> <b>2012/2013 </b>-&gt;<b>Microsoft</b> <b>Visual</b>
+     <b>Studio</b> <b>2012/2013</b></li>
+ <li class=MsoNormal>Select <b>File</b> | <b>Open</b> | <b>Project/Solution</b>.&nbsp;
      This will open the standard file open dialogue. </li>
  <li class=MsoNormal>Browse to the folder where you saved the project in
      Exercise 1. </li>
@@ -1534,12 +1536,12 @@ in Exercise 1 (Simple Herbivore)</a> </h3>
 <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
 style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>Click <b>Start</b>-&gt;<b>All</b> <b>Programs</b>-&gt;<b>Microsoft</b>
-<b>Visual</b> <b>Studio</b> <b>.NET 2003</b>-&gt;<b>Microsoft</b> <b>Visual</b>
-<b>Studio</b>  <b>.NET 2003</b></p>
+     <b>Visual</b> <b>Studio</b> <b>2012/2013 </b>-&gt;<b>Microsoft</b> <b>Visual</b>
+     <b>Studio</b> <b>2012/2013</b></p>
 
 <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span
 style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Select <b>File</b> | <b>Open</b> | <b>Project</b>.&nbsp; This
+</span></span>Select <b>File</b> | <b>Open</b> | <b>Project/Solution</b>.&nbsp; This
 will open the standard file open dialogue. </p>
 
 <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'><span

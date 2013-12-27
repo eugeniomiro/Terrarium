@@ -3,52 +3,49 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.Windows.Forms;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Drawing.Design;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Terrarium.Forms
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	[ DefaultProperty( "Text") ]
-	public class GlassTitleBar : UserControl
+    /// <summary>
+    /// 
+    /// </summary>
+    [ DefaultProperty( "Text") ]
+    public class GlassTitleBar : UserControl
     {
-		private System.Windows.Forms.Panel panel1;
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		protected Terrarium.Glass.GlassButton closeButton;
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		protected Terrarium.Glass.GlassButton maximizeButton;
-		
-		/// <summary>
-		/// 
-		/// </summary>
+        private System.Windows.Forms.Panel panel1;
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        protected Terrarium.Glass.GlassButton closeButton;
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        protected Terrarium.Glass.GlassButton maximizeButton;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         protected Terrarium.Glass.GlassButton minimizeButton;
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public event EventHandler	CloseClicked;
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		public event EventHandler	MaximizeClicked;
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		public event EventHandler	MinimizeClicked;
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler	CloseClicked;
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler	MaximizeClicked;
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler	MinimizeClicked;
 
         /// <summary>
         /// 
@@ -56,35 +53,35 @@ namespace Terrarium.Forms
         public event EventHandler BugClicked;
 
 
-		/// <summary>
-		///  Used to store dragging information
-		/// </summary>
-		private bool bDragging = false;
-		/// <summary>
-		///  Used to determine the mouse down origin
-		/// </summary>
-		private Point mouseDown;
-		private Terrarium.Glass.GlassPanel backgroundPanel;
+        /// <summary>
+        ///  Used to store dragging information
+        /// </summary>
+        private bool bDragging = false;
+        /// <summary>
+        ///  Used to determine the mouse down origin
+        /// </summary>
+        private Point mouseDown;
+        private Terrarium.Glass.GlassPanel backgroundPanel;
         private Terrarium.Glass.GlassButton bugButton;
         private Panel imagePanel;
         private PictureBox titleBarImage;
         private Terrarium.Glass.GlassLabel titleBarTitle;
-		/// <summary>
-		///  Initialized during construction to the parentForm if one exists
-		/// </summary>
-		private Form parentForm;
+        /// <summary>
+        ///  Initialized during construction to the parentForm if one exists
+        /// </summary>
+        private Form parentForm;
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public GlassTitleBar()
-		{
-			InitializeComponent();
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        public GlassTitleBar()
+        {
+            InitializeComponent();
+        }
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlassTitleBar));
             this.backgroundPanel = new Terrarium.Glass.GlassPanel();
             this.titleBarTitle = new Terrarium.Glass.GlassLabel();
@@ -308,55 +305,55 @@ namespace Terrarium.Forms
         }
 
         private void closeButton_Click(object sender, System.EventArgs e)
-		{
-			this.OnCloseClicked( e );
-		}
+        {
+            this.OnCloseClicked( e );
+        }
 
-		private void maximizeButton_Click(object sender, System.EventArgs e)
-		{
-			this.OnMaximizeClicked( e );
-		}
+        private void maximizeButton_Click(object sender, System.EventArgs e)
+        {
+            this.OnMaximizeClicked( e );
+        }
 
-		private void minimizeButton_Click(object sender, System.EventArgs e)
-		{
-			this.OnMinimizeClicked( e );
-		}
+        private void minimizeButton_Click(object sender, System.EventArgs e)
+        {
+            this.OnMinimizeClicked( e );
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="args"></param>
-		protected virtual void OnCloseClicked( EventArgs args )
-		{
-			if ( this.CloseClicked != null )
-			{
-				this.CloseClicked( this, args );
-			}
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        protected virtual void OnCloseClicked( EventArgs args )
+        {
+            if ( this.CloseClicked != null )
+            {
+                this.CloseClicked( this, args );
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="args"></param>
-		protected virtual void OnMaximizeClicked( EventArgs args )
-		{
-			if ( this.MaximizeClicked != null )
-			{
-				this.MaximizeClicked( this, args );
-			}
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        protected virtual void OnMaximizeClicked( EventArgs args )
+        {
+            if ( this.MaximizeClicked != null )
+            {
+                this.MaximizeClicked( this, args );
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="args"></param>
-		protected virtual void OnMinimizeClicked( EventArgs args )
-		{
-			if ( this.MinimizeClicked != null )
-			{
-				this.MinimizeClicked( this, args );
-			}
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        protected virtual void OnMinimizeClicked( EventArgs args )
+        {
+            if ( this.MinimizeClicked != null )
+            {
+                this.MinimizeClicked( this, args );
+            }
+        }
 
         /// <summary>
         /// 
@@ -370,86 +367,86 @@ namespace Terrarium.Forms
             }
         }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public Image Image
-		{
-			get
-			{
-				return this.titleBarImage.Image;
-			}
-			set
-			{
-				this.titleBarImage.Image = value;
-			}
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        public Image Image
+        {
+            get
+            {
+                return this.titleBarImage.Image;
+            }
+            set
+            {
+                this.titleBarImage.Image = value;
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Title
-		{
-			get
-			{
-				return this.titleBarTitle.Text;
-			}
-			set
-			{
-				this.titleBarTitle.Text = value;
-			}
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Title
+        {
+            get
+            {
+                return this.titleBarTitle.Text;
+            }
+            set
+            {
+                this.titleBarTitle.Text = value;
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		[ DefaultValue(true) ]
-		[ DesignerSerializationVisibility( DesignerSerializationVisibility.Content ) ]
-		public bool ShowCloseButton
-		{
-			get
-			{
-				return this.closeButton.Visible;
-			}
-			set
-			{
-				this.closeButton.Visible = value;
-			}
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        [ DefaultValue(true) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Content ) ]
+        public bool ShowCloseButton
+        {
+            get
+            {
+                return this.closeButton.Visible;
+            }
+            set
+            {
+                this.closeButton.Visible = value;
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		[ DefaultValue(true) ]
-		[ DesignerSerializationVisibility( DesignerSerializationVisibility.Content ) ]
-		public bool ShowMaximizeButton
-		{
-			get
-			{
-				return this.maximizeButton.Visible;
-			}
-			set
-			{
-				this.maximizeButton.Visible = value;
-			}
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        [ DefaultValue(true) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Content ) ]
+        public bool ShowMaximizeButton
+        {
+            get
+            {
+                return this.maximizeButton.Visible;
+            }
+            set
+            {
+                this.maximizeButton.Visible = value;
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		[ DefaultValue(true) ]
-		[ DesignerSerializationVisibility( DesignerSerializationVisibility.Content ) ]
-		public bool ShowMinimizeButton
-		{
-			get
-			{
-				return this.minimizeButton.Visible;
-			}
-			set
-			{
-				this.minimizeButton.Visible = value;
-			}
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        [ DefaultValue(true) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Content ) ]
+        public bool ShowMinimizeButton
+        {
+            get
+            {
+                return this.minimizeButton.Visible;
+            }
+            set
+            {
+                this.minimizeButton.Visible = value;
+            }
+        }
 
         /// <summary>
         /// 
@@ -468,73 +465,73 @@ namespace Terrarium.Forms
             }
         }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnParentChanged(EventArgs e)
-		{
-			base.OnParentChanged (e);
-			
-			Control c = this;
-			while((c = c.Parent) != null && !(c is System.Windows.Forms.Form))
-			{
-			}
-			if ( c is System.Windows.Forms.Form )
-			{
-				parentForm = c as System.Windows.Forms.Form;
-			}		
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged (e);
+            
+            Control c = this;
+            while((c = c.Parent) != null && !(c is System.Windows.Forms.Form))
+            {
+            }
+            if ( c is System.Windows.Forms.Form )
+            {
+                parentForm = c as System.Windows.Forms.Form;
+            }		
+        }
 
-		private void backgroundPanel_MouseMove(object sender, System.Windows.Forms.MouseEventArgs me)
-		{        
-			if (bDragging)
-			{
-				if ( this.parentForm != null )
-				{
-					this.Cursor = Cursors.Hand;
-					this.parentForm.Location = new Point((me.X - mouseDown.X) + this.parentForm.Location.X, (me.Y - mouseDown.Y) + this.parentForm.Location.Y);
-				}
-			}
-		}
+        private void backgroundPanel_MouseMove(object sender, System.Windows.Forms.MouseEventArgs me)
+        {        
+            if (bDragging)
+            {
+                if ( this.parentForm != null )
+                {
+                    this.Cursor = Cursors.Hand;
+                    this.parentForm.Location = new Point((me.X - mouseDown.X) + this.parentForm.Location.X, (me.Y - mouseDown.Y) + this.parentForm.Location.Y);
+                }
+            }
+        }
 
-		private void backgroundPanel_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if ( sender is Control )
-			{
-				// We handle the label and icon mouse movements in this handler as well, so
-				// we need to act against the sender, rather than a specific control
-				((Control)sender).Capture = false;
-				bDragging = false;
-			}
-		}
+        private void backgroundPanel_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if ( sender is Control )
+            {
+                // We handle the label and icon mouse movements in this handler as well, so
+                // we need to act against the sender, rather than a specific control
+                ((Control)sender).Capture = false;
+                bDragging = false;
+            }
+        }
 
-		private void backgroundPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs me)
-		{
-			if ( sender is Control )
-			{
-				// We handle the label and icon mouse movements in this handler as well, so
-				// we need to act against the sender, rather than a specific control
-				((Control)sender).Capture = true;
-				this.bDragging = true;
-				this.mouseDown = new Point( me.X,me.Y );
-			}
-		}
+        private void backgroundPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs me)
+        {
+            if ( sender is Control )
+            {
+                // We handle the label and icon mouse movements in this handler as well, so
+                // we need to act against the sender, rather than a specific control
+                ((Control)sender).Capture = true;
+                this.bDragging = true;
+                this.mouseDown = new Point( me.X,me.Y );
+            }
+        }
 
-		private void backgroundPanel_MouseLeave(object sender, System.EventArgs e)
-		{
-		}
+        private void backgroundPanel_MouseLeave(object sender, System.EventArgs e)
+        {
+        }
 
-		// Bubble the double click so that the parent could maximize, if they choose
-		private void backgroundPanel_DoubleClick(object sender, System.EventArgs e)
-		{
-			this.OnDoubleClick(e);
-		}
+        // Bubble the double click so that the parent could maximize, if they choose
+        private void backgroundPanel_DoubleClick(object sender, System.EventArgs e)
+        {
+            this.OnDoubleClick(e);
+        }
 
         private void glassButton1_Click(object sender, EventArgs e)
         {
             this.OnBugClicked(e);
         }
 
-	}
+    }
 }

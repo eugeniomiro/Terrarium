@@ -25,6 +25,7 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>

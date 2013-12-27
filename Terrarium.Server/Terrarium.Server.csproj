@@ -39,20 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IBugService.cs" />
-    <Compile Include="Abstract\IMessaging.cs" />
     <Compile Include="Abstract\IPeerDiscoveryService.cs" />
-    <Compile Include="Abstract\IReportingService.cs" />
-    <Compile Include="Abstract\ISpeciesService.cs" />
-    <Compile Include="Abstract\IUsageService.cs" />
-    <Compile Include="Abstract\IWatsonService.cs" />
-    <Compile Include="BugReporting\Bug.cs" />
     <Compile Include="OrganismType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterPeerResult.cs" />
-    <Compile Include="ReportPopulation\ReturnCode.cs" />
-    <Compile Include="Species\SpeciesServiceStatus.cs" />
-    <Compile Include="UsageReporting\UsageData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,931 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Configuration</name>
+    </assembly>
+    <members>
+        <member name="T:Terrarium.Configuration.CachedBooleanConfig">
+            <summary>
+             Facilitates the creation of boolean configuration
+             variables using the XmlConfig class.  Since all
+             values are retrieved as strings, the values are
+             first retrieved, then cached, and finally parsed
+             into boolean variables.  When values can't be
+             parsed the class allows a default value to be set.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.CachedBooleanConfig._booleanName">
+            <summary>
+             Field representing the name of the setting in the config file
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.CachedBooleanConfig._booleanString">
+            <summary>
+             Field representing the string or config representation of the setting
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.CachedBooleanConfig._booleanValue">
+            <summary>
+             Field representing the boolean value of the setting
+            </summary>
+        </member>
+        <member name="M:Terrarium.Configuration.CachedBooleanConfig.#ctor(System.String)">
+            <summary>
+             Initialize a new CachedBooleanConfig given the name of the configuration
+             setting and the initial default boolean value of false.
+            </summary>
+            <param name="name">Name of config file setting.</param>
+        </member>
+        <member name="M:Terrarium.Configuration.CachedBooleanConfig.#ctor(System.String,System.Boolean)">
+            <summary>
+             Initialize a new CachedBooleanConfig given teh name fo the configuration
+             setting and an initial default value.
+            </summary>
+            <param name="name">Name of the config file setting.</param>
+            <param name="defaultValue">Initial default value.</param>
+        </member>
+        <member name="M:Terrarium.Configuration.CachedBooleanConfig.Getter">
+            <summary>
+             Used to retrieve the value of this boolean config setting.
+             If the value has not been processed before then it is 
+             retrieved and processed, else it is returned from cache.
+            </summary>
+            <returns>True/False value of the current setting.</returns>
+        </member>
+        <member name="M:Terrarium.Configuration.CachedBooleanConfig.Setter(System.Boolean)">
+            <summary>
+             Used to set the value of a setting.  This method will create
+             the setting if it doesn't exist, or update it otherwise.
+            </summary>
+            <param name="value">New True/False value for the setting.</param>
+        </member>
+        <member name="T:Terrarium.Configuration.CountrySettings">
+            <summary>
+             This class is used to enumerate and validate
+             countries/regions.  Note: the list in this
+             class may not be 100% complete or accurate.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.CountrySettings.Countries">
+            <summary>
+             Provides direct access to the country/region array listing
+            </summary>
+        </member>
+        <member name="M:Terrarium.Configuration.CountrySettings.Validate(System.String)">
+            <summary>
+             Validates a string value against the array
+             of countries/regions.  Note this looks for a direct match
+             and doesn't match variations or abbreviations,
+            </summary>
+            <param name="country">A string value to match against the list of countries/regions</param>
+            <returns>True if the string matches one of the countries/regions in the list, false otherwise.</returns>
+        </member>
+        <member name="T:Terrarium.Configuration.GameConfig">
+            <summary>
+             Centralized class file giving strongly typed
+             access to all user configuration file values.
+             This class primarily encapsulates a series
+             of string and boolean values, but can be extended
+             for more complex values, like the State and
+             Country classes.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._backgroundGrid">
+            <summary>
+             Field representing the background grid rendering state
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._boundingBoxes">
+            <summary>
+             Field representing the bounding box rendering state
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._demoMode">
+            <summary>
+             Field representing the Demo Mode state.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._destinationLines">
+            <summary>
+             Field representing the destination lines rendering state
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._discoveryOverride">
+            <summary>
+             Field representing the use of the discovery override for the network engine
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._drawScreen">
+            <summary>
+             Field representing the screen drawing rendering state
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._enableNat">
+            <summary>
+             Field representing the use of a NAT device for the network engine
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._largeGraphicsMode">
+            <summary>
+             Field representing the large graphics modes rendering state
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._screenSaverSpanMonitors">
+            <summary>
+            Field that represents whether to start in fullscreen (maximized) mode.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._skipVersionCheck">
+            <summary>
+            Allows a client to skip checking the server for disabled versions
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._startFullscreen">
+            <summary>
+            Field that represents whether to start in fullscreen (maximized) mode.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._useSimpleScreenSaver">
+            <summary>
+            Field representing whether to use the simple screen saver
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._applicationDirectory">
+            <summary>
+            Field representing the location of application files.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._blockedVersionString">
+            <summary>
+             Field representing the version string of a blocked terrarium
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._localIPAddress">
+            <summary>
+             Field representing the local IP address to use for the network engine
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._loggingMode">
+            <summary>
+             Field representing the current trace logging mode for the Hosting code
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._mediaDirectory">
+            <summary>
+             Field representing the location of media files for the graphics engine
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._peerList">
+            <summary>
+             Field representing a comma separated list of peers for use with
+             discovery override.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._styleName">
+            <summary>
+            Field representing the Metal Style that Terrarium should use
+            for the custom controls.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._userCountry">
+            <summary>
+             Field representing the user's country/region as set by the peer properties
+             dialogue.  This value is sent during teleportation.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._userEmail">
+            <summary>
+             Field representing the user's email address.  This value is used
+             when sending error reports to the Terrarium server and is useful
+             in contacting the user for additional details or a repro case.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._userState">
+            <summary>
+             Field representing the user's state as set by the peer properties
+             dialogue.  This value is sent during teleportation.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.GameConfig._webRoot">
+            <summary>
+             Field representing the Terrarium server to connect to for peer
+             discovery and reporting.  This value is also used to create the
+             bin directory for storing game state.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Configuration.GameConfig.GetSetting(System.String)">
+            <summary>
+             Retrieves a setting from the user configuration
+             file based on a setting name.  This method only
+             retrieves the text of the element in string format.
+            </summary>
+            <param name="settingName">Name of the setting to retrieve.</param>
+            <returns>Returns the value of the setting on success or an empty string if it doesn't.</returns>
+        </member>
+        <member name="M:Terrarium.Configuration.GameConfig.SetSetting(System.String,System.String)">
+            <summary>
+             Sets a user configuration file value given the setting name
+             and the new value in string format.  This method will write
+             new values, or update existing values.
+            </summary>
+            <param name="settingName">Name of the setting to create or update.</param>
+            <param name="settingValue">Value for the setting.</param>
+        </member>
+        <member name="M:Terrarium.Configuration.GameConfig.WriteConfigFileFromResources(System.String)">
+            <summary>
+             This is a *safe* method for writing out a static configuration
+             file from the embedded configuration resource file.  We have to
+             have a template to build from.  We could use the GameConfig to
+             build one, but this allows us to pick and choose which options
+             will be in the stock config without complicated code.
+            </summary>
+            <param name="configFile">This should be a pointer to UserSettingsLocation</param>
+        </member>
+        <member name="M:Terrarium.Configuration.GameConfig.GetUserSettings">
+            <summary>
+             Gets the current user configuration settings in the form
+             of an XmlDocument file.
+            </summary>
+            <returns>An XmlDocument initalized with settings on success, null otherwise.</returns>
+        </member>
+        <member name="M:Terrarium.Configuration.GameConfig.CheckConfigFile">
+            <summary>
+             Checks the user configuration file for accessibility by
+             attempting to retrive the user settings.  If the file doesn't
+             exist then a general exception is found and caught by GetUserSettings.
+             Other exceptions will get passed back to the callee.  This is
+             primarily used to detect permissions errors with respect to the
+             config file.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.ShowErrors">
+            <summary>
+             Determines if the Terrarium Client should give a visible
+             cue when errors occur.  By default errors are always shown
+             except when in Demo Mode.  Demo Mode is useful for presentations
+             where an error dialogue might interrupt the user experience.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.AllowUpdates">
+            <summary>
+             Determines whether the Terrarium Client should accept updates
+             from the update server.  By default updates are allowed unless
+             the client is in Demo Mode.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.UseLargeGraphics">
+            <summary>
+             Determines whether the Terrarium Client graphics engine should
+             use large graphics for the rendering engine.  Large graphics are
+             full size 48x48 sprites in most skins, or the largest available
+             sprite size if 48x48 sprites don't exist.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.DemoMode">
+            <summary>
+             Determines whether or not the Terrarium Client is in demonstration
+             mode.  Certain features are disabled when the client is in demonstration
+             mode while other features are enabled.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.LoggingMode">
+            <summary>
+             Retrieves the current logging mode.  Logging modes are used to
+             determine how creature trace output is handled.  The default
+             trace logging allows for trace output to be placed on the
+             debugger output stream.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.DrawScreen">
+            <summary>
+             Retrieves the current graphics drawing mode.  Graphics can be
+             turned on and off to limit processor usage by the graphics
+             engine.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.DestinationLines">
+            <summary>
+             Determines if creature destination lines should be drawn
+             through the graphics engine.  Destination lines use more
+             CPU but are useful for movement debugging.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.BackgroundGrid">
+            <summary>
+             Determines if a special background is painted using the
+             rendering engine that contains a grid overlay identical
+             to the Terrarium Engine's cell grid.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.BoundingBoxes">
+            <summary>
+             Determines if cell boundary bounding boxes are drawn
+             for creatures.  Bounding boxes use more CPU but are
+             useful for movement debugging.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.EnableNat">
+            <summary>
+             Determines if features of the Network Engine are bypassed
+             in order to enable NAT devices.  This turns off several
+             checks that would normally stop the Terrarium Client from
+             running.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.UseConfigForDiscovery">
+            <summary>
+             Specifies whether the config file or the Terrarium
+             Server web service should be used for peer discovery.
+             This option is used in conjunction with PeerList.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.BlockedVersion">
+            <summary>
+             Specifies a blocked version number.  A Terrarium
+             Deployment Server can be used to shut-down potentially
+             dangerous clients.  The user will have to remove this
+             option from the config file or upgrade their client to
+             continue playing.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.LocalIPAddress">
+            <summary>
+             Specifies the Local IP Address of this host rather than retrieving
+             the value from the network adapter list.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.PeerList">
+            <summary>
+             Specifies a comma separated value listing of peer IP
+             addresses to connect to in the absence of a peer
+             discovery service.  This is enabled whenever the
+             discovery override option is enabled.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.WebRoot">
+            <summary>
+             Used by the Terrarium Client to build the Web Service
+             url's for connecting with a Terrarium server for discovery
+             and reporting.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.StyleName">
+            <summary>
+            Contains the name of the Metal Style file to load and set
+            as the active style
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.MediaDirectory">
+            <summary>
+             Creates the location used to retrieve the media files for
+             the graphics engine.  The value is generated using the
+             location of the currently executing assembly.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.ApplicationDirectory">
+            <summary>
+            Returns the full path to the application.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.CpuThrottle">
+            <summary>
+             Retrieves a special CPU Throttle value that controls how many
+             creatures can run inside of a Terrarium  Values less than 100
+             will operate the Terrarium with less creatures than normal,
+             while values greater than 100 will cause more creatures than
+             normal to operate.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.UserCountry">
+            <summary>
+             Retrieves the current country/region of the user.  This value is
+             set by the user by using the Peer Properties dialogue.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.UserState">
+            <summary>
+             Retrieves the current state of the user if the user is located
+             within the United States.  This value is set by the Peer Properties
+             dialogue.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.UserEmail">
+            <summary>
+             Retrieves the current user's email address as set in the
+             Peer Properties dialogue.  This value is sent in debug reports
+             to the server so that the user can be contacted.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.RelaunchCommandLine">
+            <summary>
+             A special value used to relaunch the terrarium with a given
+             command line.  This is used by the auto-update service and
+             when the user switches between Terrarium Mode/EcoSystem Mode.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.UseSimpleScreenSaver">
+            <summary>
+            Allows the user to specify that when running in screen saver
+            mode, to just use the "simple" screen saver rather than
+            actually running the Terrarium client.  No UI to access this,
+            user would hand edit the userconfig.xml
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.StartFullscreen">
+            <summary>
+            Allows the user to specify whether Terrarium should start
+            in fullscreen mode.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.ScreenSaverSpanMonitors">
+            <summary>
+            Allows the screen saver to span multiple monitors.  Should be considered
+            experimental as we make no guarantees it will work depending on video
+            memory, etc.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.SkipVersionCheck">
+            <summary>
+            Allows the client to skip checking the server for disabled versions.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.GameConfigDirectory">
+            <summary>
+             This property is used to retrieve the location of the
+             game settings file to make it more visible to the user.
+             NOTE: this is used to store user config and skin settings.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.UserSettingsLocation">
+            <summary>
+             This property is used to retrieve the location of the user
+             settings file.  The value is based on the location of the
+             currently executing assembly, generally the Terrarium client.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Configuration.GameConfig.UserSettingsExists">
+            <summary>
+             This property is used to find if the User Settings file
+             exists.  If it doesn't, then write it out of our cached
+             resource.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Configuration.StateSettings">
+            <summary>
+             This class is used to enumerate and validate
+             the list of 50 US States.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Configuration.StateSettings.States">
+            <summary>
+             Provides direct access to the state array listing
+            </summary>
+        </member>
+        <member name="M:Terrarium.Configuration.StateSettings.Validate(System.String)">
+            <summary>
+             Validates a string value against the array
+             of states.  Note this looks for a direct match
+             and doesn't match variations or two character
+             state abbreviations
+            </summary>
+            <param name="state">A string value to match against the list of states</param>
+            <returns>True if the string matches one of the 50 states, false otherwise.</returns>
+        </member>
+        <member name="T:Terrarium.Tools.ErrorLog">
+            <summary>
+             Centralized logging class for loggin handle/unhandled exceptions.  This class
+             caches various calls in order to generate a dataset when a fatal error occurs.
+             This dataset is then formatted and sent to the Terrarium Watson Service.
+            </summary>
+            <threadsafe />
+        </member>
+        <member name="F:Terrarium.Tools.ErrorLog._syncObject">
+            <summary>
+             A Mutex object used to make the ErrorLog class threadsafe and to synchronize
+             access to certain methods and resources.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.ErrorLog._machineName">
+            <summary>
+             The name of the machine the client is running on
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.ErrorLog.LogHandledException(System.Exception)">
+            <summary>
+             Log handled exceptions.  This can be used in order to review handled
+             exceptions to make sure things are happening correctly.
+            </summary>
+            <param name="e">Exception to handle</param>
+        </member>
+        <member name="M:Terrarium.Tools.ErrorLog.FormatException(System.Exception)">
+            <summary>
+             Formats and exception object.  Currently, only the SocketException
+             makes use fo the custom formatting logic.  Other formats can easily
+             be added.
+            </summary>
+            <param name="e">Exception to format</param>
+            <returns>A formatted exception string</returns>
+        </member>
+        <member name="M:Terrarium.Tools.ErrorLog.LogFailedAssertion(System.String,System.String)">
+            <summary>
+             Logs a failed assertion.  Any failed assertions launch the Watson
+             dialog which is then used to submit an error report to the Terrarium
+             Watson Service.
+            </summary>
+            <param name="message">Message for the assertion</param>
+            <param name="traces">A series of cached previous tracings</param>
+        </member>
+        <member name="M:Terrarium.Tools.ErrorLog.LogFailedAssertion(System.String)">
+            <summary>
+             Logs a failed assertion.  Any failed assertions launch the Watson
+             dialog which is then used to submit an error report to the Terrarium
+             Watson Service.
+            </summary>
+            <param name="message">Message for the assertion</param>
+        </member>
+        <member name="M:Terrarium.Tools.ErrorLog.CreateErrorLogDataSet(System.String,System.String)">
+            <summary>
+             Creates an error dataset to be reported to the Terrarium Watson Service.
+             Each dataset has information about the machine, the OS, the version of
+             the game, the type of log, and optionally some an email and user comment.
+            </summary>
+            <param name="logType">The type of log Assertion or Unhandled Exception generally.</param>
+            <param name="errorLog">The error log text, generally a compilation of the exception and previous tracings.</param>
+            <returns>A Watson Service DataSet that can be used in a web service call.</returns>
+        </member>
+        <member name="P:Terrarium.Tools.ErrorLog.MachineName">
+            <summary>
+             Used to set and retrieve the name of the machine the client is running
+             on.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Tools.Profiler">
+            <summary>
+             Encompasses the logic to profile the DirectDraw classes
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.Profiler._profileKeys">
+            <summary>
+             Contains named profiles
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.Profiler.#ctor">
+            <summary>
+             Creates a new DirectDrawProfiler and clears any
+             profiler settings by creating a new Hashtable.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.Profiler.ClearProfiler">
+            <summary>
+             Clears any profiler data.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.Profiler.Start(System.String)">
+            <summary>
+             Starts profiling the function or profile of the given name.
+            </summary>
+            <param name="functionName">Name of the function or profile to time.</param>
+        </member>
+        <member name="M:Terrarium.Tools.Profiler.End(System.String)">
+            <summary>
+             Ends the profiling of a given function or profile node.
+            </summary>
+            <param name="functionName">Name of the function or profile node to stop timing.</param>
+        </member>
+        <member name="P:Terrarium.Tools.Profiler.Item(System.String)">
+            <summary>
+             Default indexed property that gives access to nodes by
+             their key name.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Tools.Profiler.Nodes">
+            <summary>
+             Returns all nodes currently in the profiler.  This can be used
+             for generated node reports.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Tools.ProfilerNode">
+            <summary>
+             Represents an invidual function or profiler node
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.ProfilerNode._timeMonitor">
+            <summary>
+             Access to the high performance timers.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.ProfilerNode._isCounting">
+            <summary>
+             True if start has been called
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.ProfilerNode._lastTime">
+            <summary>
+             The amount of time consumed by the last call
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.ProfilerNode._runningTotal">
+            <summary>
+             The total amount of time consumed by all calls.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.ProfilerNode._samples">
+            <summary>
+             The number of times the node has been called.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.ProfilerNode.#ctor(System.String)">
+            <summary>
+             Creates a new node given an id.  Sets up the initial
+             TimeMonitor used to record high performance timings.
+            </summary>
+            <param name="id">ID for this node.</param>
+        </member>
+        <member name="M:Terrarium.Tools.ProfilerNode.Start">
+            <summary>
+             Start a timing session.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.ProfilerNode.End">
+            <summary>
+             End a timing session and update the running total, samples, and
+             last timing variables.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Tools.TerrariumTraceListener">
+            <summary>
+             The TerrariumTraceListener is responsible for stopping the
+             painting timer whenever an error or assertion occurs.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.TerrariumTraceListener.TraceBufferMaxLength">
+            <summary>
+             Maximum number of characters to store in the trace buffer.
+             A trace buffer can be built of multiple tracings and this
+             value is responsible for controlling truncation of the buffer.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.TerrariumTraceListener._defaultListener">
+            <summary>
+             Holds an instance of the default trace listener
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.TerrariumTraceListener._enableLogging">
+            <summary>
+             Enables logging traces to a debug text file
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.TerrariumTraceListener._traceBuilder">
+            <summary>
+             Builds a tracing string using a performance optimized string builder
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.TerrariumTraceListener._timerToStop">
+            <summary>
+             Holds an instance of the drawing timer so that it can be stopped
+             when an error or assertion occurs.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.#ctor">
+            <summary>
+             Creates a default TerrariumTraceListener with logging turned off
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.#ctor(System.Boolean)">
+            <summary>
+             Creates a TerrariumTraceListener with a custom value for logging.
+            </summary>
+            <param name="loggingFlag">If True logging is turned on, off otherwise</param>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.Fail(System.String)">
+            <summary>
+             Used for logging failure messages
+            </summary>
+            <param name="message">Message to log</param>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.Fail(System.String,System.String)">
+            <summary>
+             Used for logging failure messages, along with a detailed message
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="detailMessage">Detailed error message.</param>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.Write(System.String)">
+            <summary>
+             Used for logging standard messages
+            </summary>
+            <param name="message">Message to log.</param>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.Write(System.Object,System.String)">
+            <summary>
+             Used for logging categorized messages
+            </summary>
+            <param name="o">Object to log, ToString will be called.</param>
+            <param name="category">Message category.</param>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.Write(System.String,System.String)">
+            <summary>
+             Used for logging categorized messages
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="category">Message category.</param>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.Write(System.Object)">
+            <summary>
+             Used for logging standard messages
+            </summary>
+            <param name="o">Object to log, ToString will be called.</param>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.WriteLine(System.Object,System.String)">
+            <summary>
+             Used for categorized message logging
+            </summary>
+            <param name="o">Object to log, ToString will be called.</param>
+            <param name="category">Message category.</param>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.WriteLine(System.String,System.String)">
+            <summary>
+             Used for logging categorized messages
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="category">Message category.</param>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.WriteLine(System.Object)">
+            <summary>
+             Used for logging standard messages
+            </summary>
+            <param name="o">Object to log, ToString will be called.</param>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.WriteLine(System.String)">
+            <summary>
+             Used for logging standard messages
+            </summary>
+            <param name="message">Message to log.</param>
+        </member>
+        <member name="M:Terrarium.Tools.TerrariumTraceListener.showErrorDialog(System.String,System.String)">
+            <summary>
+             Creates and displays an error dialog if game errors are enabled.
+             If the dialog fails to show then the Application is exited.
+             If the user clicks the Cancel button the Applicaton is exited.
+            </summary>
+            <param name="message"></param>
+            <param name="stackTrace"></param>
+        </member>
+        <member name="P:Terrarium.Tools.TerrariumTraceListener.TimerToStop">
+            <summary>
+             Retreives or sets the current drawing timer.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Tools.TimeMonitor">
+            <summary>
+             This class provides in-direct access to the high
+             frequency performance counters for very accurate
+             timings.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.TimeMonitor.MicroSecondsPerSecond">
+            <summary>
+             The number of microseconds in a single second
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.TimeMonitor._apiOverHead">
+            <summary>
+             A value representing the overhead of calling the time monitor class
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.TimeMonitor._ticksPerSec">
+            <summary>
+             Number of ticks per second retrieved using QueryPerformanceFrequency
+            </summary>
+        </member>
+        <member name="F:Terrarium.Tools.TimeMonitor._startCounter">
+            <summary>
+             The starting value of the timer class, as set by a call to Start
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.TimeMonitor.#ctor">
+            <summary>
+             Initialize a new time monitor for computing small differences in time.
+             Only short timings should be made since thread switching can cause
+             abnormal values in the windows environment.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.TimeMonitor.GetCounterSeconds">
+            <summary>
+             Used to retrieve the number of seconds elapsed in this counter.
+             This should only be called after a call to Start.
+            </summary>
+            <returns>The amount of time elapsed in seconds.</returns>
+        </member>
+        <member name="M:Terrarium.Tools.TimeMonitor.Start">
+            <summary>
+             Starts the timing class by making a call to QueryPerformanceCounter
+             for the current time.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.TimeMonitor.EndGetMicroseconds">
+            <summary>
+             Used to retreive the number of microseconds elapsed in this counter.
+             This should only be called after a call to Start.  This method
+             subtracts out the overhead time of calling the Start and End methods.
+            </summary>
+            <returns>The number of elapsed microseconds</returns>
+        </member>
+        <member name="M:Terrarium.Tools.TimeMonitor.FreqToMicroSecs(System.Double)">
+            <summary>
+             Method used to turn an elapsed time in frequency counts into an elapsed
+             natural time.  This method also removes the overhead of calling the 
+             performance counter methods.
+            </summary>
+            <param name="ticks">The number of elapsed ticks</param>
+            <returns>The number of elapsed microseconds</returns>
+        </member>
+        <member name="M:Terrarium.Tools.TimeMonitor.QueryPerformanceFrequency(System.Double@)">
+            <summary>
+             Used to query the system timer frequency.  Returns counts per
+             second.  Ref parameter is a LARGE_INTEGER
+            </summary>
+        </member>
+        <member name="M:Terrarium.Tools.TimeMonitor.QueryPerformanceCounter(System.Double@)">
+            <summary>
+             Used to query the number of elapsed intervals in the system
+             timer.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Tools.TimeMonitor.IsStarted">
+            <summary>
+             Determines if the current time monitor has been started already.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Forms.ReportBug">
+            <summary>
+             A dialog used to report a user submitted bug.  This is similar
+             to the Watson dialog, but doesn't contain exception information.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Forms.ReportBug.errorInformation">
+            <summary>
+             The dataset holding the error information to send to the Watson
+             Service.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Forms.ReportBug.textChanged">
+            <summary>
+             If the text changes then a click on the Send button will submit
+             the text.  Otherwise it won't
+            </summary>
+        </member>
+        <member name="F:Terrarium.Forms.ReportBug.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Forms.ReportBug.#ctor">
+            <summary>
+             Constructor used to create a new User bug reporting form.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Forms.ReportBug.Dispose(System.Boolean)">
+            <summary>
+             Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Forms.ReportBug.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Forms.ReportBug.Send_Click(System.Object,System.EventArgs)">
+            <summary>
+             Send event handler.  This method sends the user bug dataset
+             to the Watson Web Service.
+            </summary>
+            <param name="sender">Button</param>
+            <param name="e">Null</param>
+        </member>
+        <member name="M:Terrarium.Forms.ReportBug.Form_Load(System.Object,System.EventArgs)">
+            <summary>
+             Create a default dataset on form load initialized to type "UserBug"
+             with no previous tracings.
+            </summary>
+            <param name="sender">Form</param>
+            <param name="e">Null</param>
+        </member>
+        <member name="M:Terrarium.Forms.ReportBug.DontSend_Click(System.Object,System.EventArgs)">
+            <summary>
+             DontSend event handler used to close the form down without sending
+             anything to the server.
+            </summary>
+            <param name="sender">Button</param>
+            <param name="e">Null</param>
+        </member>
+        <member name="M:Terrarium.Forms.ReportBug.Information_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+             Information event handler used to determine if the text is changed.
+            </summary>
+            <param name="sender">TextBox</param>
+            <param name="e">Null</param>
+        </member>
+    </members>
+</doc>

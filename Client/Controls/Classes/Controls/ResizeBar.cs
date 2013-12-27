@@ -3,47 +3,44 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.Windows.Forms;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Drawing.Design;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Terrarium.Forms
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	[ DefaultProperty( "Text") ]
-	public class ResizeBar : UserControl
-	{
-		/// <summary>
-		///  Used to store dragging information
-		/// </summary>
-		private bool bDragging = false;
-		/// <summary>
-		///  Used to determine the mouse down origin
-		/// </summary>
-		private Point mouseDown;
-		private PictureBox pictureBox1;
+    /// <summary>
+    /// 
+    /// </summary>
+    [ DefaultProperty( "Text") ]
+    public class ResizeBar : UserControl
+    {
+        /// <summary>
+        ///  Used to store dragging information
+        /// </summary>
+        private bool bDragging = false;
+        /// <summary>
+        ///  Used to determine the mouse down origin
+        /// </summary>
+        private Point mouseDown;
+        private PictureBox pictureBox1;
         private Terrarium.Glass.GlassPanel glassPanel1;
-		/// <summary>
-		///  Initialized during construction to the parentForm if one exists
-		/// </summary>
-		private Form parentForm;
+        /// <summary>
+        ///  Initialized during construction to the parentForm if one exists
+        /// </summary>
+        private Form parentForm;
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public ResizeBar()
-		{
-			InitializeComponent();
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        public ResizeBar()
+        {
+            InitializeComponent();
+        }
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResizeBar));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.glassPanel1 = new Terrarium.Glass.GlassPanel();
@@ -97,113 +94,113 @@ namespace Terrarium.Forms
             this.glassPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
-		}
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnParentChanged(EventArgs e)
-		{
-			base.OnParentChanged (e);
-			
-			Control c = this;
-			while((c = c.Parent) != null && !(c is System.Windows.Forms.Form))
-			{
-			}
-			if ( c is System.Windows.Forms.Form )
-			{
-				parentForm = c as System.Windows.Forms.Form;
-			}		
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged (e);
+            
+            Control c = this;
+            while((c = c.Parent) != null && !(c is System.Windows.Forms.Form))
+            {
+            }
+            if ( c is System.Windows.Forms.Form )
+            {
+                parentForm = c as System.Windows.Forms.Form;
+            }		
+        }
 
-		private Rectangle oldRectangle = Rectangle.Empty;
-		private void backgroundPanel_MouseMove(object sender, System.Windows.Forms.MouseEventArgs me)
-		{
-			Point p = new Point(me.X, me.Y);
-			Rectangle r = this.ClientRectangle;
+        private Rectangle oldRectangle = Rectangle.Empty;
+        private void backgroundPanel_MouseMove(object sender, System.Windows.Forms.MouseEventArgs me)
+        {
+            Point p = new Point(me.X, me.Y);
+            Rectangle r = this.ClientRectangle;
         
-			if (bDragging)
-			{
-				if ( this.parentForm != null )
-				{
-					this.Cursor = Cursors.Hand;
-					int width = this.parentForm.Size.Width;
-					int height = this.parentForm.Size.Height;
-					width += (me.X - mouseDown.X);
-					height += (me.Y - mouseDown.Y);
-					if ( oldRectangle != Rectangle.Empty )
-					{
-						ControlPaint.DrawReversibleFrame(oldRectangle, Color.Black, FrameStyle.Thick);
-						oldRectangle = Rectangle.Empty;
-					}
-					oldRectangle = new Rectangle(this.parentForm.Location, new Size(width, height));
-					if ( oldRectangle.Width < this.parentForm.MinimumSize.Width )
-					{
-						oldRectangle.Width = this.parentForm.MinimumSize.Width;
-					}
-					if ( oldRectangle.Height < this.parentForm.MinimumSize.Height )
-					{
-						oldRectangle.Height = this.parentForm.MinimumSize.Height;
-					}
+            if (bDragging)
+            {
+                if ( this.parentForm != null )
+                {
+                    this.Cursor = Cursors.Hand;
+                    int width = this.parentForm.Size.Width;
+                    int height = this.parentForm.Size.Height;
+                    width += (me.X - mouseDown.X);
+                    height += (me.Y - mouseDown.Y);
+                    if ( oldRectangle != Rectangle.Empty )
+                    {
+                        ControlPaint.DrawReversibleFrame(oldRectangle, Color.Black, FrameStyle.Thick);
+                        oldRectangle = Rectangle.Empty;
+                    }
+                    oldRectangle = new Rectangle(this.parentForm.Location, new Size(width, height));
+                    if ( oldRectangle.Width < this.parentForm.MinimumSize.Width )
+                    {
+                        oldRectangle.Width = this.parentForm.MinimumSize.Width;
+                    }
+                    if ( oldRectangle.Height < this.parentForm.MinimumSize.Height )
+                    {
+                        oldRectangle.Height = this.parentForm.MinimumSize.Height;
+                    }
 
-					ControlPaint.DrawReversibleFrame(oldRectangle, Color.Black, FrameStyle.Thick);
-				}
-			}
-		}
+                    ControlPaint.DrawReversibleFrame(oldRectangle, Color.Black, FrameStyle.Thick);
+                }
+            }
+        }
 
-		private void backgroundPanel_MouseUp(object sender, System.Windows.Forms.MouseEventArgs me)
-		{
-			Point p = new Point(me.X, me.Y);
-			Rectangle r = this.ClientRectangle;
+        private void backgroundPanel_MouseUp(object sender, System.Windows.Forms.MouseEventArgs me)
+        {
+            Point p = new Point(me.X, me.Y);
+            Rectangle r = this.ClientRectangle;
         
-			if (bDragging)
-			{
-				bDragging = false;
+            if (bDragging)
+            {
+                bDragging = false;
 
-				if ( oldRectangle != Rectangle.Empty )
-				{
-					ControlPaint.DrawReversibleFrame(oldRectangle, Color.Black, FrameStyle.Thick);
-					oldRectangle = Rectangle.Empty;
-				}
+                if ( oldRectangle != Rectangle.Empty )
+                {
+                    ControlPaint.DrawReversibleFrame(oldRectangle, Color.Black, FrameStyle.Thick);
+                    oldRectangle = Rectangle.Empty;
+                }
 
-				if ( this.parentForm != null )
-				{
-					this.Cursor = Cursors.Hand;
-					int width = this.parentForm.Size.Width;
-					int height = this.parentForm.Size.Height;
-					width += (me.X - mouseDown.X);
-					height += (me.Y - mouseDown.Y);
-					this.parentForm.Size = new Size( width, height );
-				}
-			}
+                if ( this.parentForm != null )
+                {
+                    this.Cursor = Cursors.Hand;
+                    int width = this.parentForm.Size.Width;
+                    int height = this.parentForm.Size.Height;
+                    width += (me.X - mouseDown.X);
+                    height += (me.Y - mouseDown.Y);
+                    this.parentForm.Size = new Size( width, height );
+                }
+            }
 
-			this.parentForm.Invalidate( true );
-			this.Capture = false;
-		}
+            this.parentForm.Invalidate( true );
+            this.Capture = false;
+        }
 
-		private void backgroundPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs me)
-		{
-			this.Capture = true;
-			this.bDragging = true;
-			this.mouseDown = new Point( me.X,me.Y );
-		}
+        private void backgroundPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs me)
+        {
+            this.Capture = true;
+            this.bDragging = true;
+            this.mouseDown = new Point( me.X,me.Y );
+        }
 
-		private void backgroundPanel_MouseLeave(object sender, System.EventArgs e)
-		{
-		}
+        private void backgroundPanel_MouseLeave(object sender, System.EventArgs e)
+        {
+        }
 
-		/// <summary>
-		///  Determine if the control is in the state of being
-		///  resized.  This can be used to optimize any invalidation
-		///  routines.
-		/// </summary>
-		public bool Dragging 
-		{
-			get
-			{
-				return this.bDragging;
-			}
-		}
-	}
+        /// <summary>
+        ///  Determine if the control is in the state of being
+        ///  resized.  This can be used to optimize any invalidation
+        ///  routines.
+        /// </summary>
+        public bool Dragging 
+        {
+            get
+            {
+                return this.bDragging;
+            }
+        }
+    }
 }

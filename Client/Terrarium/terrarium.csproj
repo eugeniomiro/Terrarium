@@ -10,6 +10,7 @@
     <ApplicationIcon>tericon32.ico</ApplicationIcon>
     <AssemblyName>Terrarium</AssemblyName>
     <AssemblyOriginatorKeyFile>Terrarium.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Terrarium.snk</AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -23,6 +24,7 @@
     </FileUpgradeFlags>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <GenerateManifests>true</GenerateManifests>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <FallbackCulture>en-US</FallbackCulture>
@@ -58,6 +60,8 @@
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -127,6 +131,9 @@
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine">
+      <HintPath>..\packages\CommandLineParser.1.9.71\lib\net35\CommandLine.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
       <HintPath>..\..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.dll</HintPath>
@@ -186,6 +193,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Renderer\Renderer.csproj">
       <Project>{228FD808-F488-426E-9015-F5557AD44A40}</Project>
+      <Project>{228fd808-f488-426e-9015-f5557ad44a40}</Project>
       <Name>Renderer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services\Services.csproj">
@@ -210,6 +218,7 @@
     <Compile Include="Classes\UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Classes\Options.cs" />
     <Compile Include="Classes\UI\PeerProperties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -422,6 +431,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Terrarium.pfx" />
+    <None Include="packages.config" />
+    <None Include="Terrarium.snk" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
@@ -431,4 +442,8 @@
     </PreBuildEvent>
     <PostBuildEvent>xcopy /iery "$(TargetDir)*.*" "$(SolutionDir)\Deploy"</PostBuildEvent>
   </PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

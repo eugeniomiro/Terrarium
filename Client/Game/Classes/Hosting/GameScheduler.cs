@@ -2,6 +2,7 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                               
 //------------------------------------------------------------------------------
 
+using OrganismBase;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,12 +12,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security;
 using System.Threading;
-using OrganismBase;
 using Terrarium.Configuration;
 using Terrarium.Game;
 using Terrarium.Renderer;
 using Terrarium.Tools;
-using FILETIME=System.Runtime.InteropServices.ComTypes.FILETIME;
+using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace Terrarium.Hosting
 {
