@@ -23,6 +23,16 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <AnsiNulls>False</AnsiNulls>
+    <AnsiPadding>False</AnsiPadding>
+    <AnsiWarnings>False</AnsiWarnings>
+    <ArithAbort>False</ArithAbort>
+    <ConcatNullYieldsNull>False</ConcatNullYieldsNull>
+    <QuotedIdentifier>False</QuotedIdentifier>
+    <DefaultCursor>GLOBAL</DefaultCursor>
+    <PageVerify>TORN_PAGE_DETECTION</PageVerify>
+    <ServiceBrokerOption>EnableBroker</ServiceBrokerOption>
+    <EnableFullTextSearch>False</EnableFullTextSearch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -79,5 +89,6 @@
     <Build Include="dbo\Tables\UserRegister.sql" />
     <Build Include="dbo\Tables\VersionedSettings.sql" />
     <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
+    <Build Include="TerrariumUser.sql" />
   </ItemGroup>
 </Project>
