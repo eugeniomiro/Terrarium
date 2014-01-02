@@ -4,31 +4,16 @@ GO
 
 /****** Object:  Database [Terrarium]    Script Date: 05/14/2008 08:28:03 ******/
 CREATE DATABASE [Terrarium] ON  PRIMARY 
-( NAME = N'Terrarium_Data', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\Terrarium_Data.MDF' , SIZE = 120448KB , MAXSIZE = UNLIMITED, FILEGROWTH = 10%)
+( NAME = N'Terrarium_Data', SIZE = 120448KB , MAXSIZE = UNLIMITED, FILEGROWTH = 10%)
  LOG ON 
-( NAME = N'Terrarium_Log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\Terrarium_Log.LDF' , SIZE = 470144KB , MAXSIZE = UNLIMITED, FILEGROWTH = 10%)
+( NAME = N'Terrarium_Log', SIZE = 470144KB , MAXSIZE = UNLIMITED, FILEGROWTH = 10%)
  COLLATE SQL_Latin1_General_CP1_CI_AS
-GO
-
-EXEC dbo.sp_dbcmptlevel @dbname=N'Terrarium', @new_cmptlevel=110
-GO
-
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [Terrarium].[dbo].[sp_fulltext_database] @action = 'disable'
-end
 GO
 
 ALTER DATABASE [Terrarium] SET ANSI_NULL_DEFAULT OFF
 GO
 
 ALTER DATABASE [Terrarium] SET DATE_CORRELATION_OPTIMIZATION OFF
-GO
-
-ALTER DATABASE [Terrarium] SET  READ_WRITE
-GO
-
-ALTER DATABASE [Terrarium] SET  MULTI_USER
 GO
 
 USE [Terrarium]
@@ -58,74 +43,6 @@ GO
 -- Create Stored Procedures
 --
 -- ----------------------------------------------------------
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Web_GetTips]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'
-/****** Object:  Stored Procedure dbo.Web_GetTips    Script Date: 1/4/2005 6:12:18 PM ******/
-create procedure [dbo].[Web_GetTips]
-as
-
-select id, tip from tips
-
-
-
-' 
-END
-GO
-
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER OFF
-GO
-
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TerrariumInsertWatson]') AND type in (N'P', N'PC'))
-BEGIN
-EXEC dbo.sp_executesql @statement = N'
-/****** Object:  Stored Procedure dbo.TerrariumInsertWatson    Script Date: 1/4/2005 6:12:18 PM ******/
-/****** Object:  Stored Procedure dbo.TerrariumInsertWatson    Script Date: 11/8/2001 8:16:23 PM ******/
-CREATE  PROCEDURE [dbo].[TerrariumInsertWatson]
-    @LogType varchar(50),
-    @MachineName varchar(255),
-    @OSVersion varchar(50),
-    @GameVersion varchar(50),
-    @CLRVersion varchar(50),
-    @ErrorLog text,
-    @UserComment text,
-    @UserEmail varchar(255)
-AS
-    INSERT INTO
-        Watson(
-            [LogType],
-            [MachineName],
-            [OSVersion],
-            [GameVersion],
-            [CLRVersion],
-            [ErrorLog],
-            [UserComment],
-            [UserEmail]
-        )
-        VALUES(
-            @LogType,
-            @MachineName,
-            @OSVersion,
-            @GameVersion,
-            @CLRVersion,
-            @ErrorLog,
-            @UserComment,
-            @UserEmail
-        )
-
-' 
-END
-GO
-
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TerrariumReportUsageSummary]') AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'CREATE procedure [dbo].[TerrariumReportUsageSummary]
