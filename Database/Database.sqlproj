@@ -93,5 +93,6 @@
     <Build Include="TerrariumUser.sql" />
     <Build Include="dbo\Stored Procedures\Web_GetTips.sql" />
     <Build Include="dbo\Tables\Tips.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumInsertWatson.sql" />
   </ItemGroup>
 </Project>
