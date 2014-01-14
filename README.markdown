@@ -43,4 +43,15 @@ C:.
     +---ServerConfig
     +---StyleEditor
 </pre>
+
+Required Extensions
+-------------------
+
+[asp.net mvc 5][asp_net] for Visual Studio 2012
+
+[Wix Toolkit][wix]
+
+
 [codeplex_project_site]: http://terrarium2.codeplex.com/
+[asp_net]: http://blogs.msdn.com/b/webdev/archive/2013/11/18/announcing-release-of-asp-net-and-web-tools-2013-1-for-visual-studio-2012.aspx
+[wix]: http://wixtoolset.org/
