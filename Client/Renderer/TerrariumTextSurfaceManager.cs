@@ -2,13 +2,12 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                             
 //------------------------------------------------------------------------------
 
-using DxVBLib;
 using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Drawing;
-using Terrarium.Renderer.Engine;
 using Terrarium.Renderer.DirectX;
+using Terrarium.Renderer.Engine;
 
 namespace Terrarium.Renderer
 {

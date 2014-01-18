@@ -164,84 +164,70 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\DirectX\DirectDrawClippedRect.cs">
+    <Compile Include="DirectX\DirectDrawClippedRect.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\DirectX\DirectDrawPictureBox.cs">
+    <Compile Include="DirectX\DirectDrawSpriteSurface.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DirectX\DirectDrawSurface.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DirectX\DirectXException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Engine\DirectX10GraphicsEngine.cs" />
+    <Compile Include="Engine\DirectX9GraphicsEngine.cs" />
+    <Compile Include="DirectX\DirectX7GraphicsEngine.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Engine\BltFlags.cs" />
+    <Compile Include="Engine\ColorKey.cs" />
+    <Compile Include="Engine\BltFastFlags.cs" />
+    <Compile Include="Engine\GraphicsEngine.cs" />
+    <Compile Include="Engine\IGraphicsEngine.cs" />
+    <Compile Include="Engine\IGraphicsSurface.cs" />
+    <Compile Include="Engine\ManagedDirectXGraphicsEngine.cs" />
+    <Compile Include="Engine\XnaGraphicsEngine.cs" />
+    <Compile Include="HeightMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MiniMapUpdatedEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MiniMapUpdatedEventHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OrganismClickedEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OrganismClickedEventHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TerrariumGameView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\DirectX\DirectDrawSpriteSurface.cs">
+    <Compile Include="TerrariumSpriteSurface.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\DirectX\DirectDrawSurface.cs">
+    <Compile Include="TerrariumSpriteSurfaceManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\DirectX\DirectXException.cs">
+    <Compile Include="TerrariumTextSurfaceManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\DirectX\ManagedDirectX.cs">
+    <Compile Include="TileInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\Engine\DirectX10GraphicsEngine.cs" />
-    <Compile Include="Classes\Engine\DirectX7GraphicsEngine.cs" />
-    <Compile Include="Classes\Engine\DirectX9GraphicsEngine.cs" />
-    <Compile Include="Classes\Engine\GraphicsEngine.cs" />
-    <Compile Include="Classes\Engine\IGraphicsEngine.cs" />
-    <Compile Include="Classes\DirectX\DirectX7GraphicsEngine.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Classes\Engine\BltFlags.cs" />
-    <Compile Include="Classes\Engine\ColorKey.cs" />
-    <Compile Include="Classes\Engine\BltFastFlags.cs" />
-    <Compile Include="Classes\Engine\DirectX10GraphicsEngine.cs" />
-    <Compile Include="Classes\Engine\DirectX9GraphicsEngine.cs" />
-    <Compile Include="Classes\Engine\GraphicsEngine.cs" />
-    <Compile Include="Classes\Engine\IGraphicsEngine.cs" />
-    <Compile Include="Classes\Engine\IGraphicsSurface.cs" />
-    <Compile Include="Classes\Engine\ManagedDirectXGraphicsEngine.cs" />
-    <Compile Include="Classes\Engine\XnaGraphicsEngine.cs" />
-    <Compile Include="Classes\HeightMap.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Classes\MiniMapUpdatedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Classes\MiniMapUpdatedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Classes\OrganismClickedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Classes\OrganismClickedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Classes\TerrariumDirectDrawGameView.cs">
-    <Compile Include="Classes\TerrariumGameView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Classes\TerrariumSpriteSurface.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Classes\TerrariumSpriteSurfaceManager.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Classes\TerrariumTextSurfaceManager.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Classes\TileInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Classes\World.cs">
+    <Compile Include="World.cs">
       <SubType>Code</SubType>
     </Compile>
     <AppDesigner Include="Properties\" />
-    <Compile Include="RECT.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\OrganismBase\development.snk">
       <Link>development.snk</Link>
     </None>
-    <None Include="Renderer.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Renderer.snk" />
