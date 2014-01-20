@@ -164,27 +164,27 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DirectX\DirectDrawClippedRect.cs">
+    <Compile Include="DirectX7\DirectDrawClippedRect.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DirectX\DirectDrawSpriteSurface.cs">
+    <Compile Include="DirectX7\DirectDrawSpriteSurface.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DirectX\DirectDrawSurface.cs">
+    <Compile Include="DirectX7\DirectDrawSurface.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DirectX\DirectXException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Engine\DirectX10GraphicsEngine.cs" />
-    <Compile Include="Engine\DirectX9GraphicsEngine.cs" />
-    <Compile Include="DirectX\DirectX7GraphicsEngine.cs">
+    <Compile Include="DirectX10\DirectX10GraphicsEngine.cs" />
+    <Compile Include="Engine\ISpriteSurface.cs" />
+    <Compile Include="Engine\IClippedRect.cs" />
+    <Compile Include="DirectX9\DirectX9GraphicsEngine.cs" />
+    <Compile Include="DirectX7\DirectX7GraphicsEngine.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Engine\BltFlags.cs" />
     <Compile Include="Engine\ColorKey.cs" />
     <Compile Include="Engine\BltFastFlags.cs" />
     <Compile Include="Engine\GraphicsEngine.cs" />
+    <Compile Include="Engine\GraphicsException.cs" />
     <Compile Include="Engine\IGraphicsEngine.cs" />
     <Compile Include="Engine\IGraphicsSurface.cs" />
     <Compile Include="Engine\ManagedDirectXGraphicsEngine.cs" />

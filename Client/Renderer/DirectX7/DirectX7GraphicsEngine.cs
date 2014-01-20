@@ -2,13 +2,11 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                             
 //------------------------------------------------------------------------------
 
-using DxVBLib;
 using System;
 using System.Drawing;
 using Terrarium.Renderer.Engine;
-using Terrarium.Tools;
 
-namespace Terrarium.Renderer.DirectX 
+namespace Terrarium.Renderer.DirectX7
 {
     /// <summary>
     ///  Provides access to the DirectDraw and DirectX interfaces
@@ -18,68 +16,56 @@ namespace Terrarium.Renderer.DirectX
         /// <summary>
         ///  Holds an instance of the DirectX7 native object
         /// </summary>
-        private DirectX7 directX;
+        private DxVBLib.DirectX7    _directX;
         /// <summary>
         ///  Holds an instance of the DirectDraw7 native object
         /// </summary>
-        private DirectDraw7 directDraw;
+        private DxVBLib.DirectDraw7 _directDraw;
 
         /// <summary>
         ///  Provides access to the native DirectDraw7 object
         /// </summary>
-        public DirectDraw7 DirectDraw
+        internal DxVBLib.DirectDraw7  DirectDraw
         {
             get
             {
                 try
                 {
-                    if (directDraw == null)
-                    {
-                        directDraw = DirectX.DirectDrawCreate( "" );
-                    }
-                
-                    return directDraw;
+                    return _directDraw ?? (_directDraw = DirectX.DirectDrawCreate(""));
                 }
                 catch (Exception exc)
                 {
-                    throw new DirectXException("Error obtaining DirectDraw interface", exc);
+                    throw new GraphicsException("Error obtaining DirectDraw interface", exc);
                 }
             }
         }
 
-        private DirectX7 DirectX
+        private DxVBLib.DirectX7 DirectX
         {
             get
             {
                 try
                 {
-                    if (directX == null)
-                    {
-                        directX = new DirectX7();
-                    }
-                    return directX;
+                    return _directX ?? (_directX = new DxVBLib.DirectX7());
                 }
                 catch (Exception exc)
                 {
-                    throw new DirectXException("Error obtaining DirectX interface", exc);
+                    throw new GraphicsException("Error obtaining DirectX interface", exc);
                 }
             }
         }
+        
         /// <summary>
         /// 
         /// </summary>
         /// <param name="handle"></param>
-        /// <param name="windowRect"></param>
-        public void GetWindowRect(IntPtr handle, ref Rectangle windowRect)
+        /// <returns></returns>
+        public Rectangle GetWindowRect(IntPtr handle) 
         {
-            RECT innerWindowRect = new RECT { 
-                Bottom = windowRect.Bottom, 
-                Right = windowRect.Right,  
-                Left = windowRect.Left,
-                Top = windowRect.Top
-            };
+            var innerWindowRect = new DxVBLib.RECT();
             DirectX.GetWindowRect(handle.ToInt32(), ref innerWindowRect);
-            windowRect = Rectangle.FromLTRB(innerWindowRect.Left, innerWindowRect.Top, innerWindowRect.Right, innerWindowRect.Bottom);
+            var windowRect = Rectangle.FromLTRB(innerWindowRect.Left, innerWindowRect.Top, innerWindowRect.Right, innerWindowRect.Bottom);
+            return windowRect;
         }
 
         /// <summary>
@@ -88,13 +74,17 @@ namespace Terrarium.Renderer.DirectX
         /// <param name="handle"></param>
         public void SetFullScreenMode(IntPtr handle)
         {
-            DirectDraw.SetCooperativeLevel(
-               handle.ToInt32(),
-               CONST_DDSCLFLAGS.DDSCL_FULLSCREEN |
-               CONST_DDSCLFLAGS.DDSCL_EXCLUSIVE |
-               CONST_DDSCLFLAGS.DDSCL_ALLOWREBOOT);
+            try {
+                DirectDraw.SetCooperativeLevel(handle.ToInt32(),
+                                               DxVBLib.CONST_DDSCLFLAGS.DDSCL_FULLSCREEN |
+                                               DxVBLib.CONST_DDSCLFLAGS.DDSCL_EXCLUSIVE |
+                                               DxVBLib.CONST_DDSCLFLAGS.DDSCL_ALLOWREBOOT);
 
-            DirectDraw.SetDisplayMode(640, 480, 16, 0, 0);
+                DirectDraw.SetDisplayMode(640, 480, 16, 0, 0);
+
+            } catch (GraphicsException e) {
+                throw new GraphicsException("setting up Full screen", e);
+            }
         }
 
         /// <summary>
@@ -105,7 +95,7 @@ namespace Terrarium.Renderer.DirectX
         {
             DirectDraw.SetCooperativeLevel(
                         handle.ToInt32(),
-                        CONST_DDSCLFLAGS.DDSCL_NORMAL);
+                        DxVBLib.CONST_DDSCLFLAGS.DDSCL_NORMAL);
         }
 
         /// <summary>
@@ -128,28 +118,27 @@ namespace Terrarium.Renderer.DirectX
         /// <returns></returns>
         public IGraphicsSurface CreatePrimarySurface(IntPtr handle, Boolean fullScreen, Boolean doubleBuffer)
         {
-            DDSURFACEDESC2 tempDescr    = new DDSURFACEDESC2();
-            tempDescr.lFlags            = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS;
-            tempDescr.ddsCaps.lCaps     = CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE;
+            var tempDescr   = new DxVBLib.DDSURFACEDESC2 {
+                lFlags = DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_CAPS,
+                ddsCaps = { lCaps = DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_PRIMARYSURFACE }
+            };
 
-            if (doubleBuffer)
-            {
-                tempDescr.lFlags |= CONST_DDSURFACEDESCFLAGS.DDSD_BACKBUFFERCOUNT;
+            if (doubleBuffer) {
+                tempDescr.lFlags |= DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_BACKBUFFERCOUNT;
                 tempDescr.lBackBufferCount = 1;
-                tempDescr.ddsCaps.lCaps |= CONST_DDSURFACECAPSFLAGS.DDSCAPS_COMPLEX |
-                                           CONST_DDSURFACECAPSFLAGS.DDSCAPS_FLIP;
+                tempDescr.ddsCaps.lCaps |= DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_COMPLEX |
+                                           DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_FLIP;
             }
 
-            DirectDrawSurface surface = new DirectDrawSurface(tempDescr);
+            var surface = new DirectDrawSurface(tempDescr);
 
-            if (fullScreen)
-            {
+            if (fullScreen) {
                 return surface;
             }
 
-            DirectDrawClipper clipper = DirectDraw.CreateClipper(0);
+            var clipper = DirectDraw.CreateClipper(0);
             clipper.SetHWnd(handle.ToInt32());
-            surface.Surface.SetClipper(clipper);
+            surface.SetClipper(clipper);
 
             return surface;
         }
@@ -162,14 +151,15 @@ namespace Terrarium.Renderer.DirectX
         /// <returns></returns>
         public IGraphicsSurface CreateWorkSurface(int width, int height)
         {
-            DDSURFACEDESC2 tempDescr = new DDSURFACEDESC2();
+            var tempDescr = new DxVBLib.DDSURFACEDESC2 {
+                lFlags = DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_CAPS |
+                         DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_HEIGHT |
+                         DxVBLib.CONST_DDSURFACEDESCFLAGS.DDSD_WIDTH,
+                ddsCaps = { lCaps = DxVBLib.CONST_DDSURFACECAPSFLAGS.DDSCAPS_OFFSCREENPLAIN },
+                lWidth = width,
+                lHeight = height
+            };
 
-            tempDescr.lFlags = CONST_DDSURFACEDESCFLAGS.DDSD_CAPS |
-                               CONST_DDSURFACEDESCFLAGS.DDSD_HEIGHT |
-                               CONST_DDSURFACEDESCFLAGS.DDSD_WIDTH;
-            tempDescr.ddsCaps.lCaps = CONST_DDSURFACECAPSFLAGS.DDSCAPS_OFFSCREENPLAIN;
-            tempDescr.lWidth = width;
-            tempDescr.lHeight = height;
             return new DirectDrawSurface(tempDescr);
         }
     }

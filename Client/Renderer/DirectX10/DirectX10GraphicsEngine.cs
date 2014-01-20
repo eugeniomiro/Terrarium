@@ -4,19 +4,21 @@
 
 using System;
 using System.Drawing;
-namespace Terrarium.Renderer.Engine
+using Terrarium.Renderer.Engine;
+
+namespace Terrarium.Renderer.DirectX10
 {
     /// <summary>
     /// 
     /// </summary>
-    public class DirectX9GraphicsEngine : IGraphicsEngine
+    public class DirectX10GraphicsEngine : IGraphicsEngine
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="handle"></param>
-        /// <param name="windowRect"></param>
-        public void GetWindowRect(IntPtr handle, ref Rectangle windowRect)
+        /// <returns></returns>
+        public Rectangle GetWindowRect(IntPtr handle)
         {
             throw new NotImplementedException();
         }

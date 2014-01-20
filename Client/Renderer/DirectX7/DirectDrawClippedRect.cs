@@ -3,9 +3,9 @@
 //------------------------------------------------------------------------------
 
 using System.Drawing;
-using System;
+using Terrarium.Renderer.Engine;
 
-namespace Terrarium.Renderer.DirectX 
+namespace Terrarium.Renderer.DirectX7
 {
     /// <summary>
     ///  Represents a sprite clipping structure that can
@@ -14,36 +14,36 @@ namespace Terrarium.Renderer.DirectX
     ///  These are public members instead of property accessors because they sometimes
     ///  need to be passed as ref or out arguments and these aren't supported on accessors.
     /// </summary>
-    public struct DirectDrawClippedRect
-    {
+    public struct DirectDrawClippedRect : IClippedRect {
         /// <summary>
         ///  The destination rectangle
         /// </summary>
-        public Rectangle Destination;
+        public Rectangle Destination { get; set; }
+
         /// <summary>
         ///  The source rectangle
         /// </summary>
-        public Rectangle Source;
+        public Rectangle Source { get; set; }
         /// <summary>
         ///  Has the sprite been clipped outside of the view
         /// </summary>
-        public bool Invisible;
+        public bool Invisible { get; set; }
         /// <summary>
         ///  Has the sprite been clipped along the top
         /// </summary>
-        public bool ClipTop;
+        public bool ClipTop { get; set; }
         /// <summary>
         ///  Has the sprite been clipped along the bottom
         /// </summary>
-        public bool ClipBottom;
+        public bool ClipBottom { get; set; }
         /// <summary>
         ///  Has the sprite been clipped along the left
         /// </summary>
-        public bool ClipLeft;
+        public bool ClipLeft { get; set; }
         /// <summary>
         ///  Has the sprite been clipped along the right.
         /// </summary>
-        public bool ClipRight;
+        public bool ClipRight { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -88,7 +88,7 @@ namespace Terrarium.Renderer.DirectX
                 destBottom = bounds.Bottom;
                 ClipBottom = true;
             }
-            Source = Rectangle.FromLTRB(sourceLeft, sourceTop, sourceRight, sourceBottom);
+            Source      = Rectangle.FromLTRB(sourceLeft, sourceTop, sourceRight, sourceBottom);
             Destination = Rectangle.FromLTRB(destLeft, destTop, destRight, destBottom);
         }
     }

@@ -1,8 +1,5 @@
-﻿using DxVBLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using DxVBLib;
 
 namespace Terrarium.Renderer.Engine
 {
