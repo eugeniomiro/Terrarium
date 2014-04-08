@@ -215,7 +215,7 @@
     <Compile Include="Classes\OrganismClickedEventHandler.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\TerrariumDirectDrawGameView.cs">
+    <Compile Include="Classes\TerrariumDirectDrawGameView.cs"/>
     <Compile Include="Classes\TerrariumGameView.cs">
       <SubType>Component</SubType>
     </Compile>
