@@ -1720,16 +1720,14 @@ namespace Terrarium.Renderer
         /// </summary>
         /// <param name="pixels">The number of pixels to scroll left</param>
         /// <returns>The number of pixels actually scrolled.</returns>
-        public int ScrollLeft(int pixels)
+        public int ScrollLeft(int pixels) 
         {
-            if ((ViewSize.Left - pixels) < ActualSize.Left)
-            {
+            if ((ViewSize.Left - pixels) < ActualSize.Left) {
                 pixels = ViewSize.Left - ActualSize.Left;
             }
             ViewSize = Rectangle.FromLTRB(ViewSize.Left - pixels, ViewSize.Top, ViewSize.Right - pixels, ViewSize.Bottom);
 
-            if (pixels != 0)
-            {
+            if (pixels != 0) {
                 _viewchanged = true;
             }
 
