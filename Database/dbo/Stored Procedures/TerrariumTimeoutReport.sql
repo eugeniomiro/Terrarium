@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[TerrariumTimeoutReport]
-    @Guid UNIQUEIDENTIFIER,
-    @LastContact DATETIME,
-    @LastTick INT,
-    @ReturnCode INT OUTPUT
+    @Guid           UNIQUEIDENTIFIER,
+    @LastContact    DATETIME,
+    @LastTick       INT,
+    @ReturnCode     INT OUTPUT
 AS
     DECLARE @MaxTick int
     SELECT @ReturnCode=0
@@ -11,7 +11,7 @@ AS
     FROM
         NodeLastContact
     WHERE
-        Guid=@Guid
+        [Guid]=@Guid
     -- Check to see if we have a record in the NodeLastContact
     -- Table
     IF @MaxTick IS NOT NULL
@@ -30,7 +30,7 @@ AS
                         LastTick = @LastTick,
                         LastContact = @LastContact
                     WHERE
-                        Guid=@Guid
+                        [GUID]=@Guid
                 END
         END
     ELSE
@@ -41,14 +41,14 @@ AS
             FROM
                 TimedOutNodes
             WHERE
-                Guid=@Guid
+                [GUID] = @Guid
             IF @TimeoutCount IS NULL
                 BEGIN
                     INSERT INTO
                         NodeLastContact(
                             LastTick,
                             LastContact,
-                            Guid
+                            [GUID]
                         )
                         VALUES(
                             @LastTick,

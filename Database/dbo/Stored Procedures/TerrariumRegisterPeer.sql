@@ -1,6 +1,4 @@
-﻿/****** Object:  Stored Procedure dbo.TerrariumRegisterPeer    Script Date: 1/4/2005 6:12:18 PM ******/
-/****** Object:  Stored Procedure dbo.TerrariumRegisterPeer    Script Date: 11/8/2001 8:16:23 PM ******/
-CREATE     PROCEDURE [dbo].[TerrariumRegisterPeer]
+﻿CREATE     PROCEDURE [dbo].[TerrariumRegisterPeer]
     @Version VARCHAR(255),
     @FullVersion VARCHAR(255),
     @Channel VARCHAR(255),
@@ -12,39 +10,39 @@ AS
     DECLARE @Lease DATETIME;
     SET @Lease = DATEADD(mi, 15, GETUTCDATE());
     SELECT
-        @Disabled=Disabled
+        @Disabled=[Disabled]
     FROM
         VersionedSettings
     WHERE
-        Version=@FullVersion
+        [Version]=@FullVersion
     IF @@ROWCOUNT = 0
         BEGIN
             SELECT
-                @Disabled=Disabled
+                @Disabled=[Disabled]
             FROM
                 VersionedSettings
             WHERE
-                Version=@Version
+                [Version]=@Version
             IF @@ROWCOUNT = 0
                 BEGIN
                     SELECT
-                        @Disabled=Disabled
+                        @Disabled=[Disabled]
                     FROM    
                         VersionedSettings
                     WHERE
-                        Version='Default'
+                        [Version]='Default'
                     INSERT INTO
                         VersionedSettings (
-                            Version,
-                            Disabled
+                            [Version],
+                            [Disabled]
                         ) VALUES (
                             @Version,
                             @Disabled
                         )
                     INSERT INTO
                         VersionedSettings (
-                            Version,
-                            Disabled
+                            [Version],
+                            [Disabled]
                         ) VALUES (
                             @FullVersion,
                             @Disabled
@@ -54,8 +52,8 @@ AS
                 BEGIN
                     INSERT INTO
                         VersionedSettings (
-                            Version,
-                            Disabled
+                            [Version],
+                            [Disabled]
                         ) VALUES (
                             @FullVersion,
                             @Disabled
@@ -81,10 +79,10 @@ AS
                     INSERT INTO
                         Peers(
                             Channel,
-                            Version,
+                            [Version],
                             IPAddress,
                             Lease,
-                            Guid,
+                            [GUID],
                             FirstContact
                         )
                         VALUES(
@@ -102,7 +100,7 @@ AS
                         Peers
                     SET
                         Lease = @Lease,
-                        Version = @Version
+                        [Version] = @Version
                     WHERE
                         Channel = @Channel AND
                         IPAddress = @IPAddress

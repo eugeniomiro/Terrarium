@@ -3,6 +3,6 @@
 	[IPAddress] [varchar](16) NOT NULL,
 	[Lease] [datetime] NOT NULL,
 	[Version] [varchar](16) NOT NULL,
-	[Guid] [uniqueidentifier] NULL,
+	[GUID] [uniqueidentifier] NULL,
 	[FirstContact] [datetime] NOT NULL
 ) ON [PRIMARY]

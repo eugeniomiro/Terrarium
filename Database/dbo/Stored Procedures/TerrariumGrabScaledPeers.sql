@@ -8,25 +8,25 @@ AS
 DECLARE @Total INT
 DECLARE @BelowCount INT
 DECLARE @AboveCount INT
-SELECT @Total=count(*) FROM Peers WHERE Version=@Version AND Channel=@Channel
+SELECT @Total=count(*) FROM Peers WHERE [Version] = @Version AND Channel=@Channel
 IF @Total > 30
     BEGIN
         SELECT @AboveCount=count(*)
         FROM Peers
-        WHERE Version=@Version AND Channel=@Channel AND IPAddress>@IPAddress
+        WHERE [Version]=@Version AND Channel=@Channel AND IPAddress>@IPAddress
         
         SELECT @BelowCount=count(*)
         FROM Peers
-        WHERE Version=@Version AND Channel=@Channel AND IPAddress<@IPAddress
+        WHERE [Version]=@Version AND Channel=@Channel AND IPAddress<@IPAddress
         
         IF @BelowCount < 10
             BEGIN
                 SELECT IPAddress,Lease
                 FROM Peers
-                WHERE Version=@Version AND Channel=@Channel AND
-                    (IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE VERSION=@Version AND Channel=@Channel AND IPAddress>@IPAddress ORDER BY IPAddress ASC) OR
-                     IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE VERSION=@Version AND Channel=@Channel AND IPAddress<@IPAddress ORDER BY IPAddress DESC) OR
-                                         IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE VERSION=@Version AND Channel=@Channel AND IPAddress<'255.255.255.255' ORDER BY IPAddress DESC)
+                WHERE [Version]=@Version AND Channel=@Channel AND
+                    (IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE [Version]=@Version AND Channel=@Channel AND IPAddress>@IPAddress ORDER BY IPAddress ASC) OR
+                     IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE [Version]=@Version AND Channel=@Channel AND IPAddress<@IPAddress ORDER BY IPAddress DESC) OR
+                                         IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE [Version]=@Version AND Channel=@Channel AND IPAddress<'255.255.255.255' ORDER BY IPAddress DESC)
                     )
             END
         ELSE
@@ -35,24 +35,24 @@ IF @Total > 30
                     BEGIN
                         SELECT IPAddress,Lease
                         FROM Peers
-                        WHERE Version=@Version AND Channel=@Channel AND
-                            (IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE VERSION=@Version AND Channel=@Channel AND IPAddress>@IPAddress ORDER BY IPAddress ASC) OR
-                             IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE VERSION=@Version AND Channel=@Channel AND IPAddress<@IPAddress ORDER BY IPAddress DESC) OR
-                                                 IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE VERSION=@Version AND Channel=@Channel AND IPAddress>'0.0.0.0' ORDER BY IPAddress ASC)
+                        WHERE [Version]=@Version AND Channel=@Channel AND
+                            (IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE [Version]=@Version AND Channel=@Channel AND IPAddress>@IPAddress ORDER BY IPAddress ASC) OR
+                             IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE [Version]=@Version AND Channel=@Channel AND IPAddress<@IPAddress ORDER BY IPAddress DESC) OR
+                                                 IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE [Version]=@Version AND Channel=@Channel AND IPAddress>'0.0.0.0' ORDER BY IPAddress ASC)
                             )
                     END
                 ELSE
                     BEGIN
                         SELECT IPAddress,Lease
                         FROM Peers
-                        WHERE Version=@Version AND Channel=@Channel AND
-                            (IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE VERSION=@Version AND Channel=@Channel AND IPAddress>@IPAddress ORDER BY IPAddress ASC) OR
-                             IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE VERSION=@Version AND Channel=@Channel AND IPAddress<@IPAddress ORDER BY IPAddress DESC)
+                        WHERE [Version]=@Version AND Channel=@Channel AND
+                            (IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE [Version]=@Version AND Channel=@Channel AND IPAddress>@IPAddress ORDER BY IPAddress ASC) OR
+                             IPAddress IN (SELECT TOP 10 IPAddress FROM Peers WHERE [Version]=@Version AND Channel=@Channel AND IPAddress<@IPAddress ORDER BY IPAddress DESC)
                             )
                     END
             END
     END
 ELSE
     BEGIN
-        SELECT IPAddress, Lease FROM Peers WHERE Version=@Version AND Channel=@Channel
+        SELECT IPAddress, Lease FROM Peers WHERE [Version]=@Version AND Channel=@Channel
     END

@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ShutdownPeers](
-	[Guid] [uniqueidentifier] NULL,
+	[GUID] [uniqueidentifier] NULL,
 	[Channel] [varchar](255) NOT NULL,
 	[IPAddress] [varchar](50) NOT NULL,
 	[Version] [varchar](255) NOT NULL,

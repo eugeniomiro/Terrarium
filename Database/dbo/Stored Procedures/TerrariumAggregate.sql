@@ -1,6 +1,4 @@
-﻿/****** Object:  Stored Procedure dbo.TerrariumAggregate    Script Date: 1/4/2005 6:12:18 PM ******/
-/****** Object:  Stored Procedure dbo.TerrariumAggregate    Script Date: 11/8/2001 8:16:23 PM ******/
-CREATE PROCEDURE [dbo].[TerrariumAggregate] (
+﻿CREATE PROCEDURE [dbo].[TerrariumAggregate] (
     @Expiration_Error INT OUT,
     @Rollup_Error INT OUT,
     @Timeout_Add_Error INT OUT,
@@ -21,21 +19,21 @@ BEGIN TRANSACTION
 -- Expire Peer Leases
     INSERT INTO
         ShutdownPeers (
-            Guid,
+            [Guid],
             Channel,
             IPAddress,
             FirstContact,
             LastContact,
-            Version,
+            [Version],
             UnRegister
         )
     SELECT
-        Guid,
+        [Guid],
         Channel,
         IPAddress,
         FirstContact,
         GETUTCDATE(),
-        Version,
+        [Version],
         0
     FROM
         Peers
@@ -57,11 +55,11 @@ BEGIN TRANSACTION
         -- Add Timed Out Nodes
         INSERT INTO
             TimedOutNodes (
-                GUID,
+                [GUID],
                 TimeOutDate
             )
         SELECT
-            GUID,
+            [GUID],
             @Timeout AS Expr1
         FROM
             NodeLastContact
@@ -74,11 +72,11 @@ BEGIN TRANSACTION
         WHERE
             GUID IN (
                 SELECT
-                    TimedOutNodes.GUID
+                    TimedOutNodes.[GUID]
                 FROM
                     NodeLastContact INNER JOIN
                     TimedOutNodes ON
-                        (NodeLastContact.GUID = TimedOutNodes.GUID)
+                        (NodeLastContact.[GUID] = TimedOutNodes.[GUID])
             )
         SET @Timeout_Delete_Error = @@ERROR;
     IF @Timeout_Delete_Error = 0
@@ -104,7 +102,7 @@ BEGIN TRANSACTION
                                 FROM
                                     DailyPopulation
                                 WHERE
-                                    SampleDateTime=(SELECT Max(SampleDateTime) FROM DailyPopulation)
+                                    SampleDateTime = (SELECT Max(SampleDateTime) FROM DailyPopulation)
                             ) AND
                             Species.Name NOT IN (
                                 SELECT
@@ -112,14 +110,14 @@ BEGIN TRANSACTION
                                 FROM
                                     Species INNER JOIN
                                     NodeLastContact ON
-                                        (Species.ReintroductionNode = NodeLastContact.GUID)
+                                        (Species.ReintroductionNode = NodeLastContact.[GUID])
                                 WHERE
                                     NodeLastContact.LastContact < Species.LastReintroduction
                             ) AND
                             Species.Name NOT IN (
                                 SELECT DISTINCT
                                         SpeciesName
-                                FROM
+                                    FROM
                                         History
                             ) AND
                         Species.DateAdded < @Last AND
@@ -141,7 +139,7 @@ BEGIN TRANSACTION
                                         DailyPopulation (
                                             SampleDateTime,
                                             SpeciesName,
-                                            Population,
+                                            [Population],
                                             BirthCount,
                                             StarvedCount,
                                             KilledCount,
@@ -177,7 +175,7 @@ BEGIN TRANSACTION
         DailyPopulation (
             SampleDateTime,
             SpeciesName,
-            Population,
+            [Population],
             BirthCount,
             StarvedCount,
             KilledCount,
@@ -190,7 +188,7 @@ BEGIN TRANSACTION
     SELECT
         @Now AS Expr1,
         History.SpeciesName,
-        Sum(History.Population) AS SumOfPopulation,
+        Sum(History.[Population]) AS SumOfPopulation,
         Sum(History.BirthCount) AS SumOfBirthCount,
         Sum(History.StarvedCount) AS SumOfStarvedCount,
         Sum(History.KilledCount) AS SumOfKilledCount,
@@ -203,7 +201,7 @@ BEGIN TRANSACTION
         NodeLastContact INNER JOIN
         History ON
             (NodeLastContact.LastTick = History.TickNumber) AND
-            (NodeLastContact.GUID = History.GUID) INNER JOIN
+            (NodeLastContact.[GUID] = History.[GUID]) INNER JOIN
         Species ON
             (Species.Name = History.SpeciesName)
     WHERE
@@ -217,5 +215,5 @@ BEGIN TRANSACTION
                 NodeLastContact INNER JOIN
                 History ON (
                         NodeLastContact.LastTick > History.TickNumber AND
-                        NodeLastContact.GUID = History.GUID
+                        NodeLastContact.[GUID] = History.[GUID]
                 )
