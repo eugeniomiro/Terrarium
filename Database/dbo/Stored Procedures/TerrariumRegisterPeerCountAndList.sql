@@ -18,7 +18,7 @@ AS
 
     SELECT @Disabled = [Disabled]
         FROM    VersionedSettings
-        WHERE   Version = @FullVersion
+        WHERE   [Version] = @FullVersion
     IF @@ROWCOUNT = 0
         BEGIN
             SELECT  @Disabled = [Disabled]
@@ -58,7 +58,7 @@ AS
             IF @Self = 0
                 BEGIN
                     BEGIN TRAN
-                        INSERT INTO Peers(Channel, [Version], IPAddress, Lease, [Guid], FirstContact)
+                        INSERT INTO Peers(Channel, [Version], IPAddress, Lease, [GUID], FirstContact)
                                    VALUES(@Channel, @Version, @IPAddress, @Lease, @Guid, GETUTCDATE())
                     COMMIT TRAN
                 END

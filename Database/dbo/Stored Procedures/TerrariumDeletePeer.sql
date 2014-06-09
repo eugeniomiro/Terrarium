@@ -7,7 +7,7 @@ CREATE  PROCEDURE [dbo].[TerrariumDeletePeer]
 AS
     INSERT INTO
         ShutdownPeers (
-            Guid,
+            [GUID],
             Channel,
             IPAddress,
             FirstContact,
@@ -16,7 +16,7 @@ AS
             UnRegister
         )
     SELECT
-        Guid,
+        [GUID],
         Channel,
         IPAddress,
         FirstContact,
@@ -28,10 +28,10 @@ AS
     WHERE
         Channel = @Channel AND
         IPAddress = @IPAddress AND
-        Guid = @Guid
+        [GUID] = @Guid
     DELETE FROM
         Peers
     WHERE
         Channel = @Channel AND
         IPAddress = @IPAddress AND
-        Guid = @Guid
+        [GUID] = @Guid

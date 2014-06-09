@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[Web_GetTips]
 AS
 
-SELECT id, tip FROM Tips
+SELECT Id, tip FROM Tips
 

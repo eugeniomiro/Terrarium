@@ -19,7 +19,7 @@ BEGIN TRANSACTION
 -- Expire Peer Leases
     INSERT INTO
         ShutdownPeers (
-            [Guid],
+            [GUID],
             Channel,
             IPAddress,
             FirstContact,
@@ -28,7 +28,7 @@ BEGIN TRANSACTION
             UnRegister
         )
     SELECT
-        [Guid],
+        [GUID],
         Channel,
         IPAddress,
         FirstContact,

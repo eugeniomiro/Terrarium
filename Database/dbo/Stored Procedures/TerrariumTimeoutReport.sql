@@ -11,7 +11,7 @@ AS
     FROM
         NodeLastContact
     WHERE
-        [Guid]=@Guid
+        [GUID] = @Guid
     -- Check to see if we have a record in the NodeLastContact
     -- Table
     IF @MaxTick IS NOT NULL
@@ -37,7 +37,7 @@ AS
         BEGIN
             DECLARE @TimeoutCount DATETIME
             SELECT
-                @TimeoutCount=Max(TimeoutDate)
+                @TimeoutCount=Max(TimeOutDate)
             FROM
                 TimedOutNodes
             WHERE
