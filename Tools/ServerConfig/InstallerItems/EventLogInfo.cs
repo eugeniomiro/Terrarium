@@ -17,7 +17,7 @@ namespace Terrarium.Server
         public EventLogInfo(string source) 
             : this()
         {
-            source = source;
+            Source = source;
         }
 
         [XmlAttribute("source")]
