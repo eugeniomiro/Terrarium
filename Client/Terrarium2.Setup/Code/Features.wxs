@@ -30,6 +30,8 @@
           <File Id="teleporterbmp"      Source="$(var.SolutionDir)Graphics\SpriteSheets\teleporter.bmp"       KeyPath="no" />
           <File Id="Terrariumexe"       Source="$(var.Terrarium.TargetPath)"                                  KeyPath="yes" />
           <File Id="Terrariumexeconfig" Source="$(var.Terrarium.TargetDir)\Terrarium.exe.config"              KeyPath="no" />
+          <File Id="dx7vbdll"           Source="$(var.SolutionDir)DXVBLib\dx7vb.dll"          SelfRegCost="1" KeyPath="no" />
+          <File Id="dx8vbdll"           Source="$(var.SolutionDir)DXVBLib\dx8vb.dll"          SelfRegCost="1" KeyPath="no" />
           <File Id="CommandLinedll"     Source="$(var.Terrarium.TargetDir)\CommandLine.dll"                   KeyPath="no" />
           <File Id="Configurationdll"   Source="$(var.Terrarium.TargetDir)\Configuration.dll"                 KeyPath="no" />
           <File Id="Servicesdll"        Source="$(var.Terrarium.TargetDir)\Services.dll"                      KeyPath="no" />
