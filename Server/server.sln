@@ -5,7 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerItems", "..\Tools\
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Website", "Website\", "{B2C32557-4CFE-4DC3-8DCA-A298633708C0}"
 	ProjectSection(WebsiteProperties) = preProject
-		Frontpage = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
 		ProjectReferences = "{64b30cec-fb6d-48bd-b1fd-d8d5480c8e4a}|InstallerItems.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/Website"
