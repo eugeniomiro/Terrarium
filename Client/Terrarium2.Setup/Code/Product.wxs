@@ -15,7 +15,7 @@
     <Condition Message="[ProductName] requires .NET Framework 3.5.">Installed OR NETFRAMEWORK35</Condition>
 
     <!-- User Interface Experience -->
-    <Icon Id="Icon.ico" SourceFile="Resources\Icon.ico"/>
+    <Icon Id="Icon.ico" SourceFile="$(var.Terrarium.ProjectDir)tericon32.ico"/>
     <Property Id="ARPPRODUCTICON" Value="Icon.ico"></Property>
     <UIRef Id="UI"/>
 
