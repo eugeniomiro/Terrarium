@@ -173,7 +173,6 @@
     <Compile Include="DirectX7\DirectDrawSurface.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DirectX10\DirectX10GraphicsEngine.cs" />
     <Compile Include="Engine\ISpriteSurface.cs" />
     <Compile Include="Engine\IClippedRect.cs" />
     <Compile Include="DirectX9\DirectX9GraphicsEngine.cs" />

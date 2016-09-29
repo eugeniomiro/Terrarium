@@ -1,4 +1,4 @@
-﻿using Terrarium.Renderer.DirectX10;
+﻿using Terrarium.Renderer.DirectX7;
 using Terrarium.Tools;
 
 namespace Terrarium.Renderer.Engine
@@ -28,8 +28,7 @@ namespace Terrarium.Renderer.Engine
         /// Currently configured GraphicsEngine
         /// </summary>
         public static IGraphicsEngine Current {
-            //get { return _internalGraphicsEngine ?? (_internalGraphicsEngine = new DirectX7GraphicsEngine()); }
-            get { return _internalGraphicsEngine ?? (_internalGraphicsEngine = new DirectX10GraphicsEngine()); }
+            get { return _internalGraphicsEngine ?? (_internalGraphicsEngine = new DirectX7GraphicsEngine()); }
         }
     }
 }
