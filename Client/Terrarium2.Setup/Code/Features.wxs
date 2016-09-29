@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Fragment> 
-    
-    <FeatureGroup Id="features">
+  <Fragment>
+    <FeatureGroup Id="Terrarium">
       <Feature Id="Terrarium2.Setup" Title="Terrarium 2.0" Description="Installs all the files needed for Terrarium 2.0" Level="1" AllowAdvertise="no" ConfigurableDirectory="INSTALLLOCATION">
-        <MergeRef Id="Terrarium2.SetupMM"/>
+        <Component Id="Terrarium" Guid="{276202B2-D6FA-4D25-AD30-EEBFEB17931A}" Directory="INSTALLLOCATION">
+          <File Id="ant48bmp"           Source="$(var.SolutionDir)Graphics\SpriteSheets\ant48.bmp"            KeyPath="no" />
+          <File Id="ant24bmp"           Source="$(var.SolutionDir)Graphics\SpriteSheets\ant24.bmp"            KeyPath="no" />
+          <File Id="backgroundbmp"      Source="$(var.SolutionDir)Graphics\SpriteSheets\background.bmp"       KeyPath="no" />
+          <File Id="beetle24bmp"        Source="$(var.SolutionDir)Graphics\SpriteSheets\beetle24.bmp"         KeyPath="no" />
+          <File Id="beetle48bmp"        Source="$(var.SolutionDir)Graphics\SpriteSheets\beetle48.bmp"         KeyPath="no" />
+          <File Id="cursorbmp"          Source="$(var.SolutionDir)Graphics\SpriteSheets\cursor.bmp"           KeyPath="no" />
+          <File Id="dirtbmp"            Source="$(var.SolutionDir)Graphics\SpriteSheets\dirt.bmp"             KeyPath="no" />
+          <File Id="inchworm24bmp"      Source="$(var.SolutionDir)Graphics\SpriteSheets\inchworm24.bmp"       KeyPath="no" />
+          <File Id="inchworm48bmp"      Source="$(var.SolutionDir)Graphics\SpriteSheets\inchworm48.bmp"       KeyPath="no" />
+          <File Id="plant24bmp"         Source="$(var.SolutionDir)Graphics\SpriteSheets\plant24.bmp"          KeyPath="no" />
+          <File Id="plant48bmp"         Source="$(var.SolutionDir)Graphics\SpriteSheets\plant48.bmp"          KeyPath="no" />
+          <File Id="plantone24bmp"      Source="$(var.SolutionDir)Graphics\SpriteSheets\plantone24.bmp"       KeyPath="no" />
+          <File Id="plantone48bmp"      Source="$(var.SolutionDir)Graphics\SpriteSheets\plantone48.bmp"       KeyPath="no" />
+          <File Id="plantthree24bmp"    Source="$(var.SolutionDir)Graphics\SpriteSheets\plantthree24.bmp"     KeyPath="no" />
+          <File Id="plantthree48bmp"    Source="$(var.SolutionDir)Graphics\SpriteSheets\plantthree48.bmp"     KeyPath="no" />
+          <File Id="planttwo24bmp"      Source="$(var.SolutionDir)Graphics\SpriteSheets\planttwo24.bmp"       KeyPath="no" />
+          <File Id="planttwo48bmp"      Source="$(var.SolutionDir)Graphics\SpriteSheets\planttwo48.bmp"       KeyPath="no" />
+          <File Id="scorpion24bmp"      Source="$(var.SolutionDir)Graphics\SpriteSheets\scorpion24.bmp"       KeyPath="no" />
+          <File Id="scorpion48bmp"      Source="$(var.SolutionDir)Graphics\SpriteSheets\scorpion48.bmp"       KeyPath="no" />
+          <File Id="screensaverpng"     Source="$(var.SolutionDir)Graphics\UI\screensaver.png"                KeyPath="no" />
+          <File Id="spider24bmp"        Source="$(var.SolutionDir)Graphics\SpriteSheets\spider24.bmp"         KeyPath="no" />
+          <File Id="spider48bmp"        Source="$(var.SolutionDir)Graphics\SpriteSheets\spider48.bmp"         KeyPath="no" />
+          <File Id="splashscreenpng"    Source="$(var.SolutionDir)Graphics\UI\splashscreen.png"               KeyPath="no" />
+          <File Id="teleporterbmp"      Source="$(var.SolutionDir)Graphics\SpriteSheets\teleporter.bmp"       KeyPath="no" />
+          <File Id="Terrariumexe"       Source="$(var.Terrarium.TargetPath)"                                  KeyPath="yes" />
+          <File Id="Terrariumexeconfig" Source="$(var.Terrarium.TargetDir)\Terrarium.exe.config"              KeyPath="no" />
+          <File Id="CommandLinedll"     Source="$(var.Terrarium.TargetDir)\CommandLine.dll"                   KeyPath="no" />
+          <File Id="Configurationdll"   Source="$(var.Terrarium.TargetDir)\Configuration.dll"                 KeyPath="no" />
+          <File Id="Servicesdll"        Source="$(var.Terrarium.TargetDir)\Services.dll"                      KeyPath="no" />
+          <File Id="Controlsdll"        Source="$(var.Terrarium.TargetDir)\Controls.dll"                      KeyPath="no" />
+          <File Id="HttpListenerdll"    Source="$(var.Terrarium.TargetDir)\HttpListener.dll"                  KeyPath="no" />
+          <File Id="Gamedll"            Source="$(var.Terrarium.TargetDir)\Game.dll"                          KeyPath="no" />
+          <File Id="Glassdll"           Source="$(var.Terrarium.TargetDir)\Glass.dll"                         KeyPath="no" />
+          <File Id="OrganismBase.dll"   Source="$(var.Terrarium.TargetDir)\OrganismBase.dll"                  KeyPath="no" />
+          <File Id="Rendererdll"        Source="$(var.Terrarium.TargetDir)\Renderer.dll"                      KeyPath="no" />
+          <File Id="DXVBLib.dll"        Source="$(var.Terrarium.TargetDir)\DXVBLib.dll"                       KeyPath="no" />
+        </Component>
       </Feature>
     </FeatureGroup>
 
@@ -13,11 +49,9 @@
       <Directory Id="ProgramFilesFolder">
         <Directory Id="CompanyFolder" Name="Eugenio Miró">
           <Directory Id="INSTALLLOCATION" Name="Terrarium 2.0">
-            <Merge Id="Terrarium2.SetupMM" SourceFile="$(var.Terrarium2.SetupMM.TargetPath)" DiskId="1" Language="1033"/>
           </Directory>
         </Directory>
       </Directory>
     </Directory>
-    
   </Fragment>
 </Wix>

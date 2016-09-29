@@ -225,6 +225,33 @@
              Can't create a window this way.  Use the Current property.
             </summary>
         </member>
+        <member name="P:Terrarium.Client.SplashScreen.SplashWindow.Current">
+            <summary>
+             Returns the current splash window.  If one doesn't exist
+             then one is created on the fly.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Client.SplashScreen.SplashWindow.Image">
+            <summary>
+             Set the image used as the background of the splash window.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Client.SplashScreen.SplashWindow.MinimumDuration">
+            <summary>
+             This is the minimum amount of time the window will display for.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Client.SplashScreen.SplashWindow.ShowShadow">
+            <summary>
+             Should a drop shadow be displayed?
+            </summary>
+        </member>
+        <member name="P:Terrarium.Client.SplashScreen.SplashWindow.TransparencyKey">
+            <summary>
+             Enabled a transparency key color for the image.  This will
+             generate a *cool* splash screen with transparent regions.
+            </summary>
+        </member>
         <member name="M:Terrarium.Client.SplashScreen.SplashWindow.CreateNativeWindow">
             <summary>
              Creates a native Windows OS, Window to represent the
@@ -292,33 +319,6 @@
              layering support.
             </summary>
             <returns>True if the OS supports transparency and layering, false otherwise.</returns>
-        </member>
-        <member name="P:Terrarium.Client.SplashScreen.SplashWindow.Current">
-            <summary>
-             Returns the current splash window.  If one doesn't exist
-             then one is created on the fly.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Client.SplashScreen.SplashWindow.Image">
-            <summary>
-             Set the image used as the background of the splash window.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Client.SplashScreen.SplashWindow.MinimumDuration">
-            <summary>
-             This is the minimum amount of time the window will display for.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Client.SplashScreen.SplashWindow.ShowShadow">
-            <summary>
-             Should a drop shadow be displayed?
-            </summary>
-        </member>
-        <member name="P:Terrarium.Client.SplashScreen.SplashWindow.TransparencyKey">
-            <summary>
-             Enabled a transparency key color for the image.  This will
-             generate a *cool* splash screen with transparent regions.
-            </summary>
         </member>
         <member name="T:Terrarium.Client.Properties.Resources">
             <summary>

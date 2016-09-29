@@ -52,9 +52,9 @@
     <Content Include="Resources\Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Terrarium2.SetupMM\Terrarium2.SetupMM.wixproj">
-      <Name>Terrarium2.SetupMM</Name>
-      <Project>{28516597-bf50-44aa-bda4-1132dad43274}</Project>
+    <ProjectReference Include="..\Terrarium\Terrarium.csproj">
+      <Name>Terrarium</Name>
+      <Project>{0f3c0d45-0dcc-43c9-bc43-c34c2029fff4}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>

@@ -1,0 +1,1800 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Renderer</name>
+    </assembly>
+    <members>
+        <member name="T:Terrarium.Renderer.DirectX.DirectDrawClippedRect">
+            <summary>
+             Represents a sprite clipping structure that can
+             be used to draw sprites between surfaces will
+             full edge clipping.
+             These are public members instead of property accessors because they sometimes
+             need to be passed as ref or out arguments and these aren't supported on accessors.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawClippedRect.Destination">
+            <summary>
+             The destination rectangle
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawClippedRect.Source">
+            <summary>
+             The source rectangle
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawClippedRect.Invisible">
+            <summary>
+             Has the sprite been clipped outside of the view
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawClippedRect.ClipTop">
+            <summary>
+             Has the sprite been clipped along the top
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawClippedRect.ClipBottom">
+            <summary>
+             Has the sprite been clipped along the bottom
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawClippedRect.ClipLeft">
+            <summary>
+             Has the sprite been clipped along the left
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawClippedRect.ClipRight">
+            <summary>
+             Has the sprite been clipped along the right.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawClippedRect.ClipRectBounds(System.Drawing.Rectangle,System.Drawing.Rectangle,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="dest"></param>
+            <param name="bounds"></param>
+            <param name="factor"></param>
+        </member>
+        <member name="T:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface">
+            <summary>
+             Encapsulate the logic for implementing a sprite surface capable
+             of rendering animated sprites.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.animationFrames">
+            <summary>
+             The number of animation frames on the
+             sheet.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.animationTypes">
+            <summary>
+             The number of separate animation types
+             on the sheet.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.ddsurface">
+            <summary>
+             The real DirectDraw surface pointer
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.frameHeight">
+            <summary>
+             The height of a single frame of animation.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.frameWidth">
+            <summary>
+             The width of a single frame of animation.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.spriteName">
+            <summary>
+             The name of this sprite sheet
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.#ctor(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+             Creates a new sprite sheet with the given name from an image.
+             The sheet is broken into sprites given the number of horizontal
+             and vertical frames available on this sheet.
+            </summary>
+            <param name="spriteName">The name of the sprite sheet</param>
+            <param name="spriteImagePath">The path to the image to load.</param>
+            <param name="xFrames">The number of horizontal frames on this sheet.</param>
+            <param name="yFrames">The number of vertical frames on this sheet.</param>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.FrameHeight">
+            <summary>
+             The height of each frame of animation.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.FrameWidth">
+            <summary>
+             The width of each from of animation.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.SpriteSurface">
+            <summary>
+             Access to the real DirectDraw surface used to create this sprite surface.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.SpriteName">
+            <summary>
+             The name of this sprite surface.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.GrabSprite(System.Int32,System.Int32)">
+            <summary>
+             Grab a sprite given the x,y frame offset
+            </summary>
+            <param name="xFrame">Retrieve the Xth horizontal frame.</param>
+            <param name="yFrame">Retrieve the Yth vertical frame.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.GrabSprite(System.Int32,System.Int32,System.Drawing.Rectangle,System.Drawing.Rectangle)">
+            <summary>
+             Retreive a sprite that has to be drawn within the given destination
+             rectangle, given the bounds of the viewport.
+            </summary>
+            <param name="xFrame">Retrieve the Xth horizontal frame.</param>
+            <param name="yFrame">Retrieve the Yth vertical frame.</param>
+            <param name="dest">The destination rectangle for the sprite.</param>
+            <param name="bounds">The view rectangle bounds.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSpriteSurface.GrabSprite(System.Int32,System.Int32,System.Drawing.Rectangle,System.Drawing.Rectangle,System.Int32)">
+            <summary>
+             Retreive a sprite that has to be drawn within the given destination
+             rectangle, given the bounds of the viewport.  Also contains a scaling
+             factor.
+            </summary>
+            <param name="xFrame">Retrieve the Xth horizontal frame.</param>
+            <param name="yFrame">Retrieve the Yth vertical frame.</param>
+            <param name="dest">The destination rectangle for the sprite.</param>
+            <param name="bounds">The view rectangle bounds.</param>
+            <param name="factor">A scaling factor.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Terrarium.Renderer.DirectX.DirectDrawSurface">
+            <summary>
+             Managed Wrapper for a DirectX7 DirectDraw Surface.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSurface.DefaultSurfaceDescription">
+            <summary>
+             Defines a default surface description
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSurface.ImageSurfaceDescription">
+            <summary>
+             Defines a surface description used for image surfaces
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSurface.SystemMemorySurfaceDescription">
+            <summary>
+             Defines a surface description for a system memory surface.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSurface.descriptor">
+            <summary>
+             Pointer to the surface description used to create this surface.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSurface.image">
+            <summary>
+             File based image used to initialize this surface.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSurface.rect">
+            <summary>
+             The size of the surface.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSurface.surface">
+            <summary>
+             Pointer to the real DirectDrawSurface7 class
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSurface.transparencyEnabled">
+            <summary>
+             Determines if transparency is enabled for this surface.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectDrawSurface.transparencyKey">
+            <summary>
+             The transparency key for this surface
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.#cctor">
+            <summary>
+             Static constructor used to intialize static surface description fields.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.#ctor(System.Int32,System.Int32)">
+            <summary>
+             Creates a new DirectDrawSurface given a width and height.
+            </summary>
+            <param name="x">The width of the surface.</param>
+            <param name="y">The height of the surface.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.#ctor(DxVBLib.DDSURFACEDESC2)">
+            <summary>
+             Create a new surface given a surface description.
+            </summary>
+            <param name="surfaceDescription">Surface Description</param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.#ctor(System.String)">
+            <summary>
+             Create a new surface given an image path
+            </summary>
+            <param name="imagePath">Path to an image file.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.#ctor(System.String,DxVBLib.DDSURFACEDESC2)">
+            <summary>
+             Create a new surface from an image and a surface description.
+            </summary>
+            <param name="imagePath">Path to an image file.</param>
+            <param name="surfaceDescription">Surface Description.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.#ctor(DxVBLib.DirectDrawSurface7)">
+            <summary>
+             Initialize a new surface based on a previously created surface
+            </summary>
+            <param name="directDrawSurface">The native DirectDraw surface used as reference.</param>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.DefaultColorKey">
+            <summary>
+             The default transparency color key.  Points to the MagentaColorKey
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.MagentaColorKey">
+            <summary>
+             Creates a transparency key for the color Magenta.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.WhiteColorKey">
+            <summary>
+             Creates a transparency key for the color White
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.LimeColorKey">
+            <summary>
+             Create a transparency key for the color Lime
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.InVideo">
+            <summary>
+             Determines if the surface is in video memory
+             or system memory.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.ImagePath">
+            <summary>
+             Path to the image used to initialize this surface if one exists.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.TransparentSurface">
+            <summary>
+             Determines if this is a transparent surface.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.TransparencyKey">
+            <summary>
+             Sets the transparency key for this surface.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.Descriptor">
+            <summary>
+             Modifies the Surface Description
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.Rect">
+            <summary>
+             Retrieves the size of this surface.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectDrawSurface.Surface">
+            <summary>
+             Provides access to the native surface object
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.GenerateColorKey(System.Byte,System.Byte,System.Byte)">
+            <summary>
+             Attempts to generate a transparency key from an r,g,b byte color.
+            </summary>
+            <param name="r">Red component</param>
+            <param name="g">Green component</param>
+            <param name="b">Blue component</param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.CountBits(System.Int32)">
+            <summary>
+             Helper function for counting bits used when creating transparency keys.
+            </summary>
+            <param name="number">The number of bits</param>
+            <returns>The number specified by the number of bits.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.RestoreSurface">
+            <summary>
+             Recreate the surface in the instance that the image
+             memory is lost do to a video mode switch.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.CreateSurface">
+            <summary>
+             Helper function used to complete initialization of a surface.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.BltColorFill(System.Drawing.Rectangle@,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="rect"></param>
+            <param name="fillvalue"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.SetForeColor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="color"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.GetDC">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.ReleaseDC(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.IsLost">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.GetBackBufferSurface">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.Blt(System.Drawing.Rectangle@,Terrarium.Renderer.Engine.IGraphicsSurface,System.Drawing.Rectangle@,Terrarium.Renderer.Engine.BltFlags)">
+            <summary>
+            
+            </summary>
+            <param name="destRect"></param>
+            <param name="surface"></param>
+            <param name="srcRect"></param>
+            <param name="flags"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectDrawSurface.BltFast(System.Int32,System.Int32,Terrarium.Renderer.Engine.IGraphicsSurface,System.Drawing.Rectangle@,Terrarium.Renderer.Engine.BltFastFlags)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="surface"></param>
+            <param name="rectangle"></param>
+            <param name="flags"></param>
+        </member>
+        <member name="T:Terrarium.Renderer.DirectX.DirectXException">
+            <summary>
+             Represents a DirectXException so that real COM/DirectX
+             exceptions can be wrapped into a managed exception and
+             handled by the application.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectXException.#ctor(System.String)">
+            <summary>
+             Creates a new exception from a base message.
+            </summary>
+            <param name="msg">Custom message</param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectXException.#ctor(System.String,System.Exception)">
+            <summary>
+             Creates a new exception from a base message and an original exception.
+            </summary>
+            <param name="msg">Custom message</param>
+            <param name="inner">The original exception</param>
+        </member>
+        <member name="T:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine">
+            <summary>
+             Provides access to the DirectDraw and DirectX interfaces
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.directX">
+            <summary>
+             Holds an instance of the DirectX7 native object
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.directDraw">
+            <summary>
+             Holds an instance of the DirectDraw7 native object
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.DirectDraw">
+            <summary>
+             Provides access to the native DirectDraw7 object
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.SetFullScreenMode(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.DirectX.DirectX7GraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.DirectX10GraphicsEngine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.SetFullScreenMode(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX10GraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.DirectX9GraphicsEngine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.SetFullScreenMode(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.DirectX9GraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.BltFlags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.BltFlags.KeySrc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.BltFlags.BltWait">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.ColorKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.ColorKey.High">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.ColorKey.Low">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.BltFastFlags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.BltFastFlags.SrcColorKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.BltFastFlags.FastWait">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.GraphicsEngine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.Engine.GraphicsEngine._profiler">
+            <summary>
+             Holds an instance of the DirectDrawProfiler timing object.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.GraphicsEngine.Profiler">
+            <summary>
+             Provides access to the DirectDrawProfiler timing object.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.GraphicsEngine.Current">
+            <summary>
+            Currently configured GraphicsEngine
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.IGraphicsEngine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.SetFullScreenMode(System.IntPtr)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.IGraphicsSurface">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.IGraphicsSurface.TransparencyKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.BltColorFill(System.Drawing.Rectangle@,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="rect"></param>
+            <param name="fillvalue"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.SetForeColor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="color"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.GetDC">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.ReleaseDC(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.IGraphicsSurface.InVideo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.IsLost">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Terrarium.Renderer.Engine.IGraphicsSurface.Rect">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.GetBackBufferSurface">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.Blt(System.Drawing.Rectangle@,Terrarium.Renderer.Engine.IGraphicsSurface,System.Drawing.Rectangle@,Terrarium.Renderer.Engine.BltFlags)">
+            <summary>
+            
+            </summary>
+            <param name="destRect"></param>
+            <param name="surface"></param>
+            <param name="srcRect"></param>
+            <param name="flags"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.IGraphicsSurface.BltFast(System.Int32,System.Int32,Terrarium.Renderer.Engine.IGraphicsSurface,System.Drawing.Rectangle@,Terrarium.Renderer.Engine.BltFastFlags)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="surface"></param>
+            <param name="rectangle"></param>
+            <param name="flags"></param>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.SetFullScreenMode(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.ManagedDirectXGraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Terrarium.Renderer.Engine.XnaGraphicsEngine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.GetWindowRect(System.IntPtr,System.Drawing.Rectangle@)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="windowRect"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.SetFullScreenMode(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.SetWindow(System.IntPtr)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.CreateSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.CreatePrimarySurface(System.IntPtr,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="fullScreen"></param>
+            <param name="doubleBuffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.Engine.XnaGraphicsEngine.CreateWorkSurface(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Terrarium.Renderer.HeightMap">
+            <summary>
+             Seeds a given array with a division/offset based height map.
+             Used by Terrarium for generating variable terrarain.
+             Additional features include computation of a sea level
+             based on percentage area and clamping of height values
+             via a granularity.  The current height map supports 256
+             height values, but can be modified to produce much more
+             detailed terrain.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.HeightMap.rand">
+            <summary>
+             A random number generator used throughout the process
+             of fractal height map generation.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.HeightMap.worldMap">
+            <summary>
+             The actual height map being generated.  By the time
+             the height map is complete the values are already
+             clamped.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.HeightMap.xMapTiles">
+            <summary>
+             The number of horizontal map locations.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.HeightMap.yMapTiles">
+            <summary>
+            
+             The number of vertical map locations.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.HeightMap.Granularity">
+            <summary>
+             This controls how far the algorithm recurses.
+             Whenever the granularity is greater than the
+             distance between points, the algorithm stops.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.HeightMap.lastSeaLevel">
+            <summary>
+             Make sure we can break out of the sea level creation
+             routines in the case we get into a loop where we can't
+             get our percentages correct.  This happens on smaller
+             maps quite easily.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.HeightMap.MaxLevel">
+            <summary>
+             The maximum number assigned to any point on the map.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.HeightMap.seaLevel">
+            <summary>
+             Gives an initial sea level value to begin processing
+             the grid for a sea level percentage.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.HeightMap.SeaPercent">
+            <summary>
+             Gives a sea level percentage for renegotiating which
+             points are sea level.  This dynamically modifies the
+             seaLevel value to achieve consistent results.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.HeightMap.SeaVariance">
+            <summary>
+             The allowable variance in sea level area.  This makes
+             sea level between (seaPercent - seaVariance),(seaPercent
+             + seaVariance).
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.HeightMap.BumpinessFactor">
+            <summary>
+             The bumpiness factor for terrain computations.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.HeightMap.#ctor(System.Int32[0:,0:],System.Int32,System.Int32)">
+            <summary>
+             Computes a new height map and fills in the by ref integer
+             array with world map values.
+            </summary>
+            <param name="worldMap">A by ref int array that holds the world values.</param>
+            <param name="xMapTiles">The number of horizontal map locations.</param>
+            <param name="yMapTiles">The number of vertical map locations.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.HeightMap.ComputeSeaLevel">
+            <summary>
+             Attempts to lock sea level into a specific amount of
+             area within the map.  This method either raises or lowers
+             the sea level value to achieve a consistent amount of water
+             in the final map.  Note that this method doesn't change the
+             height field, only how the normalization process clamps
+             height values to tile values.
+            </summary>
+            <returns>True if the iteration of the method achieved the desired results, false if it should be run again.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.HeightMap.NormalizeMapToBaseTiles">
+            <summary>
+             <para>
+              Clamps the map values from their original height field
+              values, to values used by the world mapping class.  This
+              should probably be moved into the World class, but for
+              more advanced height fields that support banding, this
+              method would actually be enhanced to normalize the height
+              field data to bands (deep sea, sea, shore, grass, hills,
+              rock, steep, mountain peak, etc..)
+             </para>
+             <para>
+              In the current iteration all land is set to 0, unless
+              it is below seaLevel, in which case it is set to 1.
+             </para>
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.HeightMap.NormalizeMap">
+            <summary>
+             Diamond fractal generation only works optimally
+             when the size of the map is of a very specific
+             height and width, and it only works properly if
+             the map is square.  The NormalizeMap method attempts
+             to overcome this flaw in the algorithm by iteratively
+             checking points for set values and finally *finding*
+             points that can be used to compute the mid-point.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.HeightMap.NearestPoint(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Find the nearest point to the given point by using
+             x,y delta computations.  This method is used to facilitate
+             normalization of unset points in the map.
+            </summary>
+            <param name="x">The x coordinate of the point being checked.</param>
+            <param name="y">The y coordinate of the point being checked.</param>
+            <param name="xdelta">The direction to move on the x axis, should be -1,1</param>
+            <param name="ydelta">The direction to move on the y axis, should be -1,1</param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.HeightMap.MapArea(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             <para>
+              Computes a fractal grid in the given area.  Since this
+              is a fractal algorithm, this method is called recursively on
+              successively smaller map areas until the entire map has
+              been computed.
+             </para>
+             <para>
+              If the granularity of the distance between the points is less
+              than the established granularity (2 in this revision), then
+              the method quits out.  You can create a sparse map by giving
+              less of a granularity, however, the normalization function
+              will most likely populate all points on the map with valid
+              values anyway based on nearest point calculations.
+             </para>
+            </summary>
+            <param name="x0"></param>
+            <param name="y0"></param>
+            <param name="x1"></param>
+            <param name="y1"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.HeightMap.SquareAverage(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Given 4 points, computes a center point based
+             on average height.  An additional random variance
+             factor is applied to the center point to enable
+             *bumpy* transitions.
+            </summary>
+            <param name="p1">One of 4 corner point heights.</param>
+            <param name="p2">One of 4 corner point heights.</param>
+            <param name="p3">One of 4 corner point heights.</param>
+            <param name="p4">One of 4 corner point heights.</param>
+            <param name="v">The variance factor used for bumpiness</param>
+            <returns>The averaged height, +/- a random bumpy factor</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.HeightMap.InitMap">
+            <summary>
+             Initialize a height field map with values for the initial corners
+             and center.  This ensures that the map will have a very specific
+             and consistent look and feel once it is complete.  This method
+             current places midPoint values in all 4 corners and the center.
+             Then dynamically computes a high point and low point that will
+             be used skew the map.  Note that InitMap sets very specific
+             points.  If the points set are selected randomly, then the method
+             of seeding won't necessarily work, since fractal subdivision uses
+             very specific points each iteration.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.MiniMapUpdatedEventArgs">
+            <summary>
+             Provides access to information about an updated
+             MiniMap (which is the small scaled down map that shows
+             a more global view of the terrarain.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.MiniMapUpdatedEventArgs.#ctor(System.Drawing.Bitmap)">
+            <summary>
+             Creates a new set of event arguments given the
+             new minimap bitmap.
+            </summary>
+            <param name="miniMap">The new minimap</param>
+        </member>
+        <member name="P:Terrarium.Renderer.MiniMapUpdatedEventArgs.MiniMap">
+            <summary>
+             Provides access to the minimap.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.MiniMapUpdatedEventHandler">
+            <summary>
+             Delegate used to define an event used to notify clients
+             of a mini map update.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.OrganismClickedEventArgs">
+            <summary>
+             Provides access to information about a click
+             in the TerrariumDirectDrawGameView.  A click
+             can correspond to a creature, and this class
+             provides access to the creature clicked.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.OrganismClickedEventArgs.#ctor(OrganismBase.OrganismState)">
+            <summary>
+             Creates event args that identify a clicked creature.
+            </summary>
+            <param name="state">State of the creature that was clicked.</param>
+        </member>
+        <member name="P:Terrarium.Renderer.OrganismClickedEventArgs.OrganismState">
+            <summary>
+             Provides access to the state object of the clicked creature.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.OrganismClickedEventHandler">
+            <summary>
+             Delegate used to define an event used to notify clients
+             that a creature has been clicked in the game view.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.TerrariumGameView">
+            <summary>
+             Encapsulates all of the drawing code for the Terrarium Game
+             View.  This class makes heavy use of the DirectDraw APIs in
+             order to provide high speed animation.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TerrariumGameView._screenSurface">
+            <summary>
+             The primary screen surface for the picture box.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TerrariumGameView._backBufferSurface">
+            <summary>
+             The back buffer surface used with the picture box.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+             Overrides the Painting logic because painting will be handled
+             using timers and DirectX.  If the control is in design mode, then
+             clear it because DirectX isn't available yet.
+            </summary>
+            <param name="e">Graphics context objects</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+             Don't paint the background when a background erase is requested.
+             Hurts performance and causes flicker.
+            </summary>
+            <param name="e">Graphics context objects</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.#ctor">
+            <summary>
+             Creates a new instance of the game view and initializes any properties.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.Profiler">
+            <summary>
+             Provides access to the game profiler.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.RenderTime">
+            <summary>
+             Returns the amount of time required to render a scene.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.Samples">
+            <summary>
+             Returns the number of samples (frames) obtained.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.Paused">
+            <summary>
+             Pauses the TerrariumGameView and stops rendering.  A call to 
+             RenderFrame will automatically unpause the animation.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.MiniMap">
+            <summary>
+             Provides access to the bitmap representing the minimap for the
+             currently loaded world.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.TerrariumMessage">
+            <summary>
+             Enables the textual display of a message over top of
+             the Terrarium view.  This property accepts newlines and
+             centers the text on the screen.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawDestinationLines">
+            <summary>
+             Enables the drawing of organism destination lines
+             within the Terrarium Client
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawScreen">
+            <summary>
+             Controls the rendering of the entire game view.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawBoundingBox">
+            <summary>
+             Controls the rendering of organism bounding boxes useful
+             for movement debugging.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawBackgroundGrid">
+            <summary>
+             Controls rendering of a special background that contains
+             a grid overlay that mimics the Terrarium application's
+             cell grid.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.Cursor">
+            <summary>
+             Overrides the cursor property so that
+             custom cursors can be implement.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawText">
+            <summary>
+             Determines if sprite labels should be drawn.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.VideoMemory">
+            <summary>
+             Determines if the primary surfaces are in video memory
+             or not.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.ViewSize">
+            <summary>
+             Returns the size of the viewport window.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.ActualSize">
+            <summary>
+             Returns the full size of the world.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumGameView.DrawCursor">
+            <summary>
+            Determines whether to 
+            </summary>
+        </member>
+        <member name="E:Terrarium.Renderer.TerrariumGameView.OrganismClicked">
+            <summary>
+             Clients can connect to this event and be notified of
+             click events that correspond to creatures within the view.
+            </summary>
+        </member>
+        <member name="E:Terrarium.Renderer.TerrariumGameView.MiniMapUpdated">
+            <summary>
+             Clients can connect to this event and be notified of
+             mini map changes that occur during map transitions.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.InitializeComponent">
+            <summary>
+             Initialize Component
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ClearProfiler">
+            <summary>
+             Clear the profiler
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnMouseMove(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+             Overrides OnMouseMove to enable custom cursor rendering.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.CheckScroll">
+            <summary>
+             Computes whether scrolling should occur based on mouse location and
+             hovering.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnMouseLeave(System.EventArgs)">
+            <summary>
+             Overrides the OnMouseLeave event to provide custom cursor manipulation
+            </summary>
+            <param name="e">Null</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnMouseEnter(System.EventArgs)">
+            <summary>
+             Overrides the OnMouseEnter event to provide custom cursor manipulation
+            </summary>
+            <param name="e">Null</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.InitializeGraphicEngine(System.Boolean)">
+            <summary>
+             Initializes DirectDraw rendering APIs.  The function can be called to initialize
+             both Windowed and FullScreen mode, but FullScreen mode isn't fully
+             implemented.
+            </summary>
+            <param name="fullscreen">If true then fullscreen will be enabled.</param>
+            <returns>True if DirectDraw is initialized.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.CreateWindowedSurfaces">
+            <summary>
+             Method used to create the necessary surfaces required for windowed
+             mode.
+            </summary>
+            <returns>True if the surfaces are created, otherwise false.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.CreateFullScreenSurfaces">
+            <summary>
+             Creates the surfaces required for full screen operation.
+            </summary>
+            <returns>True if the surfaces are initialized, false otherwise.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnMouseUp(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+             Overrides OnMouseUp in order to enable creature selection.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.SelectAnimalFromPoint(System.Drawing.Point,System.Boolean)">
+            <summary>
+             Attempts to select a creature given the world offset point.
+            </summary>
+            <param name="p">Point to check for creature intersection.</param>
+            <param name="selectThisAnimalOnly">Determines if this creature should be added to the selection</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnMiniMapUpdated(Terrarium.Renderer.MiniMapUpdatedEventArgs)">
+            <summary>
+             Helper function for firing the MiniMapUpdated event
+             whenever a new mini-map becomes available.
+            </summary>
+            <param name="e">Mini-map event arguments containing the newest map.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.OnOrganismClicked(Terrarium.Renderer.OrganismClickedEventArgs)">
+            <summary>
+             Helper function for firing the OrganismClicked event
+             whenever an organism is selected within the game
+             view.
+            </summary>
+            <param name="e">Event arguments detailing which organism was clicked.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.AddBackgroundSlide">
+            <summary>
+             Used to change the background slide of the Terrarium.
+             Only a single background slide can be added with this
+             revision.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.AddSpriteSurface(System.String)">
+            <summary>
+             Adds a generic 10frame by 40frame sprite surface that
+             is compatible with creature animation.
+            </summary>
+            <param name="name">The name of the sprite sheet.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.AddComplexSpriteSurface(System.String,System.Int32,System.Int32)">
+            <summary>
+             Add a complex sprite surface given the number of frames.
+            </summary>
+            <param name="name">The name of the sprite sheet.</param>
+            <param name="xFrames">The number of frames width-wise.</param>
+            <param name="yFrames">The number of frames height-wise.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.AddComplexSizedSpriteSurface(System.String,System.Int32,System.Int32)">
+            <summary>
+             Add a complex sprite surface that takes advantage of sized sprites
+            </summary>
+            <param name="name">The name of the sprite sheet.</param>
+            <param name="xFrames">The number of frames width wise.</param>
+            <param name="yFrames">The number of frames height wise.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.CreateWorld(System.Int32,System.Int32)">
+            <summary>
+             Tell the game view to create a new world and reset the rendering
+             surfaces.
+            </summary>
+            <param name="xPixels">The number of world pixels</param>
+            <param name="yPixels">The number of world pixels</param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ReInitSurfaces">
+            <summary>
+             Reinitialize all surfaces after they have been lost.
+             This method invokes the garbage collector to make sure
+             that any COM references have been cleaned up, else surface
+             renewal won't work correctly.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ResizeViewer">
+            <summary>
+            Handles logic for resizing the game view
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.RenderFrame">
+            <summary>
+             Renders a new frame of animation.  This is the entry point for drawing
+             code and is required every time a new frame is to be drawn.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.TeleporterZIndex">
+            <summary>
+             ZIndexes the teleporters so they can be properly rendered
+             on the screen.
+            </summary>
+            <returns>The z-indices for the teleporters</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.RenderTeleporter(System.Int32,System.Int32)">
+            <summary>
+             Renders any teleporters that exist between the given z
+             ordered locations.
+            </summary>
+            <param name="lowZ">The minimum z index.</param>
+            <param name="highZ">The maximum z index.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.PaintMessage">
+            <summary>
+             Controls the rendering of textual messages to the Terrarium
+             client screen.  Since DrawText is invoked each time, this method
+             is slow.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.PaintCursor">
+            <summary>
+             Paints a custom cursor rather than the default windows cursors.
+             Can be used to enable cursor animation, but in the current
+             revision simply paints a custom cursor based on mouse location.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.PaintSprites(Terrarium.Renderer.Engine.IGraphicsSurface,System.Boolean)">
+            <summary>
+             Paint sprites on the given surface.  This method is the meat
+             of the graphics engine.  Normally, creatures are painted to
+             the work surface using this method.  To increase performance plants
+             are rendered to the background surface only once every 10 frames.
+             Lots of work happening in this function so either read through the
+             code or examine the Terrarium Graphics Engine whitepaper for more
+             information.
+            </summary>
+            <param name="surf">The surface to render to.</param>
+            <param name="PlantsOnly">True to render plants, false to render animals.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.GetBoundsOfState(OrganismBase.OrganismState)">
+            <summary>
+             Uses the bounding box computation methods to compute a
+             box that can be printed within the graphics engine.  This
+             is used for debugging creature pathing.
+            </summary>
+            <param name="orgState">The state of the creature to compute a bounding box for.</param>
+            <returns>A bounding box.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.InitTeleporter(Terrarium.Game.TeleportZone)">
+            <summary>
+             Sets up the hack table with teleporter information.
+             The hack table is used to quickly implement new types
+             of sprites or implement sprites linked to immutable
+             objects (like the teleporter).
+            </summary>
+            <param name="zone">The teleporter zone to initialize.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.InitOrganism(OrganismBase.OrganismState)">
+            <summary>
+             Initializes a new organism state by computed and
+             attaching a TerrariumSprite class that can be used
+             to control on screen movement, animation skins, and
+             selection.
+            </summary>
+            <param name="orgState">The organism state to attach the sprite animation information to.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.UpdateWorld(Terrarium.Game.WorldVector)">
+            <summary>
+             Updates the sprites controlled by the game view by providing a new
+             world vector from the game engine.
+            </summary>
+            <param name="worldVector">The new world vector of organisms.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ResetTerrarium">
+            <summary>
+             Resets the Terrarium and prepares it for a new world, without
+             having to reboot the entire game.  
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ClearBackground">
+            <summary>
+             Clear any background surfaces to black.  This helps
+             find rendering artifacts where portions of a scene
+             aren't updated.  Since the background is cleared to
+             black, the portions not updated are clearly visible.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.PaintBackground">
+            <summary>
+             Renders the Terrarium background image.  Also renders
+             plants on the background for static plant drawing to
+             enable higher performance.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ScrollUp(System.Int32)">
+            <summary>
+             Controls scrolling of the viewport around the world map.
+            </summary>
+            <param name="pixels">The number of pixels to scroll up</param>
+            <returns>The number of pixels actually scrolled.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ScrollDown(System.Int32)">
+            <summary>
+             Controls scrolling of the viewport around the world map.
+            </summary>
+            <param name="pixels">The number of pixels to scroll down</param>
+            <returns>The number of pixels actually scrolled.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ScrollLeft(System.Int32)">
+            <summary>
+             Controls scrolling of the viewport around the world map.
+            </summary>
+            <param name="pixels">The number of pixels to scroll left</param>
+            <returns>The number of pixels actually scrolled.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.ScrollRight(System.Int32)">
+            <summary>
+             Controls scrolling of the viewport around the world map.
+            </summary>
+            <param name="pixels">The number of pixels to scroll right</param>
+            <returns>The number of pixels actually scrolled.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumGameView.CenterTo(System.Int32,System.Int32)">
+            <summary>
+             Controls scrolling of the viewport around the world map.  Attempts
+             to center the view to the defined point.
+            </summary>
+            <param name="xOffset">X location to center to.</param>
+            <param name="yOffset">Y location to center to.</param>
+        </member>
+        <member name="T:Terrarium.Renderer.TerrariumSpriteSurface">
+            <summary>
+             Manages Terrarium Sprite Surfaces.  Sprite Surfaces
+             are linked to one or more actual surfaces.  Each surface
+             can be used to represent a creature's size.  Each sprite
+             surface is uniquely identified by name, and is capable of
+             returning the appropriate internal sprite sheet based on
+             the look-up method.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TerrariumSpriteSurface.surfaces">
+            <summary>
+             A collection of surfaces attached to this sprite surface.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TerrariumSpriteSurface.sizedSurfaces">
+            <summary>
+             Determines if this instance supports sized surfaces.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSpriteSurface.#ctor">
+            <summary>
+             Creates a new sprite surface, initializing the size
+             array to an initial 49 slots.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSpriteSurface.AttachSurface(Terrarium.Renderer.DirectX.DirectDrawSpriteSurface)">
+            <summary>
+             Attaches a single, unsized surface to this instance.
+             If sizedSurface was previously set, it is now unset.
+            </summary>
+            <param name="ddss">The surface to attach.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSpriteSurface.AttachSurface(Terrarium.Renderer.DirectX.DirectDrawSpriteSurface,System.Int32)">
+            <summary>
+             Attaches a sized surface to this instance.  No bounds
+             checking is performed.  The size should be between 0 and 48.
+             The sizedSurfaces field is set to true.
+            </summary>
+            <param name="ddss">The sprite surface to attach to this instance.</param>
+            <param name="size">The size of this sprite surface.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSpriteSurface.GetDefaultSurface">
+            <summary>
+             Gets the default surface.  This only works for unsized surfaces.
+            </summary>
+            <returns>The default, non-sized surface.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSpriteSurface.GetClosestSurface(System.Int32)">
+            <summary>
+             Attempts to look-up the surface closest to the given size.
+            </summary>
+            <param name="size">The ideal size of the surface requrested.</param>
+            <returns>A surface that closesly resembles the ideal surface in size.</returns>
+        </member>
+        <member name="T:Terrarium.Renderer.TerrariumSpriteSurfaceManager">
+            <summary>
+             The Terrarium sprite surface manager manages keyed terrarium
+             sprite surfaces.  It attempts to load resources first from
+             disk based image, then from assembly based resources.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSpriteSurfaceManager.#ctor">
+            <summary>
+             Initializes a new sprite surface manager and clears it out.
+             Clearing it sets up the necessary internal field values.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSpriteSurfaceManager.Count">
+            <summary>
+             The number of currently loaded sprite surfaces.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSpriteSurfaceManager.Item(System.String)">
+            <summary>
+             Returns a sprite surface for the given sprite key.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSpriteSurfaceManager.Item(System.String,System.Int32,System.Boolean)">
+            <summary>
+             Returns an optimally sized sprite surface for a given sprite
+             key, a given ideal size, and whether or not the type of sprite
+             is that of a creature or plant.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSpriteSurfaceManager.Sprites">
+            <summary>
+             Access to the hashtable of sprites.  This is direct access to
+             the underlying holding structure.  You shouldn't directly manipulate
+             the hashtable returned by this property.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSpriteSurfaceManager.isSourceValid(System.String,System.String)">
+            <summary>
+             Determines if the given file name is a valid match to the
+             given key.  
+            </summary>
+            <param name="name">The name of the file to check.</param>
+            <param name="key">The key name to check the file against.</param>
+            <returns>True if the file name is valid given the key, false otherwise.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSpriteSurfaceManager.AddSizedSurface(System.String,System.Int32,System.Int32)">
+            <summary>
+             Adds a new sized surface to the sprite manager.  A sized surface
+             attempts to load multiple surfaces for the various sizes of a keyed
+             sprite.
+            </summary>
+            <param name="key">The name of the sprite surface.</param>
+            <param name="xFrames">The number of frames of animation.</param>
+            <param name="yFrames">The number of frame types.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSpriteSurfaceManager.Add(System.String,System.Int32,System.Int32)">
+            <summary>
+             Add a single size surface.
+            </summary>
+            <param name="key">The key of the sprite surface.</param>
+            <param name="xFrames">The number of frames of animation.</param>
+            <param name="yFrames">The number of frame types.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSpriteSurfaceManager.Clear">
+            <summary>
+             Clears the sprite surface manager.  Creates a new case
+             insensitive hash of sprite surfaces.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSpriteSurfaceManager.Remove(System.String)">
+            <summary>
+             Removes a sprite surface from the manager.
+            </summary>
+            <param name="key">The sprite key of the sprite surface to remove.</param>
+        </member>
+        <member name="T:Terrarium.Renderer.TerrariumTextSurfaceManager">
+            <summary>
+             Manages text based surfaces.  Each surface is keyed
+             to the original text that creates it.  For performance
+             lengthy strings are concatenated.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TerrariumTextSurfaceManager.StandardFontRect">
+            <summary>
+             Represents the rect each piece of text is drawn
+             within.  Each text surface is made exactly this
+             size.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TerrariumTextSurfaceManager.sprites">
+            <summary>
+             The sprites associated with each bit of text.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumTextSurfaceManager.#cctor">
+            <summary>
+             Initialize the standard font rectangle.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumTextSurfaceManager.#ctor">
+            <summary>
+             Initialize a new text surface manager and any internal
+             fields.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumTextSurfaceManager.Count">
+            <summary>
+             Returns the number of text surfaces currently cached.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumTextSurfaceManager.Item(System.String)">
+            <summary>
+             Gets the text surface associated with the given key.  If
+             the surface doesn't exist, it is created.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumTextSurfaceManager.Add(System.String)">
+            <summary>
+             Adds a new string to the text surface manager.  This creates
+             the associated text surface so that text can be rendered with
+             a fast Blt rather than with a DrawText call.  Note that caching
+             could be done in a much more efficient manner and some text
+             surfaces will have identical contents.
+            </summary>
+            <param name="key">The string to add.</param>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumTextSurfaceManager.Clear">
+            <summary>
+             Clears out any existing text surfaces and reinitializes the
+             hash table for storing keyed surfaces.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumTextSurfaceManager.Remove(System.String)">
+            <summary>
+             Removes the surface associated with the given key.
+            </summary>
+            <param name="key">The key of the surface to remove.</param>
+            <returns>The DirectDrawSurface being removed.</returns>
+        </member>
+        <member name="T:Terrarium.Renderer.TileInfo">
+            <summary>
+             Represents a game tile within the Terrarium world board.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TileInfo.Transition">
+            <summary>
+             The transition type for this tile.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TileInfo.Tile">
+            <summary>
+             The tile index for this tile.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TileInfo.XOffset">
+            <summary>
+             The X Offset location computed using the tileX
+             constant.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.TileInfo.YOffset">
+            <summary>
+             The Y Offset location computed using the tileY
+             constant.
+            </summary>
+        </member>
+        <member name="T:Terrarium.Renderer.World">
+            <summary>
+             Creates a Terrarium mapping world given a target height and width.
+             Used by the TerrariumDirectDrawGameView to render the background
+            </summary>
+        </member>
+        <member name="F:Terrarium.Renderer.World.worldMap">
+            <summary>
+             Holds height information for the world.  This is how the height
+             map is created.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.World.TileXSize">
+            <summary>
+             The size of a tile in the X direction
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.World.TileYSize">
+            <summary>
+             The size of a tile in the Y direction
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.World.MiniMap">
+            <summary>
+             Provides access to the generated mini map.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.World.Map">
+            <summary>
+             Provides access to the array of tile structures.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.World.XMapTiles">
+            <summary>
+             The number of map tiles in the X direction
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.World.YMapTiles">
+            <summary>
+             The number of map tiles in the Y direction
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.World.CreateWorld(System.Int32,System.Int32)">
+            <summary>
+             Initializes the mapping using a target number pixels.
+            </summary>
+            <param name="xPixels">The width of the world in pixels.</param>
+            <param name="yPixels">The height of the world in pixels.</param>
+            <returns>An updated size that has been rounded up to the nearest world boundary.</returns>
+        </member>
+        <member name="M:Terrarium.Renderer.World.MiniMapPass">
+            <summary>
+             Runs a MinMap pass over the World object to create a
+             small version of the world.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.World.TileFilterPass">
+            <summary>
+             Turns the map into a series of tiles that can index into
+             the background sprite sheet.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.World.TileOffsetPass">
+            <summary>
+             Computes the viewport offsets for tiles so that the information
+             is available during rendering and doesn't have to be computed
+             on the fly.
+            </summary>
+        </member>
+    </members>
+</doc>
