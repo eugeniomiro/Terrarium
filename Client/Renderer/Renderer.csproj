@@ -205,8 +205,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TerrariumGameView.cs">
-    <Compile Include="Classes\TerrariumDirectDrawGameView.cs"/>
-    <Compile Include="Classes\TerrariumGameView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TerrariumSpriteSurface.cs">
