@@ -111,7 +111,8 @@
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;DEVELOPER2;DEBUG_CLICKONCE2;</DefineConstants>
     <BaseAddress>285212672</BaseAddress>
-    <DocumentationFile>Terrarium.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
