@@ -15,8 +15,8 @@ namespace Terrarium.Renderer.Engine
         /// 
         /// </summary>
         /// <param name="handle"></param>
-        /// <returns></returns>
-        public Rectangle GetWindowRect(IntPtr handle)
+        /// <param name="windowRect"></param>
+        public void GetWindowRect(IntPtr handle, ref Rectangle windowRect)
         {
             throw new NotImplementedException();
         }

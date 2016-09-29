@@ -4,7 +4,6 @@
 
 using System;
 using System.Drawing;
-
 namespace Terrarium.Renderer.Engine
 {
     /// <summary>
@@ -16,8 +15,8 @@ namespace Terrarium.Renderer.Engine
         /// 
         /// </summary>
         /// <param name="handle"></param>
-        /// <returns></returns>
-        Rectangle GetWindowRect(IntPtr handle);
+        /// <param name="windowRect"></param>
+        void GetWindowRect(IntPtr handle, ref Rectangle windowRect);
         /// <summary>
         /// 
         /// </summary>

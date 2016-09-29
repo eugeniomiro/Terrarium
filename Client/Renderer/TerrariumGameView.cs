@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Terrarium.Game;
+using Terrarium.Renderer.DirectX;
 using Terrarium.Renderer.Engine;
 using Terrarium.Tools;
 
@@ -21,52 +22,64 @@ namespace Terrarium.Renderer
     /// </summary>
     public class TerrariumGameView : PictureBox
     {
-        private     readonly TerrariumTextSurfaceManager    _tfm = new TerrariumTextSurfaceManager();
-        private     readonly TerrariumSpriteSurfaceManager  _tsm = new TerrariumSpriteSurfaceManager();
+        private     readonly TerrariumTextSurfaceManager    tfm = new TerrariumTextSurfaceManager();
+        private     readonly TerrariumSpriteSurfaceManager  tsm = new TerrariumSpriteSurfaceManager();
+        private     Rectangle                               _actualsize;
 
         private     IGraphicsSurface                        _backgroundSurface;
         private     IGraphicsSurface                        _stagingSurface;
         /// <summary>
         ///  The primary screen surface for the picture box.
         /// </summary>
-        protected   IGraphicsSurface                        ScreenSurface;
+        protected   IGraphicsSurface                        _screenSurface;
 
         /// <summary>
         ///  The back buffer surface used with the picture box.
         /// </summary>
-        protected   IGraphicsSurface                        BackBufferSurface;
+        protected   IGraphicsSurface                        _backBufferSurface;
 
         private     Rectangle                               _bezelRect;
-        private     bool                                    _bltUsingBezel;
+        private     bool                                    bltUsingBezel;
         private     Rectangle                               _clipRect;
 
         // Cursor
-        private     int                                     _cursor;
-        private     Point                                   _cursorPos;
-        private     bool                                    doubleBuffer = true;
-        private     bool                                    _drawBackgroundGrid;
-        private     bool                                    _drawing;
-        private     bool                                    _enabledCursor;
-        private     bool                                    _fullscreen;
-        private     Hashtable                               _hackTable = new Hashtable();
-        private     Bitmap                                  _miniMap;
-        private     bool                                    _paintPlants;
-        private     bool                                    _resizing;
+        private int cursor;
+        private Point cursorPos;
+        private bool doubleBuffer = true;
+        private bool drawBackgroundGrid;
+        private bool drawBoundingBox;
+        private bool drawCursor = true;
+        private bool drawDestinationLines;
+        private bool drawing;
+        private bool drawScreen = true;
+        private bool drawtext = true;
+        private bool enabledCursor;
+        private bool fullscreen;
+        private Hashtable hackTable = new Hashtable();
+        private Bitmap miniMap;
+        private bool paintPlants;
+        private bool paused;
+        private Int64 renderTime;
+        private bool resizing;
+        private Int32 samples;
 
         // Scrolling
-        private     int                                     _scrollDown;
-        private     int                                     _scrollLeft;
-        private     int                                     _scrollRight;
-        private     int                                     _scrollUp;
-        private     bool                                    _skipframe = true;
-        private     Profiler                                _tddGameViewProf;
-        private     bool                                    _updateMiniMap;
+        private int scrollDown;
+        private int scrollLeft;
+        private int scrollRight;
+        private int scrollUp;
+        private bool skipframe = true;
+        private Profiler tddGameViewProf;
+        private string textMessage;
+        private bool updateMiniMap;
 
-        private     int                                     _updateTicker;
-        private     bool                                    _updateTickerChanged;
-        private     bool                                    _viewchanged = true;
-        private     World                                   _wld;
-        private     WorldVector                             _wv;
+        private int updateTicker;
+        private bool updateTickerChanged;
+        private bool videomemory = true;
+        private bool viewchanged = true;
+        private Rectangle           _viewsize;
+        private World               wld;
+        private WorldVector         wv;
 
         /// <summary>
         ///  Overrides the Painting logic because painting will be handled
@@ -94,11 +107,8 @@ namespace Terrarium.Renderer
         /// <summary>
         ///  Creates a new instance of the game view and initializes any properties.
         /// </summary>
-        public TerrariumGameView() {
-            DrawCursor = true;
-            VideoMemory = true;
-            DrawText = true;
-            DrawScreen = true;
+        public TerrariumGameView()
+        {
             InitializeComponent();
         }
 
@@ -107,24 +117,41 @@ namespace Terrarium.Renderer
         /// </summary>
         public Profiler Profiler
         {
-            get { return _tddGameViewProf ?? (_tddGameViewProf = new Profiler()); }
+            get
+            {
+                if (tddGameViewProf == null)
+                {
+                    tddGameViewProf = new Profiler();
+                }
+
+                return tddGameViewProf;
+            }
         }
 
         /// <summary>
         ///  Returns the amount of time required to render a scene.
         /// </summary>
-        public long RenderTime { get; private set; }
+        public Int64 RenderTime
+        {
+            get { return renderTime; }
+        }
 
         /// <summary>
         ///  Returns the number of samples (frames) obtained.
         /// </summary>
-        public int Samples { get; private set; }
+        public Int64 Samples
+        {
+            get { return samples; }
+        }
 
         /// <summary>
         ///  Pauses the TerrariumGameView and stops rendering.  A call to 
         ///  RenderFrame will automatically unpause the animation.
         /// </summary>
-        public bool Paused { private get; set; }
+        public bool Paused
+        {
+            set { paused = value; }
+        }
 
         /// <summary>
         ///  Provides access to the bitmap representing the minimap for the
@@ -134,22 +161,24 @@ namespace Terrarium.Renderer
         {
             get
             {
-                if (_miniMap != null) return _miniMap;
-                if (_wld != null)
+                if (miniMap == null)
                 {
-                    //this.miniMap = new Bitmap(wld.MiniMap);
-                    _miniMap = new Bitmap(_wld.MiniMap, (ActualSize.Right - ActualSize.Left)/4,
-                        (ActualSize.Bottom - ActualSize.Top)/4);
-                    var graphics = Graphics.FromImage(_miniMap);
-                    graphics.Clear(Color.Transparent);
-                    graphics.Dispose();
-                }
-                else
-                {
-                    return null;
+                    if (wld != null)
+                    {
+                        //this.miniMap = new Bitmap(wld.MiniMap);
+                        miniMap = new Bitmap(wld.MiniMap, (_actualsize.Right - _actualsize.Left)/4,
+                                             (_actualsize.Bottom - _actualsize.Top)/4);
+                        var graphics = Graphics.FromImage(miniMap);
+                        graphics.Clear(Color.Transparent);
+                        graphics.Dispose();
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
 
-                return _miniMap;
+                return miniMap;
             }
         }
 
@@ -158,24 +187,40 @@ namespace Terrarium.Renderer
         ///  the Terrarium view.  This property accepts newlines and
         ///  centers the text on the screen.
         /// </summary>
-        public string TerrariumMessage { get; set; }
+        public string TerrariumMessage
+        {
+            get { return textMessage; }
+            set { textMessage = value; }
+        }
 
         /// <summary>
         ///  Enables the drawing of organism destination lines
         ///  within the Terrarium Client
         /// </summary>
-        public bool DrawDestinationLines { get; set; }
+        public bool DrawDestinationLines
+        {
+            get { return drawDestinationLines; }
+            set { drawDestinationLines = value; }
+        }
 
         /// <summary>
         ///  Controls the rendering of the entire game view.
         /// </summary>
-        public bool DrawScreen { get; set; }
+        public bool DrawScreen
+        {
+            get { return drawScreen; }
+            set { drawScreen = value; }
+        }
 
         /// <summary>
         ///  Controls the rendering of organism bounding boxes useful
         ///  for movement debugging.
         /// </summary>
-        public bool DrawBoundingBox { get; set; }
+        public bool DrawBoundingBox
+        {
+            get { return drawBoundingBox; }
+            set { drawBoundingBox = value; }
+        }
 
         /// <summary>
         ///  Controls rendering of a special background that contains
@@ -184,11 +229,11 @@ namespace Terrarium.Renderer
         /// </summary>
         public bool DrawBackgroundGrid
         {
-            get { return _drawBackgroundGrid; }
+            get { return drawBackgroundGrid; }
             set
             {
-                _viewchanged = true;
-                _drawBackgroundGrid = value;
+                viewchanged = true;
+                drawBackgroundGrid = value;
                 AddBackgroundSlide();
             }
         }
@@ -201,14 +246,14 @@ namespace Terrarium.Renderer
         {
             get
             {
-                if (Paused || !DrawScreen)
+                if (paused || !drawScreen)
                 {
                     return Cursors.Default;
                 }
 
-                if (_bltUsingBezel)
+                if (bltUsingBezel)
                 {
-                    if (!ComputeCursorRectangle().Contains(_cursorPos))
+                    if (!ComputeCursorRectangle().Contains(cursorPos))
                     {
                         return Cursors.Default;
                     }
@@ -221,28 +266,45 @@ namespace Terrarium.Renderer
         /// <summary>
         ///  Determines if sprite labels should be drawn.
         /// </summary>
-        public bool DrawText { get; set; }
+        public bool DrawText
+        {
+            get { return drawtext; }
+            set { drawtext = value; }
+        }
 
         /// <summary>
         ///  Determines if the primary surfaces are in video memory
         ///  or not.
         /// </summary>
-        public bool VideoMemory { get; private set; }
+        public bool VideoMemory
+        {
+            get { return videomemory; }
+        }
 
         /// <summary>
         ///  Returns the size of the viewport window.
         /// </summary>
-        public Rectangle ViewSize { get; private set; }
+        public Rectangle ViewSize
+        {
+            get { return _viewsize; }
+        }
 
         /// <summary>
         ///  Returns the full size of the world.
         /// </summary>
-        public Rectangle ActualSize { get; private set; }
+        public Rectangle ActualSize
+        {
+            get { return _actualsize; }
+        }
 
         /// <summary>
         /// Determines whether to 
         /// </summary>
-        public bool DrawCursor { get; set; }
+        public bool DrawCursor
+        {
+            get { return drawCursor; }
+            set { drawCursor = value; }
+        }
 
         /// <summary>
         ///  Clients can connect to this event and be notified of
@@ -268,8 +330,8 @@ namespace Terrarium.Renderer
         /// </summary>
         public void ClearProfiler()
         {
-            RenderTime = 0;
-            Samples = 0;
+            renderTime = 0;
+            samples = 0;
         }
 
         /// <summary>
@@ -278,7 +340,7 @@ namespace Terrarium.Renderer
         /// <param name="e"></param>
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            _cursorPos = new Point(e.X, e.Y);
+            cursorPos = new Point(e.X, e.Y);
         }
 
         private Rectangle ComputeCursorRectangle()
@@ -288,14 +350,14 @@ namespace Terrarium.Renderer
             var right = Width;
             var bottom = Height;
 
-            if (_bltUsingBezel)
+            if (bltUsingBezel)
             {
-                if (_clipRect.Right == ActualSize.Right)
+                if (_clipRect.Right == _actualsize.Right)
                 {
                     left = (right - _clipRect.Right)/2;
                     right = left + _clipRect.Right;
                 }
-                if (_clipRect.Bottom == ActualSize.Bottom)
+                if (_clipRect.Bottom == _actualsize.Bottom)
                 {
                     top = (bottom - _clipRect.Bottom)/2;
                     bottom = top + _clipRect.Bottom;
@@ -312,12 +374,12 @@ namespace Terrarium.Renderer
         /// </summary>
         private void CheckScroll()
         {
-            if (!_enabledCursor)
+            if (!enabledCursor)
             {
-                _scrollUp = 0;
-                _scrollDown = 0;
-                _scrollLeft = 0;
-                _scrollRight = 0;
+                scrollUp = 0;
+                scrollDown = 0;
+                scrollLeft = 0;
+                scrollRight = 0;
                 return;
             }
 
@@ -327,97 +389,97 @@ namespace Terrarium.Renderer
             var right = cursorRect.Right;
             var bottom = cursorRect.Bottom;
 
-            if (_cursorPos.Y <= bottom && _cursorPos.Y > (bottom - 30))
+            if (cursorPos.Y <= bottom && cursorPos.Y > (bottom - 30))
             {
-                _scrollDown++;
-                if (_scrollDown > 4)
+                scrollDown++;
+                if (scrollDown > 4)
                 {
                     ScrollDown(15);
                 }
             }
             else
             {
-                _scrollDown = 0;
+                scrollDown = 0;
             }
 
-            if (_cursorPos.Y >= top && _cursorPos.Y < (top + 30))
+            if (cursorPos.Y >= top && cursorPos.Y < (top + 30))
             {
-                _scrollUp++;
-                if (_scrollUp > 4)
+                scrollUp++;
+                if (scrollUp > 4)
                 {
                     ScrollUp(15);
                 }
             }
             else
             {
-                _scrollUp = 0;
+                scrollUp = 0;
             }
 
-            if (_cursorPos.X <= right && _cursorPos.X > (right - 30))
+            if (cursorPos.X <= right && cursorPos.X > (right - 30))
             {
-                _scrollRight++;
-                if (_scrollRight > 4)
+                scrollRight++;
+                if (scrollRight > 4)
                 {
                     ScrollRight(15);
                 }
             }
             else
             {
-                _scrollRight = 0;
+                scrollRight = 0;
             }
 
-            if (_cursorPos.X >= left && _cursorPos.X < (left + 30))
+            if (cursorPos.X >= left && cursorPos.X < (left + 30))
             {
-                _scrollLeft++;
-                if (_scrollLeft > 4)
+                scrollLeft++;
+                if (scrollLeft > 4)
                 {
                     ScrollLeft(15);
                 }
             }
             else
             {
-                _scrollLeft = 0;
+                scrollLeft = 0;
             }
 
-            if (_scrollUp == 0 && _scrollDown == 0 && _scrollLeft == 0 && _scrollRight == 0)
+            if (scrollUp == 0 && scrollDown == 0 && scrollLeft == 0 && scrollRight == 0)
             {
-                _cursor = 8;
+                cursor = 8;
             }
-            else if (_scrollUp > 0 && _scrollDown == 0 && _scrollLeft == 0 && _scrollRight == 0)
+            else if (scrollUp > 0 && scrollDown == 0 && scrollLeft == 0 && scrollRight == 0)
             {
-                _cursor = 0;
+                cursor = 0;
             }
-            else if (_scrollUp == 0 && _scrollDown > 0 && _scrollLeft == 0 && _scrollRight == 0)
+            else if (scrollUp == 0 && scrollDown > 0 && scrollLeft == 0 && scrollRight == 0)
             {
-                _cursor = 4;
+                cursor = 4;
             }
-            else if (_scrollUp == 0 && _scrollDown == 0 && _scrollLeft > 0 && _scrollRight == 0)
+            else if (scrollUp == 0 && scrollDown == 0 && scrollLeft > 0 && scrollRight == 0)
             {
-                _cursor = 6;
+                cursor = 6;
             }
-            else if (_scrollUp == 0 && _scrollDown == 0 && _scrollLeft == 0 && _scrollRight > 0)
+            else if (scrollUp == 0 && scrollDown == 0 && scrollLeft == 0 && scrollRight > 0)
             {
-                _cursor = 2;
+                cursor = 2;
             }
-            else if (_scrollUp > 0 && _scrollDown == 0 && _scrollLeft > 0 && _scrollRight == 0)
+            else if (scrollUp > 0 && scrollDown == 0 && scrollLeft > 0 && scrollRight == 0)
             {
-                _cursor = 7;
+                cursor = 7;
             }
-            else if (_scrollUp > 0 && _scrollDown == 0 && _scrollLeft == 0 && _scrollRight > 0)
+            else if (scrollUp > 0 && scrollDown == 0 && scrollLeft == 0 && scrollRight > 0)
             {
-                _cursor = 1;
+                cursor = 1;
             }
-            else if (_scrollUp == 0 && _scrollDown > 0 && _scrollLeft == 0 && _scrollRight > 0)
+            else if (scrollUp == 0 && scrollDown > 0 && scrollLeft == 0 && scrollRight > 0)
             {
-                _cursor = 3;
+                cursor = 3;
             }
-            else if (_scrollUp == 0 && _scrollDown > 0 && _scrollLeft > 0 && _scrollRight == 0)
+            else if (scrollUp == 0 && scrollDown > 0 && scrollLeft > 0 && scrollRight == 0)
             {
-                _cursor = 5;
+                cursor = 5;
             }
             else
             {
-                _cursor = 8;
+                cursor = 8;
             }
         }
 
@@ -427,7 +489,7 @@ namespace Terrarium.Renderer
         /// <param name="e">Null</param>
         protected override void OnMouseLeave(EventArgs e)
         {
-            _enabledCursor = false;
+            enabledCursor = false;
         }
 
         /// <summary>
@@ -436,7 +498,7 @@ namespace Terrarium.Renderer
         /// <param name="e">Null</param>
         protected override void OnMouseEnter(EventArgs e)
         {
-            _enabledCursor = true;
+            enabledCursor = true;
         }
 
         /// <summary>
@@ -450,7 +512,7 @@ namespace Terrarium.Renderer
         {
             try
             {
-                _fullscreen = fullscreen;
+                this.fullscreen = fullscreen;
 
                 if (fullscreen)
                 {
@@ -466,7 +528,7 @@ namespace Terrarium.Renderer
 
                 return true;
             }
-            catch (GraphicsException de)
+            catch (DirectXException de)
             {
                 ErrorLog.LogHandledException(de);
             }
@@ -480,18 +542,18 @@ namespace Terrarium.Renderer
         /// <returns>True if the surfaces are created, otherwise false.</returns>
         public bool CreateWindowedSurfaces()
         {
-            ScreenSurface = GraphicsEngine.Current.CreatePrimarySurface(Handle, false, false);
+            _screenSurface = GraphicsEngine.Current.CreatePrimarySurface(Handle, false, false);
             
-            if (ScreenSurface != null)
+            if (_screenSurface != null)
             {
-                Trace.WriteLine("Primary Surface InVideo? " + ScreenSurface.InVideo);
+                Trace.WriteLine("Primary Surface InVideo? " + _screenSurface.InVideo);
 
-                var workSurfaceWidth = Math.Min(Width, ActualSize.Right);
-                var workSurfaceHeight = Math.Min(Height, ActualSize.Bottom);
+                var workSurfaceWidth = Math.Min(Width, _actualsize.Right);
+                var workSurfaceHeight = Math.Min(Height, _actualsize.Bottom);
 
-                BackBufferSurface = GraphicsEngine.Current.CreateWorkSurface(workSurfaceWidth, workSurfaceHeight);
+                _backBufferSurface = GraphicsEngine.Current.CreateWorkSurface(workSurfaceWidth, workSurfaceHeight);
                 
-                Trace.WriteLine("Back Buffer Surface InVideo? " + BackBufferSurface.InVideo);
+                Trace.WriteLine("Back Buffer Surface InVideo? " + _backBufferSurface.InVideo);
 
                 _backgroundSurface = GraphicsEngine.Current.CreateWorkSurface(workSurfaceWidth, workSurfaceHeight);
 
@@ -501,11 +563,11 @@ namespace Terrarium.Renderer
                 Trace.WriteLine("Staging Surface InVideo? " + _stagingSurface.InVideo);
             }
 
-            if (ScreenSurface != null && (!ScreenSurface.InVideo || !BackBufferSurface.InVideo || !_backgroundSurface.InVideo ||
-                                          !_stagingSurface.InVideo))
+            if (!_screenSurface.InVideo || !_backBufferSurface.InVideo || !_backgroundSurface.InVideo ||
+                !_stagingSurface.InVideo)
             {
-                VideoMemory = false;
-                DrawText = true; // For now, turn this to false for a perf increase on slower machines
+                videomemory = false;
+                drawtext = true; // For now, turn this to false for a perf increase on slower machines
             }
 
             ResetTerrarium();
@@ -522,22 +584,22 @@ namespace Terrarium.Renderer
         {
             if (doubleBuffer)
             {
-                ScreenSurface = GraphicsEngine.Current.CreatePrimarySurface(Handle, true, false);
+                _screenSurface = GraphicsEngine.Current.CreatePrimarySurface(Handle, true, false);
 
-                if (ScreenSurface != null)
+                if (_screenSurface != null)
                 {
-                    BackBufferSurface = GraphicsEngine.Current.CreateWorkSurface(640, 480);
+                    _backBufferSurface = GraphicsEngine.Current.CreateWorkSurface(640, 480);
                 }
 
                 ClearBackground();
             }
             else
             {
-                ScreenSurface = GraphicsEngine.Current.CreatePrimarySurface(Handle, true, true);
+                _screenSurface = GraphicsEngine.Current.CreatePrimarySurface(Handle, true, true);
 
-                if (ScreenSurface != null)
+                if (_screenSurface != null)
                 {
-                    BackBufferSurface = ScreenSurface.GetBackBufferSurface();
+                    _backBufferSurface = _screenSurface.GetBackBufferSurface();
                 }
             }
 
@@ -559,9 +621,13 @@ namespace Terrarium.Renderer
                 return;
             }
 
-            bool selectThisAnimalOnly = (ModifierKeys & Keys.Shift) != Keys.Shift;
+            var selectThisAnimalOnly = true;
+            if ((ModifierKeys & Keys.Shift) == Keys.Shift)
+            {
+                selectThisAnimalOnly = false;
+            }
 
-            SelectAnimalFromPoint(new Point(e.X + ViewSize.Left, e.Y + ViewSize.Top), selectThisAnimalOnly);
+            SelectAnimalFromPoint(new Point(e.X + _viewsize.Left, e.Y + _viewsize.Top), selectThisAnimalOnly);
         }
 
         /// <summary>
@@ -571,24 +637,27 @@ namespace Terrarium.Renderer
         /// <param name="selectThisAnimalOnly">Determines if this creature should be added to the selection</param>
         public void SelectAnimalFromPoint(Point p, bool selectThisAnimalOnly)
         {
-            if (_wv != null)
+            if (wv != null)
             {
-                foreach (OrganismState orgState in _wv.State.Organisms)
+                foreach (OrganismState orgState in wv.State.Organisms)
                 {
-                    if (orgState.RenderInfo == null) continue;
-                    var tsSprite = (TerrariumSprite) orgState.RenderInfo;
-                    var rec = new Rectangle((int) tsSprite.XPosition - (tsSprite.FrameWidth >> 1),
-                        (int) tsSprite.YPosition - (tsSprite.FrameWidth >> 1),
-                        tsSprite.FrameWidth, tsSprite.FrameWidth);
-                    if (rec.Contains(p))
+                    if (orgState.RenderInfo != null)
                     {
-                        tsSprite.Selected = !tsSprite.Selected;
-                        OnOrganismClicked(new OrganismClickedEventArgs(orgState));
-                    }
-                    else if (selectThisAnimalOnly && tsSprite.Selected)
-                    {
-                        tsSprite.Selected = false;
-                        OnOrganismClicked(new OrganismClickedEventArgs(orgState));
+                        var tsSprite = (TerrariumSprite) orgState.RenderInfo;
+                        var radius = tsSprite.FrameWidth;
+                        var rec = new Rectangle((int) tsSprite.XPosition - (tsSprite.FrameWidth >> 1),
+                                                (int) tsSprite.YPosition - (tsSprite.FrameWidth >> 1),
+                                                tsSprite.FrameWidth, tsSprite.FrameWidth);
+                        if (rec.Contains(p))
+                        {
+                            tsSprite.Selected = !tsSprite.Selected;
+                            OnOrganismClicked(new OrganismClickedEventArgs(orgState));
+                        }
+                        else if (selectThisAnimalOnly && tsSprite.Selected)
+                        {
+                            tsSprite.Selected = false;
+                            OnOrganismClicked(new OrganismClickedEventArgs(orgState));
+                        }
                     }
                 }
             }
@@ -628,13 +697,13 @@ namespace Terrarium.Renderer
         /// </summary>
         public void AddBackgroundSlide()
         {
-            _tsm.Remove("background");
-            _tsm.Add("background", 1, 1);
+            tsm.Remove("background");
+            tsm.Add("background", 1, 1);
 
             if (DrawBackgroundGrid)
             {
-                var workSurface = _tsm["background"].GetDefaultSurface();
-                var surface = workSurface.SpriteSurface;
+                var workSurface = tsm["background"].GetDefaultSurface();
+                var surface = workSurface.SpriteSurface.Surface;
 
                 for (var h = 0; h < workSurface.SpriteSurface.Rect.Bottom; h += 8)
                 {
@@ -660,8 +729,8 @@ namespace Terrarium.Renderer
         /// <param name="name">The name of the sprite sheet.</param>
         public void AddSpriteSurface(string name)
         {
-            _tsm.Remove(name);
-            _tsm.Add(name, 10, 40);
+            tsm.Remove(name);
+            tsm.Add(name, 10, 40);
         }
 
         /// <summary>
@@ -672,8 +741,8 @@ namespace Terrarium.Renderer
         /// <param name="yFrames">The number of frames height-wise.</param>
         public void AddComplexSpriteSurface(string name, int xFrames, int yFrames)
         {
-            _tsm.Remove(name);
-            _tsm.Add(name, xFrames, yFrames);
+            tsm.Remove(name);
+            tsm.Add(name, xFrames, yFrames);
         }
 
         /// <summary>
@@ -684,8 +753,8 @@ namespace Terrarium.Renderer
         /// <param name="yFrames">The number of frames height wise.</param>
         public void AddComplexSizedSpriteSurface(string name, int xFrames, int yFrames)
         {
-            _tsm.Remove(name);
-            _tsm.AddSizedSurface(name, xFrames, yFrames);
+            tsm.Remove(name);
+            tsm.AddSizedSurface(name, xFrames, yFrames);
         }
 
         /// <summary>
@@ -697,11 +766,11 @@ namespace Terrarium.Renderer
         /// <returns></returns>
         public Rectangle CreateWorld(int xPixels, int yPixels)
         {
-            _wld = new World();
-            ActualSize = _wld.CreateWorld(xPixels, yPixels);
+            wld = new World();
+            _actualsize = wld.CreateWorld(xPixels, yPixels);
 
             ResetTerrarium();
-            _viewchanged = true;
+            viewchanged = true;
             return ActualSize;
         }
 
@@ -713,18 +782,18 @@ namespace Terrarium.Renderer
         /// </summary>
         private void ReInitSurfaces()
         {
-            ScreenSurface = null;
-            BackBufferSurface = null;
+            _screenSurface = null;
+            _backBufferSurface = null;
             _backgroundSurface = null;
             _stagingSurface = null;
 
-            _tsm.Clear();
-            _tfm.Clear();
+            tsm.Clear();
+            tfm.Clear();
 
             GC.Collect(2);
             GC.WaitForPendingFinalizers();
 
-            if (_fullscreen)
+            if (fullscreen)
             {
                 CreateFullScreenSurfaces();
             }
@@ -741,8 +810,8 @@ namespace Terrarium.Renderer
         {
             try
             {
-                _resizing = true;
-                _viewchanged = true;
+                resizing = true;
+                viewchanged = true;
 
                 // Reset and re-initialize all surfaces to the new size
                 ResetTerrarium();
@@ -756,21 +825,21 @@ namespace Terrarium.Renderer
 
                 // Mark viewport as having changed.  This forces us to redraw
                 // background surfaces that we have cached
-                _viewchanged = true;
+                viewchanged = true;
 
                 // Re-center the screen
-                var centerX = ViewSize.Left + ((ViewSize.Right - ViewSize.Left)/2);
-                var centerY = ViewSize.Top + ((ViewSize.Bottom - ViewSize.Top)/2);
+                var centerX = _viewsize.Left + ((_viewsize.Right - _viewsize.Left)/2);
+                var centerY = _viewsize.Top + ((_viewsize.Bottom - _viewsize.Top)/2);
                 CenterTo(centerX, centerY);
 
-                _resizing = false;
+                resizing = false;
 
                 return true;
             }
             catch (Exception e)
             {
                 ErrorLog.LogHandledException(e);
-                _resizing = false;
+                resizing = false;
                 return false;
             }
         }
@@ -790,32 +859,32 @@ namespace Terrarium.Renderer
             // Don't draw while we are resizing the viewer
             // This might happen on a secondary thread so
             // we need some minimal protection.
-            if (_resizing)
+            if (resizing)
             {
                 return;
             }
 
             // If we are still drawing then skip this frame.
             // However, only skip one frame to prevent hangs.
-            if (_drawing)
+            if (drawing)
             {
-                _drawing = false;
+                drawing = false;
                 return;
             }
 
             try
             {
-                Paused = false;
-                _drawing = true;
-                _skipframe = !_skipframe;
-                if (_fullscreen)
+                paused = false;
+                drawing = true;
+                skipframe = !skipframe;
+                if (fullscreen)
                 {
                     // No full screen mode
                 }
                 else
                 {
-                    if (ScreenSurface == null || ScreenSurface.IsLost() != 0 ||
-                        BackBufferSurface == null || BackBufferSurface.IsLost() != 0)
+                    if (_screenSurface == null || _screenSurface.IsLost() != 0 ||
+                        _backBufferSurface == null || _backBufferSurface.IsLost() != 0)
                     {
                         if (ResizeViewer() == false)
                         {
@@ -823,19 +892,19 @@ namespace Terrarium.Renderer
                         }
                     }
 
-                    if (_updateTickerChanged && (_updateTicker % 10) == 0)
+                    if (updateTickerChanged && (updateTicker % 10) == 0)
                     {
-                        _updateTickerChanged = false;
-                        _updateMiniMap = true;
-                        if (_wld != null && _miniMap == null)
+                        updateTickerChanged = false;
+                        updateMiniMap = true;
+                        if (wld != null && miniMap == null)
                         {
                             //this.miniMap = new Bitmap(wld.MiniMap);
-                            _miniMap = new Bitmap(_wld.MiniMap, (ActualSize.Right - ActualSize.Left) / 4,
-                                                 (ActualSize.Bottom - ActualSize.Top) / 4);
+                            miniMap = new Bitmap(wld.MiniMap, (_actualsize.Right - _actualsize.Left) / 4,
+                                                 (_actualsize.Bottom - _actualsize.Top) / 4);
                         }
-                        if (_miniMap != null)
+                        if (miniMap != null)
                         {
-                            var graphics = Graphics.FromImage(_miniMap);
+                            var graphics = Graphics.FromImage(miniMap);
                             graphics.Clear(Color.Transparent);
                             graphics.Dispose();
                         }
@@ -845,75 +914,75 @@ namespace Terrarium.Renderer
 #if TRACE
                     Profiler.Start("TerrariumDirectDrawGameView.RenderFrame()::Primary Surface Blit");
 #endif
-                    if (DrawScreen)
+                    if (drawScreen)
                     {
-                        if (VideoMemory || !_skipframe)
+                        if (videomemory || !skipframe)
                         {
                             PaintBackground();
-                            PaintSprites(BackBufferSurface, false);
+                            PaintSprites(_backBufferSurface, false);
                             PaintMessage();
                             PaintCursor();
 
+                            // Grab the Window RECT
+                            var windowRect = new Rectangle();
+                            GraphicsEngine.Current.GetWindowRect(Handle, ref windowRect);
+
                             // Set up a sample destination rectangle
-                            var destRect = GraphicsEngine.Current.GetWindowRect(Handle);
+                            var destRect = windowRect;
 
                             // Grab the Source Rectangle for the Bezel
-                            if (BackBufferSurface != null) {
-                                Rectangle srcRect = BackBufferSurface.Rect;
-                                var destWidth = destRect.Right - destRect.Left;
-                                var destHeight = destRect.Bottom - destRect.Top;
-                                var srcWidth = srcRect.Right;
-                                var srcHeight = srcRect.Bottom;
+                            Rectangle srcRect = _backBufferSurface.Rect;
+                            var destWidth = destRect.Right - destRect.Left;
+                            var destHeight = destRect.Bottom - destRect.Top;
+                            var srcWidth = srcRect.Right;
+                            var srcHeight = srcRect.Bottom;
 
-                                _bltUsingBezel = false;
-                                if (srcWidth < destWidth)
-                                {
-                                    int left = (destWidth - srcWidth) / 2;
-                                    int right = destRect.Left + srcWidth;
+                            bltUsingBezel = false;
+                            if (srcWidth < destWidth)
+                            {
+                                int left = (destWidth - srcWidth) / 2;
+                                int right = destRect.Left + srcWidth;
 
-                                    destRect = Rectangle.FromLTRB(destRect.Left + left, destRect.Top, right, destRect.Bottom);
-                                    _bltUsingBezel = true;
-                                }
-                                if (srcHeight < destHeight)
-                                {
-                                    int top = (destHeight - srcHeight) / 2;
-                                    int bottom = destRect.Top + srcHeight;
-
-                                    destRect = Rectangle.FromLTRB(destRect.Left, destRect.Top + top, destRect.Right, bottom);
-                                    _bltUsingBezel = true;
-                                }
-
-                                if (_bltUsingBezel)
-                                {
-                                    if (destRect.Top != _bezelRect.Top ||
-                                        destRect.Left != _bezelRect.Left ||
-                                        destRect.Bottom != _bezelRect.Bottom ||
-                                        destRect.Right != _bezelRect.Right)
-                                    {
-                                        if (ScreenSurface != null) 
-                                            ScreenSurface.BltColorFill(ref destRect, 0);
-                                    }
-                                    _bezelRect = destRect;
-                                }
-
-                                if (ScreenSurface != null)
-                                    ScreenSurface.Blt(ref destRect, BackBufferSurface, ref srcRect, BltFlags.BltWait);
+                                destRect = Rectangle.FromLTRB(destRect.Left + left, destRect.Top, right, destRect.Bottom);
+                                bltUsingBezel = true;
                             }
+                            if (srcHeight < destHeight)
+                            {
+                                int top = (destHeight - srcHeight) / 2;
+                                int bottom = destRect.Top + srcHeight;
+
+                                destRect = Rectangle.FromLTRB(destRect.Left, destRect.Top + top, destRect.Right, bottom);
+                                bltUsingBezel = true;
+                            }
+
+                            if (bltUsingBezel)
+                            {
+                                if (destRect.Top != _bezelRect.Top ||
+                                    destRect.Left != _bezelRect.Left ||
+                                    destRect.Bottom != _bezelRect.Bottom ||
+                                    destRect.Right != _bezelRect.Right)
+                                {
+                                    _screenSurface.BltColorFill(ref windowRect, 0);
+                                }
+                                _bezelRect = destRect;
+                            }
+
+                            _screenSurface.Blt(ref destRect, _backBufferSurface, ref srcRect, BltFlags.BltWait);
                         }
                     }
 #if TRACE
                     Profiler.End("TerrariumDirectDrawGameView.RenderFrame()::Primary Surface Blit");
 #endif
-                    if (_updateMiniMap)
+                    if (updateMiniMap)
                     {
-                        _updateMiniMap = false;
-                        OnMiniMapUpdated(new MiniMapUpdatedEventArgs(_miniMap));
+                        updateMiniMap = false;
+                        OnMiniMapUpdated(new MiniMapUpdatedEventArgs(miniMap));
                     }
                 }
             }
             finally
             {
-                _drawing = false;
+                drawing = false;
             }
 #if TRACE
             Profiler.End("TerrariumDirectDrawGameView.RenderFrame()");
@@ -928,18 +997,20 @@ namespace Terrarium.Renderer
         ///  on the screen.
         /// </summary>
         /// <returns>The z-indices for the teleporters</returns>
-        private void TeleporterZIndex()
+        private int[] TeleporterZIndex()
         {
-            var zIndices = new int[_hackTable.Count];
+            var zIndices = new int[hackTable.Count];
             var index = 0;
 
-            var spriteList = _hackTable.GetEnumerator();
+            var spriteList = hackTable.GetEnumerator();
             while (spriteList.MoveNext())
             {
                 var tsSprite = (TerrariumSprite) spriteList.Value;
                 tsSprite.AdvanceFrame();
                 zIndices[index++] = (int) tsSprite.YPosition;
             }
+
+            return zIndices;
         }
 
         /// <summary>
@@ -950,15 +1021,15 @@ namespace Terrarium.Renderer
         /// <param name="highZ">The maximum z index.</param>
         private void RenderTeleporter(int lowZ, int highZ)
         {
-            var spriteList = _hackTable.GetEnumerator();
-            var workSurface = _tsm["teleporter"].GetDefaultSurface();
+            var spriteList = hackTable.GetEnumerator();
+            var workSurface = tsm["teleporter"].GetDefaultSurface();
             if (workSurface != null)
             {
                 while (spriteList.MoveNext())
                 {
                     var tsSprite = (TerrariumSprite) spriteList.Value;
 
-                    if (!VideoMemory && _skipframe)
+                    if (!videomemory && skipframe)
                     {
                         continue;
                     }
@@ -975,28 +1046,26 @@ namespace Terrarium.Renderer
 
                     var radius = 48; // This is actually diameter.  True diameter is 50
                     // but the size of the sprites are 48.
-                    var dest = Rectangle.FromLTRB((int) tsSprite.XPosition - ViewSize.Left, 
-                                                  (int) tsSprite.YPosition - ViewSize.Top,
-                                                  (int) tsSprite.XPosition - ViewSize.Left + radius,
-                                                  (int) tsSprite.YPosition - ViewSize.Top + radius);
-                    if (_updateMiniMap)
+                    var dest = Rectangle.FromLTRB((int) tsSprite.XPosition - _viewsize.Left, 
+                                                  (int) tsSprite.YPosition - _viewsize.Top,
+                                                  (int) tsSprite.XPosition - _viewsize.Left + radius,
+                                                  (int) tsSprite.YPosition - _viewsize.Top + radius);
+                    if (updateMiniMap)
                     {
-                        var miniMapX = (int) (tsSprite.XPosition*_miniMap.Width)/ActualSize.Right;
-                        miniMapX = (miniMapX > (_miniMap.Width - 1)) ? (_miniMap.Width - 1) : miniMapX;
-                        var miniMapY = (int) (tsSprite.YPosition*_miniMap.Height)/ActualSize.Bottom;
-                        miniMapY = (miniMapY > (_miniMap.Height - 1)) ? (_miniMap.Height - 1) : miniMapY;
+                        var miniMapX = (int) (tsSprite.XPosition*miniMap.Width)/_actualsize.Right;
+                        miniMapX = (miniMapX > (miniMap.Width - 1)) ? (miniMap.Width - 1) : miniMapX;
+                        var miniMapY = (int) (tsSprite.YPosition*miniMap.Height)/_actualsize.Bottom;
+                        miniMapY = (miniMapY > (miniMap.Height - 1)) ? (miniMap.Height - 1) : miniMapY;
                         //this.miniMap.SetPixel(miniMapX, miniMapY, Color.Blue);
-                        var miniMapGraphics = Graphics.FromImage(_miniMap);
+                        var miniMapGraphics = Graphics.FromImage(miniMap);
                         miniMapGraphics.FillRectangle(Brushes.SkyBlue, miniMapX, miniMapY, 12, 12);
                         miniMapGraphics.Dispose();
                     }
 
-                    IClippedRect ddClipRect = workSurface.GrabSprite((int) tsSprite.CurFrame, 0, dest, _clipRect);
-                    if (!ddClipRect.Invisible) {
-                        Rectangle r = ddClipRect.Source;
-                        BackBufferSurface.BltFast(ddClipRect.Destination.Left, ddClipRect.Destination.Top,
-                                                  workSurface.SpriteSurface, ref r, BltFastFlags.SrcColorKey);
-                        ddClipRect.Source = r;
+                    DirectDrawClippedRect ddClipRect = workSurface.GrabSprite((int) tsSprite.CurFrame, 0, dest, _clipRect);
+                    if (!ddClipRect.Invisible)
+                    {
+                        _backBufferSurface.BltFast(ddClipRect.Destination.Left, ddClipRect.Destination.Top, workSurface.SpriteSurface, ref ddClipRect.Source, BltFastFlags.SrcColorKey);
                     }
                 }
             }
@@ -1009,31 +1078,37 @@ namespace Terrarium.Renderer
         /// </summary>
         private void PaintMessage()
         {
-            if (TerrariumMessage == null)
+            if (textMessage == null)
             {
                 return;
             }
 
-            var dcHandle = BackBufferSurface.GetDC();
+            var lines = textMessage.Split('\n');
+            var yOffset = (_clipRect.Bottom - ((lines.Length - 1)*12))/2;
 
-            using (var graphics = Graphics.FromHdc(dcHandle)) {
-                using (var font = new Font("Verdana", 6.75f, FontStyle.Bold)) {
-                    var rectangle = new Rectangle(4, 4, ClientRectangle.Width - 8, ClientRectangle.Height - 8);
+            var dcHandle = _backBufferSurface.GetDC();
 
-                    var stringFormat = new StringFormat {
-                        Alignment = StringAlignment.Near,
-                        FormatFlags = StringFormatFlags.NoClip,
-                        LineAlignment = StringAlignment.Near,
-                        Trimming = StringTrimming.EllipsisCharacter
-                    };
+            var graphics = Graphics.FromHdc(dcHandle);
 
-                    graphics.DrawString(TerrariumMessage, font, Brushes.Black, rectangle, stringFormat);
-                    rectangle.Offset(-1, -1);
-                    graphics.DrawString(TerrariumMessage, font, Brushes.WhiteSmoke, rectangle, stringFormat);
-                }
-            }
+            var font = new Font("Verdana", 6.75f, FontStyle.Bold);
 
-            BackBufferSurface.ReleaseDC(dcHandle);
+            var rectangle = new Rectangle(4, 4, ClientRectangle.Width - 8, ClientRectangle.Height - 8);
+
+            var stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Near;
+            stringFormat.FormatFlags = StringFormatFlags.NoClip;
+            stringFormat.LineAlignment = StringAlignment.Near;
+            stringFormat.Trimming = StringTrimming.EllipsisCharacter;
+
+            graphics.DrawString(textMessage, font, Brushes.Black, rectangle, stringFormat);
+            rectangle.Offset(-1, -1);
+            graphics.DrawString(textMessage, font, Brushes.WhiteSmoke, rectangle, stringFormat);
+
+            font.Dispose();
+
+            graphics.Dispose();
+
+            _backBufferSurface.ReleaseDC(dcHandle);
         }
 
         /// <summary>
@@ -1043,53 +1118,54 @@ namespace Terrarium.Renderer
         /// </summary>
         private void PaintCursor()
         {
-            if (!_enabledCursor || Cursor != null || !DrawCursor)
+            if (!enabledCursor || Cursor != null || !drawCursor)
             {
                 return;
             }
 
-            ISpriteSurface workSurface = _tsm["cursor"].GetDefaultSurface();
+            DirectDrawSpriteSurface workSurface;
+            workSurface = tsm["cursor"].GetDefaultSurface();
             if (workSurface != null)
             {
-                Rectangle dest;
+                var dest = new Rectangle();
 
-                var xOffset = _cursorPos.X;
-                var yOffset = _cursorPos.Y;
+                var xOffset = cursorPos.X;
+                var yOffset = cursorPos.Y;
 
-                if (_bltUsingBezel)
+                if (bltUsingBezel)
                 {
                     var cursorRectangle = ComputeCursorRectangle();
                     xOffset -= cursorRectangle.Left;
                     yOffset -= cursorRectangle.Top;
                 }
 
-                switch (_cursor)
+                switch (cursor)
                 {
                     case 1:
-                    case 2:
                         dest = Rectangle.FromLTRB(xOffset - 16, yOffset, xOffset, yOffset + 16);
                         break;
+                    case 2:
+                        goto case 1;
                     case 3:
-                    case 4:
                         dest = Rectangle.FromLTRB(xOffset - 16, yOffset - 16, xOffset, yOffset);
                         break;
+                    case 4:
+                        goto case 3;
                     case 5:
-                    case 6:
                         dest = Rectangle.FromLTRB(xOffset, yOffset - 16, xOffset + 16, yOffset);
                         break;
+                    case 6:
+                        goto case 5;
                     default:
                         dest = Rectangle.FromLTRB(xOffset, yOffset, xOffset + 16, yOffset + 16);
                         break;
                 }
 
-                IClippedRect ddClipRect = workSurface.GrabSprite(0, _cursor, dest, _clipRect);
-                if (!ddClipRect.Invisible) {
-                    Rectangle d = ddClipRect.Destination;
-                    Rectangle s = ddClipRect.Source;
-
-                    BackBufferSurface.Blt(ref d, workSurface.SpriteSurface, ref s, BltFlags.KeySrc);
-                    ddClipRect.Source = s;
-                    ddClipRect.Destination = d;
+                DirectDrawClippedRect ddClipRect;
+                ddClipRect = workSurface.GrabSprite(0, cursor, dest, _clipRect);
+                if (!ddClipRect.Invisible)
+                {
+                    _backBufferSurface.Blt(ref ddClipRect.Destination, workSurface.SpriteSurface, ref ddClipRect.Source, BltFlags.KeySrc);
                 }
             }
         }
@@ -1104,274 +1180,278 @@ namespace Terrarium.Renderer
         ///  information.
         /// </summary>
         /// <param name="surf">The surface to render to.</param>
-        /// <param name="plantsOnly">True to render plants, false to render animals.</param>
-        private void PaintSprites(IGraphicsSurface surf, bool plantsOnly)
+        /// <param name="PlantsOnly">True to render plants, false to render animals.</param>
+        private void PaintSprites(IGraphicsSurface surf, bool PlantsOnly)
         {
 #if TRACE
             Profiler.Start("TerrariumDirectDrawGameView.PaintSprites()");
 #endif
-            if (_wv == null)
+            if (wv == null)
             {
                 return;
             }
 
-            if (_tfm.Count > 100)
+            if (tfm.Count > 100)
             {
-                _tfm.Clear();
+                tfm.Clear();
             }
 
-            TeleporterZIndex();
+            var TeleporterZIndices = TeleporterZIndex();
             var lastTeleporterZIndex = 0;
 
-            foreach (OrganismState orgState in _wv.State.ZOrderedOrganisms)
+            foreach (OrganismState orgState in wv.State.ZOrderedOrganisms)
             {
-                if (orgState.RenderInfo == null) continue;
-
-                var tsSprite = (TerrariumSprite) orgState.RenderInfo;
-
-                if (!plantsOnly && orgState.Species is PlantSpecies || 
-                     plantsOnly && !(orgState.Species is PlantSpecies))
+                if (orgState.RenderInfo != null)
                 {
-                    continue;
-                }
+                    var tsSprite = (TerrariumSprite) orgState.RenderInfo;
 
-                if (orgState.Species is AnimalSpecies)
-                {
-                    tsSprite.AdvanceFrame();
-                    orgState.RenderInfo = tsSprite;
-                }
+                    if ((PlantsOnly && !(orgState.Species is PlantSpecies)) ||
+                        (!PlantsOnly && orgState.Species is PlantSpecies))
+                    {
+                        continue;
+                    }
 
-                if (!VideoMemory && _skipframe)
-                {
-                    continue;
-                }
-
-                TerrariumSpriteSurface workTss = null;
-
-                if (workTss == null && tsSprite.SpriteKey != null)
-                {
-                    workTss = _tsm[tsSprite.SpriteKey, orgState.Radius, (orgState.Species is AnimalSpecies)];
-                }
-
-                if (workTss == null && tsSprite.SkinFamily != null)
-                {
-                    workTss = _tsm[tsSprite.SkinFamily, orgState.Radius, (orgState.Species is AnimalSpecies)];
-                }
-
-                if (workTss == null)
-                {
                     if (orgState.Species is AnimalSpecies)
                     {
-                        workTss = _tsm["ant", orgState.Radius, (orgState.Species is AnimalSpecies)];
-                    }
-                    else
-                    {
-                        workTss = _tsm["plant", orgState.Radius, (orgState.Species is AnimalSpecies)];
-                    }
-                }
-
-                if (workTss != null)
-                {
-                    var direction   = orgState.ActualDirection;
-                    var radius      = orgState.Radius;
-                    var framedir    = 1;
-                    var workSurface = workTss.GetClosestSurface((radius*2));
-                    radius = workSurface.FrameWidth;
-
-                    if (direction >= 68 && direction < 113)
-                    {
-                        framedir = 1;
-                    }
-                    else if (direction >= 113 && direction < 158)
-                    {
-                        framedir = 2;
-                    }
-                    else if (direction >= 158 && direction < 203)
-                    {
-                        framedir = 3;
-                    }
-                    else if (direction >= 203 && direction < 248)
-                    {
-                        framedir = 4;
-                    }
-                    else if (direction >= 248 && direction < 293)
-                    {
-                        framedir = 5;
-                    }
-                    else if (direction >= 293 && direction < 338)
-                    {
-                        framedir = 6;
-                    }
-                    else if (direction >= 338 && direction < 23)
-                    {
-                        framedir = 7;
-                    }
-                    else
-                    {
-                        framedir = 8;
+                        tsSprite.AdvanceFrame();
+                        orgState.RenderInfo = tsSprite;
                     }
 
-                    var dest = new Rectangle((int) tsSprite.XPosition - (ViewSize.Left + (radius >> 1)),
-                        (int) tsSprite.YPosition - (ViewSize.Top + (radius >> 1)),
-                        (int) tsSprite.XPosition - (ViewSize.Left + (radius >> 1)) + radius,
-                        (int) tsSprite.YPosition - (ViewSize.Top + (radius >> 1)) + radius);
+                    if (!videomemory && skipframe)
+                    {
+                        continue;
+                    }
+
+                    TerrariumSpriteSurface workTss = null;
+
+                    if (workTss == null && tsSprite.SpriteKey != null)
+                    {
+                        workTss = tsm[tsSprite.SpriteKey, orgState.Radius, (orgState.Species is AnimalSpecies)];
+                    }
+
+                    if (workTss == null && tsSprite.SkinFamily != null)
+                    {
+                        workTss = tsm[tsSprite.SkinFamily, orgState.Radius, (orgState.Species is AnimalSpecies)];
+                    }
+
+                    if (workTss == null)
+                    {
+                        if (orgState.Species is AnimalSpecies)
+                        {
+                            workTss = tsm["ant", orgState.Radius, (orgState.Species is AnimalSpecies)];
+                        }
+                        else
+                        {
+                            workTss = tsm["plant", orgState.Radius, (orgState.Species is AnimalSpecies)];
+                        }
+                    }
+
+                    if (workTss != null)
+                    {
+                        var direction = orgState.ActualDirection;
+                        var radius = orgState.Radius;
+                        var framedir = 1;
+                        var workSurface = workTss.GetClosestSurface((radius*2));
+                        radius = workSurface.FrameWidth;
+
+                        if (direction >= 68 && direction < 113)
+                        {
+                            framedir = 1;
+                        }
+                        else if (direction >= 113 && direction < 158)
+                        {
+                            framedir = 2;
+                        }
+                        else if (direction >= 158 && direction < 203)
+                        {
+                            framedir = 3;
+                        }
+                        else if (direction >= 203 && direction < 248)
+                        {
+                            framedir = 4;
+                        }
+                        else if (direction >= 248 && direction < 293)
+                        {
+                            framedir = 5;
+                        }
+                        else if (direction >= 293 && direction < 338)
+                        {
+                            framedir = 6;
+                        }
+                        else if (direction >= 338 && direction < 23)
+                        {
+                            framedir = 7;
+                        }
+                        else
+                        {
+                            framedir = 8;
+                        }
+
+                        var dest = new Rectangle((int) tsSprite.XPosition - (_viewsize.Left + (radius >> 1)),
+                                                 (int) tsSprite.YPosition - (_viewsize.Top + (radius >> 1)),
+                                                 (int) tsSprite.XPosition - (_viewsize.Left + (radius >> 1)) + radius,
+                                                 (int) tsSprite.YPosition - (_viewsize.Top + (radius >> 1)) + radius);
                         
-                    if (_updateMiniMap)
-                    {
-                        var miniMapX = (int) (tsSprite.XPosition*_miniMap.Width)/ActualSize.Right;
-                        miniMapX = (miniMapX > (_miniMap.Width - 1)) ? (_miniMap.Width - 1) : miniMapX;
-                        var miniMapY = (int) (tsSprite.YPosition*_miniMap.Height)/ActualSize.Bottom;
-                        miniMapY = (miniMapY > (_miniMap.Height - 1)) ? (_miniMap.Height - 1) : miniMapY;
+                        if (updateMiniMap)
+                        {
+                            var miniMapX = (int) (tsSprite.XPosition*miniMap.Width)/_actualsize.Right;
+                            miniMapX = (miniMapX > (miniMap.Width - 1)) ? (miniMap.Width - 1) : miniMapX;
+                            var miniMapY = (int) (tsSprite.YPosition*miniMap.Height)/_actualsize.Bottom;
+                            miniMapY = (miniMapY > (miniMap.Height - 1)) ? (miniMap.Height - 1) : miniMapY;
 
-                        Color brushColor;
+                            var brushColor = Color.Fuchsia;
 
-                        if (orgState.Species is PlantSpecies)
-                        {
-                            brushColor = Color.Lime;
-                        }
-                        else if (orgState.IsAlive == false)
-                        {
-                            brushColor = Color.Black;
-                        }
-                        else
-                        {
-                            var orgSpecies = (Species) orgState.Species;
-                            if (orgSpecies.MarkingColor == KnownColor.Green ||
-                                orgSpecies.MarkingColor == KnownColor.Black)
+                            if (orgState.Species.GetType() == typeof (PlantSpecies))
                             {
-                                brushColor = Color.Red;
+                                brushColor = Color.Lime;
+                            }
+                            else if (orgState.IsAlive == false)
+                            {
+                                brushColor = Color.Black;
                             }
                             else
                             {
-                                brushColor = Color.FromKnownColor(orgSpecies.MarkingColor);
-                            }
-                        }
-
-                        Brush orgBrush = new SolidBrush(brushColor);
-
-                        var miniMapGraphics = Graphics.FromImage(_miniMap);
-                        miniMapGraphics.FillRectangle(orgBrush, miniMapX, miniMapY, 12, 12);
-                        miniMapGraphics.Dispose();
-                        orgBrush.Dispose();
-
-                        //this.miniMap.SetPixel(
-                        //    miniMapX,
-                        //    miniMapY,
-                        //    (orgState.Species is PlantSpecies) ? Color.Green : (!orgState.IsAlive) ? Color.Black : (((Species) orgState.Species).MarkingColor == KnownColor.Green || ((Species) orgState.Species).MarkingColor == KnownColor.Black) ? Color.Red : Color.FromKnownColor(((Species) orgState.Species).MarkingColor));
-                    }
-
-                    IClippedRect ddClipRect;
-                    if (orgState.Species is PlantSpecies)
-                    {
-                        ddClipRect = workSurface.GrabSprite((int) tsSprite.CurFrame, 0, dest, _clipRect);
-                    }
-                    else
-                    {
-                        if (tsSprite.PreviousAction == DisplayAction.NoAction ||
-                            tsSprite.PreviousAction == DisplayAction.Reproduced ||
-                            tsSprite.PreviousAction == DisplayAction.Teleported ||
-                            tsSprite.PreviousAction == DisplayAction.Dead)
-                        {
-                            if (tsSprite.PreviousAction == DisplayAction.Dead)
-                            {
-                                ddClipRect = workSurface.GrabSprite(
-                                    9,
-                                    ((int) DisplayAction.Died) + framedir,
-                                    dest,
-                                    _clipRect);
-                            }
-                            else
-                            {
-                                ddClipRect = workSurface.GrabSprite(0, ((int) DisplayAction.Moved) + framedir, dest,
-                                    _clipRect);
-                            }
-                        }
-                        else
-                        {
-                            ddClipRect = workSurface.GrabSprite((int) tsSprite.CurFrame,
-                                ((int) tsSprite.PreviousAction) + framedir, dest,
-                                _clipRect);
-                        }
-                    }
-
-                    if (!ddClipRect.Invisible)
-                    {
-                        if (!plantsOnly)
-                        {
-                            RenderTeleporter(lastTeleporterZIndex, (int) tsSprite.YPosition);
-                            lastTeleporterZIndex = (int) tsSprite.YPosition;
-                        }
-                        Rectangle s = ddClipRect.Source;
-
-                        surf.BltFast(ddClipRect.Destination.Left, ddClipRect.Destination.Top, workSurface.SpriteSurface, ref s, BltFastFlags.SrcColorKey);
-                        ddClipRect.Source = s;
-
-                        if (DrawText && !plantsOnly)
-                        {
-                            var textSurface = _tfm[((Species) orgState.Species).Name];
-                            if (textSurface != null)
-                            {
-                                surf.BltFast(ddClipRect.Destination.Left, ddClipRect.Destination.Top - 14, textSurface, 
-                                    ref TerrariumTextSurfaceManager.StandardFontRect, BltFastFlags.SrcColorKey);
-                            }
-                        }
-
-                        if (!ddClipRect.ClipLeft &&
-                            !ddClipRect.ClipRight &&
-                            !ddClipRect.ClipTop &&
-                            !ddClipRect.ClipBottom)
-                        {
-                            if (DrawDestinationLines) {
-                                if (orgState.CurrentMoveToAction != null) {
-                                    var start = orgState.Position;
-                                    var end = orgState.CurrentMoveToAction.MovementVector.Destination;
-                                    surf.SetForeColor(0);
-                                    surf.DrawLine(start.X - ViewSize.Left, start.Y - ViewSize.Top, end.X - ViewSize.Left,
-                                        end.Y - ViewSize.Top);
+                                var orgSpecies = (Species) orgState.Species;
+                                if (orgSpecies.MarkingColor == KnownColor.Green ||
+                                    orgSpecies.MarkingColor == KnownColor.Black)
+                                {
+                                    brushColor = Color.Red;
+                                }
+                                else
+                                {
+                                    brushColor = Color.FromKnownColor(orgSpecies.MarkingColor);
                                 }
                             }
 
-                            if (DrawBoundingBox) {
-                                var boundingBox = GetBoundsOfState(orgState);
-                                surf.SetForeColor(0);
-                                surf.DrawBox(boundingBox.Left - ViewSize.Left,
-                                             boundingBox.Top - ViewSize.Top,
-                                             (boundingBox.Right + 1) - ViewSize.Left,
-                                             (boundingBox.Bottom + 1) - ViewSize.Top);
+                            Brush orgBrush = new SolidBrush(brushColor);
+
+                            var miniMapGraphics = Graphics.FromImage(miniMap);
+                            miniMapGraphics.FillRectangle(orgBrush, miniMapX, miniMapY, 12, 12);
+                            miniMapGraphics.Dispose();
+                            orgBrush.Dispose();
+
+                            //this.miniMap.SetPixel(
+                            //    miniMapX,
+                            //    miniMapY,
+                            //    (orgState.Species is PlantSpecies) ? Color.Green : (!orgState.IsAlive) ? Color.Black : (((Species) orgState.Species).MarkingColor == KnownColor.Green || ((Species) orgState.Species).MarkingColor == KnownColor.Black) ? Color.Red : Color.FromKnownColor(((Species) orgState.Species).MarkingColor));
+                        }
+
+                        DirectDrawClippedRect ddClipRect;
+                        if (orgState.Species is PlantSpecies)
+                        {
+                            ddClipRect = workSurface.GrabSprite((int) tsSprite.CurFrame, 0, dest, _clipRect);
+                        }
+                        else
+                        {
+                            if (tsSprite.PreviousAction == DisplayAction.NoAction ||
+                                tsSprite.PreviousAction == DisplayAction.Reproduced ||
+                                tsSprite.PreviousAction == DisplayAction.Teleported ||
+                                tsSprite.PreviousAction == DisplayAction.Dead)
+                            {
+                                if (tsSprite.PreviousAction == DisplayAction.Dead)
+                                {
+                                    ddClipRect = workSurface.GrabSprite(
+                                        9,
+                                        ((int) DisplayAction.Died) + framedir,
+                                        dest,
+                                        _clipRect);
+                                }
+                                else
+                                {
+                                    ddClipRect = workSurface.GrabSprite(0, ((int) DisplayAction.Moved) + framedir, dest,
+                                                                        _clipRect);
+                                }
+                            }
+                            else
+                            {
+                                ddClipRect = workSurface.GrabSprite((int) tsSprite.CurFrame,
+                                                                    ((int) tsSprite.PreviousAction) + framedir, dest,
+                                                                    _clipRect);
+                            }
+                        }
+
+                        if (!ddClipRect.Invisible)
+                        {
+                            if (!PlantsOnly)
+                            {
+                                RenderTeleporter(lastTeleporterZIndex, (int) tsSprite.YPosition);
+                                lastTeleporterZIndex = (int) tsSprite.YPosition;
                             }
 
-                            if (tsSprite.Selected)
-                            {
-                                surf.SetForeColor(0);
-                                surf.DrawBox(ddClipRect.Destination.Left, ddClipRect.Destination.Top,
-                                    ddClipRect.Destination.Right, ddClipRect.Destination.Bottom);
+                            surf.BltFast(ddClipRect.Destination.Left, ddClipRect.Destination.Top, workSurface.SpriteSurface, ref ddClipRect.Source, BltFastFlags.SrcColorKey);
 
-                                // red  Maybe we want some cool graphic here though
-                                var lineheight =
-                                    (int)
+                            if (drawtext && !PlantsOnly)
+                            {
+                                var textSurface = tfm[((Species) orgState.Species).Name];
+                                if (textSurface != null && textSurface.Surface != null)
+                                {
+                                    surf.BltFast(ddClipRect.Destination.Left, ddClipRect.Destination.Top - 14, textSurface, 
+                                                 ref TerrariumTextSurfaceManager.StandardFontRect, BltFastFlags.SrcColorKey);
+                                }
+                            }
+
+                            if (!ddClipRect.ClipLeft &&
+                                !ddClipRect.ClipRight &&
+                                !ddClipRect.ClipTop &&
+                                !ddClipRect.ClipBottom)
+                            {
+                                if (drawDestinationLines)
+                                {
+                                    if (orgState.CurrentMoveToAction != null)
+                                    {
+                                        var start = orgState.Position;
+                                        var end = orgState.CurrentMoveToAction.MovementVector.Destination;
+                                        ((DirectDrawSurface)surf).Surface.SetForeColor(0);
+                                        ((DirectDrawSurface)surf).Surface.DrawLine(start.X - _viewsize.Left, start.Y - _viewsize.Top,
+                                                             end.X - _viewsize.Left, end.Y - _viewsize.Top);
+                                    }
+                                }
+
+                                if (drawBoundingBox)
+                                {
+                                    var boundingBox = GetBoundsOfState(orgState);
+                                    ((DirectDrawSurface)surf).Surface.SetForeColor(0);
+                                    ((DirectDrawSurface)surf).Surface.DrawBox(
+                                        boundingBox.Left - _viewsize.Left,
+                                        boundingBox.Top - _viewsize.Top,
+                                        (boundingBox.Right + 1) - _viewsize.Left,
+                                        (boundingBox.Bottom + 1) - _viewsize.Top
+                                        );
+                                }
+
+                                if (tsSprite.Selected)
+                                {
+                                    ((DirectDrawSurface)surf).Surface.SetForeColor(0);
+                                    ((DirectDrawSurface)surf).Surface.DrawBox(ddClipRect.Destination.Left, ddClipRect.Destination.Top,
+                                                        ddClipRect.Destination.Right, ddClipRect.Destination.Bottom);
+
+                                    // red  Maybe we want some cool graphic here though
+                                    var lineheight =
+                                        (int)
                                         ((ddClipRect.Destination.Bottom - ddClipRect.Destination.Top)*
                                          orgState.PercentEnergy);
-                                surf.SetForeColor(63488);
-                                surf.DrawLine(ddClipRect.Destination.Left - 1, ddClipRect.Destination.Top,
-                                    ddClipRect.Destination.Left - 1,
-                                    ddClipRect.Destination.Top + lineheight);
+                                    ((DirectDrawSurface)surf).Surface.SetForeColor(63488);
+                                    ((DirectDrawSurface)surf).Surface.DrawLine(ddClipRect.Destination.Left - 1, ddClipRect.Destination.Top,
+                                                         ddClipRect.Destination.Left - 1,
+                                                         ddClipRect.Destination.Top + lineheight);
 
-                                //green  Maybe we want some cool graphic here though (or an actual bar?)
-                                lineheight =
-                                    (int)
+                                    //green  Maybe we want some cool graphic here though (or an actual bar?)
+                                    lineheight =
+                                        (int)
                                         ((ddClipRect.Destination.Bottom - ddClipRect.Destination.Top)*
                                          orgState.PercentInjured);
-                                surf.SetForeColor(2016);
-                                surf.DrawLine(ddClipRect.Destination.Right + 1, ddClipRect.Destination.Top,
-                                    ddClipRect.Destination.Right + 1,
-                                    ddClipRect.Destination.Top + lineheight);
+                                    ((DirectDrawSurface)surf).Surface.SetForeColor(2016);
+                                    ((DirectDrawSurface)surf).Surface.DrawLine(ddClipRect.Destination.Right + 1, ddClipRect.Destination.Top,
+                                                         ddClipRect.Destination.Right + 1,
+                                                         ddClipRect.Destination.Top + lineheight);
+                                }
                             }
                         }
                     }
                 }
             }
 
-            RenderTeleporter(lastTeleporterZIndex, ActualSize.Bottom);
+            RenderTeleporter(lastTeleporterZIndex, _actualsize.Bottom);
 
 #if TRACE
             Profiler.End("TerrariumDirectDrawGameView.PaintSprites()");
@@ -1385,10 +1465,10 @@ namespace Terrarium.Renderer
         /// </summary>
         /// <param name="orgState">The state of the creature to compute a bounding box for.</param>
         /// <returns>A bounding box.</returns>
-        private static Rectangle GetBoundsOfState(OrganismState orgState)
+        private Rectangle GetBoundsOfState(OrganismState orgState)
         {
-            var origin      = orgState.Position;
-            var cellRadius  = orgState.CellRadius;
+            var origin = orgState.Position;
+            var cellRadius = orgState.CellRadius;
 
             var p1 = new Point(
                 (origin.X >> 3)*8,
@@ -1414,14 +1494,13 @@ namespace Terrarium.Renderer
         /// <param name="zone">The teleporter zone to initialize.</param>
         private void InitTeleporter(TeleportZone zone)
         {
-            var tsZone = new TerrariumSprite {
-                CurFrame = 0,
-                CurFrameDelta = 1,
-                SpriteKey = "teleporter",
-                XPosition = zone.Rectangle.X,
-                YPosition = zone.Rectangle.Y
-            };
-            _hackTable.Add(zone.ID, tsZone);
+            var tsZone = new TerrariumSprite();
+            tsZone.CurFrame = 0;
+            tsZone.CurFrameDelta = 1;
+            tsZone.SpriteKey = "teleporter";
+            tsZone.XPosition = zone.Rectangle.X;
+            tsZone.YPosition = zone.Rectangle.Y;
+            hackTable.Add(zone.ID, tsZone);
         }
 
         /// <summary>
@@ -1433,14 +1512,15 @@ namespace Terrarium.Renderer
         /// <param name="orgState">The organism state to attach the sprite animation information to.</param>
         private void InitOrganism(OrganismState orgState)
         {
-            var tsSprite = new TerrariumSprite {CurFrame = 0, CurFrameDelta = 1};
+            var tsSprite = new TerrariumSprite();
+            tsSprite.CurFrame = 0;
+            tsSprite.CurFrameDelta = 1;
 
-            var species         = orgState.Species;
-            var animalSpecies   = species as AnimalSpecies;
-            if (animalSpecies != null)
+            var species = orgState.Species;
+            if (species is AnimalSpecies)
             {
-                tsSprite.SpriteKey = animalSpecies.Skin;
-                tsSprite.SkinFamily = animalSpecies.SkinFamily.ToString();
+                tsSprite.SpriteKey = ((AnimalSpecies) species).Skin;
+                tsSprite.SkinFamily = ((AnimalSpecies) species).SkinFamily.ToString();
                 tsSprite.IsPlant = false;
 
                 if (tsSprite.SpriteKey == null && tsSprite.SkinFamily == null)
@@ -1476,21 +1556,21 @@ namespace Terrarium.Renderer
 #if TRACE
             Profiler.Start("TerrariumDirectDrawGameView.UpdateWorld()");
 #endif
-            _wv = worldVector;
-            _paintPlants = true;
+            wv = worldVector;
+            paintPlants = true;
 
-            _updateTicker++;
-            _updateTickerChanged = true;
+            updateTicker++;
+            updateTickerChanged = true;
 
-            var zones = _wv.State.Teleporter.GetTeleportZones();
+            var zones = wv.State.Teleporter.GetTeleportZones();
             foreach (var zone in zones)
             {
-                if (_hackTable.ContainsKey(zone.ID))
+                if (hackTable.ContainsKey(zone.ID))
                 {
-                    var tsZone = (TerrariumSprite) _hackTable[zone.ID];
+                    var tsZone = (TerrariumSprite) hackTable[zone.ID];
                     tsZone.XDelta = (zone.Rectangle.X - tsZone.XPosition)/10;
                     tsZone.YDelta = (zone.Rectangle.Y - tsZone.YPosition)/10;
-                    _hackTable[zone.ID] = tsZone;
+                    hackTable[zone.ID] = tsZone;
                 }
                 else
                 {
@@ -1498,7 +1578,7 @@ namespace Terrarium.Renderer
                 }
             }
 
-            foreach (OrganismState orgState in _wv.State.Organisms)
+            foreach (OrganismState orgState in wv.State.Organisms)
             {
                 if (orgState.RenderInfo != null)
                 {
@@ -1540,31 +1620,31 @@ namespace Terrarium.Renderer
         private void ResetTerrarium()
         {
             // Lets reset the hackTable
-            _hackTable = new Hashtable();
+            hackTable = new Hashtable();
 
             // Lets reset the view coordinates
-            if (_fullscreen)
+            if (fullscreen)
             {
-                ViewSize = Rectangle.FromLTRB(0, 0, 500, 400);
+                _viewsize = Rectangle.FromLTRB(0, 0, 500, 400);
             }
             else
             {
                 int right   = Width - 1;
                 int bottom  = Height - 1;
 
-                if (right > ActualSize.Right)
+                if (right > _actualsize.Right)
                 {
-                    right = ActualSize.Right;
+                    right = _actualsize.Right;
                 }
-                if (right > ActualSize.Bottom)
+                if (right > _actualsize.Bottom)
                 {
-                    right = ActualSize.Bottom;
+                    right = _actualsize.Bottom;
                 }
 
-                ViewSize = Rectangle.FromLTRB(0, 0, right, bottom);
+                _viewsize = Rectangle.FromLTRB(0, 0, right, bottom);
 
             }
-            _clipRect = ViewSize;
+            _clipRect = _viewsize;
         }
 
         /// <summary>
@@ -1576,7 +1656,7 @@ namespace Terrarium.Renderer
         private void ClearBackground()
         {
             var clearRect = new Rectangle();
-            BackBufferSurface.BltColorFill(ref clearRect, 0);
+            _backBufferSurface.BltColorFill(ref clearRect, 0);
 
             clearRect = new Rectangle();
             _backgroundSurface.BltColorFill(ref clearRect, 0);
@@ -1595,7 +1675,7 @@ namespace Terrarium.Renderer
 #if TRACE
             Profiler.Start("TerrariumDirectDrawGameView.PaintBackground()");
 #endif
-            if (!VideoMemory && _skipframe)
+            if (!videomemory && skipframe)
             {
 #if TRACE
                 Profiler.End("TerrariumDirectDrawGameView.PaintBackground()");
@@ -1603,55 +1683,66 @@ namespace Terrarium.Renderer
                 return;
             }
 
-            if (_viewchanged)
+            if (viewchanged)
             {
-                var workSurface = _tsm["background"].GetDefaultSurface();
+                DirectDrawSpriteSurface workSurface = tsm["background"].GetDefaultSurface();
 
                 if (workSurface != null)
                 {
-                    var xTileStart = ViewSize.Left/_wld.TileYSize;
-                    var xTileEnd = (ViewSize.Right/_wld.TileYSize) + 1;
+                    var xTileStart = _viewsize.Left/wld.TileYSize;
+                    var xTileEnd = (_viewsize.Right/wld.TileYSize) + 1;
 
-                    if ((ViewSize.Right%_wld.TileYSize) != 0)
+                    if ((_viewsize.Right%wld.TileYSize) != 0)
                     {
                         xTileEnd++;
                     }
 
-                    var yTileStart = ViewSize.Top/_wld.TileYSize;
-                    var yTileEnd = (ViewSize.Bottom/_wld.TileYSize) + 2;
+                    var yTileStart = _viewsize.Top/wld.TileYSize;
+                    var yTileEnd = (_viewsize.Bottom/wld.TileYSize) + 2;
 
-                    for (var j = yTileStart; j < yTileEnd && j < _wld.Map.GetLength(1); j++)
+                    for (var j = yTileStart; j < yTileEnd && j < wld.Map.GetLength(1); j++)
                     {
                         for (var i = xTileStart; i < xTileEnd; i++)
                         {
-                            var tInfo = _wld.Map[i, j];
-                            Rectangle dest = Rectangle.FromLTRB(tInfo.XOffset - ViewSize.Left,
-                                                                tInfo.YOffset - ViewSize.Top,
-                                                                tInfo.XOffset - ViewSize.Left + World.TileXSize,
-                                                                tInfo.YOffset - ViewSize.Top + _wld.TileYSize);
+                            var tInfo = wld.Map[i, j];
+                            Rectangle dest = Rectangle.FromLTRB(tInfo.XOffset - _viewsize.Left,
+                                                                tInfo.YOffset - _viewsize.Top,
+                                                                tInfo.XOffset - _viewsize.Left + World.TileXSize,
+                                                                tInfo.YOffset - _viewsize.Top + wld.TileYSize);
 
-                            const int iTile = 0;
-                            const int iTrans = 0;
+                            var iTrans =
+                                (tInfo.Tile < 8)
+                                    ?
+                                        (tInfo.Transition*2)
+                                    :
+                                        (tInfo.Transition*2) + 1;
+                            var iTile =
+                                (tInfo.Tile < 8)
+                                    ?
+                                        tInfo.Tile
+                                    :
+                                        tInfo.Tile - 8;
+
+                            iTile = 0;
+                            iTrans = 0;
 
                             var ddClipRect = workSurface.GrabSprite(iTile, iTrans, dest, _clipRect);
                             if (!ddClipRect.Invisible)
                             {
-                                Rectangle s = ddClipRect.Source;
                                 _backgroundSurface.BltFast(ddClipRect.Destination.Left, ddClipRect.Destination.Top,
-                                                           workSurface.SpriteSurface, ref s, BltFastFlags.SrcColorKey | BltFastFlags.FastWait);
-                                ddClipRect.Source = s;
+                                                           workSurface.SpriteSurface, ref ddClipRect.Source, BltFastFlags.SrcColorKey | BltFastFlags.FastWait);
                             }
                         }
                     }
                 }
-                _viewchanged = false;
-                _paintPlants = true;
+                viewchanged = false;
+                paintPlants = true;
             }
 
             Rectangle srcRect;
             Rectangle destRect;
 
-            if (_paintPlants)
+            if (paintPlants)
             {
                 srcRect     = _backgroundSurface.Rect;
                 destRect    = _stagingSurface.Rect;
@@ -1659,13 +1750,13 @@ namespace Terrarium.Renderer
                 _stagingSurface.Blt(ref destRect, _backgroundSurface, ref srcRect, BltFlags.BltWait);
 
                 PaintSprites(_stagingSurface, true);
-                _paintPlants = false;
+                paintPlants = false;
             }
 
 
             srcRect = _stagingSurface.Rect;
-            destRect = BackBufferSurface.Rect;
-            BackBufferSurface.Blt(ref destRect, _stagingSurface, ref srcRect, BltFlags.BltWait);
+            destRect = _backBufferSurface.Rect;
+            _backBufferSurface.Blt(ref destRect, _stagingSurface, ref srcRect, BltFlags.BltWait);
 #if TRACE
             Profiler.End("TerrariumDirectDrawGameView.PaintBackground()");
 #endif
@@ -1678,16 +1769,16 @@ namespace Terrarium.Renderer
         /// <returns>The number of pixels actually scrolled.</returns>
         public int ScrollUp(int pixels)
         {
-            if ((ViewSize.Top - pixels) < ActualSize.Top)
+            if ((_viewsize.Top - pixels) < _actualsize.Top)
             {
-                pixels = ViewSize.Top - ActualSize.Top;
+                pixels = _viewsize.Top - _actualsize.Top;
             }
 
-            ViewSize = Rectangle.FromLTRB(ViewSize.Left, ViewSize.Top - pixels, ViewSize.Right, ViewSize.Bottom - pixels);
+            _viewsize = Rectangle.FromLTRB(_viewsize.Left, _viewsize.Top - pixels, _viewsize.Right, _viewsize.Bottom - pixels);
 
             if (pixels != 0)
             {
-                _viewchanged = true;
+                viewchanged = true;
             }
 
             return pixels;
@@ -1700,16 +1791,16 @@ namespace Terrarium.Renderer
         /// <returns>The number of pixels actually scrolled.</returns>
         public int ScrollDown(int pixels)
         {
-            if ((ViewSize.Bottom + pixels) > ActualSize.Bottom)
+            if ((_viewsize.Bottom + pixels) > _actualsize.Bottom)
             {
-                pixels = ActualSize.Bottom - ViewSize.Bottom;
+                pixels = _actualsize.Bottom - _viewsize.Bottom;
             }
 
-            ViewSize = Rectangle.FromLTRB(ViewSize.Left, ViewSize.Top + pixels, ViewSize.Right, ViewSize.Bottom + pixels);
+            _viewsize = Rectangle.FromLTRB(_viewsize.Left, _viewsize.Top + pixels, _viewsize.Right, _viewsize.Bottom + pixels);
 
             if (pixels != 0)
             {
-                _viewchanged = true;
+                viewchanged = true;
             }
 
             return pixels;
@@ -1722,15 +1813,15 @@ namespace Terrarium.Renderer
         /// <returns>The number of pixels actually scrolled.</returns>
         public int ScrollLeft(int pixels)
         {
-            if ((ViewSize.Left - pixels) < ActualSize.Left)
+            if ((_viewsize.Left - pixels) < _actualsize.Left)
             {
-                pixels = ViewSize.Left - ActualSize.Left;
+                pixels = _viewsize.Left - _actualsize.Left;
             }
-            ViewSize = Rectangle.FromLTRB(ViewSize.Left - pixels, ViewSize.Top, ViewSize.Right - pixels, ViewSize.Bottom);
+            _viewsize = Rectangle.FromLTRB(_viewsize.Left - pixels, _viewsize.Top, _viewsize.Right - pixels, _viewsize.Bottom);
 
             if (pixels != 0)
             {
-                _viewchanged = true;
+                viewchanged = true;
             }
 
             return pixels;
@@ -1743,16 +1834,16 @@ namespace Terrarium.Renderer
         /// <returns>The number of pixels actually scrolled.</returns>
         public int ScrollRight(int pixels)
         {
-            if ((ViewSize.Right + pixels) > ActualSize.Right)
+            if ((_viewsize.Right + pixels) > _actualsize.Right)
             {
-                pixels = ActualSize.Right - ViewSize.Right;
+                pixels = _actualsize.Right - _viewsize.Right;
             }
 
-            ViewSize = Rectangle.FromLTRB(ViewSize.Left + pixels, ViewSize.Top, ViewSize.Right + pixels, ViewSize.Bottom);
+            _viewsize = Rectangle.FromLTRB(_viewsize.Left + pixels, _viewsize.Top, _viewsize.Right + pixels, _viewsize.Bottom);
 
             if (pixels != 0)
             {
-                _viewchanged = true;
+                viewchanged = true;
             }
 
             return pixels;
@@ -1766,25 +1857,25 @@ namespace Terrarium.Renderer
         /// <param name="yOffset">Y location to center to.</param>
         public void CenterTo(int xOffset, int yOffset)
         {
-            var viewportOffsetXSize = (ViewSize.Right - ViewSize.Left)/2;
-            var viewportOffsetYSize = (ViewSize.Bottom - ViewSize.Top)/2;
+            var ViewportOffsetXSize = (_viewsize.Right - _viewsize.Left)/2;
+            var ViewportOffsetYSize = (_viewsize.Bottom - _viewsize.Top)/2;
 
-            if (xOffset < (ViewSize.Left + viewportOffsetXSize))
+            if (xOffset < (_viewsize.Left + ViewportOffsetXSize))
             {
-                ScrollLeft((ViewSize.Left + viewportOffsetXSize) - xOffset);
+                ScrollLeft((_viewsize.Left + ViewportOffsetXSize) - xOffset);
             }
             else
             {
-                ScrollRight(xOffset - (ViewSize.Left + viewportOffsetXSize));
+                ScrollRight(xOffset - (_viewsize.Left + ViewportOffsetXSize));
             }
 
-            if (yOffset < (ViewSize.Top + viewportOffsetYSize))
+            if (yOffset < (_viewsize.Top + ViewportOffsetYSize))
             {
-                ScrollUp((ViewSize.Top + viewportOffsetYSize) - yOffset);
+                ScrollUp((_viewsize.Top + ViewportOffsetYSize) - yOffset);
             }
             else
             {
-                ScrollDown(yOffset - (ViewSize.Top + viewportOffsetYSize));
+                ScrollDown(yOffset - (_viewsize.Top + ViewportOffsetYSize));
             }
         }
     }

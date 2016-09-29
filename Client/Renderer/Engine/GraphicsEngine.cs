@@ -1,4 +1,8 @@
-﻿using Terrarium.Renderer.DirectX7;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Terrarium.Renderer.DirectX;
 using Terrarium.Tools;
 
 namespace Terrarium.Renderer.Engine
@@ -19,7 +23,15 @@ namespace Terrarium.Renderer.Engine
         /// </summary>
         public static Profiler Profiler
         {
-            get { return _profiler ?? (_profiler = new Profiler()); }
+            get
+            {
+                if (_profiler == null)
+                {
+                    _profiler = new Profiler();
+                }
+
+                return _profiler;
+            }
         }
 #endif
         private static IGraphicsEngine _internalGraphicsEngine = null;

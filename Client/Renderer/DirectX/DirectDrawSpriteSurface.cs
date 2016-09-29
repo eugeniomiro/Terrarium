@@ -2,50 +2,51 @@
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                             
 //------------------------------------------------------------------------------
 
+
 using DxVBLib;
 using System;
 using System.Drawing;
 using Terrarium.Renderer.Engine;
 
-namespace Terrarium.Renderer.DirectX7
+namespace Terrarium.Renderer.DirectX
 {
     /// <summary>
     ///  Encapsulate the logic for implementing a sprite surface capable
     ///  of rendering animated sprites.
     /// </summary>
-    public class DirectDrawSpriteSurface : ISpriteSurface
+    public class DirectDrawSpriteSurface
     {
         /// <summary>
         ///  The number of animation frames on the
         ///  sheet.
         /// </summary>
-        private readonly int _animationFrames;
+        private readonly int animationFrames;
 
         /// <summary>
         ///  The number of separate animation types
         ///  on the sheet.
         /// </summary>
-        private readonly int _animationTypes;
+        private readonly int animationTypes;
 
         /// <summary>
         ///  The real DirectDraw surface pointer
         /// </summary>
-        private readonly DirectDrawSurface _ddsurface;
+        private readonly DirectDrawSurface ddsurface;
 
         /// <summary>
         ///  The height of a single frame of animation.
         /// </summary>
-        private readonly int _frameHeight;
+        private readonly int frameHeight;
 
         /// <summary>
         ///  The width of a single frame of animation.
         /// </summary>
-        private readonly int _frameWidth;
+        private readonly int frameWidth;
 
         /// <summary>
         ///  The name of this sprite sheet
         /// </summary>
-        private readonly string _spriteName;
+        private readonly string spriteName;
 
         /// <summary>
         ///  Creates a new sprite sheet with the given name from an image.
@@ -61,20 +62,20 @@ namespace Terrarium.Renderer.DirectX7
 #if TRACE
             GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface..ctor()");
 #endif
-            _spriteName = spriteName;
+            this.spriteName = spriteName;
 
-            _ddsurface = new DirectDrawSurface(spriteImagePath);
-            if (_ddsurface == null)
+            ddsurface = new DirectDrawSurface(spriteImagePath);
+            if (ddsurface == null)
             {
-                _ddsurface = new DirectDrawSurface(spriteImagePath, DirectDrawSurface.SystemMemorySurfaceDescription);
+                ddsurface = new DirectDrawSurface(spriteImagePath, DirectDrawSurface.SystemMemorySurfaceDescription);
             }
-            _ddsurface.TransparencyKey = new ColorKey(DirectDrawSurface.DefaultColorKey);
+            ddsurface.TransparencyKey = new ColorKey(DirectDrawSurface.DefaultColorKey);
 
-            _animationFrames = xFrames;
-            _animationTypes = yFrames;
+            animationFrames = xFrames;
+            animationTypes = yFrames;
 
-            _frameHeight = _ddsurface.Rect.Bottom/_animationTypes;
-            _frameWidth = _ddsurface.Rect.Right/_animationFrames;
+            frameHeight = ddsurface.Rect.Bottom/animationTypes;
+            frameWidth = ddsurface.Rect.Right/animationFrames;
 #if TRACE
             GraphicsEngine.Profiler.End("DirectDrawSpriteSurface..ctor()");
 #endif
@@ -85,7 +86,7 @@ namespace Terrarium.Renderer.DirectX7
         /// </summary>
         public int FrameHeight
         {
-            get { return _frameHeight; }
+            get { return frameHeight; }
         }
 
         /// <summary>
@@ -93,15 +94,15 @@ namespace Terrarium.Renderer.DirectX7
         /// </summary>
         public int FrameWidth
         {
-            get { return _frameWidth; }
+            get { return frameWidth; }
         }
 
         /// <summary>
         ///  Access to the real DirectDraw surface used to create this sprite surface.
         /// </summary>
-        public IGraphicsSurface SpriteSurface
+        public DirectDrawSurface SpriteSurface
         {
-            get { return _ddsurface; }
+            get { return ddsurface; }
         }
 
         /// <summary>
@@ -109,7 +110,7 @@ namespace Terrarium.Renderer.DirectX7
         /// </summary>
         public string SpriteName
         {
-            get { return _spriteName; }
+            get { return spriteName; }
         }
 
         /// <summary>
@@ -118,17 +119,25 @@ namespace Terrarium.Renderer.DirectX7
         /// <param name="xFrame">Retrieve the Xth horizontal frame.</param>
         /// <param name="yFrame">Retrieve the Yth vertical frame.</param>
         /// <returns></returns>
-        public Rectangle GrabSprite(int xFrame, int yFrame)
+        public RECT GrabSprite(int xFrame, int yFrame)
         {
 #if TRACE
             GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int)");
 #endif
-            if (xFrame < 0 || xFrame >= _animationFrames ||
-                yFrame < 0 || yFrame >= _animationTypes)
+            if (xFrame < 0 || xFrame >= animationFrames ||
+                yFrame < 0 || yFrame >= animationTypes)
             {
                 throw new Exception("Sprite request is out of range");
             }
-            var spriteRect = new Rectangle(yFrame*_frameHeight, xFrame*_frameWidth, _frameHeight, _frameWidth);
+
+            var spriteRect = new RECT();
+            spriteRect.Top = yFrame*frameHeight;
+            spriteRect.Bottom = spriteRect.Top;
+            spriteRect.Bottom += frameHeight;
+
+            spriteRect.Left = xFrame*frameWidth;
+            spriteRect.Right = spriteRect.Left;
+            spriteRect.Right += frameWidth;
 
 #if TRACE
             GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int)");
@@ -145,29 +154,29 @@ namespace Terrarium.Renderer.DirectX7
         /// <param name="dest">The destination rectangle for the sprite.</param>
         /// <param name="bounds">The view rectangle bounds.</param>
         /// <returns></returns>
-        public IClippedRect GrabSprite(int xFrame, int yFrame, Rectangle dest, Rectangle bounds)
+        public DirectDrawClippedRect GrabSprite(int xFrame, int yFrame, Rectangle dest, Rectangle bounds)
         {
 #if TRACE
             GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT)");
 #endif
-            if (xFrame < 0 || xFrame >= _animationFrames ||
-                yFrame < 0 || yFrame >= _animationTypes)
+            if (xFrame < 0 || xFrame >= animationFrames ||
+                yFrame < 0 || yFrame >= animationTypes)
             {
                 throw new Exception("Sprite request is out of range");
             }
 
-            var spriteRect = new RECT { Top = yFrame * _frameHeight };
+            var spriteRect = new RECT();
+            spriteRect.Top = yFrame * frameHeight;
             spriteRect.Bottom = spriteRect.Top;
-            spriteRect.Bottom += _frameHeight;
+            spriteRect.Bottom += frameHeight;
 
-            spriteRect.Left = xFrame * _frameWidth;
+            spriteRect.Left = xFrame * frameWidth;
             spriteRect.Right = spriteRect.Left;
-            spriteRect.Right += _frameWidth;
+            spriteRect.Right += frameWidth;
 
-            var ddClipRect = new DirectDrawClippedRect {
-                Destination = dest,
-                Source = Rectangle.FromLTRB(spriteRect.Left, spriteRect.Top, spriteRect.Right, spriteRect.Bottom)
-            };
+            var ddClipRect = new DirectDrawClippedRect();
+            ddClipRect.Destination = dest;
+            ddClipRect.Source = Rectangle.FromLTRB(spriteRect.Left, spriteRect.Top, spriteRect.Right, spriteRect.Bottom);
 
             if (dest.Left >= bounds.Right || dest.Right <= bounds.Left || dest.Top >= bounds.Bottom ||
                 dest.Bottom <= bounds.Top)
@@ -197,25 +206,26 @@ namespace Terrarium.Renderer.DirectX7
         /// <param name="bounds">The view rectangle bounds.</param>
         /// <param name="factor">A scaling factor.</param>
         /// <returns></returns>
-        public IClippedRect GrabSprite(int xFrame, int yFrame, Rectangle dest, Rectangle bounds, int factor)
+        public DirectDrawClippedRect GrabSprite(int xFrame, int yFrame, Rectangle dest, Rectangle bounds, int factor)
         {
 #if TRACE
             GraphicsEngine.Profiler.Start("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");
 #endif
-            if (xFrame < 0 || xFrame >= _animationFrames ||
-                yFrame < 0 || yFrame >= _animationTypes)
+            if (xFrame < 0 || xFrame >= animationFrames ||
+                yFrame < 0 || yFrame >= animationTypes)
             {
                 throw new Exception("Sprite request is out of range");
             }
 
-            var spriteRect = new Rectangle(xFrame, yFrame, _frameWidth, _frameHeight);
+            var spriteRect = new Rectangle(xFrame, yFrame, frameWidth, frameHeight);
 
-            var ddClipRect = new DirectDrawClippedRect {
-                Destination = dest, 
-                Source = spriteRect
-            };
+            var ddClipRect = new DirectDrawClippedRect();
+            ddClipRect.Destination  = dest;
+            ddClipRect.Source       = spriteRect;
 
-            if (dest.Left >= bounds.Right || dest.Right <= bounds.Left || dest.Top >= bounds.Bottom || dest.Bottom <= bounds.Top) {
+            if (dest.Left >= bounds.Right || dest.Right <= bounds.Left || dest.Top >= bounds.Bottom ||
+                dest.Bottom <= bounds.Top)
+            {
                 ddClipRect.Invisible = true;
 #if TRACE
                 GraphicsEngine.Profiler.End("DirectDrawSpriteSurface.GrabSprite(int, int, RECT, RECT, int)");

@@ -26,11 +26,6 @@ namespace Terrarium.Renderer.Engine
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="color"></param>
-        void SetFillColor(int color);
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
         IntPtr GetDC();
         /// <summary>
@@ -79,21 +74,5 @@ namespace Terrarium.Renderer.Engine
         /// <param name="rectangle"></param>
         /// <param name="flags"></param>
         void BltFast(int x, int y, IGraphicsSurface surface, ref Rectangle rectangle, BltFastFlags flags);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="x1"></param>
-        /// <param name="y1"></param>
-        /// <param name="x2"></param>
-        /// <param name="y2"></param>
-        void DrawLine(int x1, int y1, int x2, int y2);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="x1"></param>
-        /// <param name="y1"></param>
-        /// <param name="x2"></param>
-        /// <param name="y2"></param>
-        void DrawBox(int x1, int y1, int x2, int y2);
     }
 }

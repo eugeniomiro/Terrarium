@@ -4,10 +4,9 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
-using Terrarium.Renderer.DirectX7;
+using Terrarium.Renderer.DirectX;
 using Terrarium.Renderer.Engine;
 
 namespace Terrarium.Renderer
@@ -29,7 +28,7 @@ namespace Terrarium.Renderer
         /// <summary>
         ///  The sprites associated with each bit of text.
         /// </summary>
-        private Dictionary<String, IGraphicsSurface> _sprites;
+        private Hashtable sprites;
 
         /// <summary>
         ///  Initialize the standard font rectangle.
@@ -53,7 +52,7 @@ namespace Terrarium.Renderer
         /// </summary>
         internal int Count
         {
-            get { return _sprites.Count; }
+            get { return sprites.Count; }
         }
 
         /// <summary>
@@ -69,12 +68,12 @@ namespace Terrarium.Renderer
                     return null;
                 }
 
-                if (!_sprites.ContainsKey(key))
+                if (!sprites.ContainsKey(key))
                 {
                     Add(key);
                 }
 
-                return (DirectDrawSurface) _sprites[key];
+                return (DirectDrawSurface) sprites[key];
             }
         }
 
@@ -122,15 +121,16 @@ namespace Terrarium.Renderer
 
             }
 
-            _sprites.Add(key, ddSurface);
+            sprites.Add(key, ddSurface);
         }
 
         /// <summary>
         ///  Clears out any existing text surfaces and reinitializes the
         ///  hash table for storing keyed surfaces.
         /// </summary>
-        internal void Clear() {
-            _sprites = new Dictionary<string, IGraphicsSurface>(StringComparer.OrdinalIgnoreCase);
+        internal void Clear()
+        {
+            sprites = CollectionsUtil.CreateCaseInsensitiveHashtable();
         }
 
         /// <summary>
@@ -138,19 +138,19 @@ namespace Terrarium.Renderer
         /// </summary>
         /// <param name="key">The key of the surface to remove.</param>
         /// <returns>The DirectDrawSurface being removed.</returns>
-        internal IGraphicsSurface Remove(string key)
+        internal DirectDrawSurface Remove(string key)
         {
-            IGraphicsSurface ddSurface = null;
+            DirectDrawSurface ddSurface = null;
 
             if (string.IsNullOrEmpty(key))
             {
                 return null;
             }
 
-            if (_sprites.ContainsKey(key))
+            if (sprites.ContainsKey(key))
             {
-                ddSurface = (IGraphicsSurface) _sprites[key];
-                _sprites.Remove(key);
+                ddSurface = (DirectDrawSurface) sprites[key];
+                sprites.Remove(key);
             }
 
             return ddSurface;

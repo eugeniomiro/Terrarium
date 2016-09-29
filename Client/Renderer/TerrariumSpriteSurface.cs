@@ -3,8 +3,7 @@
 //------------------------------------------------------------------------------
 
 using Terrarium.Configuration;
-using Terrarium.Renderer.DirectX7;
-using Terrarium.Renderer.Engine;
+using Terrarium.Renderer.DirectX;
 
 namespace Terrarium.Renderer
 {
@@ -21,12 +20,12 @@ namespace Terrarium.Renderer
         /// <summary>
         ///  A collection of surfaces attached to this sprite surface.
         /// </summary>
-        private readonly DirectDrawSpriteSurface[] _surfaces;
+        private readonly DirectDrawSpriteSurface[] surfaces;
 
         /// <summary>
         ///  Determines if this instance supports sized surfaces.
         /// </summary>
-        private bool _sizedSurfaces;
+        private bool sizedSurfaces;
 
         /// <summary>
         ///  Creates a new sprite surface, initializing the size
@@ -34,7 +33,7 @@ namespace Terrarium.Renderer
         /// </summary>
         internal TerrariumSpriteSurface()
         {
-            _surfaces = new DirectDrawSpriteSurface[49];
+            surfaces = new DirectDrawSpriteSurface[49];
         }
 
         /// <summary>
@@ -42,10 +41,10 @@ namespace Terrarium.Renderer
         ///  If sizedSurface was previously set, it is now unset.
         /// </summary>
         /// <param name="ddss">The surface to attach.</param>
-        internal void AttachSurface(ISpriteSurface ddss)
+        internal void AttachSurface(DirectDrawSpriteSurface ddss)
         {
-            _sizedSurfaces = false;
-            _surfaces[0] = ddss as DirectDrawSpriteSurface;
+            sizedSurfaces = false;
+            surfaces[0] = ddss;
         }
 
         /// <summary>
@@ -55,19 +54,19 @@ namespace Terrarium.Renderer
         /// </summary>
         /// <param name="ddss">The sprite surface to attach to this instance.</param>
         /// <param name="size">The size of this sprite surface.</param>
-        internal void AttachSurface(ISpriteSurface ddss, int size)
+        internal void AttachSurface(DirectDrawSpriteSurface ddss, int size)
         {
-            _sizedSurfaces = true;
-            _surfaces[size] = ddss as DirectDrawSpriteSurface;
+            sizedSurfaces = true;
+            surfaces[size] = ddss;
         }
 
         /// <summary>
         ///  Gets the default surface.  This only works for unsized surfaces.
         /// </summary>
         /// <returns>The default, non-sized surface.</returns>
-        internal ISpriteSurface GetDefaultSurface()
+        internal DirectDrawSpriteSurface GetDefaultSurface()
         {
-            return _surfaces[0];
+            return surfaces[0];
         }
 
         /// <summary>
@@ -75,17 +74,19 @@ namespace Terrarium.Renderer
         /// </summary>
         /// <param name="size">The ideal size of the surface requrested.</param>
         /// <returns>A surface that closesly resembles the ideal surface in size.</returns>
-        internal ISpriteSurface GetClosestSurface(int size)
+        internal DirectDrawSpriteSurface GetClosestSurface(int size)
         {
-            ISpriteSurface close = null;
+            DirectDrawSpriteSurface close = null;
 
-            if (!_sizedSurfaces) {
-                return _surfaces[0];
+            if (!sizedSurfaces)
+            {
+                return surfaces[0];
             }
 
-            for (var i = 1; i <= 48; i++) {
-                if (_surfaces[i] == null) continue;
-                close = _surfaces[i];
+            for (var i = 1; i <= 48; i++)
+            {
+                if (surfaces[i] == null) continue;
+                close = surfaces[i];
 
                 if (GameConfig.UseLargeGraphics) continue;
                 if (i >= size)

@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.IO;
 using Terrarium.Configuration;
-using Terrarium.Renderer.DirectX7;
+using Terrarium.Renderer.DirectX;
 
 namespace Terrarium.Renderer
 {
@@ -100,10 +100,10 @@ namespace Terrarium.Renderer
         /// <param name="name">The name of the file to check.</param>
         /// <param name="key">The key name to check the file against.</param>
         /// <returns>True if the file name is valid given the key, false otherwise.</returns>
-        private static bool IsSourceValid(string name, string key)
+        private static bool isSourceValid(string name, string key)
         {
             var fname = Path.GetFileNameWithoutExtension(name);
-            if (fname != null && fname.Length > key.Length)
+            if (fname.Length > key.Length)
             {
                 // Strip off the prefix.  We should be left
                 // with a set of numbers now.
@@ -114,7 +114,8 @@ namespace Terrarium.Renderer
                     Int32.Parse(fname);
                     return true;
                 }
-                catch (Exception) {
+                catch
+                {
                 }
             }
             return false;
@@ -150,7 +151,7 @@ namespace Terrarium.Renderer
             var bmps = Directory.GetFiles(GameConfig.MediaDirectory, key + "*.bmp");
             for (var i = 0; i < bmps.Length; i++)
             {
-                if (!IsSourceValid(bmps[i], key))
+                if (!isSourceValid(bmps[i], key))
                 {
                     continue;
                 }
