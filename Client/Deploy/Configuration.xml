@@ -213,51 +213,6 @@
              bin directory for storing game state.
             </summary>
         </member>
-        <member name="M:Terrarium.Configuration.GameConfig.GetSetting(System.String)">
-            <summary>
-             Retrieves a setting from the user configuration
-             file based on a setting name.  This method only
-             retrieves the text of the element in string format.
-            </summary>
-            <param name="settingName">Name of the setting to retrieve.</param>
-            <returns>Returns the value of the setting on success or an empty string if it doesn't.</returns>
-        </member>
-        <member name="M:Terrarium.Configuration.GameConfig.SetSetting(System.String,System.String)">
-            <summary>
-             Sets a user configuration file value given the setting name
-             and the new value in string format.  This method will write
-             new values, or update existing values.
-            </summary>
-            <param name="settingName">Name of the setting to create or update.</param>
-            <param name="settingValue">Value for the setting.</param>
-        </member>
-        <member name="M:Terrarium.Configuration.GameConfig.WriteConfigFileFromResources(System.String)">
-            <summary>
-             This is a *safe* method for writing out a static configuration
-             file from the embedded configuration resource file.  We have to
-             have a template to build from.  We could use the GameConfig to
-             build one, but this allows us to pick and choose which options
-             will be in the stock config without complicated code.
-            </summary>
-            <param name="configFile">This should be a pointer to UserSettingsLocation</param>
-        </member>
-        <member name="M:Terrarium.Configuration.GameConfig.GetUserSettings">
-            <summary>
-             Gets the current user configuration settings in the form
-             of an XmlDocument file.
-            </summary>
-            <returns>An XmlDocument initalized with settings on success, null otherwise.</returns>
-        </member>
-        <member name="M:Terrarium.Configuration.GameConfig.CheckConfigFile">
-            <summary>
-             Checks the user configuration file for accessibility by
-             attempting to retrive the user settings.  If the file doesn't
-             exist then a general exception is found and caught by GetUserSettings.
-             Other exceptions will get passed back to the callee.  This is
-             primarily used to detect permissions errors with respect to the
-             config file.
-            </summary>
-        </member>
         <member name="P:Terrarium.Configuration.GameConfig.ShowErrors">
             <summary>
              Determines if the Terrarium Client should give a visible
@@ -470,6 +425,51 @@
              resource.
             </summary>
         </member>
+        <member name="M:Terrarium.Configuration.GameConfig.GetSetting(System.String)">
+            <summary>
+             Retrieves a setting from the user configuration
+             file based on a setting name.  This method only
+             retrieves the text of the element in string format.
+            </summary>
+            <param name="settingName">Name of the setting to retrieve.</param>
+            <returns>Returns the value of the setting on success or an empty string if it doesn't.</returns>
+        </member>
+        <member name="M:Terrarium.Configuration.GameConfig.SetSetting(System.String,System.String)">
+            <summary>
+             Sets a user configuration file value given the setting name
+             and the new value in string format.  This method will write
+             new values, or update existing values.
+            </summary>
+            <param name="settingName">Name of the setting to create or update.</param>
+            <param name="settingValue">Value for the setting.</param>
+        </member>
+        <member name="M:Terrarium.Configuration.GameConfig.WriteConfigFileFromResources(System.String)">
+            <summary>
+             This is a *safe* method for writing out a static configuration
+             file from the embedded configuration resource file.  We have to
+             have a template to build from.  We could use the GameConfig to
+             build one, but this allows us to pick and choose which options
+             will be in the stock config without complicated code.
+            </summary>
+            <param name="configFile">This should be a pointer to UserSettingsLocation</param>
+        </member>
+        <member name="M:Terrarium.Configuration.GameConfig.GetUserSettings">
+            <summary>
+             Gets the current user configuration settings in the form
+             of an XmlDocument file.
+            </summary>
+            <returns>An XmlDocument initalized with settings on success, null otherwise.</returns>
+        </member>
+        <member name="M:Terrarium.Configuration.GameConfig.CheckConfigFile">
+            <summary>
+             Checks the user configuration file for accessibility by
+             attempting to retrive the user settings.  If the file doesn't
+             exist then a general exception is found and caught by GetUserSettings.
+             Other exceptions will get passed back to the callee.  This is
+             primarily used to detect permissions errors with respect to the
+             config file.
+            </summary>
+        </member>
         <member name="T:Terrarium.Configuration.StateSettings">
             <summary>
              This class is used to enumerate and validate
@@ -508,6 +508,12 @@
         <member name="F:Terrarium.Tools.ErrorLog._machineName">
             <summary>
              The name of the machine the client is running on
+            </summary>
+        </member>
+        <member name="P:Terrarium.Tools.ErrorLog.MachineName">
+            <summary>
+             Used to set and retrieve the name of the machine the client is running
+             on.
             </summary>
         </member>
         <member name="M:Terrarium.Tools.ErrorLog.LogHandledException(System.Exception)">
@@ -553,12 +559,6 @@
             <param name="errorLog">The error log text, generally a compilation of the exception and previous tracings.</param>
             <returns>A Watson Service DataSet that can be used in a web service call.</returns>
         </member>
-        <member name="P:Terrarium.Tools.ErrorLog.MachineName">
-            <summary>
-             Used to set and retrieve the name of the machine the client is running
-             on.
-            </summary>
-        </member>
         <member name="T:Terrarium.Tools.Profiler">
             <summary>
              Encompasses the logic to profile the DirectDraw classes
@@ -573,6 +573,18 @@
             <summary>
              Creates a new DirectDrawProfiler and clears any
              profiler settings by creating a new Hashtable.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Tools.Profiler.Item(System.String)">
+            <summary>
+             Default indexed property that gives access to nodes by
+             their key name.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Tools.Profiler.Nodes">
+            <summary>
+             Returns all nodes currently in the profiler.  This can be used
+             for generated node reports.
             </summary>
         </member>
         <member name="M:Terrarium.Tools.Profiler.ClearProfiler">
@@ -591,18 +603,6 @@
              Ends the profiling of a given function or profile node.
             </summary>
             <param name="functionName">Name of the function or profile node to stop timing.</param>
-        </member>
-        <member name="P:Terrarium.Tools.Profiler.Item(System.String)">
-            <summary>
-             Default indexed property that gives access to nodes by
-             their key name.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Tools.Profiler.Nodes">
-            <summary>
-             Returns all nodes currently in the profiler.  This can be used
-             for generated node reports.
-            </summary>
         </member>
         <member name="T:Terrarium.Tools.ProfilerNode">
             <summary>
@@ -697,6 +697,11 @@
             </summary>
             <param name="loggingFlag">If True logging is turned on, off otherwise</param>
         </member>
+        <member name="P:Terrarium.Tools.TerrariumTraceListener.TimerToStop">
+            <summary>
+             Retreives or sets the current drawing timer.
+            </summary>
+        </member>
         <member name="M:Terrarium.Tools.TerrariumTraceListener.Fail(System.String)">
             <summary>
              Used for logging failure messages
@@ -771,11 +776,6 @@
             <param name="message"></param>
             <param name="stackTrace"></param>
         </member>
-        <member name="P:Terrarium.Tools.TerrariumTraceListener.TimerToStop">
-            <summary>
-             Retreives or sets the current drawing timer.
-            </summary>
-        </member>
         <member name="T:Terrarium.Tools.TimeMonitor">
             <summary>
              This class provides in-direct access to the high
@@ -808,6 +808,11 @@
              Initialize a new time monitor for computing small differences in time.
              Only short timings should be made since thread switching can cause
              abnormal values in the windows environment.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Tools.TimeMonitor.IsStarted">
+            <summary>
+             Determines if the current time monitor has been started already.
             </summary>
         </member>
         <member name="M:Terrarium.Tools.TimeMonitor.GetCounterSeconds">
@@ -850,11 +855,6 @@
             <summary>
              Used to query the number of elapsed intervals in the system
              timer.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Tools.TimeMonitor.IsStarted">
-            <summary>
-             Determines if the current time monitor has been started already.
             </summary>
         </member>
         <member name="T:Terrarium.Forms.ReportBug">

@@ -9,165 +9,12 @@
              Holds all species information about an animal.  See Species for more information
             </summary>
         </member>
-        <member name="T:Terrarium.Game.Species">
-            <summary>
-             Base class for animal and plant species.  These
-             objects contains all the information about the characteristics
-             and abilities of a given species.
-            </summary>
-            <threadsafe/>
-        </member>
-        <member name="F:Terrarium.Game.Species._assemblyFullName">
-            <summary>
-             The full assembly name of the containing assembly for the typeName
-            </summary>
-        </member>
-        <member name="F:Terrarium.Game.Species._maximumEnergyPerUnitRadius">
-            <summary>
-             The maximum amount of energey this species can attain.
-            </summary>
-        </member>
-        <member name="F:Terrarium.Game.Species._typeName">
-            <summary>
-             The name of the CLR Type that represents this creature.
-            </summary>
-        </member>
-        <member name="F:Terrarium.Game.Species._speciesType">
-            <summary>
-             Cached Type object used to quickly compare species together.
-             This class is serialized, but this member is left out since
-             when the object is deserialized sometimes the assembly doesn't exist.
-            </summary>
-        </member>
-        <member name="M:Terrarium.Game.Species.#ctor(System.Type)">
-            <summary>
-             Creates a new instance of the species class initialized with
-             the given CLR Type pulling various fields out of the Type's
-             attributes.
-            </summary>
-            <param name="clrType">The CLR Type to initialize this species.</param>
-        </member>
-        <member name="M:Terrarium.Game.Species.IsSameSpecies(OrganismBase.ISpecies)">
-            <summary>
-             This method can be used to compare another species to this species
-             and determine if they match.
-            </summary>
-            <param name="species">The species to be compared</param>
-            <returns>True if the species match, false otherwise.</returns>
-        </member>
-        <member name="M:Terrarium.Game.Species.GetAttributeWarnings">
-            <summary>
-             Gets attribute warnings for specific attributes when points are being wasted
-             or points are out of bounds.
-            </summary>
-            <returns>A message containing attribute warnings, or an empty string.</returns>
-        </member>
-        <member name="M:Terrarium.Game.Species.InitializeNewState(System.Drawing.Point,System.Int32)">
-            <summary>
-             Required method for any derived classes that can be used to
-             create a new state object based on the species.
-            </summary>
-            <param name="position">The position for the new state.</param>
-            <param name="generation">The creature's generation for the new state.</param>
-            <returns>A state object based on the species object.</returns>
-        </member>
-        <member name="M:Terrarium.Game.Species.GetSpeciesFromAssembly(System.Reflection.Assembly)">
-            <summary>
-             Called to create a new species object from the given assembly.  This
-             should be the only entry point for creating a new species object.
-            </summary>
-            <param name="organismAssembly">The assembly to generate the species from.</param>
-            <returns>A new species object generated from the assembly.</returns>
-        </member>
-        <member name="P:Terrarium.Game.Species.Type">
-            <summary>
-             Return the type for this species.  Normally this value
-             is cached and very quick to return, otherwise the value
-             has to be looked up using the assembly resolver handlers.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.AuthorName">
-            <summary>
-            Returns the author's name
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.AuthorEmail">
-            <summary>
-            Returns the author's email
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.MarkingColor">
-            <summary>
-            The custom coloring for the organism
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.InitialRadius">
-            <summary>
-            The initial Radius of the organism.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.Name">
-            <summary>
-            The name of the organism.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.AssemblyInfo">
-            <summary>
-             Retrieves assembly information about the current organism.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.MatureRadius">
-            <summary>
-             The size of the organism when mature.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.Skin">
-            <summary>
-            The custom skin name for the organism.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.ReproductionWait">
-            <summary>
-            How long the organism must wait between reproduction.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.LifeSpan">
-            <summary>
-            The lifespan of the organism.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.GrowthWait">
-            <summary>
-            How long the organism must wait to grow.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.Species.MaximumEnergyPerUnitRadius">
-            <summary>
-            The maximum amount of energy the organism can store.
-            </summary>
-        </member>
         <member name="M:Terrarium.Game.AnimalSpecies.#ctor(System.Type)">
             <summary>
              Creates a new Animal species from a CLR Type object.  Initializes
              the new species properties based on various attributes on the Type.
             </summary>
             <param name="clrType">The type for the organism class.</param>
-        </member>
-        <member name="M:Terrarium.Game.AnimalSpecies.GetAttributeWarnings">
-            <summary>
-             Generates warnings for attributes that have wasted points.
-            </summary>
-            <returns>Message about wasted points, or empty if there aren't any messages.</returns>
-        </member>
-        <member name="M:Terrarium.Game.AnimalSpecies.InitializeNewState(System.Drawing.Point,System.Int32)">
-            <summary>
-             Initializes a new state given a position and a generation.  This is
-             used when creatures give birth, and the state has to effectively
-             be cloned.
-            </summary>
-            <param name="position">The new position of the creature in the world.</param>
-            <param name="generation">The family generation for this creature.</param>
-            <returns>A new state to represent the creature.</returns>
         </member>
         <member name="P:Terrarium.Game.AnimalSpecies.ReproductionWait">
             <summary>
@@ -222,6 +69,22 @@
             The distance animal can see.
             </returns>
         </member>
+        <member name="M:Terrarium.Game.AnimalSpecies.GetAttributeWarnings">
+            <summary>
+             Generates warnings for attributes that have wasted points.
+            </summary>
+            <returns>Message about wasted points, or empty if there aren't any messages.</returns>
+        </member>
+        <member name="M:Terrarium.Game.AnimalSpecies.InitializeNewState(System.Drawing.Point,System.Int32)">
+            <summary>
+             Initializes a new state given a position and a generation.  This is
+             used when creatures give birth, and the state has to effectively
+             be cloned.
+            </summary>
+            <param name="position">The new position of the creature in the world.</param>
+            <param name="generation">The family generation for this creature.</param>
+            <returns>A new state to represent the creature.</returns>
+        </member>
         <member name="T:Terrarium.Game.AnimalWorldBoundary">
             <summary>
             This class implements the IAnimalWorldBoundary which is used by a creature
@@ -235,64 +98,20 @@
             be able to call the members of the interface.
             </summary>
         </member>
-        <member name="T:Terrarium.Game.OrganismWorldBoundary">
-            <summary>
-             Represents an organisms world view.  Implements the IOrganismWorldBoundary
-             interface which is available to creatures that link to the OrganismBase
-             library.  See description of AnimalWorldBoundary to see how this hides information
-             from creatures.
-            </summary>
-        </member>
-        <member name="M:Terrarium.Game.OrganismWorldBoundary.#ctor(OrganismBase.Organism,System.String)">
-            <summary>
-             Initializes a new world boundary given the original organism and their ID.
-            </summary>
-            <param name="organism">The organism used to init this world boundary.</param>
-            <param name="ID">The Unique ID of the organism.</param>
-        </member>
-        <member name="M:Terrarium.Game.OrganismWorldBoundary.SetOrganismID(System.String)">
-            <summary>
-             Sets the Unique ID of the creature in the system.
-            </summary>
-        </member>
-        <member name="M:Terrarium.Game.OrganismWorldBoundary.SetWorldBoundary(OrganismBase.Organism,System.String)">
-            <summary>
-             Sets the world boundary for a specific creature.
-            </summary>
-            <param name="organism">The organism the boundary is for.</param>
-            <param name="id">The Unique ID of the organism.</param>
-        </member>
-        <member name="P:Terrarium.Game.OrganismWorldBoundary.Organism">
-            <summary>
-             The original organism this world boundary was created for.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.OrganismWorldBoundary.CurrentOrganismState">
-            <summary>
-             Returns an AnimalState that represents your current state in the world.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.OrganismWorldBoundary.ID">
-            <summary>
-             Returns the organism's ID.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.OrganismWorldBoundary.WorldWidth">
-            <summary>
-             Returns the width of the world in game units (pixels).
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.OrganismWorldBoundary.WorldHeight">
-            <summary>
-             Returns the width of the world in game units (pixels).
-            </summary>
-        </member>
         <member name="M:Terrarium.Game.AnimalWorldBoundary.#ctor(OrganismBase.Organism,System.String)">
             <summary>
              Creates a new animal world boundary for a given animal
             </summary>
             <param name="animal">The actual class representing the creature.</param>
             <param name="ID">The unique ID of the creature.</param>
+        </member>
+        <member name="P:Terrarium.Game.AnimalWorldBoundary.CurrentAnimalState">
+            <summary>
+             While immutable animal properties are stored directly on the creature
+             class, any game engine properties are stored on the state objects.
+             Creatures can get access to their state object through the CurrentAnimalState
+             property.
+            </summary>
         </member>
         <member name="M:Terrarium.Game.AnimalWorldBoundary.Scan">
             <summary>
@@ -342,14 +161,6 @@
             </summary>
             <param name="organismID">The Unique ID of the organism.</param>
             <returns>The state object for the creature if visible to LookFor, null otherwise.</returns>
-        </member>
-        <member name="P:Terrarium.Game.AnimalWorldBoundary.CurrentAnimalState">
-            <summary>
-             While immutable animal properties are stored directly on the creature
-             class, any game engine properties are stored on the state objects.
-             Creatures can get access to their state object through the CurrentAnimalState
-             property.
-            </summary>
         </member>
         <member name="T:Terrarium.Game.KilledOrganism">
             <summary>
@@ -442,6 +253,58 @@
              level.
             </summary>
         </member>
+        <member name="T:Terrarium.Game.OrganismWorldBoundary">
+            <summary>
+             Represents an organisms world view.  Implements the IOrganismWorldBoundary
+             interface which is available to creatures that link to the OrganismBase
+             library.  See description of AnimalWorldBoundary to see how this hides information
+             from creatures.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Game.OrganismWorldBoundary.#ctor(OrganismBase.Organism,System.String)">
+            <summary>
+             Initializes a new world boundary given the original organism and their ID.
+            </summary>
+            <param name="organism">The organism used to init this world boundary.</param>
+            <param name="ID">The Unique ID of the organism.</param>
+        </member>
+        <member name="P:Terrarium.Game.OrganismWorldBoundary.Organism">
+            <summary>
+             The original organism this world boundary was created for.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.OrganismWorldBoundary.CurrentOrganismState">
+            <summary>
+             Returns an AnimalState that represents your current state in the world.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.OrganismWorldBoundary.ID">
+            <summary>
+             Returns the organism's ID.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.OrganismWorldBoundary.WorldWidth">
+            <summary>
+             Returns the width of the world in game units (pixels).
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.OrganismWorldBoundary.WorldHeight">
+            <summary>
+             Returns the width of the world in game units (pixels).
+            </summary>
+        </member>
+        <member name="M:Terrarium.Game.OrganismWorldBoundary.SetOrganismID(System.String)">
+            <summary>
+             Sets the Unique ID of the creature in the system.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Game.OrganismWorldBoundary.SetWorldBoundary(OrganismBase.Organism,System.String)">
+            <summary>
+             Sets the world boundary for a specific creature.
+            </summary>
+            <param name="organism">The organism the boundary is for.</param>
+            <param name="id">The Unique ID of the organism.</param>
+        </member>
         <member name="T:Terrarium.Game.PlantSpecies">
             <summary>
             Holds all species information about a plant.  See Species for more information.
@@ -453,21 +316,6 @@
              pulling information off of the type's attributes.
             </summary>
             <param name="clrType">The Type representing the Plant class.</param>
-        </member>
-        <member name="M:Terrarium.Game.PlantSpecies.GetAttributeWarnings">
-            <summary>
-             Retrieves attribute warnings.  The Plant class implements no warnings
-             and so delegates to the base class for warnings.
-            </summary>
-            <returns>A message with available attribute warnings.</returns>
-        </member>
-        <member name="M:Terrarium.Game.PlantSpecies.InitializeNewState(System.Drawing.Point,System.Int32)">
-            <summary>
-             Initializes a new state object with the given position and family generation
-            </summary>
-            <param name="position">The position of the new PlantState</param>
-            <param name="generation">The family generation of the new Plant</param>
-            <returns>A state object initialized to the given position and generation.</returns>
         </member>
         <member name="P:Terrarium.Game.PlantSpecies.SeedSpreadDistance">
             <summary>
@@ -489,6 +337,21 @@
             See Species.ReproductionWait for information about this member.
             </summary>
         </member>
+        <member name="M:Terrarium.Game.PlantSpecies.GetAttributeWarnings">
+            <summary>
+             Retrieves attribute warnings.  The Plant class implements no warnings
+             and so delegates to the base class for warnings.
+            </summary>
+            <returns>A message with available attribute warnings.</returns>
+        </member>
+        <member name="M:Terrarium.Game.PlantSpecies.InitializeNewState(System.Drawing.Point,System.Int32)">
+            <summary>
+             Initializes a new state object with the given position and family generation
+            </summary>
+            <param name="position">The position of the new PlantState</param>
+            <param name="generation">The family generation of the new Plant</param>
+            <returns>A state object initialized to the given position and generation.</returns>
+        </member>
         <member name="T:Terrarium.Game.PlantWorldBoundary">
             <summary>
              Represents a world boundary for a plant. See description of AnimalWorldBoundary to see how this hides information
@@ -507,6 +370,143 @@
             <summary>
              Returns a state object representing the plant's current state in the world.
             </summary>
+        </member>
+        <member name="T:Terrarium.Game.Species">
+            <summary>
+             Base class for animal and plant species.  These
+             objects contains all the information about the characteristics
+             and abilities of a given species.
+            </summary>
+            <threadsafe/>
+        </member>
+        <member name="F:Terrarium.Game.Species._assemblyFullName">
+            <summary>
+             The full assembly name of the containing assembly for the typeName
+            </summary>
+        </member>
+        <member name="F:Terrarium.Game.Species._maximumEnergyPerUnitRadius">
+            <summary>
+             The maximum amount of energey this species can attain.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Game.Species._typeName">
+            <summary>
+             The name of the CLR Type that represents this creature.
+            </summary>
+        </member>
+        <member name="F:Terrarium.Game.Species._speciesType">
+            <summary>
+             Cached Type object used to quickly compare species together.
+             This class is serialized, but this member is left out since
+             when the object is deserialized sometimes the assembly doesn't exist.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Game.Species.#ctor(System.Type)">
+            <summary>
+             Creates a new instance of the species class initialized with
+             the given CLR Type pulling various fields out of the Type's
+             attributes.
+            </summary>
+            <param name="clrType">The CLR Type to initialize this species.</param>
+        </member>
+        <member name="P:Terrarium.Game.Species.Type">
+            <summary>
+             Return the type for this species.  Normally this value
+             is cached and very quick to return, otherwise the value
+             has to be looked up using the assembly resolver handlers.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.AuthorName">
+            <summary>
+            Returns the author's name
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.AuthorEmail">
+            <summary>
+            Returns the author's email
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.MarkingColor">
+            <summary>
+            The custom coloring for the organism
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.InitialRadius">
+            <summary>
+            The initial Radius of the organism.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.Name">
+            <summary>
+            The name of the organism.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.AssemblyInfo">
+            <summary>
+             Retrieves assembly information about the current organism.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.MatureRadius">
+            <summary>
+             The size of the organism when mature.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.Skin">
+            <summary>
+            The custom skin name for the organism.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.ReproductionWait">
+            <summary>
+            How long the organism must wait between reproduction.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.LifeSpan">
+            <summary>
+            The lifespan of the organism.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.GrowthWait">
+            <summary>
+            How long the organism must wait to grow.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.Species.MaximumEnergyPerUnitRadius">
+            <summary>
+            The maximum amount of energy the organism can store.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Game.Species.IsSameSpecies(OrganismBase.ISpecies)">
+            <summary>
+             This method can be used to compare another species to this species
+             and determine if they match.
+            </summary>
+            <param name="species">The species to be compared</param>
+            <returns>True if the species match, false otherwise.</returns>
+        </member>
+        <member name="M:Terrarium.Game.Species.GetAttributeWarnings">
+            <summary>
+             Gets attribute warnings for specific attributes when points are being wasted
+             or points are out of bounds.
+            </summary>
+            <returns>A message containing attribute warnings, or an empty string.</returns>
+        </member>
+        <member name="M:Terrarium.Game.Species.InitializeNewState(System.Drawing.Point,System.Int32)">
+            <summary>
+             Required method for any derived classes that can be used to
+             create a new state object based on the species.
+            </summary>
+            <param name="position">The position for the new state.</param>
+            <param name="generation">The creature's generation for the new state.</param>
+            <returns>A state object based on the species object.</returns>
+        </member>
+        <member name="M:Terrarium.Game.Species.GetSpeciesFromAssembly(System.Reflection.Assembly)">
+            <summary>
+             Called to create a new species object from the given assembly.  This
+             should be the only entry point for creating a new species object.
+            </summary>
+            <param name="organismAssembly">The assembly to generate the species from.</param>
+            <returns>A new species object generated from the assembly.</returns>
         </member>
         <member name="T:Terrarium.Game.EngineStateChangeType">
             <summary>
@@ -557,21 +557,6 @@
             <param name="shortDescription">A short description</param>
             <param name="longDescription">A detailed description</param>
         </member>
-        <member name="M:Terrarium.Game.EngineStateChangedEventArgs.AnimalArrived(OrganismBase.OrganismState)">
-            <summary>
-             Creates a new event relating to a creature arriving.
-            </summary>
-            <param name="organismState">The creature arriving.</param>
-            <returns>State change initialized for a teleporting creature with messages.</returns>
-        </member>
-        <member name="M:Terrarium.Game.EngineStateChangedEventArgs.AnimalDestroyed(OrganismBase.OrganismState,OrganismBase.PopulationChangeReason)">
-            <summary>
-             Creates a new event relating to a creature being destroyed.
-            </summary>
-            <param name="organismState">The creature being destroyed.</param>
-            <param name="reason">The reason the creature is being destroyed.</param>
-            <returns>State change initialized for a creature being destroyed with messages.</returns>
-        </member>
         <member name="P:Terrarium.Game.EngineStateChangedEventArgs.LongDescription">
             <summary>
              Retrieves the long description from these event arguments.
@@ -586,6 +571,21 @@
             <summary>
              Retrieves the engine state change type for these event arguments.
             </summary>
+        </member>
+        <member name="M:Terrarium.Game.EngineStateChangedEventArgs.AnimalArrived(OrganismBase.OrganismState)">
+            <summary>
+             Creates a new event relating to a creature arriving.
+            </summary>
+            <param name="organismState">The creature arriving.</param>
+            <returns>State change initialized for a teleporting creature with messages.</returns>
+        </member>
+        <member name="M:Terrarium.Game.EngineStateChangedEventArgs.AnimalDestroyed(OrganismBase.OrganismState,OrganismBase.PopulationChangeReason)">
+            <summary>
+             Creates a new event relating to a creature being destroyed.
+            </summary>
+            <param name="organismState">The creature being destroyed.</param>
+            <param name="reason">The reason the creature is being destroyed.</param>
+            <returns>State change initialized for a creature being destroyed with messages.</returns>
         </member>
         <member name="T:Terrarium.Game.WorldVectorChangedEventArgs">
             <summary>
@@ -871,6 +871,142 @@
             <param name="leds">Provides a listing of game leds that can be used.</param>
             <param name="trackLastRun">Controls whether the PAC keeps track of the last run creature for blacklisting.</param>
         </member>
+        <member name="P:Terrarium.Game.GameEngine.NetworkEngine">
+            <summary>
+            NetworkEngine is a reference to the network object that does all peer to peer communication
+            for this instance of the game.
+            </summary>
+            <returns>A reference to the network engine.</returns>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.Pac">
+            <summary>
+             Provides a managed location for creature assemblies.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.PeerCount">
+            <summary>
+             Returns the number of peers from the network engine.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.PeerChannel">
+            <summary>
+             Gets the current peer channel from the network engine.  Also
+             allows the user to change the peer channel and network with
+             a different set of machines.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.EcosystemMode">
+            <summary>
+             Determines if the engine is in EcoSystem mode or some other mode.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.FileName">
+            <summary>
+             Returns the name of the current state file.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.LogState">
+            <summary>
+             Determines if game state should be logged after each tick.
+             This is useful for debugging mode only.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.Scheduler">
+            <summary>
+             Provides access to the game scheduler for scheduling creatures.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.CurrentVector">
+            <summary>
+             Provides access to the current world vector
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.Current">
+            <summary>
+             Static access to the current game engine.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.ShutdownError">
+            <summary>
+             Used to notify the game engine that a shutdown level
+             error has occured.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.InvalidPeerError">
+            <summary>
+             Used to notify the game engine that the peer is not
+             able to play the game networked.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.PopulationData">
+            <summary>
+             Provides access to the population data used
+             for reporting.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.WorldHeight">
+            <summary>
+             Provides the height of the given world in game units (pixels)
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.WorldWidth">
+            <summary>
+             Provides the width of the given world in game units (pixels)
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.GridWidth">
+            <summary>
+             Converts world width to grid cells and returns the number of
+             grid cells.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.GridHeight">
+            <summary>
+             Converts world height to grid cells and returns the number of
+             grid cells.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.MaxAnimals">
+            <summary>
+             Identifies the maximum amount of Animal class creatures allowed
+             in the game engine.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.MaxPlants">
+            <summary>
+             Identifies the maximum amount of Plant class creatures allowed
+             in the game engine.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.AnimalCount">
+            <summary>
+             Identifies the current count of Animal class creatures in the
+             game engine.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.TurnPhase">
+            <summary>
+             The current turn phase.  There are ten phases per tick.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.GameEngine.IsNetworkEnabled">
+            <summary>
+            Used to determine if the network is running
+            </summary>
+        </member>
+        <member name="E:Terrarium.Game.GameEngine.WorldVectorChanged">
+            <summary>
+             Event that can be handled by clients that notifies them when
+             the world vector is changed.
+            </summary>
+        </member>
+        <member name="E:Terrarium.Game.GameEngine.EngineStateChanged">
+            <summary>
+             Event that can be handled by clients to be notified whenever
+             some interesting state in the engine has changed. Used for notifications in 
+             the UI.
+            </summary>
+        </member>
         <member name="M:Terrarium.Game.GameEngine.StopGame(System.Boolean)">
             <summary>
              Stops the game and determines if the final tick of data should be serialized.
@@ -1093,142 +1229,6 @@
             Also assumes that it is within biting range.
             </summary>
         </member>
-        <member name="P:Terrarium.Game.GameEngine.NetworkEngine">
-            <summary>
-            NetworkEngine is a reference to the network object that does all peer to peer communication
-            for this instance of the game.
-            </summary>
-            <returns>A reference to the network engine.</returns>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.Pac">
-            <summary>
-             Provides a managed location for creature assemblies.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.PeerCount">
-            <summary>
-             Returns the number of peers from the network engine.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.PeerChannel">
-            <summary>
-             Gets the current peer channel from the network engine.  Also
-             allows the user to change the peer channel and network with
-             a different set of machines.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.EcosystemMode">
-            <summary>
-             Determines if the engine is in EcoSystem mode or some other mode.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.FileName">
-            <summary>
-             Returns the name of the current state file.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.LogState">
-            <summary>
-             Determines if game state should be logged after each tick.
-             This is useful for debugging mode only.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.Scheduler">
-            <summary>
-             Provides access to the game scheduler for scheduling creatures.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.CurrentVector">
-            <summary>
-             Provides access to the current world vector
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.Current">
-            <summary>
-             Static access to the current game engine.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.ShutdownError">
-            <summary>
-             Used to notify the game engine that a shutdown level
-             error has occured.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.InvalidPeerError">
-            <summary>
-             Used to notify the game engine that the peer is not
-             able to play the game networked.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.PopulationData">
-            <summary>
-             Provides access to the population data used
-             for reporting.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.WorldHeight">
-            <summary>
-             Provides the height of the given world in game units (pixels)
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.WorldWidth">
-            <summary>
-             Provides the width of the given world in game units (pixels)
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.GridWidth">
-            <summary>
-             Converts world width to grid cells and returns the number of
-             grid cells.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.GridHeight">
-            <summary>
-             Converts world height to grid cells and returns the number of
-             grid cells.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.MaxAnimals">
-            <summary>
-             Identifies the maximum amount of Animal class creatures allowed
-             in the game engine.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.MaxPlants">
-            <summary>
-             Identifies the maximum amount of Plant class creatures allowed
-             in the game engine.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.AnimalCount">
-            <summary>
-             Identifies the current count of Animal class creatures in the
-             game engine.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.TurnPhase">
-            <summary>
-             The current turn phase.  There are ten phases per tick.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.GameEngine.IsNetworkEnabled">
-            <summary>
-            Used to determine if the network is running
-            </summary>
-        </member>
-        <member name="E:Terrarium.Game.GameEngine.WorldVectorChanged">
-            <summary>
-             Event that can be handled by clients that notifies them when
-             the world vector is changed.
-            </summary>
-        </member>
-        <member name="E:Terrarium.Game.GameEngine.EngineStateChanged">
-            <summary>
-             Event that can be handled by clients to be notified whenever
-             some interesting state in the engine has changed. Used for notifications in 
-             the UI.
-            </summary>
-        </member>
         <member name="T:Terrarium.Game.GridIndex.SegmentWrapper">
             <summary>
             The segment wrapper allows us to put the same exact segment in several different cells of the grid.
@@ -1266,13 +1266,6 @@
             <param name="assemblyFullName">The full assembly name.</param>
             <param name="assemblyShortName">The assembly short name.</param>
         </member>
-        <member name="M:Terrarium.Game.OrganismAssemblyInfo.ToString">
-            <summary>
-             Returns a string representation of this organism info object.  This
-             is primarily useful for when the class is used as a list item.
-            </summary>
-            <returns>The assembly short name.</returns>
-        </member>
         <member name="P:Terrarium.Game.OrganismAssemblyInfo.FullName">
             <summary>
              Returns the assembly full name that was saved on this info object.
@@ -1282,6 +1275,13 @@
             <summary>
              Returns the assembly short name that was saved on this info object.
             </summary>
+        </member>
+        <member name="M:Terrarium.Game.OrganismAssemblyInfo.ToString">
+            <summary>
+             Returns a string representation of this organism info object.  This
+             is primarily useful for when the class is used as a list item.
+            </summary>
+            <returns>The assembly short name.</returns>
         </member>
         <member name="T:Terrarium.Game.OrganismBaseBinder">
             <summary>
@@ -1365,6 +1365,11 @@
             </summary>
             <param name="reportData">Should data be reported to the server.</param>
             <param name="led">An LED used to indicate status.</param>
+        </member>
+        <member name="P:Terrarium.Game.PopulationData.LastReportedTick">
+            <summary>
+             Remebers the last tick that data was reported to the server.
+            </summary>
         </member>
         <member name="M:Terrarium.Game.PopulationData.InitWebService">
             <summary>
@@ -1502,11 +1507,6 @@
             <param name="value">The value to check.</param>
             <returns>The value or 0 if DBNull</returns>
         </member>
-        <member name="P:Terrarium.Game.PopulationData.LastReportedTick">
-            <summary>
-             Remebers the last tick that data was reported to the server.
-            </summary>
-        </member>
         <member name="T:Terrarium.Game.PrivateAssemblyCache">
             <summary>
              A special cache that protects storage of organism assemblies
@@ -1540,6 +1540,43 @@
             <param name="hookAssemblyResolve">Determines if the assembly resolving events are hooked.</param>
             <param name="trackLastRun">Determines if organism tracking is senabled.</param>
         </member>
+        <member name="P:Terrarium.Game.PrivateAssemblyCache.LastRun">
+            <summary>
+             We track when organisms are running and Terrarium shuts down unexpectedly so that
+             we can blacklist them.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.PrivateAssemblyCache.AssemblyDirectory">
+            <summary>
+             Returns the path to the assembly cache directory.
+            </summary>
+            <threadsafe/>
+        </member>
+        <member name="P:Terrarium.Game.PrivateAssemblyCache.BaseAssemblyDirectory">
+            <summary>
+             Returns the base assembly directory without obfuscation.
+            </summary>
+            <threadsafe/>
+        </member>
+        <member name="P:Terrarium.Game.PrivateAssemblyCache.PacSize">
+            <summary>
+             Return the approximate size of the PAC in memory based on loaded
+             assemblies.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.PrivateAssemblyCache.PacOrganismCount">
+            <summary>
+             Return the approximate amount of organisms loaded from
+             the current PAC.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.PrivateAssemblyCache.VersionedDirectoryPreamble">
+            <summary>
+             Provides access to the versioned directory preamble for generating
+             cache directories.
+            </summary>
+            <threadsafe/>
+        </member>
         <member name="M:Terrarium.Game.PrivateAssemblyCache.Initialize(System.String,System.String,System.Boolean,System.Boolean)">
             <summary>
              Helper function for initializing the PAC constructors.
@@ -1548,6 +1585,12 @@
             <param name="dataFile">Path to the tracking data file.</param>
             <param name="hookAssemblyResolve">Determines if the assembly resolving events are hooked.</param>
             <param name="trackLastRun">Determines if organism tracking is senabled.</param>
+        </member>
+        <member name="E:Terrarium.Game.PrivateAssemblyCache.PacAssembliesChanged">
+            <summary>
+             Event used to notify clients when assemblies in the
+             PAC have changed.
+            </summary>
         </member>
         <member name="M:Terrarium.Game.PrivateAssemblyCache.OnPacAssembliesChanged(System.EventArgs)">
             <summary>
@@ -1695,49 +1738,6 @@
              Used for assembly validation with XML reporting in AsmCheck
             </summary>
         </member>
-        <member name="P:Terrarium.Game.PrivateAssemblyCache.LastRun">
-            <summary>
-             We track when organisms are running and Terrarium shuts down unexpectedly so that
-             we can blacklist them.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.PrivateAssemblyCache.AssemblyDirectory">
-            <summary>
-             Returns the path to the assembly cache directory.
-            </summary>
-            <threadsafe/>
-        </member>
-        <member name="P:Terrarium.Game.PrivateAssemblyCache.BaseAssemblyDirectory">
-            <summary>
-             Returns the base assembly directory without obfuscation.
-            </summary>
-            <threadsafe/>
-        </member>
-        <member name="P:Terrarium.Game.PrivateAssemblyCache.PacSize">
-            <summary>
-             Return the approximate size of the PAC in memory based on loaded
-             assemblies.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.PrivateAssemblyCache.PacOrganismCount">
-            <summary>
-             Return the approximate amount of organisms loaded from
-             the current PAC.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.PrivateAssemblyCache.VersionedDirectoryPreamble">
-            <summary>
-             Provides access to the versioned directory preamble for generating
-             cache directories.
-            </summary>
-            <threadsafe/>
-        </member>
-        <member name="E:Terrarium.Game.PrivateAssemblyCache.PacAssembliesChanged">
-            <summary>
-             Event used to notify clients when assemblies in the
-             PAC have changed.
-            </summary>
-        </member>
         <member name="T:Terrarium.Game.Teleporter">
             <summary>
              Creates a teleporter object that can move around the Terrarium
@@ -1808,6 +1808,22 @@
             <param name="vector">The movement vector of the zone.</param>
             <param name="ID">The ID for this zone.</param>
         </member>
+        <member name="P:Terrarium.Game.TeleportZone.Rectangle">
+            <summary>
+             Returns the size and location of the teleport zone.
+            </summary>
+            <returns>A new rectangle containing the size and location of the zone.</returns>
+        </member>
+        <member name="P:Terrarium.Game.TeleportZone.ID">
+            <summary>
+             The ID for this teleporter zone.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.TeleportZone.Vector">
+            <summary>
+             The current movement vector for this zone.
+            </summary>
+        </member>
         <member name="M:Terrarium.Game.TeleportZone.Clone">
             <summary>
              Clones a TeleportZone object.
@@ -1835,105 +1851,6 @@
             </summary>
             <param name="vector">The new movement vector.</param>
             <returns>The update teleport zone.</returns>
-        </member>
-        <member name="P:Terrarium.Game.TeleportZone.Rectangle">
-            <summary>
-             Returns the size and location of the teleport zone.
-            </summary>
-            <returns>A new rectangle containing the size and location of the zone.</returns>
-        </member>
-        <member name="P:Terrarium.Game.TeleportZone.ID">
-            <summary>
-             The ID for this teleporter zone.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.TeleportZone.Vector">
-            <summary>
-             The current movement vector for this zone.
-            </summary>
-        </member>
-        <member name="T:Terrarium.Renderer.TerrariumSprite">
-            <summary>
-             An object used by the Graphics Engine to render a creature.
-            </summary>
-        </member>
-        <member name="M:Terrarium.Renderer.TerrariumSprite.AdvanceFrame">
-            <summary>
-             Controls movement and frame advancement for the sprite.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.IsPlant">
-            <summary>
-             Controls if the rendered object is a plant or animal.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.FrameHeight">
-            <summary>
-             Returns the frame height of the sprite.  This value isn't really
-             required and so is set at a default of 48.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.FrameWidth">
-            <summary>
-             Returns the frame width of the sprite.  This value isn't really
-             required and so is set at a default of 48.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.SkinFamily">
-            <summary>
-             The skin family for this sprite.  Used to determine which graphics
-             to display.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.CurFrame">
-            <summary>
-             The current frame for this sprite.  Used to animate any animated
-             sprites.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.CurFrameDelta">
-            <summary>
-             The current frame delta for this sprite.  This is used to speed
-             up or slow down animations by changing the amount of frames issued
-             per AdvanceFrame method called.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.XPosition">
-            <summary>
-             The current X position within the game world.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.YPosition">
-            <summary>
-             The current Y position within the game world.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.XDelta">
-            <summary>
-             The current amount of X to add to the position
-             per call to AdvanceFrame.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.YDelta">
-            <summary>
-             The current amount of Y to add to the position
-             per call to AdvanceFrame.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.Selected">
-            <summary>
-             Determines if the current sprite is selected.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.PreviousAction">
-            <summary>
-             The current frame type to display.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Renderer.TerrariumSprite.SpriteKey">
-            <summary>
-             The key used to index sprite sheets.
-            </summary>
         </member>
         <member name="T:Terrarium.Game.TickActions">
             <summary>
@@ -1965,13 +1882,6 @@
              All of the reproduce actions that organisms have performed in this tick.
             </summary>
         </member>
-        <member name="M:Terrarium.Game.TickActions.GatherActionsFromOrganisms(Terrarium.Hosting.IGameScheduler)">
-            <summary>
-             Rips through all organisms and wraps their pending actions
-             up into the hashtables on a per action type basis.
-            </summary>
-            <param name="scheduler">The game scheduler that has all of the organisms.</param>
-        </member>
         <member name="P:Terrarium.Game.TickActions.MoveToActions">
             <summary>
              Provides access to the Movement actions.
@@ -1997,6 +1907,13 @@
              Provides access to the Defend actions.
             </summary>
         </member>
+        <member name="M:Terrarium.Game.TickActions.GatherActionsFromOrganisms(Terrarium.Hosting.IGameScheduler)">
+            <summary>
+             Rips through all organisms and wraps their pending actions
+             up into the hashtables on a per action type basis.
+            </summary>
+            <param name="scheduler">The game scheduler that has all of the organisms.</param>
+        </member>
         <member name="T:Terrarium.Game.WorldState">
             <summary>
              Contains the full state of the world at a given tick.  Contains
@@ -2012,6 +1929,47 @@
             </summary>
             <param name="gridWidth">The width of the world state in grid cells.</param>
             <param name="gridHeight">The height of the world state in grid cells.</param>
+        </member>
+        <member name="P:Terrarium.Game.WorldState.IndexBuilt">
+            <summary>
+             Determines if the cell index has been built.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.WorldState.Organisms">
+            <summary>
+             Returns the collection of organisms.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.WorldState.ZOrderedOrganisms">
+            <summary>
+             Returns the collection or organisms ZOrdered using
+             their Y value.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.WorldState.StateGuid">
+            <summary>
+             Returns the GUID for the world state.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.WorldState.TickNumber">
+            <summary>
+             Returns the tick number of the current world state.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.WorldState.Teleporter">
+            <summary>
+             Provides access to the teleporters.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.WorldState.OrganismIDs">
+            <summary>
+             Provides the collection of organism IDs
+            </summary>
+        </member>
+        <member name="P:Terrarium.Game.WorldState.IsImmutable">
+            <summary>
+             Determines if the current state is immutable.
+            </summary>
         </member>
         <member name="M:Terrarium.Game.WorldState.DuplicateMutable">
             <summary>
@@ -2135,47 +2093,6 @@
             <param name="cellY">The cell index.</param>
             <returns>True if the cell is occupied, false otherwise.</returns>
         </member>
-        <member name="P:Terrarium.Game.WorldState.IndexBuilt">
-            <summary>
-             Determines if the cell index has been built.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.WorldState.Organisms">
-            <summary>
-             Returns the collection of organisms.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.WorldState.ZOrderedOrganisms">
-            <summary>
-             Returns the collection or organisms ZOrdered using
-             their Y value.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.WorldState.StateGuid">
-            <summary>
-             Returns the GUID for the world state.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.WorldState.TickNumber">
-            <summary>
-             Returns the tick number of the current world state.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.WorldState.Teleporter">
-            <summary>
-             Provides access to the teleporters.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.WorldState.OrganismIDs">
-            <summary>
-             Provides the collection of organism IDs
-            </summary>
-        </member>
-        <member name="P:Terrarium.Game.WorldState.IsImmutable">
-            <summary>
-             Determines if the current state is immutable.
-            </summary>
-        </member>
         <member name="T:Terrarium.Game.WorldVector">
             <summary>
              The worldvector contains:
@@ -2203,11 +2120,99 @@
              Provides access to the current world state.
             </summary>
         </member>
+        <member name="T:Terrarium.Renderer.TerrariumSprite">
+            <summary>
+             An object used by the Graphics Engine to render a creature.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.IsPlant">
+            <summary>
+             Controls if the rendered object is a plant or animal.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.FrameHeight">
+            <summary>
+             Returns the frame height of the sprite.  This value isn't really
+             required and so is set at a default of 48.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.FrameWidth">
+            <summary>
+             Returns the frame width of the sprite.  This value isn't really
+             required and so is set at a default of 48.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.SkinFamily">
+            <summary>
+             The skin family for this sprite.  Used to determine which graphics
+             to display.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.CurFrame">
+            <summary>
+             The current frame for this sprite.  Used to animate any animated
+             sprites.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.CurFrameDelta">
+            <summary>
+             The current frame delta for this sprite.  This is used to speed
+             up or slow down animations by changing the amount of frames issued
+             per AdvanceFrame method called.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.XPosition">
+            <summary>
+             The current X position within the game world.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.YPosition">
+            <summary>
+             The current Y position within the game world.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.XDelta">
+            <summary>
+             The current amount of X to add to the position
+             per call to AdvanceFrame.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.YDelta">
+            <summary>
+             The current amount of Y to add to the position
+             per call to AdvanceFrame.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.Selected">
+            <summary>
+             Determines if the current sprite is selected.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.PreviousAction">
+            <summary>
+             The current frame type to display.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Renderer.TerrariumSprite.SpriteKey">
+            <summary>
+             The key used to index sprite sheets.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Renderer.TerrariumSprite.AdvanceFrame">
+            <summary>
+             Controls movement and frame advancement for the sprite.
+            </summary>
+        </member>
         <member name="T:Terrarium.Hosting.AppMgr">
             <summary>
             AppMgr is a set of static routines used to set up the Game Scheduler
             that does time slices for creatures as well as the security environment they
             execute in.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.AppMgr.CurrentScheduler">
+            <summary>
+            only call this from the organism app domain
             </summary>
         </member>
         <member name="M:Terrarium.Hosting.AppMgr.CreateSameDomainScheduler(Terrarium.Game.GameEngine)">
@@ -2217,20 +2222,114 @@
             <param name="engine"></param>
             <returns></returns>
         </member>
-        <member name="P:Terrarium.Hosting.AppMgr.CurrentScheduler">
-            <summary>
-            only call this from the organism app domain
-            </summary>
-        </member>
         <member name="T:Terrarium.Hosting.GameScheduler">
             <summary>
             This class does all of the work to give the creatures timeslices and ensure 
             that they get killed if they take too much time.
             </summary>
         </member>
+        <member name="P:Terrarium.Hosting.GameScheduler.MaxAllowance">
+            <summary>
+            in microseconds, time before component is removed
+            default is 10,000,000 (10 secs)
+            </summary>
+        </member>
+        <member name="M:Terrarium.Hosting.GameScheduler.getAnimalThreadTime(System.Int64@,System.Int64@)">
+            <summary>
+            Determines how much actual kernel and user time this thread has actually gotten
+            </summary>
+            <param name="kernel"></param>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terrarium.Hosting.GameScheduler.GetThreadTimes(System.IntPtr,System.Runtime.InteropServices.ComTypes.FILETIME@,System.Runtime.InteropServices.ComTypes.FILETIME@,System.Runtime.InteropServices.ComTypes.FILETIME@,System.Runtime.InteropServices.ComTypes.FILETIME@)">
+            <summary>
+             Used to get thread times for the current thread.  This enables
+             the Hosting code to time out creatures.
+            </summary>
+        </member>
+        <member name="M:Terrarium.Hosting.GameScheduler.GetCurrentThread">
+            <summary>
+             Used to get the current thread handle for use with GetThreadTimes
+            </summary>
+        </member>
+        <member name="M:Terrarium.Hosting.GameScheduler.GetCurrentProcess">
+            <summary>
+             Used to get the current process handle for use with DuplicateHandle
+            </summary>
+        </member>
+        <member name="M:Terrarium.Hosting.GameScheduler.DuplicateHandle(System.IntPtr,System.IntPtr,System.IntPtr,System.IntPtr@,System.Int32,System.Boolean,System.Int32)">
+            <summary>
+             Used to duplicate the thread handle returned from GetCurrentThread
+            </summary>
+        </member>
+        <member name="M:Terrarium.Hosting.GameScheduler.CloseHandle(System.IntPtr)">
+            <summary>
+             Used to close all handles allocated by GetCurrentThread, GetCurrentProcess,
+             and DuplicateHandle
+            </summary>
+        </member>
         <member name="T:Terrarium.Hosting.IGameScheduler">
             <summary>
              Used to define a game scheduler that can be used to host organisms.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.IGameScheduler.Organisms">
+            <summary>
+             Provides collection based access to the organisms in the scheduler.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.IGameScheduler.OrganismsPerTick">
+            <summary>
+             Returns the number of creatures run per tick.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.IGameScheduler.TicksPerSec">
+            <summary>
+             Control the number of ticks per second (which is really the number of buckets
+             the animals should be broken into).
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.IGameScheduler.Quantum">
+            <summary>
+             Maximum amount of time a creature can run.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.IGameScheduler.MaxOverage">
+            <summary>
+             The maximum amount of overtime that can be accrued before
+             a creature is penalized.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.IGameScheduler.MaxAllowance">
+            <summary>
+             The maximum amount of time that a creature can run before
+             it is terminated.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.IGameScheduler.CurrentState">
+            <summary>
+             The world state.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.IGameScheduler.PenalizeForTime">
+            <summary>
+             Set whether creatures should be penalized for time.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.IGameScheduler.OrganismAppDomain">
+            <summary>
+             The AppDomain the organisms are run in.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.IGameScheduler.CurrentGameEngine">
+            <summary>
+             Set the current game engine.
+            </summary>
+        </member>
+        <member name="P:Terrarium.Hosting.IGameScheduler.SuspendBlacklisting">
+            <summary>
+             Suspend blacklisting entirely.
             </summary>
         </member>
         <member name="M:Terrarium.Hosting.IGameScheduler.Tick">
@@ -2306,105 +2405,6 @@
              Close down the game scheduler releasing any resources.
             </summary>
         </member>
-        <member name="P:Terrarium.Hosting.IGameScheduler.Organisms">
-            <summary>
-             Provides collection based access to the organisms in the scheduler.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Hosting.IGameScheduler.OrganismsPerTick">
-            <summary>
-             Returns the number of creatures run per tick.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Hosting.IGameScheduler.TicksPerSec">
-            <summary>
-             Control the number of ticks per second (which is really the number of buckets
-             the animals should be broken into).
-            </summary>
-        </member>
-        <member name="P:Terrarium.Hosting.IGameScheduler.Quantum">
-            <summary>
-             Maximum amount of time a creature can run.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Hosting.IGameScheduler.MaxOverage">
-            <summary>
-             The maximum amount of overtime that can be accrued before
-             a creature is penalized.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Hosting.IGameScheduler.MaxAllowance">
-            <summary>
-             The maximum amount of time that a creature can run before
-             it is terminated.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Hosting.IGameScheduler.CurrentState">
-            <summary>
-             The world state.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Hosting.IGameScheduler.PenalizeForTime">
-            <summary>
-             Set whether creatures should be penalized for time.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Hosting.IGameScheduler.OrganismAppDomain">
-            <summary>
-             The AppDomain the organisms are run in.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Hosting.IGameScheduler.CurrentGameEngine">
-            <summary>
-             Set the current game engine.
-            </summary>
-        </member>
-        <member name="P:Terrarium.Hosting.IGameScheduler.SuspendBlacklisting">
-            <summary>
-             Suspend blacklisting entirely.
-            </summary>
-        </member>
-        <member name="M:Terrarium.Hosting.GameScheduler.getAnimalThreadTime(System.Int64@,System.Int64@)">
-            <summary>
-            Determines how much actual kernel and user time this thread has actually gotten
-            </summary>
-            <param name="kernel"></param>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Terrarium.Hosting.GameScheduler.GetThreadTimes(System.IntPtr,System.Runtime.InteropServices.ComTypes.FILETIME@,System.Runtime.InteropServices.ComTypes.FILETIME@,System.Runtime.InteropServices.ComTypes.FILETIME@,System.Runtime.InteropServices.ComTypes.FILETIME@)">
-            <summary>
-             Used to get thread times for the current thread.  This enables
-             the Hosting code to time out creatures.
-            </summary>
-        </member>
-        <member name="M:Terrarium.Hosting.GameScheduler.GetCurrentThread">
-            <summary>
-             Used to get the current thread handle for use with GetThreadTimes
-            </summary>
-        </member>
-        <member name="M:Terrarium.Hosting.GameScheduler.GetCurrentProcess">
-            <summary>
-             Used to get the current process handle for use with DuplicateHandle
-            </summary>
-        </member>
-        <member name="M:Terrarium.Hosting.GameScheduler.DuplicateHandle(System.IntPtr,System.IntPtr,System.IntPtr,System.IntPtr@,System.Int32,System.Boolean,System.Int32)">
-            <summary>
-             Used to duplicate the thread handle returned from GetCurrentThread
-            </summary>
-        </member>
-        <member name="M:Terrarium.Hosting.GameScheduler.CloseHandle(System.IntPtr)">
-            <summary>
-             Used to close all handles allocated by GetCurrentThread, GetCurrentProcess,
-             and DuplicateHandle
-            </summary>
-        </member>
-        <member name="P:Terrarium.Hosting.GameScheduler.MaxAllowance">
-            <summary>
-            in microseconds, time before component is removed
-            default is 10,000,000 (10 secs)
-            </summary>
-        </member>
         <member name="M:Terrarium.Hosting.OrganismWrapper.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             ISerializable constructor
@@ -2428,13 +2428,6 @@
              query and modify security.
             </summary>
         </member>
-        <member name="M:Terrarium.Hosting.SecurityUtils.AssemblyHasTerrariumKey(System.Reflection.AssemblyName)">
-            <summary>
-             Determine if the given assembly has a terrarium key.
-            </summary>
-            <param name="asmName">The assembly to check.</param>
-            <returns>True if the assembly has the Terrarium key, false otherwise.</returns>
-        </member>
         <member name="P:Terrarium.Hosting.SecurityUtils.SecurityEnabled">
             <summary>
              Determines if security is enabled on the machine.
@@ -2449,6 +2442,13 @@
             <summary>
              Find out if a managed debugger is attached.
             </summary>
+        </member>
+        <member name="M:Terrarium.Hosting.SecurityUtils.AssemblyHasTerrariumKey(System.Reflection.AssemblyName)">
+            <summary>
+             Determine if the given assembly has a terrarium key.
+            </summary>
+            <param name="asmName">The assembly to check.</param>
+            <returns>True if the assembly has the Terrarium key, false otherwise.</returns>
         </member>
         <member name="T:Terrarium.Hosting.StrongNameVerificationState">
             <summary>
@@ -2478,6 +2478,41 @@
         <member name="F:Terrarium.PeerToPeer.NetworkEngine.announceThread">
             <summary>
              The thread used by the network engine in order to announce this peers presence asynchronously.
+            </summary>
+        </member>
+        <member name="P:Terrarium.PeerToPeer.NetworkEngine.PeerManager">
+            <summary>
+             Returns the PeerManager that tracks which peers are valid
+            </summary>
+        </member>
+        <member name="P:Terrarium.PeerToPeer.NetworkEngine.NetworkStatusMessage">
+            <summary>
+            Returns messages that should be propagated from deep in the networking classes to the UI
+            </summary>
+        </member>
+        <member name="P:Terrarium.PeerToPeer.NetworkEngine.Teleportations">
+            <summary>
+            The total number of teleportations
+            </summary>
+        </member>
+        <member name="P:Terrarium.PeerToPeer.NetworkEngine.LocalTeleportations">
+            <summary>
+            Number of local teleportations
+            </summary>
+        </member>
+        <member name="P:Terrarium.PeerToPeer.NetworkEngine.RemoteTeleportations">
+            <summary>
+            Number of remote teleportations
+            </summary>
+        </member>
+        <member name="P:Terrarium.PeerToPeer.NetworkEngine.FailedTeleportationReceives">
+            <summary>
+            Number of failures receiving a creature
+            </summary>
+        </member>
+        <member name="P:Terrarium.PeerToPeer.NetworkEngine.FailedTeleportationSends">
+            <summary>
+            Number of failures sending a creature
             </summary>
         </member>
         <member name="M:Terrarium.PeerToPeer.NetworkEngine.StartHttpNamespaceManager">
@@ -2525,41 +2560,6 @@
             <param name="endTag">The end tag.</param>
             <param name="content">The content to parse.</param>
             <returns>A collection of values parsed from the content.</returns>
-        </member>
-        <member name="P:Terrarium.PeerToPeer.NetworkEngine.PeerManager">
-            <summary>
-             Returns the PeerManager that tracks which peers are valid
-            </summary>
-        </member>
-        <member name="P:Terrarium.PeerToPeer.NetworkEngine.NetworkStatusMessage">
-            <summary>
-            Returns messages that should be propagated from deep in the networking classes to the UI
-            </summary>
-        </member>
-        <member name="P:Terrarium.PeerToPeer.NetworkEngine.Teleportations">
-            <summary>
-            The total number of teleportations
-            </summary>
-        </member>
-        <member name="P:Terrarium.PeerToPeer.NetworkEngine.LocalTeleportations">
-            <summary>
-            Number of local teleportations
-            </summary>
-        </member>
-        <member name="P:Terrarium.PeerToPeer.NetworkEngine.RemoteTeleportations">
-            <summary>
-            Number of remote teleportations
-            </summary>
-        </member>
-        <member name="P:Terrarium.PeerToPeer.NetworkEngine.FailedTeleportationReceives">
-            <summary>
-            Number of failures receiving a creature
-            </summary>
-        </member>
-        <member name="P:Terrarium.PeerToPeer.NetworkEngine.FailedTeleportationSends">
-            <summary>
-            Number of failures sending a creature
-            </summary>
         </member>
         <member name="T:Terrarium.PeerToPeer.OrganismsNamespaceHandler">
             <summary>
@@ -2636,14 +2636,14 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Terrarium.PeerToPeer.PeerManager.ClearBadPeers">
-            <summary>
-            Empty the collection of peers that had issues for some reason.
-            </summary>
-        </member>
         <member name="P:Terrarium.PeerToPeer.PeerManager.KnownPeers">
             <summary>
             The set of peers this client knows about and considers valid and active
+            </summary>
+        </member>
+        <member name="M:Terrarium.PeerToPeer.PeerManager.ClearBadPeers">
+            <summary>
+            Empty the collection of peers that had issues for some reason.
             </summary>
         </member>
         <member name="T:Terrarium.PeerToPeer.TeleportWorkItem">
