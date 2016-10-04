@@ -1421,29 +1421,34 @@ namespace Terrarium.Renderer
 
                                 if (tsSprite.Selected)
                                 {
+                                    var boundingBox = GetBoundsOfState(orgState);
                                     ((DirectDrawSurface)surf).Surface.SetForeColor(0);
-                                    ((DirectDrawSurface)surf).Surface.DrawBox(ddClipRect.Destination.Left, ddClipRect.Destination.Top,
-                                                        ddClipRect.Destination.Right, ddClipRect.Destination.Bottom);
+                                    ((DirectDrawSurface)surf).Surface.DrawBox(
+                                        boundingBox.Left - _viewsize.Left,
+                                        boundingBox.Top - _viewsize.Top,
+                                        (boundingBox.Right + 1) - _viewsize.Left,
+                                        (boundingBox.Bottom + 1) - _viewsize.Top
+                                        );
 
-                                    // red  Maybe we want some cool graphic here though
+                                    // line to left of selection box showing how much energy the animal has
                                     var lineheight =
                                         (int)
-                                        ((ddClipRect.Destination.Bottom - ddClipRect.Destination.Top)*
+                                        ((boundingBox.Bottom - boundingBox.Top) *
                                          orgState.PercentEnergy);
                                     ((DirectDrawSurface)surf).Surface.SetForeColor(63488);
-                                    ((DirectDrawSurface)surf).Surface.DrawLine(ddClipRect.Destination.Left - 1, ddClipRect.Destination.Top,
-                                                         ddClipRect.Destination.Left - 1,
+                                    ((DirectDrawSurface)surf).Surface.DrawLine(boundingBox.Left - _viewsize.Left, boundingBox.Top - _viewsize.Top,
+                                                         boundingBox.Left - _viewsize.Left,
                                                          ddClipRect.Destination.Top + lineheight);
 
                                     //green  Maybe we want some cool graphic here though (or an actual bar?)
                                     lineheight =
                                         (int)
-                                        ((ddClipRect.Destination.Bottom - ddClipRect.Destination.Top)*
+                                        ((boundingBox.Bottom - boundingBox.Top)*
                                          orgState.PercentInjured);
                                     ((DirectDrawSurface)surf).Surface.SetForeColor(2016);
-                                    ((DirectDrawSurface)surf).Surface.DrawLine(ddClipRect.Destination.Right + 1, ddClipRect.Destination.Top,
-                                                         ddClipRect.Destination.Right + 1,
-                                                         ddClipRect.Destination.Top + lineheight);
+                                    ((DirectDrawSurface)surf).Surface.DrawLine(boundingBox.Right - _viewsize.Right, boundingBox.Top - _viewsize.Top,
+                                                        boundingBox.Right - _viewsize.Right,
+                                                         boundingBox.Top - _viewsize.Top + lineheight);
                                 }
                             }
                         }
