@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http.SelfHost;
-using TerrariumServer;
 
 namespace Terrarium.Acceptance.Tests
 {
+    using Web.UI;
+
     internal class HttpClientFactory
     {
         internal static HttpClient Create()

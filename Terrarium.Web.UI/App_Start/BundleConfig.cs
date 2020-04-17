@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace TerrariumServer
+namespace Terrarium.Web.UI
 {
     public class BundleConfig
     {
