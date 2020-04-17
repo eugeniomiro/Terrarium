@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using Terrarium.Server;
+using Terrarium.Services;
 using TerrariumServer.Models;
 
 namespace TerrariumServer.Controllers

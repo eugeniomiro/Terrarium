@@ -1,7 +1,7 @@
 using System;
 using System.Data;
 
-namespace Terrarium.Server
+namespace Terrarium.Services
 {
     public enum RegisterPeerResult
     {

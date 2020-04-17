@@ -383,9 +383,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Terrarium.Server\Terrarium.Server.csproj">
+    <ProjectReference Include="..\Terrarium.Services\Terrarium.Services.csproj">
       <Project>{be8a5e63-4a48-447c-a26e-27ddaf792455}</Project>
-      <Name>Terrarium.Server</Name>
+      <Name>Terrarium.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\ServerConfig\InstallerItems\InstallerItems.csproj">
       <Project>{64b30cec-fb6d-48bd-b1fd-d8d5480c8e4a}</Project>

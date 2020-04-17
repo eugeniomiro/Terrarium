@@ -4,7 +4,7 @@
 
 using System.Xml.Serialization;
 
-namespace Terrarium.Server
+namespace Terrarium.Services
 {
     public class EventLogInfo
     {

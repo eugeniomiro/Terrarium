@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Configuration.Install;
 using System.Diagnostics;
 
-namespace Terrarium.Server
+namespace Terrarium.Services
 {
     [RunInstaller(true)]
     public class WebsiteInstaller : Installer

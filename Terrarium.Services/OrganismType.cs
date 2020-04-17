@@ -1,4 +1,4 @@
-﻿namespace Terrarium.Server
+﻿namespace Terrarium.Services
 {
     public enum OrganismType
     {

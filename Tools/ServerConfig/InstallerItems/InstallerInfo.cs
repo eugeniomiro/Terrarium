@@ -7,7 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml.Serialization;
 
-namespace Terrarium.Server
+namespace Terrarium.Services
 {
     public class InstallerInfo
     {

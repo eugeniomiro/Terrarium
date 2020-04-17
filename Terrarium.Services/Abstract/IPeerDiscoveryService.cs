@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.Data;
 
-namespace Terrarium.Server.Abstract
+namespace Terrarium.Services.Abstract
 {
     interface IPeerDiscovery
     {
