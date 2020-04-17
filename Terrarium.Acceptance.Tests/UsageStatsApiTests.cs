@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 
 namespace Terrarium.Acceptance.Tests
 {
+    using Extensions;
+
     [TestClass]
     public class UsageStatsApiTests
     {
@@ -25,7 +26,7 @@ namespace Terrarium.Acceptance.Tests
                 var response = client.GetAsync(RequestUri).Result;
 
                 Assert.AreEqual("application/json", response.Content.Headers.ContentType.MediaType);
-                var json = response.Content.ReadAsStringAsync().ContinueWith(t => JsonConvert.DeserializeObject(t.Result)).Result;
+                var json = response.Content.ReadAsJsonAsync().Result;
                 Assert.IsNotNull(json);
             }
         }
