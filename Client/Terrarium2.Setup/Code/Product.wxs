@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define version="$(fun.AutoVersion(2.1))"?>
   <Product Id="*"
-           Name="Terrarium 2.1"
+           Name="Terrarium $(var.version)"
            Language="1033"
-           Version="$(fun.AutoVersion(2.1))"
+           Version="$(var.version)"
            Manufacturer="Eugenio Miró"
            UpgradeCode="c295a307-5698-4383-9479-45a6a86c04b4">
     <Package InstallerVersion="301" Compressed="yes" InstallScope="perMachine" />
@@ -15,7 +16,7 @@
     <Condition Message="[ProductName] requires .NET Framework 3.5.">Installed OR NETFRAMEWORK35</Condition>
 
     <!-- User Interface Experience -->
-    <Icon Id="Icon.ico" SourceFile="Resources\Icon.ico"/>
+    <Icon Id="Icon.ico" SourceFile="$(var.Terrarium.ProjectDir)tericon32.ico"/>
     <Property Id="ARPPRODUCTICON" Value="Icon.ico"></Property>
     <UIRef Id="UI"/>
 

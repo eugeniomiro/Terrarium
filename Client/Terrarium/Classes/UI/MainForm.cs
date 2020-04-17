@@ -47,65 +47,65 @@ namespace Terrarium.Client
         private static MainForm mainForm;
 
         // Mutex to detect multiple versions of the game
-        private static string   appMutexName = "{2AED158D-74C9-4297-B83B-13B87FCA6BFC}";
-        private static Mutex    appMutex;
+        private static string appMutexName = "{2AED158D-74C9-4297-B83B-13B87FCA6BFC}";
+        private static Mutex appMutex;
 
-        private static bool     maliciousOrganism = false;
-        private static bool     relaunch = false;
-        private static bool     blacklistCheckOnRestart = false;
+        private static bool maliciousOrganism = false;
+        private static bool relaunch = false;
+        private static bool blacklistCheckOnRestart = false;
 
         // New command line option holders
-        private static bool     wasRelaunched = false;
-        private static bool     skipSplashScreen = false;
+        private static bool wasRelaunched = false;
+        private static bool skipSplashScreen = false;
         private static Rectangle windowRectangle;
         private static FormWindowState windowState = FormWindowState.Normal;
 
         //get the screen size and calculate the viewport location
-        private Size            screenSize;
-        private Rectangle       virtualScreen;
-        private Rectangle       viewPort;
-        private Rectangle       controlStripTop;
-        private Rectangle       controlStripBottom;
-        private Rectangle       screenRectangle;
+        private Size screenSize;
+        private Rectangle virtualScreen;
+        private Rectangle viewPort;
+        private Rectangle controlStripTop;
+        private Rectangle controlStripBottom;
+        private Rectangle screenRectangle;
 
-        private const Boolean   traceEnabled = true;
-        private bool            alreadyRunningTimer = false;
-        private bool            runningBlockedVersion = false;
+        private const Boolean traceEnabled = true;
+        private bool alreadyRunningTimer = false;
+        private bool runningBlockedVersion = false;
 
-        private Random          random = new Random(Environment.TickCount);
-        private WorldVector     oldVector;      // current state - 1
-        private WorldVector     newVector;      // current state
-        private int             frameNumber = 0;
+        private Random random = new Random(Environment.TickCount);
+        private WorldVector oldVector;      // current state - 1
+        private WorldVector newVector;      // current state
+        private int frameNumber = 0;
 
         // Command line arguments / Screensaver support
-        private Boolean         startAtStartup;
+        private Boolean startAtStartup;
         private ScreenSaverMode screenSaverMode = ScreenSaverMode.NoScreenSaver;
-        private Int32           hwndScreenSaverParent = 0;
-        private int             turnOffDirectXCounter = 0;
-        private Boolean         turnOffDirectX = false;
-        private string          _gamePath = null;
-        private bool            firstActivate;
+        private Int32 hwndScreenSaverParent = 0;
+        private int turnOffDirectXCounter = 0;
+        private Boolean turnOffDirectX = false;
+        private string _gamePath = null;
+        private bool firstActivate;
 
         // Window Resizing and Fullscreen support
-        private bool            fullScreen = false;
-        private bool            showUI = true;
-        private Point           originalLocation;
-        private Size            originalSize;
+        private bool fullScreen = false;
+        private bool showUI = true;
+        private Point originalLocation;
+        private Size originalSize;
 
         // Screen messages
-        private const string    emptyEcosystemMessage = "Waiting for animals to be teleported from other peers running Terrarium...";
-        private const string    emptyEcosystemServerDownMessage = "The Terrarium server is experiencing temporary difficulties.  This is probably why you aren't receiving any animals.";
-        private const string    emptyTerrariumMessage = "Introduce animals into your terrarium by clicking on the 'Introduce Animal' button below.";
-        private const string    ecosystemStateFileName = "\\Ecosystem.bin";
+        private const string emptyEcosystemMessage = "Waiting for animals to be teleported from other peers running Terrarium...";
+        private const string emptyEcosystemServerDownMessage = "The Terrarium server is experiencing temporary difficulties.  This is probably why you aren't receiving any animals.";
+        private const string emptyTerrariumMessage = "Introduce animals into your terrarium by clicking on the 'Introduce Animal' button below.";
+        private const string ecosystemStateFileName = "\\Ecosystem.bin";
 
         private System.Windows.Forms.MenuItem menuItem1;
         private System.Windows.Forms.NotifyIcon taskBar;
         private System.Windows.Forms.Timer screenSaverTimer = null;
 
         // Used to force a save when restarting.  Used by auto-updates
-        private bool            forceSave = false;
+        private bool forceSave = false;
 
-        private static Options  _options     = new Options();
+        private static Options _options = new Options();
 
         #region Designer Generated Fields
         private System.ComponentModel.IContainer components;
@@ -135,7 +135,7 @@ namespace Terrarium.Client
         #region Secondary Window support (Trace, Reporting, Property Sheet)
         private PropertySheet propertySheet;
         private TraceWindow traceWindow;
-        private string engineStateText;        
+        private string engineStateText;
         private TerrariumGameView tddGameView;
         private Terrarium.Forms.Classes.Controls.DeveloperPanel developerPanel;
         private GlassBottomPanel bottomPanel;
@@ -363,26 +363,37 @@ namespace Terrarium.Client
 
             // Parse the command line arguments
             ScreenSaverMode mode = ScreenSaverMode.NoScreenSaver;
-            Int32   hwnd        = 0;
-            string  gamePath    = "";
-            
+            Int32 hwnd = 0;
+            string gamePath = "";
+
             CommandLine.Parser.Default.ParseArguments(args, _options);
             if (_options.Modal)
                 // Show the Settings dialog box, modal to the foreground window
                 mode = ScreenSaverMode.ShowSettingsModal;
 
-            else if (_options.Preview != 0) {
+            else if (_options.Preview != 0)
+            {
                 mode = ScreenSaverMode.Preview;
                 hwnd = _options.Preview;
-            } else if (_options.ScrenSaver)
+            }
+            else if (_options.ScreenSaver)
                 mode = ScreenSaverMode.Run;
-            else if (_options.LoadTerrarium != "") {
+            else if (_options.LoadTerrarium != "")
+            {
                 mode = ScreenSaverMode.RunLoadTerrarium;
                 gamePath = _options.LoadTerrarium;
-            } else if (_options.NetTerrarium != "") {
-                mode = ScreenSaverMode.RunNewTerrarium;
-                gamePath = _options.NetTerrarium;
             }
+            else if (_options.NewTerrarium != "")
+            {
+                mode = ScreenSaverMode.RunNewTerrarium;
+                gamePath = _options.NewTerrarium;
+            }
+
+            if (_options.SkipSplashScreen)
+            {
+                skipSplashScreen = true;
+            }
+
             Int32[] rectangleValues = _options.WindowRectangle;
             if (rectangleValues.Length == 4)
                 windowRectangle = new Rectangle(rectangleValues[0], rectangleValues[1], rectangleValues[2], rectangleValues[3]);
@@ -489,28 +500,28 @@ namespace Terrarium.Client
                     switch (mainForm.screenSaverMode)
                     {
                         case ScreenSaverMode.RunLoadTerrarium:
-                            configLine += "|/loadterrarium|" + mainForm._gamePath;
+                            configLine += "|--loadterrarium|" + mainForm._gamePath;
                             break;
 
                         case ScreenSaverMode.RunNewTerrarium:
-                            configLine += "|/newterrarium|" + mainForm._gamePath;
+                            configLine += "|--newterrarium|" + mainForm._gamePath;
                             break;
 
                         case ScreenSaverMode.Run:
-                            configLine += "|/s";
+                            configLine += "|-s";
                             break;
                     }
 
                     if (blacklistCheckOnRestart)
                     {
-                        configLine += "|/blacklistcheck" + configLine;
+                        configLine += "|--blacklistcheck|" + configLine;
                     }
 
                     // Let's not display the splash screen on a restart
-                    configLine += "|/skipSplashScreen";
+                    configLine += "|--skipsplashscreen";
 
                     // Add the current window size, position, and state
-                    configLine += "|/windowRectangle|" + mainForm.Location.X.ToString() + "," + mainForm.Location.X.ToString() + "," + mainForm.Size.Width.ToString() + "," + mainForm.Size.Height.ToString();
+                    configLine += "|--windowrectangle|" + mainForm.Location.X.ToString() + "|" + mainForm.Location.X.ToString() + "|" + mainForm.Size.Width.ToString() + "|" + mainForm.Size.Height.ToString();
 
                     if (mainForm.Visible == false && mainForm.taskBar.Visible == true)
                     {
@@ -521,7 +532,7 @@ namespace Terrarium.Client
                         windowState = mainForm.WindowState;
                     }
 
-                    configLine += "|windowState|" + windowState.ToString();
+                    configLine += "|--windowstate|" + windowState.ToString();
 
                     GameConfig.RelaunchCommandLine = configLine;
                     Application.Restart();
@@ -565,7 +576,7 @@ namespace Terrarium.Client
             _gamePath = gamePath;
             hwndScreenSaverParent = hwndParent;
             startAtStartup = !_options.NoStart;
-            
+
             // Check to see if this version has been blocked by the server (because of a security issue)
             // if it has, then don't actually start the game and just wait for
             // an updated version to get downloaded.
@@ -617,7 +628,7 @@ namespace Terrarium.Client
             this.developerPanel.WebRoot = GameConfig.WebRoot;
 
             this.developerPanel.ViewPortSize = this.tddGameView.Size;
-            
+
             this.bottomPanel.Location = new Point(controlStripBottom.Left, controlStripBottom.Top);
             this.bottomPanel.AddAnimalButton.Click += new EventHandler(this.AddNewAnimal_Click);
             this.bottomPanel.AddAnimalComboBox.DropDown += new EventHandler(this.AddAnimalComboBox_DropDown);
@@ -1214,11 +1225,11 @@ namespace Terrarium.Client
                 //}
                 //else
                 //{
-                    path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    path = Path.Combine(path, "Terrarium");
-                    path = Path.Combine(path, PrivateAssemblyCache.VersionedDirectoryPreamble);
+                path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                path = Path.Combine(path, "Terrarium");
+                path = Path.Combine(path, PrivateAssemblyCache.VersionedDirectoryPreamble);
                 //}
-                         
+
                 if (GameConfig.WebRoot == null || GameConfig.WebRoot.Length == 0)
                 {
                     GameConfig.WebRoot = "http://www.terrariumgame.net/terrarium";
@@ -1442,7 +1453,7 @@ namespace Terrarium.Client
 
                     this.Location = new Point(windowRectangle.Left, windowRectangle.Top);
                     this.Size = new Size(windowRectangle.Width, windowRectangle.Height);
-                    
+
                     this.ResumeLayout();
                 }
                 else
@@ -1469,7 +1480,7 @@ namespace Terrarium.Client
             }
 
             timer1.Enabled = false;
-            
+
             this.bottomPanel.Ticker.Stop();
 
             if (tddGameView != null)
@@ -2178,12 +2189,12 @@ namespace Terrarium.Client
             this.bottomPanel.Ticker.Stop();
 
             this.bottomPanel.Ticker.Messages.Enqueue("Welcome to Terrarium!", Color.White, null);
-            this.bottomPanel.Ticker.Messages.Enqueue("You are running version " + Assembly.GetExecutingAssembly().GetName().Version.ToString(), Color.White,null);
+            this.bottomPanel.Ticker.Messages.Enqueue("You are running version " + Assembly.GetExecutingAssembly().GetName().Version.ToString(), Color.White, null);
             //if (UpdateManager.IsDeployed == true)
             //    this.bottomPanel.Ticker.Messages.Enqueue("Auto-updates are enabled", Color.White, null);
             //else
             //    this.bottomPanel.Ticker.Messages.Enqueue("Auto-updates are not enabled", Color.Yellow, null);
-                        
+
             this.bottomPanel.Ticker.Start();
         }
 

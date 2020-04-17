@@ -12,34 +12,34 @@ namespace Terrarium.Client
         [Option('c', "modal", DefaultValue = false)]
         public bool Modal { get; set; }
 
-        [Option('p', "Preview", DefaultValue = 0)]
+        [Option('p', "preview", DefaultValue = 0)]
         public int Preview { get; set; }
 
-        [Option('s', "ScreenSaver", DefaultValue = false)]
-        public bool ScrenSaver { get; set; }
+        [Option('s', "screensaver", DefaultValue = false)]
+        public bool ScreenSaver { get; set; }
 
-        [Option("NoStart", DefaultValue = false)]
+        [Option("nostart", DefaultValue = false)]
         public bool NoStart { get; set; }
 
-        [Option("NoDirectX", DefaultValue = false)]
+        [Option("nodirectx", DefaultValue = false)]
         public bool NoDirectX { get; set; }
 
-        [Option("LoadTerrarium", DefaultValue = "")]
+        [Option("loadterrarium", DefaultValue = "")]
         public string LoadTerrarium { get; set; }
 
-        [Option("NewTerrarium", DefaultValue = "")]
-        public string NetTerrarium { get; set; }
+        [Option("newterrarium", DefaultValue = "")]
+        public string NewTerrarium { get; set; }
 
-        [Option("BlackListCheck", DefaultValue = false)]
+        [Option("blacklistcheck", DefaultValue = false)]
         public bool BlackListCheck { get; set; }
 
-        [Option("SkipSplashScreen", DefaultValue = false)]
+        [Option("skipsplashscreen", DefaultValue = false)]
         public bool SkipSplashScreen { get; set; }
 
-        [Option("WindowRectangle", DefaultValue = new Int32[] { 0 })]
+        [OptionArray("windowrectangle", DefaultValue = new Int32[] { 0 })]
         public int[] WindowRectangle { get; set; }
 
-        [Option("WindowState", DefaultValue = FormWindowState.Normal)]
+        [Option("windowstate", DefaultValue = FormWindowState.Normal)]
         public FormWindowState WindowState { get; set; }
     }
 }
