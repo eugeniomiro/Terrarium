@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace Terrarium.Web.UI.Controllers.Api
@@ -7,7 +8,7 @@ namespace Terrarium.Web.UI.Controllers.Api
     {
         public HttpResponseMessage Get()
         {
-            return Request.CreateResponse();
+            return Request.CreateResponse(HttpStatusCode.OK, "");
         }
     }
 }
