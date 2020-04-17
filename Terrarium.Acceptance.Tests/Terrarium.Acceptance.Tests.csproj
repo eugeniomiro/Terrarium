@@ -8,8 +8,8 @@
     <ProjectGuid>{3C1E0035-BA69-4963-BD18-19521F6210F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TerrariumServer.Acceptance.Tests</RootNamespace>
-    <AssemblyName>TerrariumServer.Acceptance.Tests</AssemblyName>
+    <RootNamespace>Terrarium.Acceptance.Tests</RootNamespace>
+    <AssemblyName>Terrarium.Acceptance.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
