@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+﻿//------------------------------------------------------------------------------
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                          
 //------------------------------------------------------------------------------
 
@@ -313,7 +313,7 @@ namespace Terrarium.Server {
             get
             {
                 if (chartUrl == null) {
-                    chartUrl = Path.Combine(LocalSettings.ChartUrl, Path.GetFileName(ChartPath));
+                    chartUrl = Path.Combine(ServerSettings.ChartUrl, Path.GetFileName(ChartPath));
                 }
 
                 return chartUrl;
@@ -332,7 +332,7 @@ namespace Terrarium.Server {
             get
             {
                 if (chartPath == null) {
-                    chartPath = Path.Combine(LocalSettings.ChartPath, Guid.NewGuid().ToString() + ".gif");
+                    chartPath = Path.Combine(ServerSettings.ChartPath, Guid.NewGuid().ToString() + ".gif");
                 }
 
                 return chartPath;
