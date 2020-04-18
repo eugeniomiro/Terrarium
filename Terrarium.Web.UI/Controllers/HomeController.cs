@@ -67,33 +67,34 @@ namespace TerrariumServer.Controllers
                 DatabaseStatusClass = "Up",
                 PeerCount = 0,
                 Tip = "You can use Alt-Enter to enter a true Full-Screen view.",
-                TopOrganisms = new Dictionary<OrganismType, TopOrganisms>()
-            };
-            vm.TopOrganisms[OrganismType.Plant] = new TopOrganisms() { 
-                Species = new Species[] {
-                    new Species{ Name= "Acelga",    Population=100 },
-                    new Species{ Name= "Lechuga",   Population=99 },
-                    new Species{ Name= "Tomate",    Population=98 },
-                    new Species{ Name= "Banana",    Population=97 },
-                    new Species{ Name= "Remolacha", Population=96 },
-                }
-            };
-            vm.TopOrganisms[OrganismType.Herbivore] = new TopOrganisms {
-                Species = new Species[] {
-                    new Species{ Name= "Vaca",          Population=100 },
-                    new Species{ Name= "Huemul",        Population=99 },
-                    new Species{ Name= "Gliptodonte",   Population=98 },
-                    new Species{ Name= "Herbivore",     Population=97 },
-                    new Species{ Name= "Carlitos",      Population=96 },
-                }
-            };
-            vm.TopOrganisms[OrganismType.Carnivore] = new TopOrganisms {
-                Species = new Species[] {
-                    new Species{ Name= "Cocodrilo", Population=100 },
-                    new Species{ Name= "Tigre",     Population=99 },
-                    new Species{ Name= "Mono",      Population=98 },
-                    new Species{ Name= "Carnivore1", Population=97 },
-                    new Species{ Name= "Juancito", Population=96 },
+                TopOrganisms = new Dictionary<OrganismType, TopOrganisms> {
+                    { OrganismType.Plant, new TopOrganisms() {
+                                                Species = new Species[] {
+                                                    new Species{ Name= "Acelga",    Population=100 },
+                                                    new Species{ Name= "Lechuga",   Population=99 },
+                                                    new Species{ Name= "Tomate",    Population=98 },
+                                                    new Species{ Name= "Banana",    Population=97 },
+                                                    new Species{ Name= "Remolacha", Population=96 },
+                                                }
+                                            } },
+                    { OrganismType.Herbivore, new TopOrganisms {
+                                                Species = new Species[] {
+                                                    new Species{ Name= "Vaca",          Population=100 },
+                                                    new Species{ Name= "Huemul",        Population=99 },
+                                                    new Species{ Name= "Gliptodonte",   Population=98 },
+                                                    new Species{ Name= "Herbivore",     Population=97 },
+                                                    new Species{ Name= "Carlitos",      Population=96 },
+                                                }
+                                            } },
+                    { OrganismType.Carnivore, new TopOrganisms {
+                                                Species = new Species[] {
+                                                    new Species{ Name= "Cocodrilo", Population=100 },
+                                                    new Species{ Name= "Tigre",     Population=99 },
+                                                    new Species{ Name= "Mono",      Population=98 },
+                                                    new Species{ Name= "Carnivore1", Population=97 },
+                                                    new Species{ Name= "Juancito", Population=96 },
+                                                }
+                                            } }
                 }
             };
             
