@@ -7,7 +7,7 @@ namespace Terrarium.Services.Concrete
     {
         public SystemStatus GetSystemStatus()
         {
-            return null;
+            return new SystemStatus();
         }
     }
 }
