@@ -25,10 +25,10 @@
         with the DefaultBlackBoxFile.
     */
     void Application_Start(Object sender, EventArgs E) {
-    	InstallerInfo.WriteEventLog("Webservice", "Terrarium Website Started", EventLogEntryType.Information);
-    	
-    	NonPageServices.Current.Start();
-    	
+        InstallerInfo.WriteEventLog("Webservice", "Terrarium Website Started", EventLogEntryType.Information);
+
+        NonPageServices.Current.Start();
+
     }
 
     /*
@@ -47,13 +47,16 @@
         when a page fails to compile because of incorrect code changes.
     */
     void Application_Error(Object sender, EventArgs E) {
-		StringBuilder builder = new StringBuilder();
-		Exception [] exceptions = Context.AllErrors;
-		builder.Append("Error accessing: " + Context.Request.RawUrl + "\r\n");
-		foreach(Exception e in exceptions)
-			builder.Append("Exception:\r\n" + e.ToString() + "\r\n");
+        StringBuilder builder = new StringBuilder();
+        if (Context != null)
+        {
+            Exception [] exceptions = Context.AllErrors;
+            builder.Append("Error accessing: " + Context.Request.RawUrl + "\r\n");
+            foreach(Exception e in exceptions)
+                builder.Append("Exception:\r\n" + e.ToString() + "\r\n");
+        }
 
-		InstallerInfo.WriteEventLog("Webservice", builder.ToString());
+        InstallerInfo.WriteEventLog("Webservice", builder.ToString());
     }
 
 </script>
