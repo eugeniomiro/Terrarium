@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+﻿//------------------------------------------------------------------------------
 //      Copyright (c) Microsoft Corporation.  All rights reserved.                                                          
 //------------------------------------------------------------------------------
 
@@ -14,6 +14,7 @@ using System.Web;
 using System.Text;
 using System.Diagnostics;
 using Terrarium.Server;
+using Terrarium.Services;
 
 namespace Terrarium.Server
 {
