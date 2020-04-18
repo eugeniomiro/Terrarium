@@ -89,6 +89,12 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleInjector, Version=4.9.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.9.2\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi, Version=4.9.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.WebApi.4.9.2\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -176,6 +182,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\SystemStatusController.cs" />
     <Compile Include="Controllers\Api\UsageStatsController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -383,6 +390,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Terrarium.Domain\Terrarium.Domain.csproj">
+      <Project>{6D4BE331-5583-4367-BB01-AF76DCCC52BD}</Project>
+      <Name>Terrarium.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Terrarium.Services\Terrarium.Services.csproj">
       <Project>{be8a5e63-4a48-447c-a26e-27ddaf792455}</Project>
       <Name>Terrarium.Services</Name>

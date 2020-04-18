@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Abstract\IPeerDiscoveryService.cs" />
     <Compile Include="Abstract\ISystemStatusService.cs" />
+    <Compile Include="Concrete\SystemStatusService.cs" />
     <Compile Include="OrganismType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterPeerResult.cs" />
