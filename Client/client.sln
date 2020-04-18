@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terrarium", "Terrarium\Terrarium.csproj", "{0F3C0D45-0DCC-43C9-BC43-C34C2029FFF4}"
 EndProject
@@ -21,6 +21,17 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renderer", "Renderer\Renderer.csproj", "{228FD808-F488-426E-9015-F5557AD44A40}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Terrarium2.Setup", "Terrarium2.Setup\Terrarium2.Setup.wixproj", "{386DD595-55C0-4868-A36E-F3793664645D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{5B1D93BA-1B96-4582-A458-EB43278E7F4E}"
+	ProjectSection(SolutionItems) = preProject
+		DXVBLib\dx7vb.dll = DXVBLib\dx7vb.dll
+		DXVBLib\dx8vb.dll = DXVBLib\dx8vb.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B4CFB02C-09A7-4D7D-BAC0-C9FE72C61A42}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,5 +164,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9AC6E92-0859-4587-9363-95B51DDDBEE3}
 	EndGlobalSection
 EndGlobal
