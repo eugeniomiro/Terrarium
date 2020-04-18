@@ -110,5 +110,19 @@
     <Build Include="dbo\Stored Procedures\TerrariumRegisterPeerCountAndList.sql" />
     <Build Include="dbo\Stored Procedures\TerrariumGrabNumPeers.sql" />
     <Build Include="dbo\Stored Procedures\TerrariumGrabScaledPeers.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumGrabTotalNumPeers.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumAdminDisableAllVersions.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumAdminDisableVersion.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumAdminEnableVersion.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumCheckSpeciesBlackList.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumCheckSpeciesExtinct.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumGrabAllRecentSpecies.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumGrabAllSpecies.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumGrabExtinctRecentSpecies.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumGrabExtinctSpecies.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumInsertSpecies.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumIsVersionDisabled.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumRegisterUser.sql" />
+    <Build Include="dbo\Stored Procedures\TerrariumReintroduceSpecies.sql" />
   </ItemGroup>
 </Project>
