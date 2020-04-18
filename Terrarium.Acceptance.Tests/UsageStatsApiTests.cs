@@ -12,7 +12,7 @@ namespace Terrarium.Acceptance.Tests
         [TestMethod]
         public void GetReturnsResponseWithCorrectStatusCode()
         {
-            using (var client = HttpClientFactory.Create()) {
+            using (var client = new HttpClientBuilder().Build()) {
                 var response = client.GetAsync(RequestUri).Result;
 
                 Assert.IsTrue(response.IsSuccessStatusCode, $"actual status code: {response.StatusCode}");
@@ -22,7 +22,7 @@ namespace Terrarium.Acceptance.Tests
         [TestMethod]
         public void GetReturnsJsonContent()
         {
-            using (var client = HttpClientFactory.Create()) {
+            using (var client = new HttpClientBuilder().Build()) {
                 var response = client.GetAsync(RequestUri).Result;
 
                 Assert.AreEqual("application/json", response.Content.Headers.ContentType.MediaType);
