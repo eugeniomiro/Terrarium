@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9384E81B-B360-40E2-8D4E-8F6738331B78}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Terrarium.Server</RootNamespace>
+    <AssemblyName>Terrarium.Server</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BugService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Charts\ChartService.asmx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Code\ChartBuilder.cs" />
+    <Compile Include="Code\ErrorLog.cs" />
+    <Compile Include="Code\NonPageServices.cs" />
+    <Compile Include="Code\ServerSettings.cs" />
+    <Compile Include="Code\Throttle.cs" />
+    <Compile Include="Code\WordFilter.cs" />
+    <Compile Include="Discovery\DiscoveryDB.asmx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Discovery\IPeerDiscoveryService.cs" />
+    <Compile Include="IBugService.cs" />
+    <Compile Include="IUsageService.cs" />
+    <Compile Include="Messaging\IMessaging.cs" />
+    <Compile Include="Messaging\Messaging.asmx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reporting\IReportingService.cs" />
+    <Compile Include="Reporting\ReportPopulation.asmx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Species\AddSpecies.asmx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Species\ISpeciesService.cs" />
+    <Compile Include="UsageData.cs" />
+    <Compile Include="UsageReporting.cs" />
+    <Compile Include="UsageService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Watson\IWatsonService.cs" />
+    <Compile Include="Watson\Watson.asmx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Tools\ServerConfig\InstallerItems\InstallerItems.csproj">
+      <Project>{64b30cec-fb6d-48bd-b1fd-d8d5480c8e4a}</Project>
+      <Name>InstallerItems</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
