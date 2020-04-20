@@ -260,6 +260,10 @@
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="Views\web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\ServerStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_GlobalResources\Resource.designer.cs">
@@ -278,6 +282,7 @@
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Code\ChartNet.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controls\topcritters.ascx.cs">
       <DependentUpon>topcritters.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -306,7 +311,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -339,6 +343,10 @@
     <EmbeddedResource Include="Watson\Watson.asmx.resx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Tools\ServerConfig\InstallerItems\InstallerItems.csproj">
+      <Project>{64B30CEC-FB6D-48BD-B1FD-D8D5480C8E4A}</Project>
+      <Name>InstallerItems</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Terrarium.Server\Terrarium.Server.csproj">
       <Project>{9384e81b-b360-40e2-8d4e-8f6738331b78}</Project>
       <Name>Terrarium.Server</Name>
